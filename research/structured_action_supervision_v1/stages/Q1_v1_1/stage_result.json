@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-P0-v1.1",
+  "stage": "Q1",
+  "stage_status": "KILL",
+  "decision": "KILL_CURRENT_INSTRUMENT",
+  "authorization": {
+    "status": "USER_AUTHORIZED_SUCCESSOR",
+    "date": "2026-07-30",
+    "scope": "dependency installation, frozen source deployment, Qwen3-0.6B download, and four Q1 GPU training tasks under the remaining original eight-hour cap",
+    "gpu_time_limit_seconds": 28774.619931
+  },
+  "execution": {
+    "attempt_id": "Q1-v1.1-20260730",
+    "started_at_utc": "2026-07-30T15:23:08.330790+00:00",
+    "ended_at_utc": "2026-07-30T15:29:58.519324+00:00",
+    "controller_elapsed_seconds": 410.1885431110859,
+    "attempted_runs": 4,
+    "completed_runs": 4,
+    "run_return_codes": {
+      "AF-seed-1101": 0,
+      "LF-seed-1101": 0,
+      "AF-seed-2202": 0,
+      "LF-seed-2202": 0
+    },
+    "raw_trajectories": 128,
+    "exact_four_call_trajectories": 0,
+    "optimization_steps_completed": 32,
+    "heldout_consumed": false,
+    "gpu_processes_after_completion": []
+  },
+  "failure": {
+    "reason_code": "BASE_POLICY_ZERO_STRICT_TOOL_EXECUTABILITY",
+    "root_cause": "Every raw rollout stopped at its first assistant response with MISSING_TOOL_CALL, so no trajectory reached the frozen four-call contract.",
+    "overall_parser_executable_rate": 0.0,
+    "required_parser_executable_rate": 0.95,
+    "invalid_trajectory_counts": {
+      "MISSING_TOOL_CALL": 128
+    },
+    "reward_observation": "All 32 logged step rewards were exactly -1.0.",
+    "optimization_observation": "All logged losses and gradient norms were 0.0.",
+    "mask_observation": "AF and LF emitted identical trainable-token and masked-response-token series within each seed: 512 and 0 at every step.",
+    "scientific_data_interpretable": false,
+    "efficacy_comparison_permitted": false,
+    "selective_rerun_permitted_under_protocol_v1_1": false
+  },
+  "qualification": {
+    "all_four_commands_complete": true,
+    "no_oom": true,
+    "no_nonfinite_optimization": true,
+    "no_fabricated_or_repaired_calls": true,
+    "complete_metrics_and_raw_provenance": true,
+    "parser_and_executable_validity_measured": true,
+    "parser_and_executable_validity_at_least_0_95": false,
+    "rewards_non_degenerate": false,
+    "resource_usage_measured": true,
+    "arm_masks_distinct_in_emitted_metrics": false
+  },
+  "environment_verification": {
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "torch": "2.8.0+cu128",
+    "cuda_runtime": "12.8",
+    "python": "3.12.3",
+    "compiled_extension_import": "PASS",
+    "targeted_remote_cpu_tests": "156 passed"
+  },
+  "provenance": {
+    "source_commit": "f96c96544284d65bcb2e8e10ab1d9f2aeda08cd6",
+    "source_archive_sha256": "65dfc21c7eeee8c71979c0db58374070be19244231b958f213af6a124e09124b",
+    "runtime_manifest_sha256": "fb76e91cdc726548c202236a7b8e26013c7560ce19f8edabc712eabf8e22d2f8",
+    "qualification_dataset_sha256": "a4a54821febebc60f47f8bb1ca67183c35941ffbc1f2b9bfd5412fe869b92d32",
+    "model_config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "model_tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "analysis_sha256": "4104da7445385d3f2e17c64264b2d975ccedc1e2a250dd15a6263ecb8b178e4d",
+    "downloaded_attempt_archive_sha256": "fcf49428fc8473c8b751197ae413f3f42f2c3b2fbc657d7a05bf5209c30963ef",
+    "evidence_root": "attempt_20260730"
+  },
+  "next_action": "Terminate SAS-P0-v1.1. Do not tune, repair, or rerun this consumed protocol. Any future work requires a newly justified high-level instrument and a separately frozen protocol.",
+  "main_track_evidence": {
+    "protocol_valid": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_method_or_benchmark": false,
+    "no_material_protocol_deviation": true
+  }
+}

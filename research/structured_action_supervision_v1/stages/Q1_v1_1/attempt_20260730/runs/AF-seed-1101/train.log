@@ -1,0 +1,186 @@
+controller_start_utc=2026-07-30T15:23:10.018329+00:00
+command=areno train --ckpt Qwen/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/areno-sas-q1-v1-1/research/structured_action_supervision_v1/stages/Q0/dataset/qualification.jsonl --dataset-loader-fn /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/reward.py --agent-fn /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/run_agent.py --algo gspo --tp-size 1 --world-size 1 --batch-size 1 --n-samples 4 --mini-bs 4 --max-running-prompts 4 --max-prompt-tokens 512 --max-new-tokens 128 --max-context-len 2048 --agent-timeout-s 900 --attn-backend native --adam-8bit --drop-rollout-state --max-steps 8 --seed 1101 --metrics-log-dir /root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-1101/metrics --trainable-turns all_assistant
+[97m[1mAReno training config[0m
+
+[94m[1mAlgorithm[0m
+[90m[22m---------[0m
+  [90m[22mname            [0m  gspo
+  [90m[22mdefault_loss    [0m  gspo_loss_fn
+  [90m[22mrequires_rollout[0m  yes
+
+[94m[1mInputs[0m
+[90m[22m------[0m
+  [90m[22mckpt          [0m  Qwen/Qwen3-0.6B
+  [90m[22mdataset_path  [0m  /root/autodl-tmp/areno-sas-q1-v1-1/research/structured_action_supervision_v1/stage
+                  s/Q0/dataset/qualification.jsonl
+  [90m[22mmodel_hub     [0m  modelscope
+  [90m[22mdataset_loader[0m  /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  dataset_loader.py
+  [90m[22mreward_fn     [0m  /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  reward.py
+  [90m[22mreward_ckpt   [0m  none
+  [90m[22magent_fn      [0m  /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  run_agent.py
+
+[94m[1mRuntime[0m
+[90m[22m-------[0m
+  [90m[22mworld_size  [0m  1
+  [90m[22mtp_size     [0m  1
+  [90m[22mdp_size     [0m  1
+  [90m[22mattn_backend[0m  native
+  [90m[22mseed        [0m  1101
+  [90m[22mthinking    [0m  tokenizer default
+
+[94m[1mRollout[0m
+[90m[22m-------[0m
+  [90m[22mbatch_size         [0m  1
+  [90m[22mmax_prompt_tokens  [0m  512
+  [90m[22mmax_new_tokens     [0m  128
+  [90m[22mmax_context_len    [0m  2048
+  [90m[22mtrainable_turns    [0m  all_assistant
+  [90m[22mmask_tool_call_args[0m  no
+  [90m[22mn_samples          [0m  4
+  [90m[22mmax_running_prompts[0m  4
+  [90m[22msampling           [0m  greedy=no, temperature=1.0, top_k=-1, top_p=1.0
+
+[94m[1mTraining[0m
+[90m[22m--------[0m
+  [90m[22mmax_steps                  [0m  8
+  [90m[22mmini_bs                    [0m  4
+  [90m[22mscore_micro_bs             [0m  8
+  [90m[22mgradient_accumulation_steps[0m  auto
+  [90m[22moptimizer                  [0m  lr=1e-06, min_lr=1e-07, decay=cosine/1000, betas=(0.9, 0.999),
+                               weight_decay=0.01, adam_8bit=yes
+  [90m[22mgrad_clip_norm             [0m  1.0
+
+[94m[1mOutputs[0m
+[90m[22m-------[0m
+  [90m[22msave_path      [0m  none
+  [90m[22msave_interval  [0m  100
+  [90m[22mmetrics_log_dir[0m  /root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-1101/metrics
+[33m[1mWARNING[0m: no checkpoint output path configured (--save-path); checkpoints will not be saved.
+2026-07-30 23:23:14,314 | INFO    | modelscope_hub.download | Downloading 11 files from Qwen/Qwen3-0.6B@master
+Downloading:   0%|          | 0/11 [00:00<?, ?file/s]Downloading: 100%|██████████| 11/11 [00:01<00:00,  6.38file/s]Downloading: 100%|██████████| 11/11 [00:01<00:00,  6.38file/s]
+2026-07-30 23:23:17,002 INFO httpx: HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/json/json.py "HTTP/1.1 200 OK"
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 16 examples [00:00, 2011.60 examples/s]
+loading checkpoint:   0%|          | 0/29 [00:00<?, ?stage/s]loading checkpoint:  28%|██▊       | 8/29 [00:00<00:00, 75.98stage/s]loading checkpoint:  55%|█████▌    | 16/29 [00:00<00:00, 69.76stage/s]loading checkpoint:  83%|████████▎ | 24/29 [00:00<00:00, 68.06stage/s]loading checkpoint: 100%|██████████| 29/29 [00:00<00:00, 68.65stage/s]
+2026-07-30 23:23:32 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:83 - epoch=0 stage=epoch_start
+2026-07-30 23:23:32 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=0 role=policy stage=rollout_start
+2026-07-30 23:23:32 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:23:46,042 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:48,006 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:49,850 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:51,704 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:51 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1772 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:23:52 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=0 role=policy stage=rollout_end
+2026-07-30 23:23:52 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=0 metric=reward_mean value=-1.000000
+2026-07-30 23:23:52 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=0 metric=rollout_logprob_mean value=-0.462169
+2026-07-30 23:23:52 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=0 role=policy stage=train_start
+2026-07-30 23:23:53 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=1.790628 total=19.816877
+2026-07-30 23:23:53 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=0 role=policy stage=train_end
+2026-07-30 23:23:53 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=0 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.017682835459709167, 'lr': 9.999977793408362e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.4621693789958954, 'train_logprobs_mean': -0.46287471055984497, 'logp_diff_mean': 0.0007052868604660034, 'step_rollout_time_s': 19.521795827895403, 'step_train_time_s': 1.7912986446172, 'step_e2e_time_s': 21.320282695814967, 'policy_train_wall_time_s': 1.7984759956598282}
+2026-07-30 23:23:54 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=1 role=policy stage=rollout_start
+2026-07-30 23:23:54 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:23:55 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=1 cuda_graph=True tokens_per_second=48.1
+2026-07-30 23:23:56,578 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:58,233 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:23:59,899 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:01,592 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:01 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1748 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:01 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=1 role=policy stage=rollout_end
+2026-07-30 23:24:01 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=1 metric=reward_mean value=-1.000000
+2026-07-30 23:24:01 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=1 metric=rollout_logprob_mean value=-0.410779
+2026-07-30 23:24:01 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=1 role=policy stage=train_start
+2026-07-30 23:24:03 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=1.494145 total=9.030895
+2026-07-30 23:24:03 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=1 role=policy stage=train_end
+2026-07-30 23:24:03 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=1 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.015618398785591125, 'lr': 9.999911173852615e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.41077920794487, 'train_logprobs_mean': -0.41202330589294434, 'logp_diff_mean': 0.0012440681457519531, 'step_rollout_time_s': 7.627924157306552, 'step_train_time_s': 1.4945093598216772, 'step_e2e_time_s': 9.126348473131657, 'policy_train_wall_time_s': 1.5007563531398773}
+2026-07-30 23:24:03 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=2 role=policy stage=rollout_start
+2026-07-30 23:24:03 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:04,874 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:06 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=1 cuda_graph=True tokens_per_second=63.4
+2026-07-30 23:24:06,608 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:08,240 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:09,877 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:09 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1772 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:10 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=2 role=policy stage=rollout_end
+2026-07-30 23:24:10 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=2 metric=reward_mean value=-1.000000
+2026-07-30 23:24:10 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=2 metric=rollout_logprob_mean value=-0.453006
+2026-07-30 23:24:10 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=2 role=policy stage=train_start
+2026-07-30 23:24:11 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.843748 total=7.859941
+2026-07-30 23:24:11 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=2 role=policy stage=train_end
+2026-07-30 23:24:11 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=2 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.018765948712825775, 'lr': 9.999800141990274e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.45300614833831787, 'train_logprobs_mean': -0.45055872201919556, 'logp_diff_mean': -0.0024474486708641052, 'step_rollout_time_s': 7.06003781594336, 'step_train_time_s': 0.8440969046205282, 'step_e2e_time_s': 7.911023382097483, 'policy_train_wall_time_s': 0.8501923438161612}
+2026-07-30 23:24:11 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=3 role=policy stage=rollout_start
+2026-07-30 23:24:11 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:12,800 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:14,416 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:16 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=1 cuda_graph=True tokens_per_second=74.6
+2026-07-30 23:24:16,108 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:17,790 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:17 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1740 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=3 role=policy stage=rollout_end
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=3 metric=reward_mean value=-1.000000
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=3 metric=rollout_logprob_mean value=-0.395454
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=3 role=policy stage=train_start
+2026-07-30 23:24:18 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.848947 total=7.865772
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=3 role=policy stage=train_end
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=3 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.015424694865942001, 'lr': 9.999644698917172e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.3954538106918335, 'train_logprobs_mean': -0.397223562002182, 'logp_diff_mean': 0.0017697550356388092, 'step_rollout_time_s': 7.0584919434040785, 'step_train_time_s': 0.8495088238269091, 'step_e2e_time_s': 7.915190931409597, 'policy_train_wall_time_s': 0.8583589345216751}
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=4 role=policy stage=rollout_start
+2026-07-30 23:24:18 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:20,699 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:22,361 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:24,103 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:25,811 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:25 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1740 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:26 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=4 role=policy stage=rollout_end
+2026-07-30 23:24:26 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=4 metric=reward_mean value=-1.000000
+2026-07-30 23:24:26 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=4 metric=rollout_logprob_mean value=-0.408871
+2026-07-30 23:24:26 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=4 role=policy stage=train_start
+2026-07-30 23:24:27 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.983100 total=7.993742
+2026-07-30 23:24:27 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=4 role=policy stage=train_end
+2026-07-30 23:24:27 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=4 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.014869853854179382, 'lr': 9.99944484616747e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.40887120366096497, 'train_logprobs_mean': -0.4071118235588074, 'logp_diff_mean': -0.0017593726515769958, 'step_rollout_time_s': 7.103360656648874, 'step_train_time_s': 0.9833648949861526, 'step_e2e_time_s': 8.09001400694251, 'policy_train_wall_time_s': 0.9891944099217653}
+2026-07-30 23:24:27 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=5 role=policy stage=rollout_start
+2026-07-30 23:24:27 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:28 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=0 cuda_graph=True tokens_per_second=53.8
+2026-07-30 23:24:28,737 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:30,355 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:31,996 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:33,611 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:33 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1744 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:33 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=5 role=policy stage=rollout_end
+2026-07-30 23:24:33 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=5 metric=reward_mean value=-1.000000
+2026-07-30 23:24:33 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=5 metric=rollout_logprob_mean value=-0.481961
+2026-07-30 23:24:33 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=5 role=policy stage=train_start
+2026-07-30 23:24:34 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.916229 total=7.447019
+2026-07-30 23:24:34 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=5 role=policy stage=train_end
+2026-07-30 23:24:34 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=5 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.01887260004878044, 'lr': 9.99920058571364e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.4819607436656952, 'train_logprobs_mean': -0.48539888858795166, 'logp_diff_mean': 0.003438163548707962, 'step_rollout_time_s': 6.570951661095023, 'step_train_time_s': 0.9164733160287142, 'step_e2e_time_s': 7.4901488572359085, 'policy_train_wall_time_s': 0.9242914468050003}
+2026-07-30 23:24:34 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=6 role=policy stage=rollout_start
+2026-07-30 23:24:34 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:36,329 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:37,954 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:38 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=0 cuda_graph=True tokens_per_second=70.1
+2026-07-30 23:24:39,613 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:41,276 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:41 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1748 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:41 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=6 role=policy stage=rollout_end
+2026-07-30 23:24:41 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=6 metric=reward_mean value=-1.000000
+2026-07-30 23:24:41 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=6 metric=rollout_logprob_mean value=-0.400653
+2026-07-30 23:24:41 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=6 role=policy stage=train_start
+2026-07-30 23:24:42 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.895945 total=7.907886
+2026-07-30 23:24:42 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=6 role=policy stage=train_end
+2026-07-30 23:24:42 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=6 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.01620756834745407, 'lr': 9.99891191996643e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.40065258741378784, 'train_logprobs_mean': -0.40121057629585266, 'logp_diff_mean': 0.0005579888820648193, 'step_rollout_time_s': 7.101593190804124, 'step_train_time_s': 0.8962066005915403, 'step_e2e_time_s': 8.00102343969047, 'policy_train_wall_time_s': 0.9021791201084852}
+2026-07-30 23:24:42 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:106 - epoch=0 step=7 role=policy stage=rollout_start
+2026-07-30 23:24:42 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:259 - agentic rollout batch prompts=1 n_samples=4 expected_requests=4 max_running_prompts=4
+2026-07-30 23:24:44,330 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=0 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:46,033 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=1 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:47,659 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=2 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:48 INFO areno.engine.inference inference.py:623 - rollout decode progress: dp=0/1 active=1 cuda_graph=True tokens_per_second=70.1
+2026-07-30 23:24:49,274 INFO _areno_agent_ee633186ef9d3d114569cbf7623d98e593612d6961fc9ac92bb321bb31a2f396: sas_invalid_call prompt_index=0 sample_index=3 turn=search_catalog reason=MISSING_TOOL_CALL
+2026-07-30 23:24:49 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:304 - agentic train batch built samples=4 tokens=1744 trainable_tokens=512 masked_response_tokens=0 trainable_turns=all_assistant mask_tool_call_args=False messages=16 tool_calls=0 tool_results=0
+2026-07-30 23:24:49 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:117 - epoch=0 step=7 role=policy stage=rollout_end
+2026-07-30 23:24:49 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:143 - epoch=0 step=7 metric=reward_mean value=-1.000000
+2026-07-30 23:24:49 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:147 - epoch=0 step=7 metric=rollout_logprob_mean value=-0.469287
+2026-07-30 23:24:49 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:171 - epoch=0 step=7 role=policy stage=train_start
+2026-07-30 23:24:50 INFO areno.api.backend.areno.backend backend.py:401 - time rollout=0.000000 train=0.840729 total=7.857360
+2026-07-30 23:24:50 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:185 - epoch=0 step=7 role=policy stage=train_end
+2026-07-30 23:24:50 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:187 - epoch=0 step=7 train_stats={'loss': 0.0, 'policy_loss': 0.0, 'total_loss': 0.0, 'advantage_mean': 0.0, 'response_len': 128.0, 'logp_abs_diff_mean': 0.018916882574558258, 'lr': 9.99857885177485e-07, 'grad_norm': 0.0, 'grad_zero_count': 751632384.0, 'grad_nonzero_count': 0.0, 'grad_total_count': 751632384.0, 'grad_zero_ratio': 1.0, 'grad_nonzero_ratio': 0.0, 'ratio_mean': 1.0, 'ratio_std': 0.0, 'rollout_logprobs_mean': -0.4692867398262024, 'train_logprobs_mean': -0.47241613268852234, 'logp_diff_mean': 0.003129437565803528, 'step_rollout_time_s': 7.051331320777535, 'step_train_time_s': 0.8411248680204153, 'step_e2e_time_s': 7.899222131818533, 'policy_train_wall_time_s': 0.8481693863868713}
+2026-07-30 23:24:50 INFO areno.api.trainers.policy_only.PolicyOnlyTrainer policy_only.py:206 - epoch=0 step=8 stage=max_steps_reached

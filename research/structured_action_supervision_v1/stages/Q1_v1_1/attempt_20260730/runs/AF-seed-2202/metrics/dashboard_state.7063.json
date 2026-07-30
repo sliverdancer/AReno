@@ -1,0 +1,9 @@
+{
+  "pid": 7063,
+  "stage": "max_steps_reached",
+  "status": "running",
+  "updated_at": 1785425289.1910434,
+  "step": 8,
+  "epoch": 0,
+  "role": "policy"
+}

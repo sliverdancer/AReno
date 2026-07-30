@@ -1,0 +1,1327 @@
+{
+  "all_tensorboard_scalars_finite": true,
+  "any_nonfinite_marker": false,
+  "any_oom": false,
+  "arm_pair_checks": {
+    "1101": {
+      "af_masked_response_tokens": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "af_trainable_tokens": [
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0
+      ],
+      "lf_masked_response_tokens": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lf_trainable_tokens": [
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0
+      ],
+      "masked_response_tokens_equal": true,
+      "normalized_raw_samples_equal": true,
+      "trainable_tokens_equal": true
+    },
+    "2202": {
+      "af_masked_response_tokens": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "af_trainable_tokens": [
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0
+      ],
+      "lf_masked_response_tokens": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lf_trainable_tokens": [
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0,
+        512.0
+      ],
+      "masked_response_tokens_equal": true,
+      "normalized_raw_samples_equal": true,
+      "trainable_tokens_equal": true
+    }
+  },
+  "completed_runs": 4,
+  "controller_elapsed_seconds": 410.1885431110859,
+  "controller_status": "COMPLETED",
+  "expected_total_raw_samples": 128,
+  "gate_checks": {
+    "arm_masks_distinct": false,
+    "complete_raw_provenance": true,
+    "finite_metrics": true,
+    "four_commands_complete": true,
+    "no_oom": true,
+    "nondegenerate_reward": false,
+    "parser_executable_rate_at_least_0_95": false
+  },
+  "overall_parser_executable_rate": 0.0,
+  "protocol_id": "SAS-P0-v1.1",
+  "runs": {
+    "AF-seed-1101": {
+      "any_tool_call_trajectory_count": 0,
+      "exact_four_call_trajectory_count": 0,
+      "expected_raw_sample_count": 32,
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 32
+      },
+      "loss_mask_total_values": [
+        435,
+        436,
+        437,
+        443
+      ],
+      "loss_mask_true_values": [
+        128
+      ],
+      "nonfinite_marker_detected": false,
+      "normalized_samples_sha256": "27543e206ab282e05749a9bd8884cad29c17b4f7ed3017bf31962a9a9e541cc7",
+      "oom_detected": false,
+      "parser_executable_rate": 0.0,
+      "raw_sample_count": 32,
+      "sample_file": "/root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-1101/metrics/rollout_samples.5432.jsonl",
+      "sample_file_sha256": "e384f87cf4ed686052a559bd9fe90a95f2d1dad482dd9deeb676826883bc579c",
+      "tensorboard": {
+        "rollout/accuracy": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3954538106918335,
+          "mean": -0.4352724775671959,
+          "min": -0.4819607138633728
+        },
+        "rollout/num_sequences": {
+          "all_finite": true,
+          "count": 8,
+          "max": 4.0,
+          "mean": 4.0,
+          "min": 4.0
+        },
+        "rollout/prompt_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 315.0,
+          "mean": 309.75,
+          "min": 307.0
+        },
+        "rollout/response_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "rollout/rewards_max": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_min": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/seq_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 443.0,
+          "mean": 437.75,
+          "min": 435.0
+        },
+        "rollout/skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/total_skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "time/rollout": {
+          "all_finite": true,
+          "count": 8,
+          "max": 19.52179527282715,
+          "mean": 8.636935651302338,
+          "min": 6.570951461791992
+        },
+        "time/train": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.7912986278533936,
+          "mean": 1.0770729258656502,
+          "min": 0.8411248922348022
+        },
+        "train/advantage_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_norm": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_total_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/logp_abs_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.018916882574558258,
+          "mean": 0.017044847831130028,
+          "min": 0.014869853854179382
+        },
+        "train/logp_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.003438163548707962,
+          "mean": 0.0008297348394989967,
+          "min": -0.0024474486708641052
+        },
+        "train/loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/lr": {
+          "all_finite": true,
+          "count": 8,
+          "max": 9.999977237384883e-07,
+          "mean": 9.999433672192026e-07,
+          "min": 9.998578889280907e-07
+        },
+        "train/masked_response_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/policy_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/ratio_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/ratio_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/response_len": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "train/rollout_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3954538106918335,
+          "mean": -0.4352724775671959,
+          "min": -0.4819607436656952
+        },
+        "train/step_e2e_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 21.320281982421875,
+          "mean": 9.719156682491302,
+          "min": 7.490149021148682
+        },
+        "train/step_rollout_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 19.52179527282715,
+          "mean": 8.636935651302338,
+          "min": 6.570951461791992
+        },
+        "train/step_train_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.7912986278533936,
+          "mean": 1.0770729258656502,
+          "min": 0.8411248922348022
+        },
+        "train/total_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/train_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.397223562002182,
+          "mean": -0.4361022152006626,
+          "min": -0.48539888858795166
+        },
+        "train/trainable_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 512.0,
+          "mean": 512.0,
+          "min": 512.0
+        }
+      },
+      "tool_call_count_distribution": {
+        "0": 32
+      }
+    },
+    "AF-seed-2202": {
+      "any_tool_call_trajectory_count": 0,
+      "exact_four_call_trajectory_count": 0,
+      "expected_raw_sample_count": 32,
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 32
+      },
+      "loss_mask_total_values": [
+        434,
+        435,
+        436,
+        437,
+        445
+      ],
+      "loss_mask_true_values": [
+        128
+      ],
+      "nonfinite_marker_detected": false,
+      "normalized_samples_sha256": "7c0be302a22423953e7d813d7861373dc08083feacc3bc7d949134b8b0bc6a4d",
+      "oom_detected": false,
+      "parser_executable_rate": 0.0,
+      "raw_sample_count": 32,
+      "sample_file": "/root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-2202/metrics/rollout_samples.7063.jsonl",
+      "sample_file_sha256": "2127acb9d66b01c70363f7d3a85fa55ecd993c8c525e7bd330be7487b14617e5",
+      "tensorboard": {
+        "rollout/accuracy": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.33829113841056824,
+          "mean": -0.39755460247397423,
+          "min": -0.48248714208602905
+        },
+        "rollout/num_sequences": {
+          "all_finite": true,
+          "count": 8,
+          "max": 4.0,
+          "mean": 4.0,
+          "min": 4.0
+        },
+        "rollout/prompt_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 317.0,
+          "mean": 308.75,
+          "min": 306.0
+        },
+        "rollout/response_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "rollout/rewards_max": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_min": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/seq_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 445.0,
+          "mean": 436.75,
+          "min": 434.0
+        },
+        "rollout/skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/total_skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "time/rollout": {
+          "all_finite": true,
+          "count": 8,
+          "max": 15.594534873962402,
+          "mean": 7.850292801856995,
+          "min": 6.575626373291016
+        },
+        "time/train": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.803194284439087,
+          "mean": 1.0290322080254555,
+          "min": 0.7329851984977722
+        },
+        "train/advantage_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_norm": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_total_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/logp_abs_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.01757347211241722,
+          "mean": 0.0157118602655828,
+          "min": 0.012969586998224258
+        },
+        "train/logp_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.001367960125207901,
+          "mean": -0.00018555531278252602,
+          "min": -0.0022583715617656708
+        },
+        "train/loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/lr": {
+          "all_finite": true,
+          "count": 8,
+          "max": 9.999977237384883e-07,
+          "mean": 9.999433672192026e-07,
+          "min": 9.998578889280907e-07
+        },
+        "train/masked_response_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/policy_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/ratio_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/ratio_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/response_len": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "train/rollout_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.33829110860824585,
+          "mean": -0.39755459874868393,
+          "min": -0.48248714208602905
+        },
+        "train/step_e2e_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 17.406112670898438,
+          "mean": 8.886163830757141,
+          "min": 7.341468334197998
+        },
+        "train/step_rollout_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 15.594534873962402,
+          "mean": 7.850292801856995,
+          "min": 6.575626373291016
+        },
+        "train/step_train_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.803194284439087,
+          "mean": 1.0290322080254555,
+          "min": 0.7329851984977722
+        },
+        "train/total_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/train_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3376280963420868,
+          "mean": -0.39736904948949814,
+          "min": -0.483555406332016
+        },
+        "train/trainable_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 512.0,
+          "mean": 512.0,
+          "min": 512.0
+        }
+      },
+      "tool_call_count_distribution": {
+        "0": 32
+      }
+    },
+    "LF-seed-1101": {
+      "any_tool_call_trajectory_count": 0,
+      "exact_four_call_trajectory_count": 0,
+      "expected_raw_sample_count": 32,
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 32
+      },
+      "loss_mask_total_values": [
+        435,
+        436,
+        437,
+        443
+      ],
+      "loss_mask_true_values": [
+        128
+      ],
+      "nonfinite_marker_detected": false,
+      "normalized_samples_sha256": "27543e206ab282e05749a9bd8884cad29c17b4f7ed3017bf31962a9a9e541cc7",
+      "oom_detected": false,
+      "parser_executable_rate": 0.0,
+      "raw_sample_count": 32,
+      "sample_file": "/root/autodl-tmp/sas-q1-v1-1-runtime/runs/LF-seed-1101/metrics/rollout_samples.6378.jsonl",
+      "sample_file_sha256": "8edbdf3d88b4d547ecfc6a511dab451df9baebcd96658c95e9ccf1e5e309d2e1",
+      "tensorboard": {
+        "rollout/accuracy": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3954538106918335,
+          "mean": -0.4352724775671959,
+          "min": -0.4819607138633728
+        },
+        "rollout/num_sequences": {
+          "all_finite": true,
+          "count": 8,
+          "max": 4.0,
+          "mean": 4.0,
+          "min": 4.0
+        },
+        "rollout/prompt_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 315.0,
+          "mean": 309.75,
+          "min": 307.0
+        },
+        "rollout/response_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "rollout/rewards_max": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_min": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/seq_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 443.0,
+          "mean": 437.75,
+          "min": 435.0
+        },
+        "rollout/skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/total_skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "time/rollout": {
+          "all_finite": true,
+          "count": 8,
+          "max": 14.061714172363281,
+          "mean": 8.093958795070648,
+          "min": 7.075416564941406
+        },
+        "time/train": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.8553106784820557,
+          "mean": 1.1890445947647095,
+          "min": 0.8258912563323975
+        },
+        "train/advantage_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_norm": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_total_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/logp_abs_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.018916882574558258,
+          "mean": 0.017044847831130028,
+          "min": 0.014869853854179382
+        },
+        "train/logp_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.003438163548707962,
+          "mean": 0.0008297348394989967,
+          "min": -0.0024474486708641052
+        },
+        "train/loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/lr": {
+          "all_finite": true,
+          "count": 8,
+          "max": 9.999977237384883e-07,
+          "mean": 9.999433672192026e-07,
+          "min": 9.998578889280907e-07
+        },
+        "train/masked_response_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/policy_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/ratio_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/ratio_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/response_len": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "train/rollout_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3954538106918335,
+          "mean": -0.4352724775671959,
+          "min": -0.4819607436656952
+        },
+        "train/step_e2e_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 15.85413646697998,
+          "mean": 9.29047554731369,
+          "min": 7.946503162384033
+        },
+        "train/step_rollout_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 14.061714172363281,
+          "mean": 8.093958795070648,
+          "min": 7.075416564941406
+        },
+        "train/step_train_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.8553106784820557,
+          "mean": 1.1890445947647095,
+          "min": 0.8258912563323975
+        },
+        "train/total_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/train_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.397223562002182,
+          "mean": -0.4361022152006626,
+          "min": -0.48539888858795166
+        },
+        "train/trainable_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 512.0,
+          "mean": 512.0,
+          "min": 512.0
+        }
+      },
+      "tool_call_count_distribution": {
+        "0": 32
+      }
+    },
+    "LF-seed-2202": {
+      "any_tool_call_trajectory_count": 0,
+      "exact_four_call_trajectory_count": 0,
+      "expected_raw_sample_count": 32,
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 32
+      },
+      "loss_mask_total_values": [
+        434,
+        435,
+        436,
+        437,
+        445
+      ],
+      "loss_mask_true_values": [
+        128
+      ],
+      "nonfinite_marker_detected": false,
+      "normalized_samples_sha256": "7c0be302a22423953e7d813d7861373dc08083feacc3bc7d949134b8b0bc6a4d",
+      "oom_detected": false,
+      "parser_executable_rate": 0.0,
+      "raw_sample_count": 32,
+      "sample_file": "/root/autodl-tmp/sas-q1-v1-1-runtime/runs/LF-seed-2202/metrics/rollout_samples.7741.jsonl",
+      "sample_file_sha256": "88e427479aa1cb705581e8b1713fa0812eba70e9670d04144f88bafc8b36ba27",
+      "tensorboard": {
+        "rollout/accuracy": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/advantages_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.33829113841056824,
+          "mean": -0.39755460247397423,
+          "min": -0.48248714208602905
+        },
+        "rollout/num_sequences": {
+          "all_finite": true,
+          "count": 8,
+          "max": 4.0,
+          "mean": 4.0,
+          "min": 4.0
+        },
+        "rollout/prompt_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 317.0,
+          "mean": 308.75,
+          "min": 306.0
+        },
+        "rollout/response_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "rollout/rewards_max": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_min": {
+          "all_finite": true,
+          "count": 8,
+          "max": -1.0,
+          "mean": -1.0,
+          "min": -1.0
+        },
+        "rollout/rewards_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/seq_len_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 445.0,
+          "mean": 436.75,
+          "min": 434.0
+        },
+        "rollout/skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "rollout/total_skipped_long": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "time/rollout": {
+          "all_finite": true,
+          "count": 8,
+          "max": 15.052634239196777,
+          "mean": 8.28504467010498,
+          "min": 7.102436542510986
+        },
+        "time/train": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.9020024538040161,
+          "mean": 1.2122942209243774,
+          "min": 0.8350526690483093
+        },
+        "train/advantage_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_nonzero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_norm": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/grad_total_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_count": {
+          "all_finite": true,
+          "count": 8,
+          "max": 751632384.0,
+          "mean": 751632384.0,
+          "min": 751632384.0
+        },
+        "train/grad_zero_ratio": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/logp_abs_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.01757347211241722,
+          "mean": 0.0157118602655828,
+          "min": 0.012969586998224258
+        },
+        "train/logp_diff_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.001367960125207901,
+          "mean": -0.00018555531278252602,
+          "min": -0.0022583715617656708
+        },
+        "train/loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/lr": {
+          "all_finite": true,
+          "count": 8,
+          "max": 9.999977237384883e-07,
+          "mean": 9.999433672192026e-07,
+          "min": 9.998578889280907e-07
+        },
+        "train/masked_response_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/policy_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/ratio_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0
+        },
+        "train/ratio_std": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/response_len": {
+          "all_finite": true,
+          "count": 8,
+          "max": 128.0,
+          "mean": 128.0,
+          "min": 128.0
+        },
+        "train/rollout_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.33829110860824585,
+          "mean": -0.39755459874868393,
+          "min": -0.48248714208602905
+        },
+        "train/step_e2e_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 16.865550994873047,
+          "mean": 9.504487872123718,
+          "min": 7.952387809753418
+        },
+        "train/step_rollout_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 15.052634239196777,
+          "mean": 8.28504467010498,
+          "min": 7.102436542510986
+        },
+        "train/step_train_time_s": {
+          "all_finite": true,
+          "count": 8,
+          "max": 1.9020024538040161,
+          "mean": 1.2122942209243774,
+          "min": 0.8350526690483093
+        },
+        "train/total_loss": {
+          "all_finite": true,
+          "count": 8,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0
+        },
+        "train/train_logprobs_mean": {
+          "all_finite": true,
+          "count": 8,
+          "max": -0.3376280963420868,
+          "mean": -0.39736904948949814,
+          "min": -0.483555406332016
+        },
+        "train/trainable_tokens": {
+          "all_finite": true,
+          "count": 8,
+          "max": 512.0,
+          "mean": 512.0,
+          "min": 512.0
+        }
+      },
+      "tool_call_count_distribution": {
+        "0": 32
+      }
+    }
+  },
+  "schema_version": 1,
+  "total_exact_four_call_trajectories": 0,
+  "total_raw_samples": 128
+}

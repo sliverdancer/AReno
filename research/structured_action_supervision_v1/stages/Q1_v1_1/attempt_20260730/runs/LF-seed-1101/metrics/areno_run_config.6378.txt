@@ -1,0 +1,59 @@
+AReno training config
+
+Algorithm
+---------
+  name              gspo
+  default_loss      gspo_loss_fn
+  requires_rollout  yes
+
+Inputs
+------
+  ckpt            /root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master
+  dataset_path    /root/autodl-tmp/areno-sas-q1-v1-1/research/structured_action_supervision_v1/stage
+                  s/Q0/dataset/qualification.jsonl
+  model_hub       modelscope
+  dataset_loader  /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  dataset_loader.py
+  reward_fn       /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  reward.py
+  reward_ckpt     none
+  agent_fn        /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/
+                  run_agent.py
+
+Runtime
+-------
+  world_size    1
+  tp_size       1
+  dp_size       1
+  attn_backend  native
+  seed          1101
+  thinking      tokenizer default
+
+Rollout
+-------
+  batch_size           1
+  max_prompt_tokens    512
+  max_new_tokens       128
+  max_context_len      2048
+  trainable_turns      last_assistant
+  mask_tool_call_args  no
+  n_samples            4
+  max_running_prompts  4
+  sampling             greedy=no, temperature=1.0, top_k=-1, top_p=1.0
+
+Training
+--------
+  max_steps                    8
+  mini_bs                      4
+  score_micro_bs               8
+  gradient_accumulation_steps  auto
+  optimizer                    lr=1e-06, min_lr=1e-07, decay=cosine/1000, betas=(0.9, 0.999),
+                               weight_decay=0.01, adam_8bit=yes
+  grad_clip_norm               1.0
+
+Outputs
+-------
+  save_path        none
+  save_interval    100
+  metrics_log_dir  /root/autodl-tmp/sas-q1-v1-1-runtime/runs/LF-seed-1101/metrics
+WARNING: no checkpoint output path configured (--save-path); checkpoints will not be saved.

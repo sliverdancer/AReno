@@ -1,0 +1,258 @@
+{
+  "kind": "train",
+  "pid": 5432,
+  "summary_text": "AReno training config\n\nAlgorithm\n---------\n  name              gspo\n  default_loss      gspo_loss_fn\n  requires_rollout  yes\n\nInputs\n------\n  ckpt            /root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master\n  dataset_path    /root/autodl-tmp/areno-sas-q1-v1-1/research/structured_action_supervision_v1/stage\n                  s/Q0/dataset/qualification.jsonl\n  model_hub       modelscope\n  dataset_loader  /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/\n                  dataset_loader.py\n  reward_fn       /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/\n                  reward.py\n  reward_ckpt     none\n  agent_fn        /root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/\n                  run_agent.py\n\nRuntime\n-------\n  world_size    1\n  tp_size       1\n  dp_size       1\n  attn_backend  native\n  seed          1101\n  thinking      tokenizer default\n\nRollout\n-------\n  batch_size           1\n  max_prompt_tokens    512\n  max_new_tokens       128\n  max_context_len      2048\n  trainable_turns      all_assistant\n  mask_tool_call_args  no\n  n_samples            4\n  max_running_prompts  4\n  sampling             greedy=no, temperature=1.0, top_k=-1, top_p=1.0\n\nTraining\n--------\n  max_steps                    8\n  mini_bs                      4\n  score_micro_bs               8\n  gradient_accumulation_steps  auto\n  optimizer                    lr=1e-06, min_lr=1e-07, decay=cosine/1000, betas=(0.9, 0.999),\n                               weight_decay=0.01, adam_8bit=yes\n  grad_clip_norm               1.0\n\nOutputs\n-------\n  save_path        none\n  save_interval    100\n  metrics_log_dir  /root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-1101/metrics\nWARNING: no checkpoint output path configured (--save-path); checkpoints will not be saved.",
+  "settings": {
+    "sections": [
+      {
+        "title": "Basic",
+        "items": [
+          {
+            "key": "algo",
+            "value": "gspo"
+          },
+          {
+            "key": "ckpt",
+            "value": "/root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master"
+          },
+          {
+            "key": "dataset_path",
+            "value": "/root/autodl-tmp/areno-sas-q1-v1-1/research/structured_action_supervision_v1/stages/Q0/dataset/qualification.jsonl"
+          },
+          {
+            "key": "model_hub",
+            "value": "modelscope"
+          },
+          {
+            "key": "dataset_loader_fn",
+            "value": "/root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/dataset_loader.py"
+          },
+          {
+            "key": "epochs",
+            "value": 10
+          },
+          {
+            "key": "max_steps",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "title": "Runtime",
+        "items": [
+          {
+            "key": "world_size",
+            "value": 1
+          },
+          {
+            "key": "tp_size",
+            "value": 1
+          },
+          {
+            "key": "attn_backend",
+            "value": "native"
+          },
+          {
+            "key": "eager_decode",
+            "value": false
+          },
+          {
+            "key": "activation_checkpointing",
+            "value": true
+          },
+          {
+            "key": "keep_rollout_state",
+            "value": false
+          },
+          {
+            "key": "chat_template_enable_thinking",
+            "value": null
+          }
+        ]
+      },
+      {
+        "title": "Rollout",
+        "items": [
+          {
+            "key": "batch_size",
+            "value": 1
+          },
+          {
+            "key": "n_samples",
+            "value": 4
+          },
+          {
+            "key": "max_running_prompts",
+            "value": 4
+          },
+          {
+            "key": "max_prompt_tokens",
+            "value": 512
+          },
+          {
+            "key": "max_new_tokens",
+            "value": 128
+          },
+          {
+            "key": "max_context_len",
+            "value": 2048
+          },
+          {
+            "key": "greedy",
+            "value": false
+          },
+          {
+            "key": "temperature",
+            "value": 1.0
+          },
+          {
+            "key": "top_k",
+            "value": -1
+          },
+          {
+            "key": "top_p",
+            "value": 1.0
+          },
+          {
+            "key": "agent_fn",
+            "value": "/root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/run_agent.py"
+          },
+          {
+            "key": "agent_timeout_s",
+            "value": 900.0
+          },
+          {
+            "key": "train_tool_results",
+            "value": false
+          },
+          {
+            "key": "trainable_turns",
+            "value": "all_assistant"
+          },
+          {
+            "key": "mask_tool_call_args",
+            "value": false
+          },
+          {
+            "key": "reward_fn_path",
+            "value": "/root/autodl-tmp/areno-sas-q1-v1-1/examples/agentic/structured_action_supervision/reward.py"
+          },
+          {
+            "key": "turn_credit_fn_path",
+            "value": null
+          },
+          {
+            "key": "turn_credit_config_path",
+            "value": null
+          },
+          {
+            "key": "resolved_max_running_prompts",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "title": "Train",
+        "items": [
+          {
+            "key": "mini_bs",
+            "value": 4
+          },
+          {
+            "key": "score_micro_bs",
+            "value": 8
+          },
+          {
+            "key": "gradient_accumulation_steps",
+            "value": null
+          }
+        ]
+      },
+      {
+        "title": "Optimizer",
+        "items": [
+          {
+            "key": "optimizer_lr",
+            "value": 1e-06
+          },
+          {
+            "key": "optimizer_min_lr",
+            "value": 1e-07
+          },
+          {
+            "key": "lr_decay_steps",
+            "value": 1000
+          },
+          {
+            "key": "lr_decay_style",
+            "value": "cosine"
+          },
+          {
+            "key": "optimizer_beta1",
+            "value": 0.9
+          },
+          {
+            "key": "optimizer_beta2",
+            "value": 0.999
+          },
+          {
+            "key": "weight_decay",
+            "value": 0.01
+          },
+          {
+            "key": "grad_clip_norm",
+            "value": 1.0
+          },
+          {
+            "key": "adam_8bit",
+            "value": true
+          }
+        ]
+      },
+      {
+        "title": "Roles and loss",
+        "items": [
+          {
+            "key": "gspo_clip_eps",
+            "value": 0.0003
+          },
+          {
+            "key": "grpo_clip_eps",
+            "value": 0.2
+          }
+        ]
+      },
+      {
+        "title": "Checkpoint",
+        "items": [
+          {
+            "key": "save_path",
+            "value": null
+          },
+          {
+            "key": "save_interval",
+            "value": 100
+          }
+        ]
+      },
+      {
+        "title": "Observability",
+        "items": [
+          {
+            "key": "metrics_log_dir",
+            "value": "/root/autodl-tmp/sas-q1-v1-1-runtime/runs/AF-seed-1101/metrics"
+          }
+        ]
+      },
+      {
+        "title": "Other",
+        "items": [
+          {
+            "key": "seed",
+            "value": 1101
+          }
+        ]
+      }
+    ]
+  }
+}

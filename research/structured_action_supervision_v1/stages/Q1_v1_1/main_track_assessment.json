@@ -1,0 +1,37 @@
+{
+  "criteria": [
+    "protocol_valid",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_method_or_benchmark",
+    "no_material_protocol_deviation"
+  ],
+  "decision": "KILL_MAIN_TRACK",
+  "protocol_id": "SAS-P0-v1.1",
+  "reasons": [
+    "stage closed with terminal status KILL"
+  ],
+  "schema_version": 1,
+  "stage": "Q1",
+  "stage_result_sha256": "3aeaf886979714e7dd2fc1f6af28dd9cc5c59d83be508fae7e80c97ffa4b0a52",
+  "stage_status": "KILL",
+  "unmet_criteria": [
+    "protocol_valid",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_method_or_benchmark",
+    "no_material_protocol_deviation"
+  ]
+}

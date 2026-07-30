@@ -8,8 +8,8 @@
   "max_depth": 1,
   "budget_cycles": 1,
   "cycles_used": 1,
-  "best_node": null,
-  "best_test_score": null,
-  "best_branch_ref": null,
+  "best_node": "n1",
+  "best_test_score": 4.0,
+  "best_branch_ref": "research/structured-action-supervision-v1.1@f96c96544284d65bcb2e8e10ab1d9f2aeda08cd6",
   "created_at": 1785424359
 }
