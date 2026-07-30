@@ -89,7 +89,7 @@ flowchart LR
 
 There is no further executable stage under `CARE-P3-PILOT-v0.1`. P3-v0.2
 preserves its evidence and scientific design while adding only a production
-loader fix and CPU regression. After the reviewed source commit is frozen, the
+loader fix and CPU regression. The reviewed source commit is now frozen. The
 next legal action is a read-only remote preflight followed by a new explicit
 GPU authorization. P4–P7 remain unopened.
 
@@ -103,6 +103,10 @@ GPU authorization. P4–P7 remain unopened.
   `research/care_turn_credit_mainconf/`
 - P3-v0.2 protocol and CPU decision:
   `research/care_turn_credit_mainconf/p3_v02/`
+
+The frozen P3-v0.2 source is
+`c96bcf2da464dff36593d43c8d29991d4b998059`; use the docs-only branch tip for
+navigation and that exact commit for any remote preparation.
 
 ## Stop rules
 

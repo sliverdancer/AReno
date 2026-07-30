@@ -8,6 +8,9 @@ Decision: `PASS_P3_V02_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST`
 
 GPU execution: `NOT_RUN_NOT_AUTHORIZED`
 
+Frozen source commit:
+`c96bcf2da464dff36593d43c8d29991d4b998059`
+
 ## Verified evidence
 
 The production loader fix was exercised by regression tests covering:
