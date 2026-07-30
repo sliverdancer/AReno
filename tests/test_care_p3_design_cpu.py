@@ -290,8 +290,15 @@ def test_agent_tool_executor_rejects_multiple_calls():
     assert all(json.loads(result["content"])["ok"] is False for result in results)
 
 
-def test_p3_prepare_writes_six_commands_and_gpu_block(tmp_path):
+def test_p3_prepare_writes_six_commands_and_gpu_block(tmp_path, monkeypatch):
     prepare = _load_module("prepare_p3", "prepare_p3.py")
+    monkeypatch.setattr(
+        prepare,
+        "_git_output",
+        lambda _repo_root, *args: (
+            "fixture-commit" if args == ("rev-parse", "HEAD") else ""
+        ),
+    )
 
     manifest = prepare.prepare(
         repo_root=REPO_ROOT,
@@ -303,6 +310,10 @@ def test_p3_prepare_writes_six_commands_and_gpu_block(tmp_path):
     )
 
     assert manifest["authorization"] == "PREPARE_ONLY_GPU_NOT_AUTHORIZED"
+    assert manifest["protocol"] == "CARE-P3-PILOT-v0.2"
+    assert manifest["supersedes_protocol"] == "CARE-P3-PILOT-v0.1"
+    assert manifest["dynamic_hook_preflight"]["status"] == "passed"
+    assert manifest["dynamic_hook_preflight"]["callable"] == "route_turn_credit"
     assert len(manifest["commands"]) == 6
     assert manifest["train_seeds"] == [3101, 3102, 3103]
     assert manifest["model_asset"]["full_file_hash_verification_required"] is True
@@ -351,6 +362,7 @@ def test_p3_executor_rejects_dirty_or_remote_checkpoint(tmp_path):
     prepare = _load_module("prepare_p3", "prepare_p3.py")
     executor = _load_module("care_p3_executor", "execute_p3.py")
     manifest = {
+        "protocol": prepare.PROTOCOL,
         "authorization": "PREPARE_ONLY_GPU_NOT_AUTHORIZED",
         "commands": {
             f"{arm}-seed-{seed}": "areno train"

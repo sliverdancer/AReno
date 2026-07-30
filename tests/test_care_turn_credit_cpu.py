@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -634,5 +635,52 @@ def test_hook_loader_rejects_bad_signature_before_rollout(tmp_path):
         encoding="utf-8",
     )
 
+    module_name = "areno_turn_credit_bad_credit"
+    sys.modules.pop(module_name, None)
     with pytest.raises(ValueError, match=r"route_turn_credit\(batch, \*, step, config\)"):
         load_turn_credit_fn(str(hook_path))
+    assert module_name not in sys.modules
+
+
+def test_hook_loader_registers_module_before_python312_dataclass_execution(tmp_path):
+    hook_path = tmp_path / "dataclass_credit.py"
+    hook_path.write_text(
+        "from dataclasses import dataclass\n"
+        "\n"
+        "@dataclass\n"
+        "class RouteConfig:\n"
+        "    scale: float = 1.0\n"
+        "\n"
+        "def route_turn_credit(batch, *, step, config):\n"
+        "    return RouteConfig(float(config.get('scale', 1.0)))\n",
+        encoding="utf-8",
+    )
+
+    module_name = "areno_turn_credit_dataclass_credit"
+    sys.modules.pop(module_name, None)
+    fn = load_turn_credit_fn(str(hook_path))
+
+    assert fn(None, step=0, config={"scale": 2.5}).scale == 2.5
+    assert sys.modules[module_name].route_turn_credit is fn
+    sys.modules.pop(module_name, None)
+
+
+def test_hook_loader_removes_partially_initialized_module_on_failure(tmp_path):
+    hook_path = tmp_path / "broken_credit.py"
+    hook_path.write_text(
+        "from dataclasses import dataclass\n"
+        "\n"
+        "@dataclass\n"
+        "class RouteConfig:\n"
+        "    scale: float = 1.0\n"
+        "\n"
+        "raise RuntimeError('fixture import failure')\n",
+        encoding="utf-8",
+    )
+
+    module_name = "areno_turn_credit_broken_credit"
+    sys.modules.pop(module_name, None)
+    with pytest.raises(RuntimeError, match="fixture import failure"):
+        load_turn_credit_fn(str(hook_path))
+
+    assert module_name not in sys.modules

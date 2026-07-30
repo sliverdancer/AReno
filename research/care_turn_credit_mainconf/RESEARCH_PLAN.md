@@ -1,6 +1,6 @@
 # CARe: Complete Main-Conference Research Plan
 
-Status: `P0_PASS_P1_PASS_P2_PASS_P3_CPU_FREEZE_GPU_BLOCKED`
+Status: `P3_V01_KILL_EXECUTABILITY_P3_V02_CPU_PASS_GPU_BLOCKED`
 Working title: **CARe: Risk-Controlled Abstention for Turn-Level Credit in
 Agentic Reinforcement Learning**
 
@@ -157,8 +157,9 @@ Minimum baseline set:
 3. static final/last-turn selection;
 4. random matched-token routing;
 5. magnitude-only top-k routing;
-6. one strong turn-level baseline such as TRACE, TRIAGE, or MT-GRPO;
-7. CARe applied to the identical base scorer.
+6. one strong dense turn-level baseline such as TRACE, TRIAGE, or MT-GRPO;
+7. a deterministic sign-preserving baseline derived from STAMP or StepOPSD;
+8. CARe applied to the identical base scorer.
 
 If reproducible public code for the strongest direct baseline cannot be adapted
 faithfully, the task is `BLOCKED_BASELINE`, not a baseline failure.
@@ -271,6 +272,16 @@ Deliver:
 Ask before changing public configs or CLI.
 
 ### P3 — Bounded GPU executability pilot, about 1 week
+
+P3-v0.1 returned `KILL_P3_EXECUTABILITY` on the first run because the dynamic
+turn-credit module was not registered before a Python 3.12 dataclass executed.
+No model initialization or update occurred and five runs remain unopened.
+
+P3-v0.2 is a separately versioned requalification. It preserves the arms,
+seeds, model asset, dataset, order, hyperparameters, estimands, ceilings, and
+GO/KILL rule. Its only changes are the loader registration/cleanup fix and an
+exact production-loader CPU preflight. Passing its CPU gate does not reopen P4
+and does not authorize GPU execution.
 
 Requires explicit user authorization after presenting:
 
@@ -434,6 +445,7 @@ Likely rejection reasons and required defenses:
 | Reviewer objection | Required evidence |
 |---|---|
 | “This is just thresholded TRACE/TRIAGE.” | Formal risk target, naive-threshold baseline, and direct-substitute audit |
+| “Sign-preserving shaping already solves this.” | Matched STAMP/StepOPSD-style control; show benefit beyond deterministic sign preservation or kill the method claim |
 | “Conformal assumptions fail on-policy.” | Trajectory blocks, same-policy calibration/update split, refresh/KL ablation |
 | “Gains come from fewer tokens.” | Random and magnitude-only matched-token controls |
 | “You hide counterfactual cost.” | Total environment-call and GPU-hour accounting |

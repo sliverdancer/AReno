@@ -1,9 +1,9 @@
 # START HERE — CARe: Risk-Controlled Turn Credit for Agentic RL
 
-Protocol ID: `CARE-P3-PILOT-v0.1`
+Protocol ID: `CARE-P3-PILOT-v0.2`
 Decision date: `2026-07-30`
 Target: main-conference method paper
-Current authorization: completed CPU design and deterministic qualification
+Current authorization: completed CPU requalification only
 GPU training status: `BLOCKED_PENDING_EXPLICIT_USER_AUTHORIZATION`
 
 ## Owner goal
@@ -34,14 +34,16 @@ credit routing under noisy turn-credit estimates.
 
 ## Current gate
 
-`P3-CPU-FREEZE-PASSED-GPU-BLOCKED`
+`P3-v0.2-CPU-FREEZE-PASSED-GPU-BLOCKED`
 
 Read in order:
 
-1. `LITERATURE_AUDIT.md`
-2. `RESEARCH_PLAN.md`
-3. `HYPOTHESES_AND_GATES.md`
-4. `../../examples/agentic/trainable_turns_ablation/README.md`
+1. `p3/gpu_gate_decision_20260730.md`
+2. `p3_v02/LITERATURE_REFRESH.md`
+3. `p3_v02/POSTMORTEM_AND_PROTOCOL.md`
+4. `p3_v02/CPU_GATE_DECISION.md`
+5. `RESEARCH_PLAN.md`
+6. `HYPOTHESES_AND_GATES.md`
 
 Then inspect the worktree and the completed P0/P1/P2/P3 CPU decisions. The
 frozen P3 runner, task, router, asset manifest, artifact collector, commands,
@@ -75,20 +77,21 @@ flowchart LR
 | P0 full-text novelty audit | `PASS_NOVELTY_CONDITIONAL` | Completed |
 | P1 formalization and CPU oracle | `PASS_THEORY_ORACLE_CONDITIONAL_TO_P2` | Completed |
 | P2 AReno instrument qualification | `PASS_P2_INSTRUMENT_TO_P3_DESIGN` | Completed |
-| P3 bounded GPU executability pilot | `CPU_FREEZE_PASS_GPU_BLOCKED` | Clean committed source, remote preflight, and explicit user authorization |
-| P4 variance/resource freeze | `UNOPENED` | P3 is valid and non-degenerate |
+| P3-v0.1 bounded GPU pilot | `KILL_P3_EXECUTABILITY` | Terminal first-run loader crash; evidence preserved |
+| P3-v0.2 CPU requalification | `PASS_P3_V02_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST` | Completed; GPU not run |
+| P3-v0.2 bounded GPU pilot | `BLOCKED_PENDING_EXPLICIT_USER_AUTHORIZATION` | New authorization for the frozen commit and ceilings |
+| P4 variance/resource freeze | `UNOPENED` | P3-v0.2 GPU qualification has not passed |
 | P5 confirmatory multi-seed study | `UNOPENED` | Frozen manifest plus new explicit authorization |
 | P6 transfer/robustness study | `UNOPENED` | P5 primary gate passes |
 | P7 paper claim gate | `UNOPENED` | All admissible evidence archived |
 
 ## First executable work
 
-The reviewed P2/P3 scope is packaged on the dedicated
-`research/trainable-turns-ablation` branch. The exact source revision is the
-commit containing this document and must be recorded with `git rev-parse HEAD`
-after checkout. GPU execution still requires a separate authorization after
-the remote read-only preflight verifies that commit and the live provider
-quote.
+There is no further executable stage under `CARE-P3-PILOT-v0.1`. P3-v0.2
+preserves its evidence and scientific design while adding only a production
+loader fix and CPU regression. After the reviewed source commit is frozen, the
+next legal action is a read-only remote preflight followed by a new explicit
+GPU authorization. P4–P7 remain unopened.
 
 ## Evidence and artifact roots
 
@@ -98,6 +101,8 @@ quote.
   `areno/api/metrics.py`
 - Proposed research artifacts:
   `research/care_turn_credit_mainconf/`
+- P3-v0.2 protocol and CPU decision:
+  `research/care_turn_credit_mainconf/p3_v02/`
 
 ## Stop rules
 

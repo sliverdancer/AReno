@@ -1,0 +1,79 @@
+{
+  "arms": [
+    "care",
+    "uncalibrated"
+  ],
+  "authorization": "PREPARE_ONLY_GPU_NOT_AUTHORIZED",
+  "checkpoint": "/root/autodl-tmp/care-p3-work/Qwen3-0.6B",
+  "commands": {
+    "care-seed-3101": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_config.json --algo grpo --seed 3101 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/care-seed-3101/metrics --trainable-turns all_assistant",
+    "care-seed-3102": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_config.json --algo grpo --seed 3102 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/care-seed-3102/metrics --trainable-turns all_assistant",
+    "care-seed-3103": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_config.json --algo grpo --seed 3103 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/care-seed-3103/metrics --trainable-turns all_assistant",
+    "uncalibrated-seed-3101": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/uncalibrated_config.json --algo grpo --seed 3101 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/uncalibrated-seed-3101/metrics --trainable-turns all_assistant",
+    "uncalibrated-seed-3102": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/uncalibrated_config.json --algo grpo --seed 3102 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/uncalibrated-seed-3102/metrics --trainable-turns all_assistant",
+    "uncalibrated-seed-3103": "areno train --ckpt /root/autodl-tmp/care-p3-work/Qwen3-0.6B --model-hub modelscope --dataset-path /root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl --dataset-loader-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/dataset_loader.py --reward-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/reward.py --agent-fn /root/autodl-tmp/areno/examples/agentic/care_bifurcation/run_agent.py --turn-credit-fn-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/care_router.py --turn-credit-config-path /root/autodl-tmp/areno/examples/agentic/care_bifurcation/uncalibrated_config.json --algo grpo --seed 3103 --tp-size 1 --world-size 1 --batch-size 20 --n-samples 1 --mini-bs 5 --gradient-accumulation-steps 4 --max-running-prompts 20 --max-prompt-tokens 512 --max-new-tokens 64 --max-context-len 4096 --agent-timeout-s 900 --attn-backend native --disable-thinking --max-steps 1 --metrics-log-dir /root/autodl-tmp/care-p3-work/pilot/runs/uncalibrated-seed-3103/metrics --trainable-turns all_assistant"
+  },
+  "controlled_difference_within_seed": [
+    "--turn-credit-config-path",
+    "--metrics-log-dir"
+  ],
+  "dataset": {
+    "count": 64,
+    "path": "/root/autodl-tmp/care-p3-work/pilot/dataset/bifurcation.jsonl",
+    "seed": 7301,
+    "sha256": "bdb6fd0f502a9f7a7bb2e2947a09c89d884ffada7364fb92c81d4105c38fa03d"
+  },
+  "fixed_design": {
+    "alpha": 0.2,
+    "budget_tokens_per_update_trajectory": 256,
+    "calibration_split": "even prompt indices, 10 unique blocks",
+    "counterfactual_terminal_evaluations_per_run": 300,
+    "expected_model_calls_total": 600,
+    "kill_on_first_nonfinite_update": true,
+    "matched_audits": true,
+    "maximum_instance_lifetime_hours": 8,
+    "maximum_single_gpu_wall_clock_hours": 1,
+    "maximum_total_gpu_hours": 6,
+    "maximum_total_spend_cny": 60,
+    "model_calls_per_trajectory": 5,
+    "observed_gpu_price_cny_per_hour": 4.98,
+    "proposed_gpu": "AutoDL A800-80GB",
+    "update_split": "odd prompt indices, 10 unique blocks"
+  },
+  "git_commit": "dd2bf826771b1e47541edfbee26e59808ebfb1dc",
+  "git_status": "",
+  "max_steps": 1,
+  "model_asset": {
+    "full_file_hash_verification_required": true,
+    "latest_commit_short_id": "09b42cad",
+    "manifest_path": "examples/agentic/care_bifurcation/modelscope_asset.json",
+    "manifest_sha256": "857e014f8ec9ce4e6380fa8d7301199d7730f762a19a3bdef346027c34812c4a",
+    "model_id": "Qwen/Qwen3-0.6B",
+    "revision": "master"
+  },
+  "model_hub": "modelscope",
+  "protocol": "CARE-P3-PILOT-v0.1",
+  "schema_version": 1,
+  "source_sha256": {
+    "areno/experimental/care/calibration.py": "e36ee87370d8860c7317b2aa0a7497f658e46f5ac28ea081b202e4c7cb3ff44d",
+    "areno/experimental/care/turn_credit.py": "ef361120b34c5fb56eee08aebbfac57aac5f045b331448d10e0ea6e12392ccc6",
+    "examples/agentic/care_bifurcation/care_config.json": "bdd19e2df22d56beae3f2c286ecb26527bf5992ff6d9e2228eb975b6cfde6186",
+    "examples/agentic/care_bifurcation/care_router.py": "b639e2318850dedfcdb81f796d24351b2d6735055dab2193ac7118de8052be97",
+    "examples/agentic/care_bifurcation/collect_p3.py": "996359358842913e499e9c4ca775d6cafd8a88f940b507d1fc3de07b6ff15e62",
+    "examples/agentic/care_bifurcation/dataset_generator.py": "1164954387579cd320d6aee08b52b00a2d6830b62713c71095826594aa68da5c",
+    "examples/agentic/care_bifurcation/dataset_loader.py": "7901b49370619bd9ff6a324516d5e7845d05243830cece26573f78bc5f1cd2e2",
+    "examples/agentic/care_bifurcation/execute_p3.py": "55702b28d475b8621dd2b8f69bed9626e648924f26fa52102c0f6272f4b229c7",
+    "examples/agentic/care_bifurcation/fetch_modelscope_snapshot.py": "682abaece169474946974e74325ac85a13f29767f14ff840c394fbb4f90081c2",
+    "examples/agentic/care_bifurcation/modelscope_asset.json": "857e014f8ec9ce4e6380fa8d7301199d7730f762a19a3bdef346027c34812c4a",
+    "examples/agentic/care_bifurcation/prepare_p3.py": "5104ec75ddccb57952f1a46910286336edf6c0ad0eb14faf1ec12b39b04abaca",
+    "examples/agentic/care_bifurcation/reward.py": "4b8c1c55f84fe56aafbbb769d8545d5643ac4ce550e152627b1407f0f8ad40ae",
+    "examples/agentic/care_bifurcation/run_agent.py": "77a87b877a6187ab6c21306cf840c914215097de3776bd42dbe673cd60dfe0dc",
+    "examples/agentic/care_bifurcation/task.py": "366a1a3b14014e690998fa599e43c5d3c079a782e4d33f0445ecc06a3149cf7f",
+    "examples/agentic/care_bifurcation/uncalibrated_config.json": "79d98eaf0fc6a9b1b17af7ecc9c7ca1a4cdb11ce44da6e32407c5199de6f4049"
+  },
+  "train_seeds": [
+    3101,
+    3102,
+    3103
+  ]
+}

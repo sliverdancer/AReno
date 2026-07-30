@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "arm": "care",
+      "returncode": 1,
+      "run_id": "care-seed-3101",
+      "seed": 3101,
+      "status": "failed",
+      "stderr": "/root/autodl-tmp/care-p3-work/pilot/runs/care-seed-3101/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-work/pilot/runs/care-seed-3101/stdout.log",
+      "wall_seconds": 8.479367017745972
+    }
+  ],
+  "schema_version": 1,
+  "total_single_gpu_hours": 0.0023553797271516587
+}

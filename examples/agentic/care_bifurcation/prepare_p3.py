@@ -12,9 +12,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from areno.experimental.care import load_turn_credit_fn
+
 
 ARMS = ("care", "uncalibrated")
 TRAIN_SEEDS = (3101, 3102, 3103)
+PROTOCOL = "CARE-P3-PILOT-v0.2"
 DEFAULT_CKPT = "Qwen/Qwen3-0.6B"
 DEFAULT_DATASET_SEED = 7301
 DEFAULT_COUNT = 64
@@ -105,6 +108,7 @@ def prepare(
 ) -> dict[str, Any]:
     """Generate deterministic inputs and a command/source manifest."""
 
+    dynamic_hook_preflight = validate_dynamic_hook_preflight(repo_root)
     generator = _load_module(
         "care_p3_dataset_generator",
         repo_root / "examples/agentic/care_bifurcation/dataset_generator.py",
@@ -143,7 +147,13 @@ def prepare(
     model_asset = json.loads(MODEL_ASSET_PATH.read_text(encoding="utf-8"))
     manifest = {
         "schema_version": 1,
-        "protocol": "CARE-P3-PILOT-v0.1",
+        "protocol": PROTOCOL,
+        "supersedes_protocol": "CARE-P3-PILOT-v0.1",
+        "engineering_change_scope": [
+            "register the turn-credit module before dynamic execution",
+            "restore the previous module registry state after execution failure",
+            "run the production turn-credit loader during CPU preparation and execution preflight",
+        ],
         "authorization": "PREPARE_ONLY_GPU_NOT_AUTHORIZED",
         "git_commit": _git_output(repo_root, "rev-parse", "HEAD"),
         "git_status": _git_output(repo_root, "status", "--short"),
@@ -168,6 +178,7 @@ def prepare(
         "arms": list(ARMS),
         "train_seeds": list(TRAIN_SEEDS),
         "max_steps": max_steps,
+        "dynamic_hook_preflight": dynamic_hook_preflight,
         "commands": {
             run_id: shlex.join(command)
             for run_id, command in commands.items()
@@ -210,6 +221,26 @@ def prepare(
     return manifest
 
 
+def validate_dynamic_hook_preflight(repo_root: Path) -> dict[str, str]:
+    """Exercise the production loader against the frozen P3 routing hook."""
+
+    hook_path = (
+        repo_root
+        / "examples"
+        / "agentic"
+        / "care_bifurcation"
+        / "care_router.py"
+    )
+    route_fn = load_turn_credit_fn(str(hook_path))
+    return {
+        "status": "passed",
+        "loader": "areno.experimental.care.load_turn_credit_fn",
+        "hook_path": str(hook_path.relative_to(repo_root)),
+        "callable": route_fn.__name__,
+        "module": route_fn.__module__,
+    }
+
+
 def _load_module(name: str, path: Path):
     spec = importlib.util.spec_from_file_location(name, path)
     if spec is None or spec.loader is None:
@@ -244,7 +275,7 @@ def main() -> int:
     parser.add_argument(
         "--run-root",
         type=Path,
-        default=Path("artifacts/care-p3-pilot"),
+        default=Path("artifacts/care-p3-pilot-v02"),
     )
     parser.add_argument("--ckpt", default=DEFAULT_CKPT)
     parser.add_argument("--dataset-seed", type=int, default=DEFAULT_DATASET_SEED)

@@ -11,7 +11,9 @@ import time
 from pathlib import Path
 from typing import Any
 
-from prepare_p3 import ARMS, TRAIN_SEEDS
+from areno.experimental.care import load_turn_credit_fn
+
+from prepare_p3 import ARMS, PROTOCOL, TRAIN_SEEDS
 from fetch_modelscope_snapshot import load_manifest, verify_snapshot
 
 
@@ -24,6 +26,8 @@ def validate_preflight(
 
     if manifest.get("authorization") != "PREPARE_ONLY_GPU_NOT_AUTHORIZED":
         raise ValueError("unexpected manifest authorization state")
+    if manifest.get("protocol") != PROTOCOL:
+        raise ValueError(f"expected protocol {PROTOCOL}")
     expected_run_ids = {
         f"{arm}-seed-{seed}"
         for seed in TRAIN_SEEDS
@@ -42,6 +46,16 @@ def validate_preflight(
         run_id: shlex.split(command)
         for run_id, command in command_strings.items()
     }
+    hook_paths = {
+        _option_value(command, "--turn-credit-fn-path")
+        for command in commands.values()
+    }
+    if len(hook_paths) != 1:
+        raise ValueError("all frozen commands must use one turn-credit hook")
+    hook_path = Path(hook_paths.pop())
+    if not hook_path.is_absolute():
+        raise ValueError("turn-credit hook must be an absolute path")
+    load_turn_credit_fn(str(hook_path))
     checkpoint = Path(str(manifest.get("checkpoint", "")))
     if not checkpoint.is_absolute() or not checkpoint.is_dir():
         raise ValueError(
@@ -56,6 +70,17 @@ def validate_preflight(
         raise ValueError("frozen ModelScope asset manifest is missing or changed")
     verify_snapshot(checkpoint, load_manifest(asset_manifest_path))
     return commands
+
+
+def _option_value(command: list[str], option: str) -> str:
+    try:
+        index = command.index(option)
+        value = command[index + 1]
+    except (ValueError, IndexError) as exc:
+        raise ValueError(f"frozen command is missing {option}") from exc
+    if value.startswith("--"):
+        raise ValueError(f"frozen command is missing a value for {option}")
+    return value
 
 
 def execute(
@@ -162,7 +187,7 @@ def main() -> int:
     parser.add_argument(
         "--run-root",
         type=Path,
-        default=Path("artifacts/care-p3-pilot"),
+        default=Path("artifacts/care-p3-pilot-v02"),
     )
     parser.add_argument(
         "--execute-gpu-training",

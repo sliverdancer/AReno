@@ -11,6 +11,7 @@ import importlib.util
 import inspect
 import json
 import math
+import sys
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -83,23 +84,34 @@ def load_turn_credit_fn(path: str) -> Callable[..., Any]:
     if spec is None or spec.loader is None:
         raise ValueError(f"cannot load turn-credit function from {module_path}")
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    missing = object()
+    previous_module = sys.modules.get(spec.name, missing)
+    sys.modules[spec.name] = module
     try:
-        fn = module.route_turn_credit
-    except AttributeError as exc:
-        raise ValueError(
-            f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
-        ) from exc
-    if not callable(fn):
-        raise ValueError(
-            f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
-        )
-    try:
-        inspect.signature(fn).bind(object(), step=0, config={})
-    except (TypeError, ValueError) as exc:
-        raise ValueError(
-            f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
-        ) from exc
+        spec.loader.exec_module(module)
+        try:
+            fn = module.route_turn_credit
+        except AttributeError as exc:
+            raise ValueError(
+                f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
+            ) from exc
+        if not callable(fn):
+            raise ValueError(
+                f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
+            )
+        try:
+            inspect.signature(fn).bind(object(), step=0, config={})
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                f"{module_path} must define callable route_turn_credit(batch, *, step, config)"
+            ) from exc
+    except BaseException:
+        if sys.modules.get(spec.name) is module:
+            if previous_module is missing:
+                sys.modules.pop(spec.name, None)
+            else:
+                sys.modules[spec.name] = previous_module
+        raise
     return fn
 
 
