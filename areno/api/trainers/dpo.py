@@ -22,6 +22,7 @@ import areno.api
 from areno.api.dashboard import record_dashboard_state
 from areno.api.data_utils import apply_chat_template, encode_prompt_value, response_to_tokens_and_mask
 from areno.api.roles import ModelRole
+from areno.api.seeding import epoch_dataset_view, seed_parent_process
 from areno.api.tokenizer import configure_chat_template_enable_thinking
 
 
@@ -48,6 +49,7 @@ class DPOTrainer:
         }
 
     def fit(self) -> None:
+        seed_parent_process(getattr(self.config, "seed", 42))
         self.areno.init()
         self._ensure_roles()
         try:
@@ -70,7 +72,15 @@ class DPOTrainer:
         for epoch in range(self.config.epochs):
             self.logger.info("epoch=%d stage=epoch_start", epoch)
             record_dashboard_state(self.areno, stage="epoch_start", epoch=epoch, step=step, role="policy")
-            for train_batch in self._iter_train_batches(tokenizer, max_seq_len=max_seq_len):
+            for train_batch in self._iter_train_batches(
+                tokenizer,
+                dataset=epoch_dataset_view(
+                    self.dataset,
+                    seed=getattr(self.config, "seed", 42),
+                    epoch=epoch,
+                ),
+                max_seq_len=max_seq_len,
+            ):
                 if not train_batch:
                     continue
                 self.logger.info(
@@ -132,13 +142,13 @@ class DPOTrainer:
             self.logger.info("epoch=%d stage=epoch_end", epoch)
             record_dashboard_state(self.areno, stage="epoch_end", epoch=epoch, step=step, role="policy")
 
-    def _iter_train_batches(self, tokenizer, *, max_seq_len: int):
+    def _iter_train_batches(self, tokenizer, *, dataset, max_seq_len: int):
         # `batch_size` counts preference pairs; the emitted train batch has two
         # rows per pair and always preserves chosen/rejected adjacency.
         batch = []
         skipped = 0
-        for index in range(len(self.dataset)):
-            pair = _record_to_train_pair(self.dataset[index], tokenizer, max_seq_len=max_seq_len)
+        for index in range(len(dataset)):
+            pair = _record_to_train_pair(dataset[index], tokenizer, max_seq_len=max_seq_len)
             if pair is None:
                 skipped += 1
                 continue

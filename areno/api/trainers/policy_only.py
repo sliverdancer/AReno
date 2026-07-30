@@ -22,6 +22,7 @@ from pathlib import Path
 import numpy as np
 
 from areno.api.dashboard import record_dashboard_state
+from areno.api.seeding import derive_seed, epoch_dataset_view, seed_parent_process
 from areno.api.tokenizer import configure_chat_template_enable_thinking
 
 
@@ -42,8 +43,18 @@ class PolicyOnlyTrainer:
         self.loss_fn = loss_fn
         self.logger = logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")
         self._agent_run_fn = None
+        self._turn_credit_fn = None
+        self._turn_credit_config = {}
+        if getattr(config, "turn_credit_fn_path", None):
+            from areno.experimental.care import load_turn_credit_config, load_turn_credit_fn
+
+            self._turn_credit_fn = load_turn_credit_fn(config.turn_credit_fn_path)
+            self._turn_credit_config = load_turn_credit_config(
+                getattr(config, "turn_credit_config_path", None)
+            )
 
     def fit(self) -> None:
+        seed_parent_process(getattr(self.config, "seed", 42))
         self.areno.init()
         try:
             self._fit_initialized()
@@ -55,6 +66,7 @@ class PolicyOnlyTrainer:
 
         tokenizer = self.areno.get_tokenizer()
         configure_chat_template_enable_thinking(tokenizer, getattr(self.config, "chat_template_enable_thinking", None))
+        base_seed = getattr(self.config, "seed", 42)
         sampling_params = areno.api.SamplingParams(
             greedy=self.config.greedy,
             temperature=self.config.temperature,
@@ -63,6 +75,7 @@ class PolicyOnlyTrainer:
             max_prompt_len=self.config.max_prompt_tokens,
             top_k=self.config.top_k,
             top_p=self.config.top_p,
+            seed=base_seed,
         )
 
         step = 0
@@ -72,17 +85,35 @@ class PolicyOnlyTrainer:
                 self.areno, stage="epoch_start", epoch=epoch, step=step, role=self._policy_role_name()
             )
             for prompt_batch in self.areno.load_prompt_batches(
-                self.dataset,
+                epoch_dataset_view(
+                    self.dataset,
+                    seed=base_seed,
+                    epoch=epoch,
+                ),
                 batch_size=self.config.batch_size,
                 max_prompt_tokens=self.config.max_prompt_tokens,
             ):
+                step_sampling_params = sampling_params.model_copy(
+                    update={
+                        "seed": derive_seed(
+                            base_seed,
+                            "rollout",
+                            step,
+                        )
+                    }
+                )
                 role = self._policy_role_name()
                 self.logger.info("epoch=%d step=%d role=%s stage=rollout_start", epoch, step, role)
                 record_dashboard_state(self.areno, stage="rollout_start", epoch=epoch, step=step, role=role)
                 self._dashboard_epoch = epoch
                 self._dashboard_step = step
                 if self._agentic_enabled():
-                    agent_batch = asyncio.run(self._run_agentic_rollout(sampling_params, prompt_batch))
+                    agent_batch = asyncio.run(
+                        self._run_agentic_rollout(
+                            step_sampling_params,
+                            prompt_batch,
+                        )
+                    )
                     self.logger.info("epoch=%d step=%d role=%s stage=rollout_end", epoch, step, role)
                     record_dashboard_state(self.areno, stage="rollout_end", epoch=epoch, step=step, role=role)
                     self._log_agentic_sample_completions(epoch, step, agent_batch)
@@ -92,7 +123,12 @@ class PolicyOnlyTrainer:
                 else:
                     # 1) Sample n_samples completions per prompt; ordering
                     #    matches `prompt_batch.items` so we can zip downstream.
-                    rollout_results = asyncio.run(self._run_prompt_rollout(sampling_params, prompt_batch))
+                    rollout_results = asyncio.run(
+                        self._run_prompt_rollout(
+                            step_sampling_params,
+                            prompt_batch,
+                        )
+                    )
                     self.logger.info("epoch=%d step=%d role=%s stage=rollout_end", epoch, step, role)
                     record_dashboard_state(self.areno, stage="rollout_end", epoch=epoch, step=step, role=role)
                     self._record_sample_completions(tokenizer, epoch, step, prompt_batch, rollout_results)
@@ -150,6 +186,21 @@ class PolicyOnlyTrainer:
                     record_dashboard_state(self.areno, stage="train_end", epoch=epoch, step=step, role=role)
                     self.logger.info("epoch=%d step=%d train_stats=%s", epoch, step, result)
                     self._maybe_save(epoch, step)
+                elif self._turn_credit_fn is not None:
+                    self.logger.info(
+                        "epoch=%d step=%d role=%s stage=train_skip reason=turn_credit_full_abstention",
+                        epoch,
+                        step,
+                        role,
+                    )
+                    record_dashboard_state(
+                        self.areno,
+                        stage="train_skip",
+                        epoch=epoch,
+                        step=step,
+                        role=role,
+                    )
+                    self.areno.finish_step()
                 step += 1
                 if self.config.max_steps is not None and step >= self.config.max_steps:
                     self.logger.info("epoch=%d step=%d stage=max_steps_reached", epoch, step)
@@ -271,6 +322,7 @@ class PolicyOnlyTrainer:
                 rewards=rewards,
                 records=[sample.item.record for sample in samples],
                 reward_records=reward_records,
+                response_spans=rows.response_spans,
             )
 
     def _filter_overlong_agent_samples(self, ctx, samples, sampling_params):
@@ -424,11 +476,69 @@ class PolicyOnlyTrainer:
             group_rewards = [rewards_all[row_idx] for row_idx in row_indices]
             for row_idx, advantage in zip(row_indices, compute_group_advantages(group_rewards), strict=True):
                 advantages_by_row[row_idx] = float(advantage)
+        routed_credit = None
+        effective_loss_masks = agent_batch.loss_masks
+        if self._turn_credit_fn is not None:
+            from areno.experimental.care import (
+                build_turn_credit_batch,
+                route_turn_credit_batch,
+                write_turn_credit_diagnostics,
+            )
+
+            if len(agent_batch.response_spans) != len(agent_batch.token_rows):
+                raise ValueError("turn-credit agent batch is missing response spans")
+            credit_batch = build_turn_credit_batch(
+                seed=int(getattr(self.config, "seed", 42)),
+                step=int(getattr(self, "_dashboard_step", 0)),
+                response_spans=agent_batch.response_spans,
+                response_masks=agent_batch.response_masks,
+                loss_masks=agent_batch.loss_masks,
+                rollout_logprobs=agent_batch.rollout_logprobs,
+                rewards=rewards_all,
+                outcome_advantages=[
+                    advantages_by_row.get(row_idx, 0.0)
+                    for row_idx in range(len(agent_batch.token_rows))
+                ],
+                reward_records=agent_batch.reward_records,
+            )
+            hook_result = self._turn_credit_fn(
+                credit_batch,
+                step=credit_batch.step,
+                config=dict(self._turn_credit_config),
+            )
+            routed_credit = route_turn_credit_batch(
+                batch=credit_batch,
+                result=hook_result,
+                token_row_lengths=[len(row) for row in agent_batch.token_rows],
+                response_masks=agent_batch.response_masks,
+                base_loss_masks=agent_batch.loss_masks,
+                mini_bs=int(getattr(self.config, "mini_bs", len(agent_batch.token_rows))),
+                gradient_accumulation_steps=getattr(
+                    self.config,
+                    "gradient_accumulation_steps",
+                    None,
+                ),
+            )
+            effective_loss_masks = routed_credit.loss_masks
+            metrics_log_dir = getattr(self.config, "metrics_log_dir", None)
+            if metrics_log_dir:
+                write_turn_credit_diagnostics(
+                    Path(metrics_log_dir) / "turn_credit_diagnostics.jsonl",
+                    routed_credit.diagnostics,
+                )
+            self.logger.info(
+                "turn-credit routed step=%d selected_tokens=%d budget_tokens=%d",
+                credit_batch.step,
+                routed_credit.selected_tokens,
+                routed_credit.budget_tokens,
+            )
+            if routed_credit.selected_tokens == 0:
+                return [], rewards_all, []
         for row_idx, (tokens, response_mask, loss_mask, logprobs, reward) in enumerate(
             zip(
                 agent_batch.token_rows,
                 agent_batch.response_masks,
-                agent_batch.loss_masks,
+                effective_loss_masks,
                 agent_batch.rollout_logprobs,
                 rewards_all,
                 strict=True,
@@ -438,7 +548,10 @@ class PolicyOnlyTrainer:
                 raise ValueError("agentic train batch has misaligned token/mask/logprob rows")
             prompt_mask = [not item for item in response_mask]
             advantage = advantages_by_row.get(row_idx, 0.0)
-            advantages = [advantage if is_loss else 0.0 for is_loss in loss_mask]
+            if routed_credit is None:
+                advantages = [advantage if is_loss else 0.0 for is_loss in loss_mask]
+            else:
+                advantages = routed_credit.advantages[row_idx]
             rollout_logprobs.extend(lp for lp, is_loss in zip(logprobs, loss_mask, strict=True) if is_loss)
             train_batch.append(
                 areno.api.TrainSequence(

@@ -1,0 +1,12 @@
+{
+  "artifacts": {
+    "bifurcation_trajectories.csv": {
+      "rows": 64,
+      "sha256": "1db2432d2c27de0d281b53fe6d31bc5e856528f97f8e78dfd7c47d00380da6fb"
+    },
+    "p1_summary.json": {
+      "sha256": "ff9e361153739380c40e5f86803685b8bf76c791bce734e19d17044fe5953a9d"
+    }
+  },
+  "protocol_id": "CARE-P1-v0.1"
+}

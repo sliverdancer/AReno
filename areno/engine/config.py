@@ -223,10 +223,13 @@ class EngineConfig:
     dp_size: int | None = None
     devices: list[int] | None = None
     dummy_load: bool = False
+    seed: int = 42
 
     def __post_init__(self) -> None:
         """Infer DP/devices and validate the distributed layout."""
 
+        if isinstance(self.seed, bool) or not isinstance(self.seed, int) or self.seed < 0:
+            raise ValueError("seed must be a non-negative integer")
         self.model.validate_tp(self.tp_size)
         if self.devices is None:
             if torch.cuda.is_available():

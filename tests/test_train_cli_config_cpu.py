@@ -53,6 +53,20 @@ def test_train_config_requires_world_size_divisible_by_tp_size():
         _trainer_config_from_options(**_options(algo="sft", world_size=3, tp_size=2))
 
 
+def test_train_config_seed_reaches_public_and_backend_configs():
+    config = _trainer_config_from_options(
+        **_options(algo="gspo", seed=1234)
+    )
+
+    assert config.seed == 1234
+    assert config.areno_config().seed == 1234
+
+
+def test_train_config_rejects_negative_seed():
+    with pytest.raises(UsageError, match="--seed must be a non-negative integer"):
+        _trainer_config_from_options(**_options(algo="gspo", seed=-1))
+
+
 @pytest.mark.parametrize(
     ("field", "value", "message"),
     [

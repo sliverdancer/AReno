@@ -82,51 +82,57 @@ AReno 原先对所有 assistant turn 一视同仁地计入 policy loss，无法�
 2. `mask_tool_call_args` 仅在 `all_assistant` 下显著（-20pp），在 turn-level 模式下几乎冗余
 3. `bare_trailing` fixture 揭示 `last_assistant`（65.5%）vs `final_answer`（0%）的关键分歧
 
+### 2.4 T6.2 GPU harness（本地准备已完成，GPU 尚未执行）
+
+新增 `examples/agentic/trainable_turns_ablation/`：
+
+- `run_agent.py`：复用 Tic-Tac-Toe 数据、环境和 reward，执行真实 tool result 后再生成最终文本；
+- `run_ablation.py`：默认 dry-run；`--prepare` 只生成固定数据集和 manifest；
+  只有显式 `--execute-gpu-training` 才启动三臂；
+- `collect_metrics.py`：从 TensorBoard 严格对齐 step，输出
+  `ablation_steps.csv` / `ablation_steps.json`；
+- `README.md`：远端 GPU 的完整、无占位符命令。
+
+同时补齐了交接文档此前遗漏的指标链路：原分支只在普通日志中打印
+`trainable_tokens` / `masked_response_tokens`，现在
+`areno/api/metrics.py` 会逐 step 写入 TensorBoard 的
+`train/trainable_tokens` / `train/masked_response_tokens`。
+
+CPU 验证：相关 agentic + metrics + artifact tests 共 76 个通过。未运行 GPU
+训练。正常轨迹的最后一轮是 tool result 后的最终文本，因此
+`last_assistant` 与 `final_answer` 应选择同一 span，作为等价性对照；
+`all_assistant` 还会训练前一轮 tool-call span。
+
 ---
 
 ## 3. 未完成内容（需 GPU 机器执行）
 
-### 3.1 T6.2 — 小规模 GPU Ablation（核心待办）
+### 3.1 T6.2 — 小规模 GPU Ablation（harness 已完成，执行待授权）
 
 **目标**：对比三种 `trainable_turns` 模式在小模型 + 少步训练下的收敛趋势和最终奖励。
 
-**推荐配置**（可按算力调整）：
+完整三条 `areno train` 命令见
+`examples/agentic/trainable_turns_ablation/README.md`。远端先执行 CPU-only
+准备：
 
 ```bash
-# 基础环境（按 AGENTS.md）
-pip install psutil flash-linear-attention
-pip install -e . --no-build-isolation
-
-# 三组对比（最小模型 + agentic 环境）
-# 组1: all_assistant（baseline）
-areno train --ckpt Qwen/Qwen3-0.6B --dataset-path <agentic-dataset> \
-  --reward-fn-path <reward.py> --algo gspo --tp-size <GPU数> \
-  --trainable-turns all_assistant --max-steps 50
-
-# 组2: last_assistant
-areno train --ckpt Qwen/Qwen3-0.6B --dataset-path <agentic-dataset> \
-  --reward-fn-path <reward.py> --algo gspo --tp-size <GPU数> \
-  --trainable-turns last_assistant --max-steps 50
-
-# 组3: final_answer
-areno train --ckpt Qwen/Qwen3-0.6B --dataset-path <agentic-dataset> \
-  --reward-fn-path <reward.py> --algo gspo --tp-size <GPU数> \
-  --trainable-turns final_answer --max-steps 50
+python examples/agentic/trainable_turns_ablation/run_ablation.py \
+  --run-root artifacts/issue-199-ablation \
+  --count 32 --dataset-seed 2026 --max-steps 10 --prepare
 ```
 
-**可用的 agentic 环境**（`examples/agentic/` 下）：
-- `tictactoe/` — 井字棋，轻量，适合快速验证
-- `shopping/` — 购物任务
-- `duelgrid/` — 网格对抗
-- `coding/` — 代码任务
+检查 `manifest.json` 后，经用户明确授权再执行：
 
-**需要记录的指标**：
-- 每 step 的 `trainable_tokens` / `masked_response_tokens`（已在 metrics 输出）
-- 每 step 的 reward 均值/方差
-- 收敛步数（reward 不再增长的点）
-- 最终 reward
+```bash
+python examples/agentic/trainable_turns_ablation/run_ablation.py \
+  --run-root artifacts/issue-199-ablation \
+  --count 32 --dataset-seed 2026 --max-steps 10 --execute-gpu-training
+```
 
-**产出**：JSON/CSV 数据表 + 简要文字对比（可追加到 `trainable_turns_research_notes.md`）
+产出为逐 step reward 均值/方差、`trainable_tokens`、
+`masked_response_tokens` 的 JSON/CSV。当前分支没有训练 seed CLI，故数据集
+和命令可复现，但随机 GPU sampling 不是 bitwise deterministic；10-step 结果
+只能作为 smoke ablation，不能单独支撑收敛优劣结论。
 
 ### 3.2 T6.3 — 研究叙述整合（T6.2 完成后）
 
@@ -186,6 +192,8 @@ python examples/agentic/trainable_turns_stats.py
 | `tests/test_agentic_cpu.py:1132-1473` | 16 个相关 CPU 测试 |
 | `examples/agentic/trainable_turns_stats.py` | 统计脚本 |
 | `examples/agentic/trainable_turns_research_notes.md` | 文献定位 + 研究叙述 |
+| `examples/agentic/trainable_turns_ablation/` | 三臂 GPU harness、metrics exporter、远端命令 |
+| `areno/api/metrics.py` | 逐 step TensorBoard token-count scalars |
 | `issue-199-execution-plan.md` | 完整执行计划（spec mode） |
 
 ---

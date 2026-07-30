@@ -8,6 +8,7 @@ from areno.api.metrics import (
     collect_train_batch_stats,
     init_rollout_stats,
     record_rollout_sequence_stats,
+    record_training_stats,
 )
 from areno.api.models import TrainSequence
 
@@ -19,6 +20,7 @@ class MetricsUtilityTest(unittest.TestCase):
         """Only response positions should contribute logprob/advantage stats."""
         seq = TrainSequence(
             prompt_mask=[True, True, False, False],
+            loss_mask=[False, False, True, False],
             tokens=[1, 2, 3, 4],
             logprobs=[0.0, 0.0, -0.2, -0.4],
             advantages=[0.0, 0.0, 1.0, -1.0],
@@ -32,6 +34,37 @@ class MetricsUtilityTest(unittest.TestCase):
         self.assertEqual(stats["advantages"], [1.0, -1.0])
         self.assertEqual(stats["prompt_len"], [2])
         self.assertEqual(stats["response_len"], [2])
+        self.assertEqual(stats["trainable_tokens"], 1)
+        self.assertEqual(stats["masked_response_tokens"], 1)
+
+    def test_record_training_stats_emits_loss_mask_token_counts(self):
+        """Per-step token counts must be available to TensorBoard exporters."""
+
+        class FakeWriter:
+            def __init__(self):
+                self.scalars = {}
+
+            def add_scalar(self, name, value, step):
+                self.scalars[name] = (value, step)
+
+            def flush(self):
+                pass
+
+        writer = FakeWriter()
+        stats = init_rollout_stats()
+        stats.update(
+            {
+                "rewards": [1.0, -1.0],
+                "trainable_tokens": 7,
+                "masked_response_tokens": 5,
+            }
+        )
+
+        record_training_stats(writer, stats, 3, {}, [object(), object()])
+
+        self.assertEqual(writer.scalars["train/trainable_tokens"], (7, 3))
+        self.assertEqual(writer.scalars["train/masked_response_tokens"], (5, 3))
+        self.assertEqual(writer.scalars["rollout/rewards_mean"], (0.0, 3))
 
     def test_rollout_stats_accumulator_keeps_skip_counters(self):
         """The mutable stats accumulator carries prompt-skip counters forward."""

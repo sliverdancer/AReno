@@ -34,6 +34,7 @@ from areno.api.openai_chat import (
     normalize_messages,
 )
 from areno.api.rewards import RewardEvent, RewardRecord
+from areno.api.seeding import derive_seed
 from areno.api.tokenizer import apply_chat_template_with_options
 from areno.api.tool_call_parser import get_tool_call_parser, infer_tool_call_parser_name
 
@@ -130,6 +131,7 @@ class AgentTrainBatch:
     rewards: list[float] | None
     records: list[dict[str, Any]]
     reward_records: list[RewardRecord]
+    response_spans: list[list[ResponseSpan]] = field(default_factory=list)
 
 
 @dataclass(slots=True)
@@ -175,6 +177,8 @@ class ResponseSpan:
 
     kind: Literal["assistant_text", "assistant_tool_call"]
     length: int
+    raw_text: str = ""
+    raw_tool_calls_json: tuple[str, ...] = ()
 
 
 @dataclass(slots=True)
@@ -208,6 +212,7 @@ class _AgentTrainRows:
     response_masks: list[list[bool]]
     loss_masks: list[list[bool]]
     rollout_logprobs: list[list[float]]
+    response_spans: list[list[ResponseSpan]]
     total_tokens: int
     trainable_tokens: int = 0
     masked_response_tokens: int = 0
@@ -220,6 +225,7 @@ class _ChatBatchKey:
     temperature: float
     top_p: float
     top_k: int
+    seed: int | None
     stop_token_ids: tuple[int, ...]
     ignore_eos: bool
     skip_special_tokens: bool
@@ -362,6 +368,14 @@ class RolloutSession:
 
         await self._trainer.sync_rollout_session_async()
 
+    def request_seed(self, *parts: Any) -> int | None:
+        """Derive a stable per-request seed from the active rollout seed."""
+
+        base_seed = getattr(self._sampling_params, "seed", None)
+        if base_seed is None:
+            return None
+        return derive_seed(int(base_seed), "agent_request", *parts)
+
     def _http_server_cls(self) -> type[_AgenticHTTPServer]:
         return type(
             "AgenticRolloutHTTPServer",
@@ -503,6 +517,7 @@ class RolloutSession:
         response_masks: list[list[bool]] = []
         loss_masks: list[list[bool]] = []
         rollout_logprobs: list[list[float]] = []
+        response_spans: list[list[ResponseSpan]] = []
         total_tokens = 0
         self._validate_call_result_pairing(samples)
         for sample in samples:
@@ -512,6 +527,7 @@ class RolloutSession:
                 response_masks.append(list(sample.response_mask_row))
                 loss_masks.append(list(sample.loss_mask_row))
                 rollout_logprobs.append(list(sample.rollout_logprobs_row))
+                response_spans.append(list(sample.response_spans))
                 total_tokens += len(sample.token_row)
                 continue
             prompt_len = len(sample.item.input_tokens)
@@ -521,6 +537,7 @@ class RolloutSession:
             response_masks.append([False] * prompt_len + [True] * response_len)
             loss_masks.append([False] * prompt_len + self._response_loss_mask(sample))
             rollout_logprobs.append([0.0] * prompt_len + list(sample.response_logprobs))
+            response_spans.append(list(sample.response_spans))
             total_tokens += len(token_row)
         trainable_tokens = sum(sum(mask) for mask in loss_masks)
         masked_response_tokens = sum(sum(mask) for mask in response_masks) - trainable_tokens
@@ -529,6 +546,7 @@ class RolloutSession:
             response_masks=response_masks,
             loss_masks=loss_masks,
             rollout_logprobs=rollout_logprobs,
+            response_spans=response_spans,
             total_tokens=total_tokens,
             trainable_tokens=trainable_tokens,
             masked_response_tokens=masked_response_tokens,
@@ -586,6 +604,8 @@ class RolloutSession:
             params.temperature = float(body["temperature"])
         if body.get("top_p") is not None:
             params.top_p = float(body["top_p"])
+        if body.get("seed") is not None:
+            params.seed = int(body["seed"])
         pending = _PendingChat(
             item=None,
             messages=messages,
@@ -797,7 +817,15 @@ class RolloutSession:
         sample.rollout_logprobs_row = [0.0] * len(prompt_tokens) + list(sample.response_logprobs)
         if not sample.response_spans:
             sample.response_spans = [
-                ResponseSpan(kind=sample.response_kind, length=len(sample.response_tokens))
+                ResponseSpan(
+                    kind=sample.response_kind,
+                    length=len(sample.response_tokens),
+                    raw_text=sample.last_response_text,
+                    raw_tool_calls_json=tuple(
+                        json.dumps(call, ensure_ascii=False, sort_keys=True)
+                        for call in sample.last_tool_calls
+                    ),
+                )
             ]
 
     def _build_pending_chat_response(
@@ -1146,6 +1174,7 @@ def _chat_batch_key(params: Any) -> _ChatBatchKey:
         temperature=float(getattr(params, "temperature")),
         top_p=float(getattr(params, "top_p")),
         top_k=int(getattr(params, "top_k", -1)),
+        seed=getattr(params, "seed", None),
         stop_token_ids=tuple(int(item) for item in (getattr(params, "stop_token_ids", None) or ())),
         ignore_eos=bool(getattr(params, "ignore_eos", False)),
         skip_special_tokens=bool(getattr(params, "skip_special_tokens", True)),

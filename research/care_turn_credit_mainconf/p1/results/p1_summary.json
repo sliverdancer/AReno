@@ -1,0 +1,41 @@
+{
+  "clustered_dependence": {
+    "alpha": 0.1,
+    "bad_block_probability": 0.33,
+    "block_controls_nominal_risk": true,
+    "block_maximum_bad_blocks": -1,
+    "calibration_blocks": 2,
+    "clustered_block_expected_risk": 0.0,
+    "clustered_naive_expected_risk": 0.148137,
+    "independent_turn_expected_risk": 0.0011897880483868442,
+    "naive_maximum_bad_blocks": 0,
+    "naive_violates_nominal_risk": true,
+    "turns_per_block": 10
+  },
+  "deterministic": true,
+  "gpu_training_performed": false,
+  "oracle": {
+    "contains_both_outcome_credit_conflicts": true,
+    "negative_turns_inside_successes": 4,
+    "positive_turns_inside_failures": 8,
+    "sign_counts": {
+      "-1": 24,
+      "0": 16,
+      "1": 24
+    },
+    "trajectory_count": 16,
+    "turn_label_count": 64
+  },
+  "policy_shift": {
+    "alpha": 0.1,
+    "calibration_bad_probability": 0.05,
+    "calibration_blocks": 20,
+    "maximum_bad_blocks": 1,
+    "refreshed_threshold_controls_nominal_risk": true,
+    "refreshed_threshold_expected_risk": 0.006078156216290154,
+    "shifted_bad_probability": 0.25,
+    "stale_threshold_expected_risk": 0.1839598812359623,
+    "stale_threshold_violates_nominal_risk": true
+  },
+  "protocol_id": "CARE-P1-v0.1"
+}

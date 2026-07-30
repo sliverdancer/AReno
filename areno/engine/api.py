@@ -183,6 +183,7 @@ class ArenoEngine:
         dp_size: int | None = None,
         devices: list[int] | None = None,
         dummy_load: bool = False,
+        seed: int = 42,
         optimizer_config: OptimizerConfig | None = None,
         runtime_config: RuntimeConfig | None = None,
         loss_fn: Callable[[Any, torch.Tensor], torch.Tensor | tuple[torch.Tensor, dict[str, Any]]] | None = None,
@@ -211,6 +212,7 @@ class ArenoEngine:
             dp_size=dp_size,
             devices=devices,
             dummy_load=dummy_load,
+            seed=seed,
             optimizer=optimizer_config or OptimizerConfig(),
             runtime=runtime_config or RuntimeConfig(),
         )

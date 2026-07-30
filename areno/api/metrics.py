@@ -135,14 +135,22 @@ def collect_train_batch_stats(train_batch) -> dict:
     stats = init_rollout_stats()
     for seq in train_batch:
         prompt_mask = list(seq.prompt_mask)
+        loss_mask = list(seq.loss_mask)
         # `prompt_mask[i] == True` marks a prompt token; rollout signals only
         # exist on response positions so we filter the prompt prefix out.
         response_logprobs = [lp for lp, is_prompt in zip(seq.logprobs, prompt_mask) if not is_prompt]
         response_advantages = [adv for adv, is_prompt in zip(seq.advantages, prompt_mask) if not is_prompt]
         prefix_len = sum(1 for is_prompt in prompt_mask if is_prompt)
         response_len = len(response_logprobs)
+        trainable_tokens = sum(
+            1
+            for enabled, is_prompt in zip(loss_mask, prompt_mask, strict=True)
+            if enabled and not is_prompt
+        )
         stats["rewards"].append(seq.reward)
         stats["advantages"].extend(response_advantages)
+        stats["trainable_tokens"] += trainable_tokens
+        stats["masked_response_tokens"] += response_len - trainable_tokens
         record_rollout_sequence_stats(
             stats,
             prefix_len=prefix_len,
@@ -162,6 +170,8 @@ def init_rollout_stats(skipped_long: int = 0, total_skipped_long: int = 0) -> di
         "seq_len": [],
         "prompt_len": [],
         "response_len": [],
+        "trainable_tokens": 0,
+        "masked_response_tokens": 0,
         "skipped_long": skipped_long,
         "total_skipped_long": total_skipped_long,
     }
@@ -210,6 +220,9 @@ def record_training_stats(writer, stats, step, train_res, train_batch, timings: 
     for key in ("skipped_long", "total_skipped_long"):
         if key in stats:
             writer.add_scalar(f"rollout/{key}", stats[key], step)
+    for key in ("trainable_tokens", "masked_response_tokens"):
+        if key in stats and key not in train_res:
+            writer.add_scalar(f"train/{key}", stats[key], step)
 
     # Backend-supplied training metrics (loss, policy_loss, ratio_mean, ...).
     for key, value in train_res.items():

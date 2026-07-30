@@ -24,6 +24,7 @@ from typing import Any
 import areno.api
 from areno.api.dashboard import record_dashboard_state
 from areno.api.data_utils import prompt_response_to_tokens_and_mask
+from areno.api.seeding import epoch_dataset_view, seed_parent_process
 from areno.api.tokenizer import configure_chat_template_enable_thinking
 
 
@@ -45,6 +46,7 @@ class SFTTrainer:
         self.logger = logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")
 
     def fit(self) -> None:
+        seed_parent_process(getattr(self.config, "seed", 42))
         self.areno.init()
         try:
             self._fit_initialized()
@@ -60,6 +62,11 @@ class SFTTrainer:
             record_dashboard_state(self.areno, stage="epoch_start", epoch=epoch, step=step, role="policy")
             for train_batch in self._iter_train_batches(
                 tokenizer,
+                dataset=epoch_dataset_view(
+                    self.dataset,
+                    seed=getattr(self.config, "seed", 42),
+                    epoch=epoch,
+                ),
                 max_prompt_tokens=self.config.max_prompt_tokens,
                 max_new_tokens=self.config.max_new_tokens,
             ):
@@ -94,18 +101,25 @@ class SFTTrainer:
             self.logger.info("epoch=%d stage=epoch_end", epoch)
             record_dashboard_state(self.areno, stage="epoch_end", epoch=epoch, step=step, role="policy")
 
-    def _iter_train_batches(self, tokenizer, *, max_prompt_tokens: int, max_new_tokens: int):
+    def _iter_train_batches(
+        self,
+        tokenizer,
+        *,
+        dataset,
+        max_prompt_tokens: int,
+        max_new_tokens: int,
+    ):
         # Dataset rows are converted lazily so large HF datasets do not need an
         # up-front tokenized copy. Rows that are empty, all-prompt, or exceed
         # the configured prompt or supervised-response budgets are dropped.
         batch = []
         skipped = 0
         accepted = 0
-        total_rows = len(self.dataset)
+        total_rows = len(dataset)
         for index in range(total_rows):
             # Normalize each supported row schema into one TrainSequence.
             seq = _record_to_train_sequence(
-                self.dataset[index],
+                dataset[index],
                 tokenizer,
                 max_prompt_tokens=max_prompt_tokens,
                 max_new_tokens=max_new_tokens,

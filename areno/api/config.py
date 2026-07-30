@@ -24,6 +24,7 @@ class ArenoConfig:
     dp_size: int | None = None
     devices: list[int] | None = None
     dummy_load: bool = False
+    seed: int = 42
     optimizer: dict[str, Any] = field(default_factory=dict)
     runtime: dict[str, Any] = field(default_factory=dict)
     max_running_prompts: int = 64

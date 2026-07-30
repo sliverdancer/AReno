@@ -1,0 +1,8 @@
+{
+  "alpha": 0.2,
+  "budget_tokens": 256,
+  "min_calibration_trajectories": 10,
+  "min_update_trajectories": 10,
+  "mode": "uncalibrated",
+  "scorer_seed": 9102
+}

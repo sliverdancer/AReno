@@ -1,0 +1,134 @@
+{
+  "protocol_id": "CARE-P0-v0.1",
+  "snapshot_date": "2026-07-29",
+  "scope": "direct-substitute audit for risk-controlled selective turn credit",
+  "gpu_training_performed": false,
+  "records": [
+    {
+      "id": "mt_grpo",
+      "title": "Reinforcing Multi-Turn Reasoning in LLM Agents via Turn-Level Reward Design",
+      "paper_url": "https://arxiv.org/abs/2505.11821",
+      "full_text_url": "https://arxiv.org/html/2505.11821",
+      "code_url": null,
+      "code_status": "NOT_LOCATED_IN_PAPER",
+      "access": "FULL_TEXT_HTML"
+    },
+    {
+      "id": "trace",
+      "title": "TRACE: Turn-level Reward Assignment via Credit Estimation for Long-Horizon Agents",
+      "paper_url": "https://arxiv.org/abs/2607.13988",
+      "full_text_url": "https://arxiv.org/html/2607.13988v1",
+      "code_url": null,
+      "code_status": "NOT_LOCATED_IN_PAPER",
+      "access": "FULL_TEXT_HTML"
+    },
+    {
+      "id": "siop",
+      "title": "Self-Induced Outcome Potential: Turn-Level Credit Assignment for Agents without Verifiers",
+      "paper_url": "https://arxiv.org/abs/2605.04984",
+      "full_text_url": "https://arxiv.org/pdf/2605.04984",
+      "code_url": "https://github.com/dl-m9/SIOP.git",
+      "code_status": "DECLARED_BY_PAPER_URL_UNAVAILABLE_AT_AUDIT",
+      "access": "FULL_TEXT_PDF"
+    },
+    {
+      "id": "vpr",
+      "title": "Verifiable Process Rewards for Agentic Reasoning",
+      "paper_url": "https://arxiv.org/abs/2605.10325",
+      "full_text_url": "https://arxiv.org/html/2605.10325",
+      "code_url": "https://github.com/thu-nics/VPR",
+      "code_status": "PUBLIC_APACHE_2_0_REPOSITORY_WITH_DATA_AND_TRAINING_SCRIPTS",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY"
+    },
+    {
+      "id": "echo",
+      "title": "ECHO: Prune to Act, Trace to Learn with Selective Turn Memory in Agentic RL",
+      "paper_url": "https://arxiv.org/abs/2606.31650",
+      "full_text_url": "https://arxiv.org/html/2606.31650v3",
+      "code_url": "https://github.com/xiezijun714-lang/Echo",
+      "code_status": "PUBLIC_APACHE_2_0_REPOSITORY",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY"
+    },
+    {
+      "id": "taco",
+      "title": "When Implausible Tokens Get Reinforced: Tail-Aware Credit Calibration for LLM Reinforcement Learning",
+      "paper_url": "https://arxiv.org/abs/2607.07976",
+      "full_text_url": "https://arxiv.org/html/2607.07976",
+      "code_url": "https://github.com/xiuyilou/TACO",
+      "code_status": "PUBLIC_REPOSITORY_LICENSE_NOT_VISIBLE_ON_LANDING_PAGE",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY"
+    },
+    {
+      "id": "irc",
+      "title": "Multi-Turn Reinforcement Learning for Tool-Calling Agents with Iterative Reward Calibration",
+      "paper_url": "https://arxiv.org/abs/2604.02869",
+      "full_text_url": "https://arxiv.org/html/2604.02869",
+      "code_url": null,
+      "code_status": "PAPER_DECLARES_RELEASE_EXACT_REPOSITORY_NOT_LOCATED",
+      "access": "FULL_TEXT_HTML"
+    },
+    {
+      "id": "triage",
+      "title": "TRIAGE: Role-Typed Credit Assignment for Agentic Reinforcement Learning",
+      "paper_url": "https://arxiv.org/abs/2606.32017",
+      "full_text_url": "https://arxiv.org/html/2606.32017",
+      "code_url": null,
+      "code_status": "NOT_LOCATED_IN_PAPER",
+      "access": "FULL_TEXT_HTML"
+    },
+    {
+      "id": "hcapo",
+      "title": "Hindsight Credit Assignment for Long-Horizon LLM Agents",
+      "paper_url": "https://arxiv.org/abs/2603.08754",
+      "full_text_url": "https://arxiv.org/html/2603.08754",
+      "code_url": null,
+      "code_status": "NOT_LOCATED_IN_PAPER",
+      "access": "FULL_TEXT_HTML"
+    },
+    {
+      "id": "c3",
+      "title": "Exact Is Easier: Credit Assignment for Cooperative LLM Agents",
+      "paper_url": "https://arxiv.org/abs/2603.06859",
+      "full_text_url": "https://arxiv.org/html/2603.06859",
+      "code_url": "https://github.com/EIT-EAST-Lab/C3",
+      "code_status": "PUBLIC_REPOSITORY",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY_LINK"
+    },
+    {
+      "id": "ccpo",
+      "title": "Counterfactual Credit Policy Optimization for Multi-agent Collaboration",
+      "paper_url": "https://arxiv.org/abs/2603.21563",
+      "full_text_url": "https://arxiv.org/html/2603.21563",
+      "code_url": "https://github.com/bhai114/ccpo",
+      "code_status": "PUBLIC_REPOSITORY",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY_LINK"
+    },
+    {
+      "id": "crc",
+      "title": "Conformal Risk Control",
+      "paper_url": "https://arxiv.org/abs/2208.02814",
+      "full_text_url": "https://arxiv.org/html/2208.02814",
+      "code_url": "https://github.com/aangelopoulos/conformal-risk",
+      "code_status": "PUBLIC_REPOSITORY",
+      "access": "FULL_TEXT_HTML_AND_REPOSITORY_LINK"
+    },
+    {
+      "id": "conformal_risk_training",
+      "title": "Conformal Risk Training: End-to-End Optimization of Conformal Risk Control",
+      "paper_url": "https://arxiv.org/abs/2510.08748",
+      "full_text_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/6559542f75b4452ebaaf82094c7defb7-Abstract-Conference.html",
+      "code_url": null,
+      "code_status": "NOT_AUDITED_BEYOND_PRIMARY_ABSTRACT_AND_PAPER_RECORD",
+      "access": "PRIMARY_ABSTRACT_AND_PAPER_RECORD"
+    },
+    {
+      "id": "cap",
+      "title": "Context-Adaptive Conformal Prediction with Abstention for LLMs and VLMs",
+      "paper_url": "https://proceedings.mlr.press/v304/tayebati26a.html",
+      "full_text_url": "https://proceedings.mlr.press/v304/tayebati26a.html",
+      "code_url": null,
+      "code_status": "NOT_AUDITED",
+      "access": "PRIMARY_PROCEEDINGS_PAGE"
+    }
+  ]
+}

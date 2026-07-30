@@ -29,6 +29,7 @@ class TrainerConfig:
     dataset_path: str
     model_hub: str = "modelscope"
     dataset_loader_fn: str | None = None
+    seed: int = 42
     save_path: str | None = None
     save_interval: int = 100
     epochs: int = 10
@@ -64,6 +65,8 @@ class TrainerConfig:
     chat_template_enable_thinking: bool | None = None
 
     def __post_init__(self) -> None:
+        if isinstance(self.seed, bool) or not isinstance(self.seed, int) or self.seed < 0:
+            raise ValueError("seed must be a non-negative integer")
         if self.attn_backend not in {"flash", "native"}:
             raise ValueError("attn_backend must be one of: flash, native")
         if self.model_hub not in {"hf", "modelscope"}:
@@ -98,6 +101,7 @@ class TrainerConfig:
 
         return ArenoConfig(
             tp_size=self.tp_size,
+            seed=self.seed,
             optimizer=self.optimizer_config(),
             runtime={
                 "activation_checkpointing": self.activation_checkpointing,
@@ -133,6 +137,7 @@ class RolloutTrainerConfig(TrainerConfig):
 
         return ArenoConfig(
             tp_size=self.tp_size,
+            seed=self.seed,
             max_running_prompts=self.resolved_max_running_prompts(),
             optimizer=self.optimizer_config(),
             runtime={
@@ -149,8 +154,20 @@ class PolicyTrainerConfig(RolloutTrainerConfig):
     """Reward-driven policy trainer configuration for GSPO/GRPO."""
 
     reward_fn_path: str | None = None
+    turn_credit_fn_path: str | None = None
+    turn_credit_config_path: str | None = None
     gspo_clip_eps: float = 3.0e-4
     grpo_clip_eps: float = 0.2
+
+    def __post_init__(self) -> None:
+        RolloutTrainerConfig.__post_init__(self)
+        if self.turn_credit_config_path is not None and self.turn_credit_fn_path is None:
+            raise ValueError("turn_credit_config_path requires turn_credit_fn_path")
+        if self.turn_credit_fn_path is not None:
+            if self.algo != "grpo":
+                raise ValueError("experimental turn credit currently supports only --algo grpo")
+            if self.agent_fn is None:
+                raise ValueError("experimental turn credit requires agent_fn")
 
 
 @dataclass(slots=True)

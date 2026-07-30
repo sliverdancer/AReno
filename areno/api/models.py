@@ -38,6 +38,7 @@ class SamplingParams(BaseModel):
     max_new_tokens: int = Field(default=16)
     max_context_len: int | None = Field(default=None)
     temperature: float = Field(default=1.0)
+    seed: int | None = Field(default=None, ge=0)
     stop: list[str] | None = Field(default=None)
     stop_token_ids: list[int] | None = Field(default=None)
     ignore_eos: bool = Field(default=False)

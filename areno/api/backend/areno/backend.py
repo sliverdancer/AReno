@@ -65,6 +65,7 @@ def _rollout_options(ctx: Context, sampling_params: SamplingParams):
             temperature=0.0 if sampling_params.greedy else sampling_params.temperature,
             top_p=sampling_params.top_p,
             top_k=max(0, sampling_params.top_k),
+            seed=sampling_params.seed,
             stop_token_ids=stop_token_ids,
             suppress_token_ids=suppress_token_ids,
             suppress_special_tokens=not sampling_params.ignore_eos,
@@ -171,6 +172,7 @@ class ArenoBackend(Backend):
             dp_size=dp_size,
             devices=devices,
             dummy_load=cfg.dummy_load,
+            seed=cfg.seed,
             optimizer_config=OptimizerConfig(**cfg.optimizer),
             runtime_config=RuntimeConfig(**cfg.runtime),
             loss_fn=_external_loss_dispatcher,
@@ -338,6 +340,13 @@ class ArenoBackend(Backend):
         engine = self._require_engine()
         if not callable(loss_fn):
             raise ValueError("ArenoBackend requires a callable loss_fn")
+        if not _has_trainable_tokens(batch_data):
+            logger.info("train skipped: batch has zero trainable tokens")
+            return {
+                "loss": 0.0,
+                "optimizer_step_skipped": 1.0,
+                "trainable_tokens": 0.0,
+            }
 
         train_start = time.perf_counter()
         if self._step_e2e_start is None:
@@ -514,6 +523,34 @@ def _make_train_pack(seqs: list[TrainSequence]) -> dict[str, torch.Tensor]:
     if ref_logprobs is not None:
         pack["ref_logprobs"] = ref_logprobs
     return pack
+
+
+def _has_trainable_tokens(seqs: list[TrainSequence]) -> bool:
+    """Return whether a batch contains at least one effective loss token.
+
+    A non-empty ``loss_mask`` is explicit, including an all-false mask. An
+    empty mask preserves the legacy default in which every non-prompt token is
+    trainable. Skipping the backend step for an explicit all-false batch avoids
+    optimizer-state and weight-decay mutations in zero-signal control arms.
+    """
+
+    for seq in seqs:
+        if seq.loss_mask:
+            if len(seq.loss_mask) != len(seq.prompt_mask):
+                raise ValueError("loss_mask and prompt_mask lengths must match")
+            if any(
+                enabled and not is_prompt
+                for enabled, is_prompt in zip(
+                    seq.loss_mask,
+                    seq.prompt_mask,
+                    strict=True,
+                )
+            ):
+                return True
+            continue
+        if any(not is_prompt for is_prompt in seq.prompt_mask):
+            return True
+    return False
 
 
 def _is_sft_loss_fn(loss_fn: Callable) -> bool:

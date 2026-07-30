@@ -79,6 +79,12 @@ Built-in algorithms: ``sft``, ``dpo``, ``gspo``, ``grpo``, ``ppo``.
    Optional global trainer step cap. Training stops after this many step
    indices have completed, even if the current epoch still has more batches.
 
+``--seed INTEGER``
+   Non-negative base seed for model initialization, deterministic per-epoch
+   dataset order, and deterministic per-step rollout sampling. Default: ``42``.
+   CUDA kernels may still have hardware-specific nondeterminism; record the
+   complete environment when exact reproducibility matters.
+
 ``--world-size INTEGER``
    Total device count for the backend. Default: ``8``.
 

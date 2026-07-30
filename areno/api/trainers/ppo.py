@@ -30,6 +30,7 @@ from areno.api.advantages import compute_gae
 from areno.api.dashboard import record_dashboard_state
 from areno.api.rewards import make_reward_record
 from areno.api.roles import MissingRoleCapability, ModelRole
+from areno.api.seeding import seed_parent_process
 from areno.api.trainers.policy_only import PolicyOnlyTrainer
 
 logger = logging.getLogger(__name__)
@@ -431,6 +432,7 @@ class PPOTrainer(PolicyOnlyTrainer):
     def fit(self) -> None:
         # Override the base `fit` so role initialisation happens after the
         # backend is up but before the first rollout/train cycle.
+        seed_parent_process(getattr(self.config, "seed", 42))
         self.areno.init()
         self._ensure_roles()
         try:

@@ -66,6 +66,7 @@ TRAIN_OPTION_GROUPS: tuple[tuple[str, tuple[str, ...]], ...] = (
             "smoke_train",
             "epochs",
             "max_steps",
+            "seed",
             "world_size",
             "tp_size",
         ),
@@ -93,6 +94,8 @@ TRAIN_OPTION_GROUPS: tuple[tuple[str, tuple[str, ...]], ...] = (
             "trainable_turns",
             "mask_tool_call_args",
             "reward_fn_path",
+            "turn_credit_fn_path",
+            "turn_credit_config_path",
             "reward_ckpt",
         ),
     ),
@@ -178,6 +181,7 @@ def _trainer_config_from_options(**options) -> TrainerConfig:
     args.max_steps = getattr(args, "max_steps", None)
     args.score_micro_bs = getattr(args, "score_micro_bs", 8)
     args.model_hub = getattr(args, "model_hub", "modelscope")
+    args.seed = getattr(args, "seed", 42)
     smoke_infer = bool(getattr(args, "smoke_infer", False))
     smoke_train = bool(getattr(args, "smoke_train", False))
     if smoke_infer or smoke_train:
@@ -213,12 +217,23 @@ def _trainer_config_from_options(**options) -> TrainerConfig:
         and args.reward_ckpt is None
     ):
         raise click.UsageError("--reward-fn-path or --reward-ckpt is required")
+    turn_credit_fn_path = getattr(args, "turn_credit_fn_path", None)
+    turn_credit_config_path = getattr(args, "turn_credit_config_path", None)
+    if turn_credit_config_path is not None and turn_credit_fn_path is None:
+        raise click.UsageError("--turn-credit-config-path requires --turn-credit-fn-path")
+    if turn_credit_fn_path is not None:
+        if algorithm.name != "grpo":
+            raise click.UsageError("--turn-credit-fn-path currently supports only --algo grpo")
+        if args.agent_fn is None:
+            raise click.UsageError("--turn-credit-fn-path requires --agent-fn")
     if args.save_interval <= 0:
         raise click.UsageError("--save-interval must be positive")
     if args.epochs <= 0:
         raise click.UsageError("--epochs must be positive")
     if args.max_steps is not None and args.max_steps <= 0:
         raise click.UsageError("--max-steps must be positive")
+    if isinstance(args.seed, bool) or not isinstance(args.seed, int) or args.seed < 0:
+        raise click.UsageError("--seed must be a non-negative integer")
     if args.tp_size <= 0:
         raise click.UsageError("--tp-size must be positive")
     if args.world_size <= 0:
@@ -326,6 +341,7 @@ def _format_training_config_summary(
                 ("tp_size", str(config.tp_size)),
                 ("dp_size", _resolved_dp_size_for_summary(config)),
                 ("attn_backend", attn_backend),
+                ("seed", str(config.seed)),
                 (
                     "thinking",
                     _format_optional(config.chat_template_enable_thinking, default="tokenizer default"),
@@ -553,6 +569,33 @@ def _preflight_task_hooks(args, algorithm) -> None:
             expected="run_agent(ctx, batch)",
             positional_args=2,
         )
+    turn_credit_fn_path = getattr(args, "turn_credit_fn_path", None)
+    if turn_credit_fn_path is not None:
+        _validate_python_callable(
+            Path(turn_credit_fn_path).expanduser().resolve(),
+            "route_turn_credit",
+            option_name="--turn-credit-fn-path",
+            expected="route_turn_credit(batch, *, step, config)",
+            positional_args=1,
+        )
+    turn_credit_config_path = getattr(args, "turn_credit_config_path", None)
+    if turn_credit_config_path is not None:
+        config_path = Path(turn_credit_config_path).expanduser().resolve()
+        if not config_path.exists():
+            raise click.UsageError(
+                f"--turn-credit-config-path file does not exist: {config_path}; expected a JSON object"
+            )
+        try:
+            turn_credit_config = json.loads(config_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise click.UsageError(
+                f"--turn-credit-config-path cannot load JSON object: {config_path}; "
+                f"{type(exc).__name__}: {exc}"
+            ) from exc
+        if not isinstance(turn_credit_config, dict):
+            raise click.UsageError(
+                f"--turn-credit-config-path must contain a JSON object: {config_path}"
+            )
 
 
 def _validate_python_callable(
@@ -604,6 +647,11 @@ def _trainer_config_from_args(args) -> TrainerConfig:
     args.model_hub = getattr(args, "model_hub", "modelscope")
     algorithm = get_algorithm(args.algo)
     chat_template_enable_thinking = False if args.disable_thinking else None
+    seed = getattr(args, "seed", 42)
+    trainable_turns = getattr(args, "trainable_turns", "all_assistant")
+    mask_tool_call_args = bool(getattr(args, "mask_tool_call_args", False))
+    turn_credit_fn_path = getattr(args, "turn_credit_fn_path", None)
+    turn_credit_config_path = getattr(args, "turn_credit_config_path", None)
     if algorithm.name == "dpo":
         return DPOTrainerConfig(
             algo=algorithm.name,
@@ -611,6 +659,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             dataset_path=args.dataset_path,
             model_hub=args.model_hub,
             dataset_loader_fn=args.dataset_loader_fn,
+            seed=seed,
             save_path=args.save_path,
             save_interval=args.save_interval,
             epochs=args.epochs,
@@ -641,8 +690,8 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             agent_fn=args.agent_fn,
             agent_timeout_s=args.agent_timeout_s,
             train_tool_results=args.train_tool_results,
-            trainable_turns=args.trainable_turns,
-            mask_tool_call_args=args.mask_tool_call_args,
+            trainable_turns=trainable_turns,
+            mask_tool_call_args=mask_tool_call_args,
             chat_template_enable_thinking=chat_template_enable_thinking,
             ref_ckpt=args.ref_ckpt,
             dpo_beta=args.dpo_beta,
@@ -654,6 +703,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             dataset_path=args.dataset_path,
             model_hub=args.model_hub,
             dataset_loader_fn=args.dataset_loader_fn,
+            seed=seed,
             save_path=args.save_path,
             save_interval=args.save_interval,
             epochs=args.epochs,
@@ -684,8 +734,8 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             agent_fn=args.agent_fn,
             agent_timeout_s=args.agent_timeout_s,
             train_tool_results=args.train_tool_results,
-            trainable_turns=args.trainable_turns,
-            mask_tool_call_args=args.mask_tool_call_args,
+            trainable_turns=trainable_turns,
+            mask_tool_call_args=mask_tool_call_args,
             chat_template_enable_thinking=chat_template_enable_thinking,
         )
     if algorithm.name != "ppo":
@@ -695,7 +745,10 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             dataset_path=args.dataset_path,
             model_hub=args.model_hub,
             dataset_loader_fn=args.dataset_loader_fn,
+            seed=seed,
             reward_fn_path=args.reward_fn_path,
+            turn_credit_fn_path=turn_credit_fn_path,
+            turn_credit_config_path=turn_credit_config_path,
             save_path=args.save_path,
             save_interval=args.save_interval,
             epochs=args.epochs,
@@ -734,8 +787,8 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             agent_fn=args.agent_fn,
             agent_timeout_s=args.agent_timeout_s,
             train_tool_results=args.train_tool_results,
-            trainable_turns=args.trainable_turns,
-            mask_tool_call_args=args.mask_tool_call_args,
+            trainable_turns=trainable_turns,
+            mask_tool_call_args=mask_tool_call_args,
             chat_template_enable_thinking=chat_template_enable_thinking,
         )
     return PPOTrainerConfig(
@@ -744,7 +797,10 @@ def _trainer_config_from_args(args) -> TrainerConfig:
         dataset_path=args.dataset_path,
         model_hub=args.model_hub,
         dataset_loader_fn=args.dataset_loader_fn,
+        seed=seed,
         reward_fn_path=args.reward_fn_path,
+        turn_credit_fn_path=turn_credit_fn_path,
+        turn_credit_config_path=turn_credit_config_path,
         save_path=args.save_path,
         save_interval=args.save_interval,
         epochs=args.epochs,
@@ -797,8 +853,8 @@ def _trainer_config_from_args(args) -> TrainerConfig:
         agent_fn=args.agent_fn,
         agent_timeout_s=args.agent_timeout_s,
         train_tool_results=args.train_tool_results,
-            trainable_turns=args.trainable_turns,
-            mask_tool_call_args=args.mask_tool_call_args,
+        trainable_turns=trainable_turns,
+        mask_tool_call_args=mask_tool_call_args,
         chat_template_enable_thinking=chat_template_enable_thinking,
     )
 
@@ -917,6 +973,8 @@ def _training_config_settings(config: TrainerConfig) -> dict:
                 "trainable_turns",
                 "mask_tool_call_args",
                 "reward_fn_path",
+                "turn_credit_fn_path",
+                "turn_credit_config_path",
                 "reward_ckpt",
             ],
         ),
@@ -1193,6 +1251,16 @@ def _dataset_builder_for_suffix(suffix: str) -> str:
 )
 @click.option("--reward-fn-path", default=None, help="Python file defining reward_fn(record).")
 @click.option(
+    "--turn-credit-fn-path",
+    default=None,
+    help="Experimental Python file defining route_turn_credit(batch, *, step, config); agentic GRPO only.",
+)
+@click.option(
+    "--turn-credit-config-path",
+    default=None,
+    help="Optional JSON object passed to the experimental turn-credit hook.",
+)
+@click.option(
     "--ref-ckpt", default=None, help="Optional PPO/DPO reference model checkpoint path or remote model repo ID."
 )
 @click.option("--reward-ckpt", default=None, help="Optional PPO reward model checkpoint path or remote model repo ID.")
@@ -1204,6 +1272,13 @@ def _dataset_builder_for_suffix(suffix: str) -> str:
 )
 @click.option("--epochs", type=int, default=10, show_default=True, help="Number of dataset epochs to train.")
 @click.option("--max-steps", type=int, default=None, help="Stop after this many trainer steps.")
+@click.option(
+    "--seed",
+    type=click.IntRange(min=0),
+    default=42,
+    show_default=True,
+    help="Base seed for model initialization, epoch data order, and rollout sampling.",
+)
 @click.option(
     "--tune-params",
     "tune_params",

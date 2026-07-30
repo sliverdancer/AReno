@@ -176,6 +176,7 @@ class WorkerRole:
         tp_size: int,
         dp_size: int,
         devices: list[int] | None,
+        seed: int,
         optimizer_lr: float | None = None,
         source_model: torch.nn.Module | None = None,
     ) -> WorkerRole:
@@ -192,6 +193,7 @@ class WorkerRole:
             dp_size=dp_size,
             devices=devices,
             dummy_load=False,
+            seed=seed,
         )
         model = build_model_on_device(role_config, device)
         if source_model is None:
@@ -289,6 +291,7 @@ class RoleManager:
                 tp_size=worker.config.tp_size,
                 dp_size=int(worker.config.dp_size),
                 devices=worker.config.devices,
+                seed=worker.config.seed,
                 optimizer_lr=spec.optimizer_lr,
                 source_model=model_sources.get(cache_key) if cache_key is not None else None,
             )

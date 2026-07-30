@@ -12,7 +12,9 @@ from __future__ import annotations
 
 import asyncio
 import multiprocessing as mp
+import os
 import queue
+import random
 import socket
 import threading
 import traceback
@@ -482,6 +484,23 @@ class TPCluster:
         self.close()
 
 
+def _seed_worker_process(seed: int) -> None:
+    """Seed one spawned worker before model construction or runtime use."""
+
+    normalized = int(seed) & ((1 << 63) - 1)
+    os.environ["PYTHONHASHSEED"] = str(normalized)
+    random.seed(normalized)
+    try:
+        import numpy as np
+
+        np.random.seed(normalized % (2**32))
+    except ImportError:
+        pass
+    torch.manual_seed(normalized)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(normalized)
+
+
 def _worker_entry(
     worker_cls: type,
     rank: int,
@@ -511,7 +530,9 @@ def _worker_entry(
             tp_size=config.tp_size,
         )
         torch.set_float32_matmul_precision("high")
+        _seed_worker_process(config.seed)
         worker = worker_cls(config)
+        _seed_worker_process(config.seed + rank + 1)
         # Inject coordinator-facing handles so worker methods can report
         # request-id-scoped results without re-importing this module.
         worker._rank = rank
