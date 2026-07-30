@@ -1,0 +1,22 @@
+{
+  "_counter": 0,
+  "root": "n0",
+  "nodes": {
+    "n0": {
+      "id": "n0",
+      "parent": null,
+      "depth": 0,
+      "status": "root",
+      "hypothesis": "Restore executable dataclass-bearing agent loading without changing SAS Q1 scientific variables; maximize completed frozen Q1 cells",
+      "insight": "",
+      "metadata": {
+        "dev_score": null,
+        "test_score": null,
+        "result": "",
+        "branch_ref": null
+      },
+      "created_at": 1785424359,
+      "updated_at": 1785424359
+    }
+  }
+}

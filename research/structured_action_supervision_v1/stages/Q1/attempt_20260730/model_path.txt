@@ -1,0 +1,1 @@
+/root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master

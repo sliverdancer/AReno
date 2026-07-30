@@ -1,0 +1,15 @@
+{
+  "objective": "Restore executable dataclass-bearing agent loading without changing SAS Q1 scientific variables; maximize completed frozen Q1 cells",
+  "metric_direction": "max",
+  "dev_eval": "python -m pytest tests/test_agentic_cpu.py tests/test_structured_action_supervision_cpu.py tests/test_train_cli_config_cpu.py -q",
+  "test_eval": "Fresh frozen SAS-P0-v1.1 AF/LF x seeds 1101/2202 qualification-only GPU run; score completed cells out of 4",
+  "material": "dd2bf826771b1e47541edfbee26e59808ebfb1dc",
+  "branching": 1,
+  "max_depth": 1,
+  "budget_cycles": 1,
+  "cycles_used": 0,
+  "best_node": null,
+  "best_test_score": null,
+  "best_branch_ref": null,
+  "created_at": 1785424359
+}

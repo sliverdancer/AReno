@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">SAS main-conference gated research flow</title>
+  <desc id="desc">A left-to-right flow from qualified instrument through GPU pilot, novelty audit, power freeze, confirmatory experiments, and the main-track decision.</desc>
+  <rect width="1400" height="760" fill="#ffffff"/>
+  <style>
+    .box { stroke:#222222; stroke-width:2.5; rx:18; ry:18; }
+    .label { font-family:Arial,Helvetica,sans-serif; font-size:24px; font-weight:700; fill:#111111; text-anchor:middle; }
+    .small { font-family:Arial,Helvetica,sans-serif; font-size:18px; fill:#111111; text-anchor:middle; }
+    .light { fill:#ffffff; }
+    .arrow { stroke:#333333; stroke-width:4; fill:none; marker-end:url(#arrowhead); }
+    .gate { stroke:#222222; stroke-width:2.5; fill:#f0e442; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#333333"/>
+    </marker>
+  </defs>
+
+  <text x="700" y="58" class="label" font-size="32">Structured Action-Span Supervision: Main-Track Gate Flow</text>
+
+  <rect x="40" y="140" width="210" height="140" class="box" fill="#56b4e9"/>
+  <text x="145" y="190" class="label">Q0 PASS</text>
+  <text x="145" y="228" class="small">strict instrument</text>
+  <text x="145" y="255" class="small">seed chain</text>
+
+  <line x1="250" y1="210" x2="315" y2="210" class="arrow"/>
+  <rect x="320" y="140" width="210" height="140" class="box" fill="#009e73"/>
+  <text x="425" y="190" class="label">Q1 Pilot</text>
+  <text x="425" y="228" class="small">AF/LF × 2 seeds</text>
+  <text x="425" y="255" class="small">qualification only</text>
+
+  <line x1="530" y1="210" x2="595" y2="210" class="arrow"/>
+  <polygon points="700,120 800,210 700,300 600,210" class="gate"/>
+  <text x="700" y="194" class="label">N1 / Q2</text>
+  <text x="700" y="226" class="small">novelty, power,</text>
+  <text x="700" y="252" class="small">resource freeze</text>
+
+  <line x1="800" y1="210" x2="865" y2="210" class="arrow"/>
+  <rect x="870" y="140" width="230" height="140" class="box" fill="#0072b2"/>
+  <text x="985" y="184" class="label light">Q3 Confirm</text>
+  <text x="985" y="222" class="small light">anchor + generalization</text>
+  <text x="985" y="250" class="small light">+ mechanism controls</text>
+
+  <line x1="1100" y1="210" x2="1165" y2="210" class="arrow"/>
+  <polygon points="1270,120 1370,210 1270,300 1170,210" class="gate"/>
+  <text x="1270" y="194" class="label">Q4 Hook</text>
+  <text x="1270" y="226" class="small">all criteria met?</text>
+
+  <path d="M1270 300 L1270 385 L1030 385 L1030 455" class="arrow"/>
+  <rect x="900" y="460" width="260" height="130" class="box" fill="#009e73"/>
+  <text x="1030" y="510" class="label">GO MAIN</text>
+  <text x="1030" y="548" class="small">benchmark or novel method</text>
+  <text x="1030" y="575" class="small">plus reproducible evidence</text>
+
+  <path d="M1220 260 L1150 335 L700 335 L700 455" class="arrow"/>
+  <rect x="570" y="460" width="260" height="130" class="box" fill="#e69f00"/>
+  <text x="700" y="510" class="label">STAY DIAGNOSTIC</text>
+  <text x="700" y="548" class="small">bounded, null, negative,</text>
+  <text x="700" y="575" class="small">or incomplete evidence</text>
+
+  <path d="M650 260 L520 335 L370 335 L370 455" class="arrow"/>
+  <rect x="240" y="460" width="260" height="130" class="box" fill="#d55e00"/>
+  <text x="370" y="510" class="label light">KILL / BLOCK</text>
+  <text x="370" y="548" class="small light">invalid instrument, direct</text>
+  <text x="370" y="575" class="small light">substitute, or underpowered</text>
+
+  <text x="700" y="685" class="small">Held-out outcomes remain unopened until the frozen Q3 manifest is authorized.</text>
+  <text x="700" y="718" class="small">Q0–Q2 can never independently trigger GO_MAIN_TRACK.</text>
+</svg>

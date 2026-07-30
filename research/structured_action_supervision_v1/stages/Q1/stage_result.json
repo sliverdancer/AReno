@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-P0-v1.0",
+  "stage": "Q1",
+  "stage_status": "KILL",
+  "decision": "KILL_CURRENT_INSTRUMENT",
+  "authorization": {
+    "status": "USER_AUTHORIZED",
+    "date": "2026-07-30",
+    "scope": "dependency installation, frozen source deployment, Qwen3-0.6B download, and four Q1 GPU training tasks",
+    "gpu_time_limit_seconds": 28800
+  },
+  "execution": {
+    "attempt_id": "Q1-20260730",
+    "started_at_utc": "2026-07-30T15:04:53.161864+00:00",
+    "ended_at_utc": "2026-07-30T15:05:18.541918+00:00",
+    "controller_elapsed_seconds": 25.380068723112345,
+    "attempted_runs": 1,
+    "completed_runs": 0,
+    "unattempted_runs": [
+      "LF-seed-1101",
+      "AF-seed-2202",
+      "LF-seed-2202"
+    ],
+    "failed_run": "AF-seed-1101",
+    "failed_run_return_code": 1,
+    "trajectory_requests_started": 0,
+    "optimization_steps_completed": 0,
+    "heldout_consumed": false,
+    "gpu_processes_after_failure": []
+  },
+  "failure": {
+    "reason_code": "DYNAMIC_AGENT_MODULE_NOT_REGISTERED",
+    "exception_type": "AttributeError",
+    "exception_message": "'NoneType' object has no attribute '__dict__'",
+    "root_cause": "load_agent_run_fn creates a dynamic module and executes it without first registering it in sys.modules; Python 3.12 dataclasses with slots consult sys.modules during class processing.",
+    "trigger": "The CallValidation dataclass in the frozen SAS agent file was evaluated before the first model request.",
+    "scientific_data_interpretable": false,
+    "selective_rerun_permitted_under_protocol_v1": false
+  },
+  "qualification": {
+    "all_four_commands_complete": false,
+    "no_oom": true,
+    "no_nonfinite_optimization": true,
+    "no_fabricated_or_repaired_calls": true,
+    "complete_metrics_and_raw_provenance": false,
+    "parser_and_executable_validity_measured": false,
+    "rewards_non_degenerate": false,
+    "resource_usage_measured": false,
+    "arm_masks_distinct_in_emitted_metrics": false
+  },
+  "environment_verification": {
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "torch": "2.8.0+cu128",
+    "cuda_runtime": "12.8",
+    "python": "3.12.3",
+    "areno_check": "READY_WITH_OPTIONAL_FLASH_ATTN_WARNING",
+    "compiled_extension_import": "PASS",
+    "bf16_gpu_smoke": "PASS",
+    "sas_and_cli_cpu_tests": "89 passed",
+    "full_cpu_suite": "431 passed, 2 environment-dependent failures"
+  },
+  "provenance": {
+    "source_commit": "dd2bf826771b1e47541edfbee26e59808ebfb1dc",
+    "source_archive_sha256": "64258a5209d5a18792676e7ce434a8ec644edfd62ab83ab6dada03a4a5c48240",
+    "runtime_manifest_sha256": "0df84d5a2a3de7e7f9cdd278151e493553ee7782fc3c54eafefbe026b300d17f",
+    "qualification_dataset_sha256": "a4a54821febebc60f47f8bb1ca67183c35941ffbc1f2b9bfd5412fe869b92d32",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "downloaded_attempt_archive_sha256": "d2d999016fa2e3a6f219ed8b07ad1dcfd0de4606d40dc2e6439d5e4614f0cdae",
+    "evidence_root": "attempt_20260730"
+  },
+  "next_action": "Terminate SAS-P0-v1.0. Any loader repair and GPU retry must use a new protocol version and a new frozen Q1 manifest.",
+  "main_track_evidence": {
+    "protocol_valid": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_method_or_benchmark": false,
+    "no_material_protocol_deviation": true
+  }
+}

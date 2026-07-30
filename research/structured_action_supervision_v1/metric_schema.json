@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-P0-v1.0",
+  "strict_denominator_rule": "Every attempted trajectory remains in the denominator.",
+  "outcomes": {
+    "strict_task_success": {
+      "role": "primary",
+      "definition": "mean(reward > 0) on the frozen held-out split",
+      "source": "TensorBoard rollout/accuracy plus rollout_samples.*.jsonl audit",
+      "available_stage": "Q3"
+    },
+    "strict_success_auc": {
+      "role": "secondary",
+      "definition": "trapezoidal area under strict success versus cumulative environment interactions",
+      "source": "TensorBoard rollout/accuracy and rollout/num_sequences",
+      "available_stage": "Q1"
+    },
+    "valid_call_rate": {
+      "role": "qualification",
+      "definition": "valid expected calls divided by all expected call opportunities before deterministic stop",
+      "source": "rollout_samples.*.jsonl reconstructed with run_agent.validate_response reason rules",
+      "available_stage": "Q1"
+    },
+    "invalid_call_reasons": {
+      "role": "qualification",
+      "definition": "counts of MISSING_TOOL_CALL, MULTIPLE_TOOL_CALLS, UNEXPECTED_TOOL_NAME, INVALID_JSON_ARGUMENTS, ARGUMENTS_NOT_OBJECT, and INVALID_ARGUMENT_SCHEMA",
+      "source": "rollout_samples.*.jsonl and sas_invalid_call structured log lines",
+      "available_stage": "Q1"
+    },
+    "process_compliance": {
+      "role": "secondary",
+      "definition": "fraction with exactly search_catalog, inspect_items, check_kit, submit_bundle",
+      "source": "rollout_samples.*.jsonl tool_calls",
+      "available_stage": "Q1"
+    },
+    "final_reward": {
+      "role": "secondary",
+      "definition": "mean and distribution of strict reward including invalid trajectories",
+      "source": "TensorBoard rollout/rewards_*",
+      "available_stage": "Q1"
+    },
+    "cumulative_trainable_tokens": {
+      "role": "budget",
+      "definition": "cumulative sum of effective non-prompt loss-mask tokens",
+      "source": "TensorBoard train/trainable_tokens",
+      "available_stage": "Q1"
+    },
+    "effective_masked_response_length": {
+      "role": "mechanism",
+      "definition": "trainable and masked response-token counts per optimizer step",
+      "source": "TensorBoard train/trainable_tokens and train/masked_response_tokens",
+      "available_stage": "Q1"
+    },
+    "optimization_diagnostics": {
+      "role": "safety",
+      "definition": "policy loss, gradient norm, sequence ratio mean/std, and clipping diagnostics",
+      "source": "TensorBoard train/loss, train/grad_norm, train/ratio_*, and algorithm-specific clip metrics",
+      "available_stage": "Q1"
+    },
+    "wall_clock": {
+      "role": "resource",
+      "definition": "rollout, reward, advantage, train, and end-to-end seconds",
+      "source": "TensorBoard time/* and train/step_*_time_s",
+      "available_stage": "Q1"
+    },
+    "peak_gpu_memory": {
+      "role": "resource",
+      "definition": "maximum allocated GPU memory per arm under the same process protocol",
+      "source": "Q1 environment sidecar using torch.cuda.max_memory_allocated",
+      "available_stage": "Q1"
+    }
+  }
+}
+

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-P0-v1.0",
+  "stage": "Q0",
+  "stage_status": "PASS",
+  "decision": "PASS_Q0_INSTRUMENT",
+  "completed_checks": {
+    "four_factorial_masks_distinct": true,
+    "zero_signal_optimizer_step_skipped": true,
+    "raw_arguments_preserved": true,
+    "missing_calls_not_synthesized": true,
+    "stable_invalid_reason_codes": true,
+    "constraint_signature_splits_disjoint": true,
+    "strict_reward_requires_exact_protocol": true,
+    "metric_schema_frozen": true,
+    "training_seed_explicit_end_to_end": true
+  },
+  "seed_contract": {
+    "public_trainer_config": true,
+    "public_cli_option": "--seed",
+    "parent_initialization": true,
+    "spawn_worker_initialization": true,
+    "epoch_dataset_order": true,
+    "per_step_rollout_sampling": true,
+    "per_agent_request_sampling": true,
+    "cuda_bitwise_determinism_claimed": false
+  },
+  "dataset": {
+    "generator_version": "sas-shopping-v1",
+    "seed": 20260729,
+    "train_count": 48,
+    "qualification_count": 16,
+    "heldout_count": 16,
+    "manifest": "dataset/split_manifest.json"
+  },
+  "verification": {
+    "sas_targeted": "17 passed",
+    "cpu_suite_without_optional_serve_module": "388 passed",
+    "full_cpu_collection": "blocked before tests because fastapi is absent from the current project virtual environment",
+    "syntax_compile": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "main_track_evidence": {
+    "protocol_valid": true,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_method_or_benchmark": false,
+    "no_material_protocol_deviation": true
+  }
+}
+

@@ -1,0 +1,37 @@
+{
+  "criteria": [
+    "protocol_valid",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_method_or_benchmark",
+    "no_material_protocol_deviation"
+  ],
+  "decision": "STAY_DIAGNOSTIC",
+  "protocol_id": "SAS-P0-v1.0",
+  "reasons": [
+    "main-track upgrade is forbidden before a valid Q3 confirmatory result",
+    "the current stage remains blocked"
+  ],
+  "schema_version": 1,
+  "stage": "Q0",
+  "stage_result_sha256": "b27ec4ff3ec1446996242d641c5a3a5bb7b1736d11dc7e2a98a0c7c1bc24704a",
+  "stage_status": "BLOCKED",
+  "unmet_criteria": [
+    "protocol_valid",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_method_or_benchmark"
+  ]
+}
