@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_CHECKPOINT = "Qwen/Qwen3-0.6B"
+DEFAULT_PROTOCOL_ID = "SAS-P0-v1.0"
 DEFAULT_SEEDS = (1101, 2202)
 DEFAULT_MAX_STEPS = 8
 ARMS = {
@@ -102,6 +103,7 @@ def prepare(
     repo_root: Path,
     run_root: Path,
     checkpoint: str = DEFAULT_CHECKPOINT,
+    protocol_id: str = DEFAULT_PROTOCOL_ID,
     seeds: tuple[int, ...] = DEFAULT_SEEDS,
     max_steps: int = DEFAULT_MAX_STEPS,
 ) -> dict[str, Any]:
@@ -143,7 +145,7 @@ def prepare(
     )
     manifest = {
         "schema_version": 1,
-        "protocol_id": "SAS-P0-v1.0",
+        "protocol_id": protocol_id,
         "stage": "Q1",
         "status": "PREPARED_GPU_UNAUTHORIZED",
         "checkpoint": checkpoint,
@@ -237,6 +239,11 @@ def main() -> int:
         default=Path("research/structured_action_supervision_v1/stages/Q1"),
     )
     parser.add_argument("--checkpoint", default=DEFAULT_CHECKPOINT)
+    parser.add_argument(
+        "--protocol-id",
+        choices=("SAS-P0-v1.0", "SAS-P0-v1.1"),
+        default=DEFAULT_PROTOCOL_ID,
+    )
     parser.add_argument("--seed", type=int, action="append", dest="seeds")
     parser.add_argument("--max-steps", type=int, default=DEFAULT_MAX_STEPS)
     parser.add_argument("--prepare", action="store_true")
@@ -279,6 +286,7 @@ def main() -> int:
         repo_root=repo_root,
         run_root=run_root,
         checkpoint=args.checkpoint,
+        protocol_id=args.protocol_id,
         seeds=seeds,
         max_steps=args.max_steps,
     )
@@ -295,4 +303,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

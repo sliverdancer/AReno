@@ -428,6 +428,22 @@ def test_q1_pilot_dry_run_is_seeded_two_arm_and_qualification_only(tmp_path):
         assert command[command.index("--trainable-turns") + 1] == expected_mode
 
 
+def test_q1_successor_manifest_changes_only_protocol_identity_and_paths(tmp_path):
+    pilot = _instrument_module("run_q1_pilot")
+
+    manifest = pilot.prepare(
+        repo_root=REPO_ROOT,
+        run_root=tmp_path,
+        protocol_id="SAS-P0-v1.1",
+    )
+
+    assert manifest["protocol_id"] == "SAS-P0-v1.1"
+    assert manifest["heldout_consumed"] is False
+    assert manifest["seeds"] == [1101, 2202]
+    assert manifest["max_steps"] == 8
+    assert set(manifest["arms"]) == {"AF", "LF"}
+
+
 def test_main_track_hook_requires_q3_and_all_frozen_criteria(tmp_path):
     hook = _load_module(
         "sas_stage_completion_hook_for_tests",
@@ -441,6 +457,9 @@ def test_main_track_hook_requires_q3_and_all_frozen_criteria(tmp_path):
         "main_track_evidence": {},
     }
     assert hook.assess_stage_result(q0)["decision"] == "STAY_DIAGNOSTIC"
+    assert hook.assess_stage_result(
+        {**q0, "protocol_id": "SAS-P0-v1.1"}
+    )["decision"] == "STAY_DIAGNOSTIC"
 
     q3 = {
         **q0,

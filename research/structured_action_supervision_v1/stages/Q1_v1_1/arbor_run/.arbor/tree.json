@@ -1,5 +1,5 @@
 {
-  "_counter": 0,
+  "_counter": 1,
   "root": "n0",
   "nodes": {
     "n0": {
@@ -8,7 +8,7 @@
       "depth": 0,
       "status": "root",
       "hypothesis": "Restore executable dataclass-bearing agent loading without changing SAS Q1 scientific variables; maximize completed frozen Q1 cells",
-      "insight": "",
+      "insight": "[from n1] Dynamic agent loaders must register collision-safe modules before execution and roll back failed imports; this is an execution prerequisite, not a training intervention.",
       "metadata": {
         "dev_score": null,
         "test_score": null,
@@ -16,7 +16,23 @@
         "branch_ref": null
       },
       "created_at": 1785424359,
-      "updated_at": 1785424359
+      "updated_at": 1785424695
+    },
+    "n1": {
+      "id": "n1",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "Register each dynamically loaded agent module under a collision-safe deterministic sys.modules name before exec_module, with cleanup on failure; this eliminates the Python 3.12 dataclass crash without altering agent behavior or Q1 variables",
+      "insight": "Python 3.12 slotted dataclasses require the defining dynamic module in sys.modules during class creation; deterministic path-digest names avoid stem collisions and rollback preserves import hygiene.",
+      "metadata": {
+        "dev_score": 2.0,
+        "test_score": null,
+        "result": "Focused Python 3.12 dataclass-load and failure-cleanup checks passed; syntax and diff checks passed. Full local pytest unavailable because the local interpreter lacks pytest and torch.",
+        "branch_ref": "arbor/sas-loader-registration@cf90e4a18a7d1f5b8df9ea3a5947c320edfc2a9a"
+      },
+      "created_at": 1785424401,
+      "updated_at": 1785424695
     }
   }
 }

@@ -15,6 +15,7 @@ from typing import Any
 
 DECISIONS = {"GO_MAIN_TRACK", "STAY_DIAGNOSTIC", "KILL_MAIN_TRACK"}
 STAGES = {"P0", "Q0", "Q1", "Q2", "Q3", "Q4"}
+PROTOCOL_IDS = {"SAS-P0-v1.0", "SAS-P0-v1.1"}
 TERMINAL_FAILURES = {"KILL", "INVALID"}
 MAIN_TRACK_CRITERIA = (
     "protocol_valid",
@@ -100,8 +101,11 @@ def finalize_stage(stage_result_path: Path, output_path: Path | None = None) -> 
 def _validate_stage_result(payload: dict[str, Any]) -> None:
     if payload.get("schema_version") != 1:
         raise ValueError("stage result schema_version must be 1")
-    if payload.get("protocol_id") != "SAS-P0-v1.0":
-        raise ValueError("stage result protocol_id must be SAS-P0-v1.0")
+    if payload.get("protocol_id") not in PROTOCOL_IDS:
+        raise ValueError(
+            "stage result protocol_id must be one of: "
+            + ", ".join(sorted(PROTOCOL_IDS))
+        )
     if payload.get("stage") not in STAGES:
         raise ValueError(f"unsupported stage: {payload.get('stage')!r}")
     if payload.get("stage_status") not in {
@@ -134,4 +138,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
