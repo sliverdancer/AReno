@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import importlib.util
 import logging
 import sys
@@ -31,6 +32,38 @@ AgentBatch = agentic.AgentBatch
 AgentTrajectoryTurn = agentic.AgentTrajectoryTurn
 LossMaskPolicy = agentic.LossMaskPolicy
 RolloutSession = agentic.RolloutSession
+
+
+def test_load_agent_run_fn_supports_slotted_dataclass(tmp_path):
+    agent_path = tmp_path / "dataclass_agent.py"
+    agent_path.write_text(
+        "from dataclasses import dataclass\n"
+        "\n"
+        "@dataclass(frozen=True, slots=True)\n"
+        "class Result:\n"
+        "    value: int\n"
+        "\n"
+        "async def run_agent(ctx, batch):\n"
+        "    return Result(7).value\n",
+        encoding="utf-8",
+    )
+
+    run_agent = agentic.load_agent_run_fn(str(agent_path))
+
+    assert asyncio.run(run_agent(None, None)) == 7
+    assert run_agent.__module__ in sys.modules
+
+
+def test_load_agent_run_fn_cleans_registration_after_import_failure(tmp_path):
+    agent_path = tmp_path / "broken_agent.py"
+    agent_path.write_text("raise RuntimeError('broken agent import')\n", encoding="utf-8")
+    path_digest = hashlib.sha256(str(agent_path.resolve()).encode()).hexdigest()
+    module_name = f"_areno_agent_{path_digest}"
+
+    with pytest.raises(RuntimeError, match="broken agent import"):
+        agentic.load_agent_run_fn(str(agent_path))
+
+    assert module_name not in sys.modules
 
 
 def test_agent_batch_expands_records_by_n_samples():

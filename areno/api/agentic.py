@@ -14,9 +14,11 @@ coverage can be added without changing trainer boundaries.
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import importlib.util
 import json
 import logging
+import sys
 import threading
 import time
 import uuid
@@ -859,14 +861,27 @@ def load_agent_run_fn(path: str) -> Callable[[RolloutSession, AgentBatch], Any]:
     """Load ``async def run_agent(ctx, batch)`` from a Python file."""
 
     module_path = Path(path).expanduser().resolve()
-    spec = importlib.util.spec_from_file_location(module_path.stem, module_path)
+    path_digest = hashlib.sha256(str(module_path).encode()).hexdigest()
+    module_name = f"_areno_agent_{path_digest}"
+    spec = importlib.util.spec_from_file_location(module_name, module_path)
     if spec is None or spec.loader is None:
         raise ValueError(f"cannot load agent function from {module_path}")
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    run_agent = getattr(module, "run_agent", None)
-    if not callable(run_agent):
-        raise ValueError(f"{module_path} must define callable run_agent(ctx, batch)")
+    missing = object()
+    previous_module = sys.modules.get(module_name, missing)
+    sys.modules[module_name] = module
+    try:
+        spec.loader.exec_module(module)
+        run_agent = getattr(module, "run_agent", None)
+        if not callable(run_agent):
+            raise ValueError(f"{module_path} must define callable run_agent(ctx, batch)")
+    except BaseException:
+        if sys.modules.get(module_name) is module:
+            if previous_module is missing:
+                sys.modules.pop(module_name, None)
+            else:
+                sys.modules[module_name] = previous_module
+        raise
     return run_agent
 
 
