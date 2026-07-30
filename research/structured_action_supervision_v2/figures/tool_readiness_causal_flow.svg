@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">SAS tool-readiness causal and decision flow</title>
+  <desc id="desc">The consumed v1.1 default-thinking 128-token condition led to truncated thinking, no tool calls, degenerate reward, and a killed instrument. The v2 protocol tests thinking mode and token budget before any new action-span training.</desc>
+  <rect width="1200" height="640" fill="#ffffff"/>
+  <style>
+    .title{font:700 28px sans-serif;fill:#222}
+    .label{font:600 18px sans-serif;fill:#222}
+    .small{font:400 15px sans-serif;fill:#333}
+    .box{stroke:#222;stroke-width:2;rx:14}
+    .arrow{stroke:#444;stroke-width:3;fill:none;marker-end:url(#m)}
+  </style>
+  <defs>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#444"/>
+    </marker>
+  </defs>
+  <text x="600" y="45" text-anchor="middle" class="title">From Failed SAS Instrument to Prespecified Tool-Readiness Gate</text>
+
+  <rect x="35" y="100" width="210" height="105" class="box" fill="#56B4E9"/>
+  <text x="140" y="135" text-anchor="middle" class="label">v1.1 interface</text>
+  <text x="140" y="166" text-anchor="middle" class="small">default thinking</text>
+  <text x="140" y="188" text-anchor="middle" class="small">128-token ceiling</text>
+
+  <rect x="305" y="100" width="210" height="105" class="box" fill="#E69F00"/>
+  <text x="410" y="135" text-anchor="middle" class="label">128 / 128</text>
+  <text x="410" y="166" text-anchor="middle" class="small">entered &lt;think&gt;</text>
+  <text x="410" y="188" text-anchor="middle" class="small">no closing tag</text>
+
+  <rect x="575" y="100" width="210" height="105" class="box" fill="#D55E00"/>
+  <text x="680" y="135" text-anchor="middle" class="label">No tool calls</text>
+  <text x="680" y="166" text-anchor="middle" class="small">zero raw markup</text>
+  <text x="680" y="188" text-anchor="middle" class="small">zero parsed calls</text>
+
+  <rect x="845" y="100" width="320" height="105" class="box" fill="#CC79A7"/>
+  <text x="1005" y="135" text-anchor="middle" class="label">Degenerate training signal</text>
+  <text x="1005" y="166" text-anchor="middle" class="small">reward = -1; loss = 0</text>
+  <text x="1005" y="188" text-anchor="middle" class="small">AF and LF masks collapse</text>
+
+  <path d="M245 153 H300" class="arrow"/>
+  <path d="M515 153 H570" class="arrow"/>
+  <path d="M785 153 H840" class="arrow"/>
+
+  <text x="600" y="270" text-anchor="middle" class="label">New protocol — causal qualification, not a repaired Q1</text>
+
+  <rect x="90" y="320" width="220" height="100" class="box" fill="#999999"/>
+  <text x="200" y="355" text-anchor="middle" class="label">D128 / D512</text>
+  <text x="200" y="385" text-anchor="middle" class="small">default thinking</text>
+  <text x="200" y="407" text-anchor="middle" class="small">diagnostic only</text>
+
+  <rect x="365" y="320" width="220" height="100" class="box" fill="#0072B2"/>
+  <text x="475" y="355" text-anchor="middle" class="label">N128 / N512</text>
+  <text x="475" y="385" text-anchor="middle" class="small">thinking disabled</text>
+  <text x="475" y="407" text-anchor="middle" class="small">eligible interfaces</text>
+
+  <rect x="640" y="320" width="220" height="100" class="box" fill="#F0E442"/>
+  <text x="750" y="350" text-anchor="middle" class="label">Strict gate</text>
+  <text x="750" y="377" text-anchor="middle" class="small">first call ≥ 95%</text>
+  <text x="750" y="399" text-anchor="middle" class="small">four turns ≥ 75%</text>
+
+  <path d="M310 370 H360" class="arrow"/>
+  <path d="M585 370 H635" class="arrow"/>
+
+  <rect x="925" y="285" width="240" height="100" class="box" fill="#009E73"/>
+  <text x="1045" y="322" text-anchor="middle" class="label">PASS</text>
+  <text x="1045" y="352" text-anchor="middle" class="small">validate selected cell</text>
+  <text x="1045" y="374" text-anchor="middle" class="small">then plan new AF/LF</text>
+
+  <rect x="925" y="430" width="240" height="100" class="box" fill="#D55E00"/>
+  <text x="1045" y="467" text-anchor="middle" class="label">FAIL</text>
+  <text x="1045" y="497" text-anchor="middle" class="small">kill 0.6B instrument</text>
+  <text x="1045" y="519" text-anchor="middle" class="small">no automatic escalation</text>
+
+  <path d="M860 350 C895 350 895 335 920 335" class="arrow"/>
+  <path d="M860 390 C895 390 895 480 920 480" class="arrow"/>
+  <text x="875" y="329" class="small">pass</text>
+  <text x="875" y="458" class="small">fail</text>
+
+  <rect x="90" y="505" width="770" height="85" class="box" fill="#EAF4F8"/>
+  <text x="475" y="540" text-anchor="middle" class="label">Main-track status remains closed</text>
+  <text x="475" y="570" text-anchor="middle" class="small">Tool readiness qualifies the instrument; it does not estimate supervision efficacy.</text>
+</svg>

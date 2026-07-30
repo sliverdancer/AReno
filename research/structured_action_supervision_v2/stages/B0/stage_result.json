@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.0",
+  "stage": "B0",
+  "stage_status": "PASS",
+  "decision": "PASS_ROOT_CAUSE_CANDIDATE_THINK_BUDGET_EXHAUSTION",
+  "execution": {
+    "raw_samples_audited": 128,
+    "heldout_consumed": false,
+    "gpu_used": false
+  },
+  "qualification": {
+    "all_responses_enter_thinking": true,
+    "all_responses_saturate_generation_budget": true,
+    "no_response_closes_thinking": true,
+    "no_raw_tool_markup": true,
+    "no_parsed_tool_calls": true,
+    "causal_root_cause_proven": false
+  },
+  "provenance": {
+    "forensic_result_sha256": "f9368d650983b7a1c4ba300aa43da0f17b96663ed13fb73ac3dbe7232f0cfebf",
+    "source_protocol": "SAS-P0-v1.1",
+    "source_evidence_root": "../structured_action_supervision_v1/stages/Q1_v1_1/attempt_20260730"
+  },
+  "next_action": "Freeze and validate a fresh thinking-mode by token-budget factorial without modifying consumed v1.1 evidence.",
+  "main_track_evidence": {
+    "tool_readiness_causally_validated": false,
+    "af_lf_contrast_instantiated": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_benchmark_or_method": false,
+    "no_material_protocol_deviation": true
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.0",
+  "stage": "B1",
+  "stage_status": "PASS",
+  "decision": "PASS_B1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "execution": {
+    "cpu_contract_tests": "4 passed",
+    "heldout_consumed": false,
+    "reserve_consumed": false,
+    "gpu_used": false,
+    "model_downloaded": false
+  },
+  "qualification": {
+    "four_cells_frozen": true,
+    "sampling_seeds_frozen": true,
+    "calibration_validation_reserve_disjoint": true,
+    "selection_rule_frozen": true,
+    "kill_rule_frozen": true,
+    "public_api_changed": false,
+    "public_cli_changed": false,
+    "dependency_changed": false
+  },
+  "provenance": {
+    "manifest_sha256": "a8d5fa17e788e711ab16cbb36c3cb97a36de27ca2a26e1e4fedccc06daaa57e5",
+    "source_train_sha256": "73ebf043b1736d911f7b4268ed62f900e48009683cf138bc555583a01d30dc59",
+    "calibration_sha256": "164d0aac8d4468fc6057b1c8aeaf8361a2ea33234f0e5753afe7076373927711",
+    "validation_sha256": "318d573a111f74cc84ca5bcf7006a401e49e59ba5abb4187200e9026021a3f76",
+    "reserve_sha256": "473eaf83a40824711576160d3cd7ee71f4a987c7e095451b70321137e0f8604d"
+  },
+  "next_action": "Request explicit authorization for bounded B2 GPU serving and inference. Do not run training.",
+  "main_track_evidence": {
+    "tool_readiness_causally_validated": false,
+    "af_lf_contrast_instantiated": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_benchmark_or_method": false,
+    "no_material_protocol_deviation": true
+  }
+}

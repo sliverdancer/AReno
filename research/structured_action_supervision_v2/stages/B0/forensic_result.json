@@ -1,0 +1,69 @@
+{
+  "causal_boundary": "The stored samples do not include an API finish_reason, so this audit does not by itself prove that thinking mode caused the failure. A fresh prespecified thinking-mode by token-budget factorial is required.",
+  "counts": {
+    "budget_saturated": 128,
+    "closed_think": 0,
+    "contains_tool_markup": 0,
+    "parsed_tool_calls": 0,
+    "raw_samples": 128,
+    "rollout_files": 4,
+    "single_assistant_turn": 128,
+    "starts_with_think": 128,
+    "unique_responses": 64
+  },
+  "decision": "PASS_ROOT_CAUSE_CANDIDATE_THINK_BUDGET_EXHAUSTION",
+  "gate_checks": {
+    "all_responses_enter_thinking": true,
+    "all_responses_saturate_generation_budget": true,
+    "complete_consumed_evidence": true,
+    "exactly_one_assistant_turn_per_trajectory": true,
+    "no_parsed_tool_calls": true,
+    "no_raw_tool_markup": true,
+    "no_response_closes_thinking": true
+  },
+  "interpretation": "The evidence is consistent with generation-budget exhaustion inside Qwen3 thinking mode before a tool call could be emitted.",
+  "loss_mask_true_distribution": {
+    "128": 128
+  },
+  "per_run": {
+    "AF-seed-1101": {
+      "budget_saturated": 32,
+      "chat_template_enable_thinking": null,
+      "closed_think": 0,
+      "max_new_tokens": 128,
+      "parsed_tool_calls": 0,
+      "raw_samples": 32,
+      "starts_with_think": 32
+    },
+    "AF-seed-2202": {
+      "budget_saturated": 32,
+      "chat_template_enable_thinking": null,
+      "closed_think": 0,
+      "max_new_tokens": 128,
+      "parsed_tool_calls": 0,
+      "raw_samples": 32,
+      "starts_with_think": 32
+    },
+    "LF-seed-1101": {
+      "budget_saturated": 32,
+      "chat_template_enable_thinking": null,
+      "closed_think": 0,
+      "max_new_tokens": 128,
+      "parsed_tool_calls": 0,
+      "raw_samples": 32,
+      "starts_with_think": 32
+    },
+    "LF-seed-2202": {
+      "budget_saturated": 32,
+      "chat_template_enable_thinking": null,
+      "closed_think": 0,
+      "max_new_tokens": 128,
+      "parsed_tool_calls": 0,
+      "raw_samples": 32,
+      "starts_with_think": 32
+    }
+  },
+  "schema_version": 1,
+  "source_protocol": "SAS-P0-v1.1",
+  "stage": "B0-RETROSPECTIVE-FORENSICS"
+}

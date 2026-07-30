@@ -1,0 +1,182 @@
+{
+  "calibration_gates": {
+    "fabricated_call_count_max": 0,
+    "first_turn_executable_rate_min": 0.95,
+    "four_turn_completion_rate_min": 0.75,
+    "positive_reward_rate_max": 0.95,
+    "positive_reward_rate_min": 0.05
+  },
+  "cells": {
+    "D128": {
+      "max_new_tokens": 128,
+      "role": "diagnostic_only",
+      "thinking_mode": "tokenizer_default"
+    },
+    "D512": {
+      "max_new_tokens": 512,
+      "role": "diagnostic_only",
+      "thinking_mode": "tokenizer_default"
+    },
+    "N128": {
+      "max_new_tokens": 128,
+      "role": "eligible_interface",
+      "thinking_mode": "disabled"
+    },
+    "N512": {
+      "max_new_tokens": 512,
+      "role": "eligible_interface",
+      "thinking_mode": "disabled"
+    }
+  },
+  "claim_boundary": "B1/B2 qualify an inference interface. They do not estimate AF versus LF efficacy and cannot reopen the main-conference route.",
+  "decision_rule": "Select N128 if it passes every calibration gate; otherwise select N512 if it passes; otherwise KILL_QWEN3_0_6B_INSTRUMENT. D128 and D512 diagnose the failure mechanism and are never eligible.",
+  "files": {
+    "calibration": {
+      "constraint_signatures": [
+        "f4556f9c1e31f4f9f8887bf71bf64eb625a65b1f3406630befa7390851a42800",
+        "464159ccc4f4aeaede5d4c87e56e255a4caf86c07321362c6dc452f850c5a917",
+        "a4ad37dcbb1a32897b465f90ea164a47ab6b6fc468c855414ab2f694b3598467",
+        "0382ed6d5f232299ff94ad5987129f4b050342ec531e5b6f6d0091ccac7e6ac3",
+        "c68c645280658061a5c4c9cda452f560a93a91140d8bd7c52dcf4a94f73e5b6f",
+        "3a3cde37704ec40545ae38c5d251b6ceb3162229326d6deebafed30c6f877d1a",
+        "784e533b2c6fb3ffcd2115f6581da1ee1dc1994215447fb1f27b6e0e1460906e",
+        "4944db708e6c2f6cba8536121ed475cbb267eaad198c26df86f8b6de459b9260",
+        "bfd266234de897b490802660890310100bb155e411d8ac2a4ffd330a99d0e0da",
+        "3d90a63c155ee048f422391aed409fc8420ecfa18eb9e90a20399159e4d3d3b0",
+        "04705592dc981f0ae97a12a899d6ee374991dd48cb6e28bfa0ff911c5f08c0b6",
+        "58eee3c4cac7dfb306cc09f8b2637f943a6b7e9ba46990581e85ef72312b53ee",
+        "d225ea699ace40ddd919d6772b82c91847c0825a962e91e2bd5d8dfe437d3353",
+        "30d79c752a83e19fcc4bcf6867afb83734fe2224e51061dccee5ce05762a8dcf",
+        "6721196079ae36370df2fcf96db3aa54ca7803246b9507b03099e81886099bd8",
+        "f4dfb5dd33456e1c1d52c1f61a91f91aa39f796ecd182ecdcf434177d1211820"
+      ],
+      "ids": [
+        "train-010",
+        "train-017",
+        "train-029",
+        "train-011",
+        "train-019",
+        "train-035",
+        "train-021",
+        "train-041",
+        "train-014",
+        "train-000",
+        "train-016",
+        "train-009",
+        "train-039",
+        "train-013",
+        "train-020",
+        "train-044"
+      ],
+      "path": "calibration.jsonl",
+      "rows": 16,
+      "sha256": "164d0aac8d4468fc6057b1c8aeaf8361a2ea33234f0e5753afe7076373927711"
+    },
+    "reserve": {
+      "constraint_signatures": [
+        "189b49698766d3f617cf9592ef8fc135ae5c88fcf22199a1c24d53ad8ef1cbbd",
+        "041a88185fb6cf1bb8443aecd62426d79714af415e94fcd823a29ec66e5b1434",
+        "3d3cff139ea94bcf82d7a373bff64c2048486d15129b9f1b792ec5cd55977dfc",
+        "7c0d80ee71e254811a964e9237c578a219df081c4823d5d9c2020ac81f1a1350",
+        "807e9d2286610af8b69237df6b15064441c06293622bdf93472cbed8cc2dbcf4",
+        "67334d2b87240a06b15c6852c1cdc5297baef8fbc6148bf08e77c1fc63013fea",
+        "fc2f9840c111e718bf7cb5fbaf95f7b1830cc3c002ba7fd2a0884a3be5faa400",
+        "56ac3d3517bbd9963c387b974a72284ab329d1b37f65f947cb22781f26a13f73",
+        "8dddb9024f3e5b2d09bb8c36087a0e9f6384aee90356009c35b07eb877da9b55",
+        "10bc5433503cbb55f7be67a7a2eddb4bcc5af9587ac04eed68b8e4d28b854d6a",
+        "7be0b55bc96f2de87be86e39006f7f97f360d23040361b65aee7088994d54d7a",
+        "5dff5d111c4fafec99bb22ee7e356b7ade11a817d192c183833a59c106801b18",
+        "a7120195acc13b431d0285c0ab4d015e13bb3940a8d0823bc56828ad764dfab3",
+        "e00c09b2ceaef95721ff89a7c84b04f780ca40ddfe9c8474e925b04ec09eed48",
+        "df0e56ca77d845420788a40e3e1bc9feb62a59e23c35745d250d749415f7e9e9",
+        "9398457fca73c875b3b9282669c640970f4d4989751d5075a0a11c642ac20cd1"
+      ],
+      "ids": [
+        "train-036",
+        "train-026",
+        "train-001",
+        "train-040",
+        "train-005",
+        "train-006",
+        "train-030",
+        "train-042",
+        "train-003",
+        "train-007",
+        "train-022",
+        "train-028",
+        "train-025",
+        "train-031",
+        "train-002",
+        "train-004"
+      ],
+      "path": "reserve.jsonl",
+      "rows": 16,
+      "sha256": "473eaf83a40824711576160d3cd7ee71f4a987c7e095451b70321137e0f8604d"
+    },
+    "validation": {
+      "constraint_signatures": [
+        "25702bff1dd75f87a0599619b9f4ac8089fa9c77fe8b4d4158e15076b93d41c4",
+        "c1a659890f6af023f672b1d585f5c632d8224ae76c917a1a7d7bc753b94de51d",
+        "208f3063a5f2ccd8e9aea32e26926af0cd26d911e720da2c195e077068d4f38a",
+        "c2cf0a669b9f408e2626897b156075e3a3af5fdacc0f185aa9f926025322dc75",
+        "9c5e88717682ad66ebb982ff42191d76df1903ba395327bf028f3b384ac5e505",
+        "263105ec0b91f90b09673b7cac02f5c8d4340ec86823ec4ab455c4ddc9da7b01",
+        "6a0988c6ac184d399c1552f59a597cd194f4dca18946ec5b13d68dd2439f9f69",
+        "d5fe43fab2e424b91205a8bb0a1f7fa0ae8976106ba0efe3f1eff88394aab7a1",
+        "05b792a198c96f90c378d17a3b4487fe4ddee9d9709bbe1c3fd261c72065dbd2",
+        "0e880af47348bb92f3ff8b7d16ad28321a951d9eef3451b83880a63ab2aafd01",
+        "2ee000dfd505fdd55a170e2f59335dbd420168c5ef7f0665a0dfdb12d91e9c6e",
+        "978b6061ed8bfd1f917800e3cc54f8fdf3ab700aab0f0b50b45d1c4b827e52b2",
+        "65da9e6a99299073c5c6cecc7ae7565ed51fff5c40dc3274e6596d4a649fd28e",
+        "4a8972a09bebc831bd9eab54017b853d6c7bf443bf6c297ca63357e9c09746ab",
+        "8c59d285808c906e17264ac81551f1d5abc27520abdaaa337f9790be2b3e137e",
+        "98b59763c4811510e2e2f25444794dd6d818f772a70d100b3b8d7ef8fda2fd7c"
+      ],
+      "ids": [
+        "train-045",
+        "train-038",
+        "train-047",
+        "train-024",
+        "train-008",
+        "train-037",
+        "train-015",
+        "train-033",
+        "train-023",
+        "train-034",
+        "train-032",
+        "train-018",
+        "train-027",
+        "train-043",
+        "train-012",
+        "train-046"
+      ],
+      "path": "validation.jsonl",
+      "rows": 16,
+      "sha256": "318d573a111f74cc84ca5bcf7006a401e49e59ba5abb4187200e9026021a3f76"
+    }
+  },
+  "heldout_consumed": false,
+  "model": {
+    "checkpoint": "Qwen/Qwen3-0.6B",
+    "weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+  },
+  "protocol_id": "SAS-TR-v2.0",
+  "sampling_seeds": [
+    3101,
+    3202
+  ],
+  "schema_version": 1,
+  "selection_order": [
+    "N128",
+    "N512"
+  ],
+  "source": {
+    "path": "research/structured_action_supervision_v1/stages/Q0/dataset/train.jsonl",
+    "rows": 48,
+    "sha256": "73ebf043b1736d911f7b4268ed62f900e48009683cf138bc555583a01d30dc59"
+  },
+  "split_salt": "SAS-TR-v2.0-tool-readiness-split",
+  "stage": "B1-CPU-FREEZE",
+  "trajectories_per_cell": 32,
+  "validation_rule": "Run only the selected interface on validation.jsonl with both frozen seeds. It must independently pass the same gates. Reserve remains unopened."
+}
