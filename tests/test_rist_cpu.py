@@ -105,3 +105,171 @@ def test_rist_stage_hook_keeps_p1_diagnostic_and_kills_failed_stages():
     assert passed["upgraded"] is False
     assert killed["decision"] == "KILL_CURRENT_ROUTE"
     assert killed["upgraded"] is False
+
+
+def test_rist_p2_parser_rejects_missing_or_malformed_calls_without_repair():
+    client = _load_module("rist_run_p2_client", RESEARCH_DIR / "run_p2_client.py")
+    offered = {"scan_registry"}
+
+    missing = client.parse_tool_call({"role": "assistant"}, offered)
+    malformed = client.parse_tool_call(
+        {
+            "tool_calls": [
+                {
+                    "id": "x",
+                    "function": {
+                        "name": "scan_registry",
+                        "arguments": "{}",
+                    },
+                }
+            ]
+        },
+        offered,
+    )
+    multiple = client.parse_tool_call(
+        {
+            "tool_calls": [
+                {
+                    "id": "x",
+                    "function": {
+                        "name": "scan_registry",
+                        "arguments": '{"code":"r0-abc"}',
+                    },
+                },
+                {
+                    "id": "y",
+                    "function": {
+                        "name": "scan_registry",
+                        "arguments": '{"code":"r0-def"}',
+                    },
+                },
+            ]
+        },
+        offered,
+    )
+    unlisted = client.parse_tool_call(
+        {
+            "tool_calls": [
+                {
+                    "id": "x",
+                    "function": {
+                        "name": "unknown_tool",
+                        "arguments": '{"code":"r0-abc"}',
+                    },
+                }
+            ]
+        },
+        offered,
+    )
+    valid = client.parse_tool_call(
+        {
+            "tool_calls": [
+                {
+                    "id": "x",
+                    "function": {
+                        "name": "scan_registry",
+                        "arguments": '{"code":"r0-abc"}',
+                    },
+                }
+            ]
+        },
+        offered,
+    )
+
+    assert missing == {"valid": False, "reason": "MISSING_TOOL_CALL", "call": None}
+    assert malformed["reason"] == "INVALID_ARGUMENT_SCHEMA"
+    assert multiple["reason"] == "MULTIPLE_TOOL_CALLS"
+    assert unlisted["reason"] == "UNLISTED_TOOL"
+    assert valid["valid"] is True
+    assert valid["call"]["arguments"] == {"code": "r0-abc"}
+
+
+def test_rist_p2_forced_cells_hide_distractor_tools():
+    client = _load_module("rist_run_p2_client_topology", RESEARCH_DIR / "run_p2_client.py")
+    turn = {
+        "expected_tool": "scan_registry",
+        "offered_tools": ["scan_registry", "delete_registry", "export_registry"],
+    }
+
+    forced = client._offered_tool_names(
+        {"factors": {"tool_choice_mode": "forced"}},
+        turn,
+    )
+    free = client._offered_tool_names(
+        {"factors": {"tool_choice_mode": "free"}},
+        turn,
+    )
+
+    assert forced == ["scan_registry"]
+    assert free == turn["offered_tools"]
+
+
+def test_rist_p2_analyzer_passes_only_cross_family_resolution_signal():
+    generator = _load_module("rist_task_generator_p2", RESEARCH_DIR / "task_generator.py")
+    analyzer = _load_module("rist_analyze_p2", RESEARCH_DIR / "analyze_p2.py")
+    tasks = generator.generate_splits(seed=31)["qualification"]
+    selected = []
+    for stratum in ("low", "intermediate", "high"):
+        selected.extend(
+            task for task in tasks if task["reward_resolution_stratum"] == stratum
+        )
+    mixed_signatures = {task["task_signature"] for task in selected[:2]}
+    mixed_signatures.update(
+        task["task_signature"]
+        for task in [
+            *[task for task in tasks if task["reward_resolution_stratum"] == "low"][:2],
+            *[task for task in tasks if task["reward_resolution_stratum"] == "high"][:2],
+            *[task for task in tasks if task["reward_resolution_stratum"] == "intermediate"][:2],
+        ]
+    )
+
+    def payload(model_cell: str):
+        trajectories = []
+        for task in tasks:
+            for sample_index in range(8):
+                mixed = task["task_signature"] in mixed_signatures
+                reward = int(mixed and sample_index % 2 == 0)
+                actions = [
+                    {
+                        "name": action["name"],
+                        "arguments": {
+                            "code": (
+                                action["arguments"]["code"]
+                                if reward or sample_index == 0
+                                else f"wrong-{sample_index}"
+                            )
+                        },
+                    }
+                    for action in task["oracle_actions"]
+                ]
+                trajectories.append(
+                    {
+                        "task_signature": task["task_signature"],
+                        "analytic_stratum": task["reward_resolution_stratum"],
+                        "strict_reward": reward,
+                        "actions": actions,
+                        "first_turn_executable": True,
+                        "four_turn_complete": True,
+                        "raw_response_count": 4,
+                        "fabricated_call_count": 0,
+                    }
+                )
+        return {
+            "model_cell": model_cell,
+            "expected_trajectories": 256,
+            "infrastructure_error": None,
+            "trajectories": trajectories,
+        }
+
+    result = analyzer.analyze_cross_family(
+        [payload("qwen3_0_6b"), payload("gemma4_e2b_it")]
+    )
+
+    assert result["stage_status"] == "PASS"
+    assert result["decision"] == "PASS_P2_CROSS_FAMILY_RESOLUTION_TO_P3_PILOT"
+    assert all(result["cross_family_gates"].values())
+    assert all(
+        model["mean_empirical_reward_entropy_bits"] > 0.0
+        and model["raw_parsed_agreement_rate"] == 1.0
+        for model in result["models"]
+    )
