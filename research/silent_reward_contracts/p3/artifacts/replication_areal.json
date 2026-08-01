@@ -1,0 +1,59 @@
+{
+  "case": {
+    "case_id": "ARCA-P3-AREAL-MISSING-REWARD-ZERO",
+    "conclusion_flip": false,
+    "expected_violations": [
+      "ARCA-F6-STATUS"
+    ],
+    "framework": "AReaL",
+    "natural_case": true,
+    "payload": {
+      "execution_failures": [
+        {
+          "kind": "missing_reward",
+          "numeric_reward": 0.0,
+          "structured_status": null
+        }
+      ]
+    },
+    "seed": 0,
+    "severity": "medium",
+    "workload": "failure_status"
+  },
+  "dynamic_probe": {
+    "input_reward": null,
+    "output_keys": [
+      "attention_mask",
+      "input_ids",
+      "logprobs",
+      "loss_mask",
+      "original_rewards",
+      "rewards",
+      "versions"
+    ],
+    "output_reward": 0.0,
+    "structured_missing_status": false,
+    "torch_cpu": true
+  },
+  "exact_match": true,
+  "gpu_executed": false,
+  "inspection": {
+    "commit": "62f955c5e0388aebc6fd58c5ad3f8fcf9d7384b8",
+    "facts": {
+      "discount_path_warns_missing_reward": true,
+      "none_reward_maps_to_zero": true,
+      "singleton_group_native_warning": true,
+      "tensor_output_has_reward_status": false
+    },
+    "source_hashes": {
+      "cli_args": "505fad54b28171cb409f0835645eeacd9f3eb4a4ee4c4eaefa99e584e1c4e0d4",
+      "interaction_cache": "23c4bbd701ef92ccf28a04e7bd2771b303ef54e9e894fd0cb3c6878005e11664",
+      "interaction_types": "392e1e41b165e3b8bdd6382c5132a479b8bd568ff3e39de2c983bf387230b064"
+    }
+  },
+  "predicted_violations": [
+    "ARCA-F6-STATUS"
+  ],
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+  "schema_version": "arca.p3.replication.v1"
+}

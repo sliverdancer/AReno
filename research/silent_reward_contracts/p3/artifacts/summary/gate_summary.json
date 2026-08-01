@@ -1,0 +1,258 @@
+{
+  "baselines": [
+    {
+      "baseline": "exit_only",
+      "clean_false_positive_rate": 0.0,
+      "macro_recall": 0.0
+    },
+    {
+      "baseline": "finite_only",
+      "clean_false_positive_rate": 0.0,
+      "macro_recall": 0.0
+    },
+    {
+      "baseline": "schema_only",
+      "clean_false_positive_rate": 0.0,
+      "macro_recall": 0.0
+    },
+    {
+      "baseline": "openrlhf_native_preflight",
+      "clean_false_positive_rate": 0.0,
+      "macro_recall": 0.25
+    },
+    {
+      "baseline": "ARCA",
+      "clean_false_positive_rate": 0.0,
+      "macro_recall": 1.0
+    }
+  ],
+  "conditions": {
+    "all_high_natural_detected": true,
+    "frozen_hashes_match": true,
+    "heldout_clean_fpr_at_most_0_05": true,
+    "heldout_macro_recall_at_least_0_90": true,
+    "two_natural_conclusion_flips": true,
+    "workloads_under_60_seconds": true
+  },
+  "dev": {
+    "case_count": 163,
+    "clean_false_positive_rate": 0.0,
+    "clean_false_positive_wilson_95": [
+      0.0,
+      0.0458181295355271
+    ],
+    "high_natural_recall": 1.0,
+    "macro_recall": 1.0,
+    "natural_conclusion_flips_detected": 2,
+    "rule_metrics": {
+      "ARCA-F1-TYPE": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 11,
+        "wilson_95": [
+          0.7411670330319684,
+          1.0
+        ]
+      },
+      "ARCA-F2-PAIRING": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F2-REWARD-FLOW": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 11,
+        "wilson_95": [
+          0.7411670330319684,
+          1.0
+        ]
+      },
+      "ARCA-F3-INFORMATIVE": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F4-ADVANTAGE": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F5-TREATMENT": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F6-PROVENANCE": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F6-STATUS": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 11,
+        "wilson_95": [
+          0.7411670330319684,
+          1.0
+        ]
+      }
+    },
+    "schema_version": "arca.evaluation.v1",
+    "split": "dev",
+    "wall_time_limit_seconds": 60.0,
+    "wall_time_under_limit": true
+  },
+  "evidence_strength": {
+    "development_natural_failures": 3,
+    "heldout_mutation_failures": 40,
+    "heldout_natural_failures": 0,
+    "heldout_source_derived_clean_cases": 40,
+    "post_freeze_replication_natural_failures": 1
+  },
+  "frozen_hashes": {
+    "research/silent_reward_contracts/arca.py": "f1805dc3104fcab82cd5d22d984379c9ea3f9c322ab17de07d9103d14657952c",
+    "research/silent_reward_contracts/evaluate_auditor.py": "6dab53958717c01d9eba27762245be6aad6730661d7f7f345a8e5a784c575152",
+    "research/silent_reward_contracts/p3/dev_cases.json": "c90c7ced9dbe45fdd9f50471dfb68b4a133ec18cba69eadbd954b286a6935e8d"
+  },
+  "gpu_executed": false,
+  "heldout": {
+    "case_count": 80,
+    "clean_false_positive_rate": 0.0,
+    "clean_false_positive_wilson_95": [
+      0.0,
+      0.08762160119728664
+    ],
+    "high_natural_recall": null,
+    "macro_recall": 1.0,
+    "natural_conclusion_flips_detected": 0,
+    "rule_metrics": {
+      "ARCA-F2-REWARD-FLOW": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F4-ADVANTAGE": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F5-TREATMENT": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "ARCA-F6-STATUS": {
+        "fn": 0,
+        "recall": 1.0,
+        "tp": 10,
+        "wilson_95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      }
+    },
+    "schema_version": "arca.evaluation.v1",
+    "split": "heldout",
+    "wall_time_limit_seconds": 60.0,
+    "wall_time_under_limit": true
+  },
+  "heldout_hierarchical_bootstrap_macro_recall_95": [
+    1.0,
+    1.0
+  ],
+  "outcome": "PASS_P3_CPU_AUDITOR_TO_GPU_AUTHORIZATION_REQUEST",
+  "post_freeze_replication": {
+    "case": {
+      "case_id": "ARCA-P3-AREAL-MISSING-REWARD-ZERO",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "AReaL",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "missing_reward",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "medium",
+      "workload": "failure_status"
+    },
+    "dynamic_probe": {
+      "input_reward": null,
+      "output_keys": [
+        "attention_mask",
+        "input_ids",
+        "logprobs",
+        "loss_mask",
+        "original_rewards",
+        "rewards",
+        "versions"
+      ],
+      "output_reward": 0.0,
+      "structured_missing_status": false,
+      "torch_cpu": true
+    },
+    "exact_match": true,
+    "gpu_executed": false,
+    "inspection": {
+      "commit": "62f955c5e0388aebc6fd58c5ad3f8fcf9d7384b8",
+      "facts": {
+        "discount_path_warns_missing_reward": true,
+        "none_reward_maps_to_zero": true,
+        "singleton_group_native_warning": true,
+        "tensor_output_has_reward_status": false
+      },
+      "source_hashes": {
+        "cli_args": "505fad54b28171cb409f0835645eeacd9f3eb4a4ee4c4eaefa99e584e1c4e0d4",
+        "interaction_cache": "23c4bbd701ef92ccf28a04e7bd2771b303ef54e9e894fd0cb3c6878005e11664",
+        "interaction_types": "392e1e41b165e3b8bdd6382c5132a479b8bd568ff3e39de2c983bf387230b064"
+      }
+    },
+    "predicted_violations": [
+      "ARCA-F6-STATUS"
+    ],
+    "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+    "schema_version": "arca.p3.replication.v1"
+  },
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+  "schema_version": "arca.p3.gate.v1"
+}

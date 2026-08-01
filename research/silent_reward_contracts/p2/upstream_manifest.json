@@ -1,0 +1,17 @@
+{
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+  "framework": "veRL",
+  "repository": "https://github.com/volcengine/verl.git",
+  "audited_commit": "e9618406de5bad40041d7612554e465ec2003ec1",
+  "intent_commit": {
+    "commit": "bf7aac2fa77fb4a7df2a931c576292d11fcbff72",
+    "title": "[rollout, tool] feat: export rollout rewards to total rewards (#3563)",
+    "recorded_claim": "exports rollout rewards including tool calling rewards to compute_score"
+  },
+  "source_sha256": {
+    "verl/experimental/agent_loop/tool_agent_loop.py": "911864a9b3a41af23a204dfce90ec051c3ced646b3d41d4c50dd383de90abc1f",
+    "verl/experimental/agent_loop/agent_loop.py": "8fafab8568a3c495a061cbe98d1734c80f8adcb634a3fc27950b4acbf924cf92",
+    "verl/workers/reward_manager/naive.py": "c8a043a053a024976613b62a401ca8acc511d6e1d51aefca4a9720f7cc793448",
+    "verl/tools/function_tool.py": "fb512e1470101059f828ccbacaa8e387bde840b9234c36120f18ea3a600f8883"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "case_count": 80,
+  "clean_false_positive_rate": 0.0,
+  "clean_false_positive_wilson_95": [
+    0.0,
+    0.08762160119728664
+  ],
+  "high_natural_recall": null,
+  "macro_recall": 1.0,
+  "natural_conclusion_flips_detected": 0,
+  "rule_metrics": {
+    "ARCA-F2-REWARD-FLOW": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F4-ADVANTAGE": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F5-TREATMENT": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F6-STATUS": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    }
+  },
+  "schema_version": "arca.evaluation.v1",
+  "split": "heldout",
+  "wall_time_limit_seconds": 60.0,
+  "wall_time_under_limit": true
+}

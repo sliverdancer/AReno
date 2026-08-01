@@ -1,0 +1,1712 @@
+{
+  "cases": [
+    {
+      "case_id": "heldout-clean-reward-flow-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 0,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 0,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 0,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 1,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 1,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 1,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 1,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 2,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 2,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 2,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 2,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 3,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 3,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 3,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 3,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 4,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 4,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 4,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 4,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 5,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 5,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 5,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 5,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 6,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 6,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 6,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 6,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 7,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 7,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 7,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 7,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 8,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 8,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 8,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 8,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-clean-reward-flow-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 9,
+      "severity": "clean_source",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-mutation-reward-flow-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "heldout-clean-group-advantage-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "seed": 9,
+      "severity": "clean_source",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-mutation-group-advantage-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ]
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "heldout-clean-treatment-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            0,
+            1
+          ]
+        }
+      },
+      "seed": 9,
+      "severity": "clean_source",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-mutation-treatment-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "arm-a": [
+            1,
+            0
+          ],
+          "arm-b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "treatment_identity"
+    },
+    {
+      "case_id": "heldout-clean-failure-status-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "OpenRLHF",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": null,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 9,
+      "severity": "clean_source",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "heldout-mutation-failure-status-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "OpenRLHF",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "remote_reward_failure",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    }
+  ],
+  "framework_inspection": {
+    "commit": "bc71bb19464aca306b33080b2d2bb45d154e2f49",
+    "facts": {
+      "executor_reward_key": "reward",
+      "group_estimators_require_multiple_samples": true,
+      "remote_reward_failure_stays_none": true,
+      "sample_consumer_reward_key": "reward",
+      "step_reward_key": "rewards"
+    },
+    "source_hashes": {
+      "agent": "2c549b3bf47b42e59089d587606b7271ae92263760025651b17e4a2537ad69dc",
+      "cli": "658dd36d9f116531e75a003a07c609b7dba1f467c983e68585ea7c634a669656",
+      "sample_generator": "2fc25a3da36825a842d13a3782a17930ad0d71e4821d51bd4cccf30d102272e3"
+    }
+  },
+  "mutation_policy": "single_fault_only",
+  "schema_version": "arca.cases.v1",
+  "split": "heldout"
+}

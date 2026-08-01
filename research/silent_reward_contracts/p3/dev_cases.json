@@ -1,0 +1,3351 @@
+{
+  "cases": [
+    {
+      "case_id": "natural-areno-argument-type",
+      "conclusion_flip": true,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "AReno",
+      "natural_case": true,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "\"not-an-object\""
+        ]
+      },
+      "seed": 0,
+      "severity": "high",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "natural-verl-tool-reward-key",
+      "conclusion_flip": true,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "veRL",
+      "natural_case": true,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward_scores"
+        ],
+        "intended_reward_keys": [
+          "tool_rewards"
+        ],
+        "produced_reward_keys": [
+          "tool_rewards"
+        ]
+      },
+      "seed": 0,
+      "severity": "high",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "natural-verl-timeout-zero",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "veRL",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "medium",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-typed_arguments-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-0",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-0",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 0,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-1",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-1",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 1,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-2",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-2",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 2,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-3",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-3",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 3,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-4",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-4",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 4,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-5",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-5",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 5,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-6",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-6",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 6,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-7",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-7",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 7,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-8",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-8",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 8,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "clean-typed_arguments-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          {
+            "bit": 1
+          },
+          "{\"bit\": 1}"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "clean-trace_pairing-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": [
+          "c1"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "clean-reward_flow-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "reward"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "clean-reward_signal-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "clean-group_advantage-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "clean-treatments-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [
+          [
+            "a",
+            "b"
+          ]
+        ],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "clean-failure_status-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "clean-provenance-9",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "abc"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "provenance"
+    },
+    {
+      "case_id": "mutation-typed_arguments-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F1-TYPE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "argument_variants": [
+          "{"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "typed_arguments"
+    },
+    {
+      "case_id": "mutation-trace_pairing-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-PAIRING"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "call_ids": [
+          "c1"
+        ],
+        "result_call_ids": []
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "trace_pairing"
+    },
+    {
+      "case_id": "mutation-reward_flow-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F2-REWARD-FLOW"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "consumed_reward_keys": [
+          "score"
+        ],
+        "intended_reward_keys": [
+          "reward"
+        ],
+        "produced_reward_keys": [
+          "reward"
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "reward_flow"
+    },
+    {
+      "case_id": "mutation-reward_signal-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "reward_signal"
+    },
+    {
+      "case_id": "mutation-group_advantage-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F4-ADVANTAGE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "group_rewards": [
+          [
+            1.0
+          ],
+          [
+            0.0
+          ]
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "group_advantage"
+    },
+    {
+      "case_id": "mutation-treatments-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F5-TREATMENT"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "declared_aliases": [],
+        "treatment_masks": {
+          "a": [
+            1,
+            0
+          ],
+          "b": [
+            1,
+            0
+          ]
+        }
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "treatments"
+    },
+    {
+      "case_id": "mutation-failure_status-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "kind": "TimeoutError",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "failure_status"
+    },
+    {
+      "case_id": "mutation-provenance-9",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-PROVENANCE"
+      ],
+      "framework": "registered-fixture",
+      "natural_case": false,
+      "payload": {
+        "provenance": {
+          "observed": {
+            "commit": "def"
+          },
+          "required": {
+            "commit": "abc"
+          }
+        }
+      },
+      "seed": 9,
+      "severity": "synthetic",
+      "workload": "provenance"
+    }
+  ],
+  "mutation_policy": "single_fault_only",
+  "schema_version": "arca.cases.v1",
+  "split": "dev"
+}

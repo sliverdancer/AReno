@@ -1,0 +1,89 @@
+{
+  "case_count": 163,
+  "clean_false_positive_rate": 0.0,
+  "clean_false_positive_wilson_95": [
+    0.0,
+    0.0458181295355271
+  ],
+  "high_natural_recall": 1.0,
+  "macro_recall": 1.0,
+  "natural_conclusion_flips_detected": 2,
+  "rule_metrics": {
+    "ARCA-F1-TYPE": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 11,
+      "wilson_95": [
+        0.7411670330319684,
+        1.0
+      ]
+    },
+    "ARCA-F2-PAIRING": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F2-REWARD-FLOW": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 11,
+      "wilson_95": [
+        0.7411670330319684,
+        1.0
+      ]
+    },
+    "ARCA-F3-INFORMATIVE": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F4-ADVANTAGE": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F5-TREATMENT": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F6-PROVENANCE": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 10,
+      "wilson_95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    "ARCA-F6-STATUS": {
+      "fn": 0,
+      "recall": 1.0,
+      "tp": 11,
+      "wilson_95": [
+        0.7411670330319684,
+        1.0
+      ]
+    }
+  },
+  "schema_version": "arca.evaluation.v1",
+  "split": "dev",
+  "wall_time_limit_seconds": 60.0,
+  "wall_time_under_limit": true
+}

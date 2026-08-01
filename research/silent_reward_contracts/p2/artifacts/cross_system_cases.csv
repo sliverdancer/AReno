@@ -1,0 +1,4 @@
+case_id,framework,failure_class,failure_family,severity,natural_case,ordinary_exit_ok,detected,conclusion_flip,observed_contract,oracle_contract
+ARCA-P2-ARENO-ARG-TYPE,AReno,serialized_argument_type_mismatch,F1_serialization_type,high,True,True,True,True,production_reward=0.0,canonical_object_reward=1.0
+ARCA-P2-VERL-TOOL-REWARD-KEY,veRL,tool_reward_namespace_mismatch,F2_trace_reward_flow,high,True,True,True,True,tool_rewards serialized but default reward manager reads reward_scores,documented tool reward reaches compute_score under one stable key
+ARCA-P2-VERL-TIMEOUT-ZERO,veRL,timeout_zero_status_conflation,F6_artifact_provenance,medium,True,True,True,False,TimeoutError becomes score=0.0 with console text only,structured timeout status remains distinguishable from legitimate zero

@@ -1,0 +1,86 @@
+{
+  "_counter": 4,
+  "root": "n0",
+  "nodes": {
+    "n0": {
+      "id": "n0",
+      "parent": null,
+      "depth": 0,
+      "status": "root",
+      "hypothesis": "Maximize held-out macro detection recall for silent agentic-RL contract failures while keeping clean-fixture false-positive rate at or below 5 percent",
+      "insight": "[from n1] Successful agentic-RL execution does not establish typed reward-boundary equivalence; production-boundary positive controls are required\n[from n2] Reward contracts must cover namespace flow and structured failure provenance in addition to schema types\n[from n3] Preflight identifiability needs declared treatment aliases and nondegenerate group variance",
+      "metadata": {
+        "dev_score": null,
+        "test_score": null,
+        "result": "",
+        "branch_ref": null
+      },
+      "created_at": 1785557168,
+      "updated_at": 1785558860
+    },
+    "n1": {
+      "id": "n1",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "Typed serialization contracts catch silent reward corruption that exit-code and finite-metric checks miss",
+      "insight": "Typed equivalence must be checked at the exact reward boundary, not inferred from successful parsing or process exit",
+      "metadata": {
+        "dev_score": null,
+        "test_score": null,
+        "result": "AReno production normalization converts dict arguments to strings; the frozen CARe reward returns 0.0 versus canonical-object oracle 1.0 while execution succeeds",
+        "branch_ref": "research/silent-reward-contracts"
+      },
+      "created_at": 1785557179,
+      "updated_at": 1785557767
+    },
+    "n2": {
+      "id": "n2",
+      "parent": "n0",
+      "depth": 1,
+      "status": "merged",
+      "hypothesis": "Semantic trajectory and reward invariants are required because schema-valid traces can still be scientifically invalid",
+      "insight": "Schema validity is insufficient when producer and consumer namespaces differ or failure status is erased",
+      "metadata": {
+        "dev_score": 1.0,
+        "test_score": 1.0,
+        "result": "veRL production manager probe exposed tool_rewards/reward_scores dataflow mismatch and timeout-to-zero provenance conflation; frozen rules detected both",
+        "branch_ref": "research/silent-reward-contracts"
+      },
+      "created_at": 1785557180,
+      "updated_at": 1785558927
+    },
+    "n3": {
+      "id": "n3",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "Experimental-identifiability checks detect aliased treatments and degenerate advantages before GPU execution",
+      "insight": "Identical treatments are acceptable only when preregistered as equivalence controls; grouped estimators need an explicit variance precondition",
+      "metadata": {
+        "dev_score": 1.0,
+        "test_score": null,
+        "result": "Declared issue-199 mask equivalence passed, undeclared alias and singleton-group mutations were detected, and OpenRLHF native CLI independently catches singleton grouped estimators",
+        "branch_ref": "research/silent-reward-contracts"
+      },
+      "created_at": 1785557180,
+      "updated_at": 1785558859
+    },
+    "n4": {
+      "id": "n4",
+      "parent": "n1",
+      "depth": 2,
+      "status": "executed",
+      "hypothesis": "The same silent typed-boundary failure appears naturally in at least one independent development framework",
+      "insight": "Cross-system recurrence occurred at the broader reward-contract layer, not the exact serialization subtype",
+      "metadata": {
+        "dev_score": 0.0,
+        "test_score": null,
+        "result": "No second natural typed-serialization mismatch was found in veRL; its independent natural failures were reward-key flow and timeout provenance",
+        "branch_ref": "research/silent-reward-contracts"
+      },
+      "created_at": 1785557767,
+      "updated_at": 1785558859
+    }
+  }
+}

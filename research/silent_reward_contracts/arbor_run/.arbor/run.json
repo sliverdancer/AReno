@@ -1,0 +1,15 @@
+{
+  "objective": "Maximize held-out macro detection recall for silent agentic-RL contract failures while keeping clean-fixture false-positive rate at or below 5 percent",
+  "metric_direction": "max",
+  "dev_eval": "python -m research.silent_reward_contracts.evaluate_auditor --split dev --score-only",
+  "test_eval": "python -m research.silent_reward_contracts.evaluate_auditor --split heldout --score-only",
+  "material": ".",
+  "branching": 3,
+  "max_depth": 2,
+  "budget_cycles": 8,
+  "cycles_used": 2,
+  "best_node": "n2",
+  "best_test_score": 1.0,
+  "best_branch_ref": "research/silent-reward-contracts",
+  "created_at": 1785557168
+}

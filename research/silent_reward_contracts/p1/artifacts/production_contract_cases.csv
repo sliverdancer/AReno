@@ -1,0 +1,3 @@
+case_id,failure_family,severity,ordinary_exit_ok,observed_value,oracle_value,detected,contract_status,source_path
+ARCA-P1-F1-STRINGIFIED-ARGUMENTS,F1_serialization_type,high,True,0.0,1.0,True,FAIL_SILENT_REWARD_CORRUPTION,areno/api/agentic.py::_chat_response_message_tool_calls -> examples/agentic/care_bifurcation/reward.py::reward_fn
+ARCA-P1-F5-ISSUE199-ALIAS,F5_treatment_identity,informational,True,1,1,True,PASS_DECLARED_EQUIVALENCE_CONTROL,examples/agentic/trainable_turns_ablation/README.md

@@ -1,0 +1,26 @@
+{
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+  "search_date": "2026-08-01",
+  "screening_level": "title_abstract_and_official_artifact",
+  "sources": [
+    {"id": "RHB", "url": "https://arxiv.org/abs/2605.02964", "kind": "primary_paper"},
+    {"id": "IRC", "url": "https://arxiv.org/abs/2604.02869", "kind": "primary_paper"},
+    {"id": "CA_SURVEY", "url": "https://arxiv.org/abs/2604.09459", "kind": "survey"},
+    {"id": "CM2", "url": "https://arxiv.org/abs/2602.12268", "kind": "primary_paper"},
+    {"id": "COLLAPSE", "url": "https://openreview.net/forum?id=9ElTlEDWpx", "kind": "primary_paper"},
+    {"id": "GUIDE", "url": "https://openreview.net/forum?id=K6T0o875zF", "kind": "primary_paper"},
+    {"id": "LMRLGYM", "url": "https://openreview.net/forum?id=8cNMMrWRbZ", "kind": "benchmark_paper"},
+    {"id": "VERLTOOL", "url": "https://openreview.net/forum?id=pcmPnp84vz", "kind": "framework_paper"},
+    {"id": "VERL_DOC", "url": "https://verl.readthedocs.io/en/latest/sglang_multiturn/multiturn.html", "kind": "official_documentation"},
+    {"id": "VERL_REWARD", "url": "https://verl.readthedocs.io/en/latest/advance/reward_loop.html", "kind": "official_documentation"},
+    {"id": "OPENRLHF", "url": "https://github.com/OpenRLHF/OpenRLHF", "kind": "official_repository"},
+    {"id": "AREAL", "url": "https://inclusionai.github.io/AReaL/", "kind": "official_documentation"},
+    {"id": "LEARNOPT", "url": "https://arxiv.org/abs/2511.19355", "kind": "primary_paper"},
+    {"id": "SPECBENCH", "url": "https://arxiv.org/abs/2605.21384", "kind": "benchmark_paper"}
+  ],
+  "framework_pins": {
+    "development": {"name": "veRL", "commit": "e9618406de5bad40041d7612554e465ec2003ec1"},
+    "heldout": {"name": "OpenRLHF", "commit": "bc71bb19464aca306b33080b2d2bb45d154e2f49"},
+    "optional": {"name": "AReaL", "commit": "62f955c5e0388aebc6fd58c5ad3f8fcf9d7384b8"}
+  }
+}

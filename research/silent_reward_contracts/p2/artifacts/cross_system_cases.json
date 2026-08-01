@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "case_id": "ARCA-P2-ARENO-ARG-TYPE",
+      "conclusion_flip": true,
+      "detected": true,
+      "failure_class": "serialized_argument_type_mismatch",
+      "failure_family": "F1_serialization_type",
+      "framework": "AReno",
+      "natural_case": true,
+      "observed_contract": "production_reward=0.0",
+      "oracle_contract": "canonical_object_reward=1.0",
+      "ordinary_exit_ok": true,
+      "severity": "high"
+    },
+    {
+      "case_id": "ARCA-P2-VERL-TOOL-REWARD-KEY",
+      "conclusion_flip": true,
+      "detected": true,
+      "failure_class": "tool_reward_namespace_mismatch",
+      "failure_family": "F2_trace_reward_flow",
+      "framework": "veRL",
+      "natural_case": true,
+      "observed_contract": "tool_rewards serialized but default reward manager reads reward_scores",
+      "oracle_contract": "documented tool reward reaches compute_score under one stable key",
+      "ordinary_exit_ok": true,
+      "severity": "high"
+    },
+    {
+      "case_id": "ARCA-P2-VERL-TIMEOUT-ZERO",
+      "conclusion_flip": false,
+      "detected": true,
+      "failure_class": "timeout_zero_status_conflation",
+      "failure_family": "F6_artifact_provenance",
+      "framework": "veRL",
+      "natural_case": true,
+      "observed_contract": "TimeoutError becomes score=0.0 with console text only",
+      "oracle_contract": "structured timeout status remains distinguishable from legitimate zero",
+      "ordinary_exit_ok": true,
+      "severity": "medium"
+    }
+  ],
+  "frameworks": {
+    "AReno": {
+      "commit": "c96bcf2da464dff36593d43c8d29991d4b998059"
+    },
+    "veRL": {
+      "commit": "e9618406de5bad40041d7612554e465ec2003ec1",
+      "dynamic_probe": {
+        "rollout_reward_scores_seen": {},
+        "timeout_console_marker": true,
+        "timeout_observed_score": 0.0,
+        "timeout_structured": false,
+        "tool_reward_observed_score": 0.0,
+        "tool_reward_oracle_score": 1.0,
+        "tool_rewards_visible_to_compute_score": false
+      },
+      "facts": {
+        "function_tool_documents_reward_tuple": true,
+        "reward_manager_consumes_reward_scores": true,
+        "reward_manager_consumes_tool_rewards": false,
+        "timeout_maps_to_numeric_zero": true,
+        "timeout_status_structured": false,
+        "tool_reward_namespace_mismatch": true,
+        "tool_rewards_produced": true,
+        "tool_rewards_serialized": true
+      },
+      "source_hashes": {
+        "agent_loop": "8fafab8568a3c495a061cbe98d1734c80f8adcb634a3fc27950b4acbf924cf92",
+        "function_tool": "fb512e1470101059f828ccbacaa8e387bde840b9234c36120f18ea3a600f8883",
+        "reward_manager": "c8a043a053a024976613b62a401ca8acc511d6e1d51aefca4a9720f7cc793448",
+        "tool_loop": "911864a9b3a41af23a204dfce90ec051c3ced646b3d41d4c50dd383de90abc1f"
+      }
+    }
+  },
+  "gpu_executed": false,
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1",
+  "schema_version": "arca.p2.v1",
+  "summary": {
+    "conclusion_flips": 2,
+    "distinct_failure_classes": 3,
+    "independent_frameworks": 2,
+    "natural_medium_or_high_detected": 3
+  }
+}

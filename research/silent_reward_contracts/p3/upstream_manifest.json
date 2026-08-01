@@ -1,0 +1,23 @@
+{
+  "heldout": {
+    "commit": "bc71bb19464aca306b33080b2d2bb45d154e2f49",
+    "framework": "OpenRLHF",
+    "repository": "https://github.com/OpenRLHF/OpenRLHF.git",
+    "source_sha256": {
+      "openrlhf/cli/train_ppo_ray.py": "658dd36d9f116531e75a003a07c609b7dba1f467c983e68585ea7c634a669656",
+      "openrlhf/trainer/ppo_utils/samples_generator.py": "2fc25a3da36825a842d13a3782a17930ad0d71e4821d51bd4cccf30d102272e3",
+      "openrlhf/utils/agent.py": "2c549b3bf47b42e59089d587606b7271ae92263760025651b17e4a2537ad69dc"
+    }
+  },
+  "optional_replication": {
+    "commit": "62f955c5e0388aebc6fd58c5ad3f8fcf9d7384b8",
+    "framework": "AReaL",
+    "repository": "https://github.com/inclusionAI/AReaL.git",
+    "source_sha256": {
+      "areal/api/cli_args.py": "505fad54b28171cb409f0835645eeacd9f3eb4a4ee4c4eaefa99e584e1c4e0d4",
+      "areal/experimental/openai/cache.py": "23c4bbd701ef92ccf28a04e7bd2771b303ef54e9e894fd0cb3c6878005e11664",
+      "areal/experimental/openai/types.py": "392e1e41b165e3b8bdd6382c5132a479b8bd568ff3e39de2c983bf387230b064"
+    }
+  },
+  "protocol_id": "ARCA-CPU-AUDIT-v0.1"
+}
