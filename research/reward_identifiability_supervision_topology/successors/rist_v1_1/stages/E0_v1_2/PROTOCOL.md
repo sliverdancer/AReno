@@ -2,9 +2,9 @@
 
 Protocol: `RIST-E0-v1.2`
 
-Frozen: pending CPU freeze
+Frozen: `2026-08-02`
 
-Status: `DRAFT_CPU_FREEZE`
+Status: `FROZEN_AWAITING_GPU_AUTHORIZATION`
 
 ## Purpose
 

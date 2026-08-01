@@ -1,6 +1,6 @@
 # RIST-v1.1 Successor Route
 
-Status: `E0_CPU_READY_AWAITING_GPU_AUTHORIZATION`
+Status: `E0_V1_2_CPU_READY_AWAITING_NEW_GPU_AUTHORIZATION`
 
 Parent terminal result: `../../stages/P2/stage_result.json`
 
@@ -24,19 +24,27 @@ terminal `INVALID_P2_INFRASTRUCTURE` with zero scientific trajectories.
 ## Current result
 
 R0 returned `PASS_NOVELTY_CONDITIONAL_TO_E0`; its main-conference hook stayed
-diagnostic. E0's independent canary protocol, client, validator, task bytes,
-and execution manifest are CPU-frozen. The next unopened action is remote GPU
-preflight and sequential native-backend serving under a separate 30-minute GPU
-authorization. No E0 GPU request has been sent and E0 is not yet terminal.
+diagnostic. `RIST-E0-v1.1` is terminal `INVALID_E0_PREFLIGHT_STOP`: its frozen
+top-level extension import named a module that the package does not register.
+The actual extension import, CUDA, exact source, `areno check`, and empty GPU
+process list passed, but no server or model request was started.
+
+`RIST-E0-v1.2` minimally corrects that symbol, retains the native backend,
+model order, canary semantics, thresholds, and 30-minute ceiling, and is now
+CPU-frozen. The next unopened action is a newly authorized v1.2 GPU canary; the
+v1.1 authorization does not carry over.
 
 ## Evidence roots
 
 - R0 full-text decision: `stages/R0/stage_result.json`;
 - R0 reviewer matrix: `stages/R0/reviewer_threat_matrix.json`;
-- E0 protocol and manifest: `stages/E0/PROTOCOL.md`,
-  `stages/E0/EXECUTION_MANIFEST.json`;
-- E0 CPU freeze: `stages/E0/cpu_freeze_result.json`;
-- E0 canary data: `stages/E0/canary_tasks.json`.
+- E0-v1.1 terminal result: `stages/E0/gpu_run_20260802/evidence/stage_result.json`;
+- E0-v1.1 main-conference hook:
+  `stages/E0/gpu_run_20260802/evidence/hook_result.json`;
+- E0-v1.2 protocol and manifest: `stages/E0_v1_2/PROTOCOL.md`,
+  `stages/E0_v1_2/EXECUTION_MANIFEST.json`;
+- E0-v1.2 CPU freeze: `stages/E0_v1_2/cpu_freeze_result.json`;
+- E0-v1.2 canary data: `stages/E0_v1_2/canary_tasks.json`.
 
 ## Claim language
 

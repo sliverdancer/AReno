@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "protocol": "RIST-E0-v1.2",
-  "status": "DRAFT_CPU_FREEZE",
+  "status": "FROZEN_AWAITING_GPU_AUTHORIZATION",
   "parent_terminal_protocol": "RIST-E0-v1.1",
   "parent_terminal_decision": "INVALID_E0_PREFLIGHT_STOP",
   "correction_scope": "REGISTERED_EXTENSION_IMPORT_ONLY",
-  "source_commit_required": "TO_BE_FILLED_AFTER_PROTOCOL_CODE_COMMIT",
+  "source_commit_required": "626fd7ba96d13f56a76082b4d675ce90205494eb",
   "canary_tasks_sha256": "c0a4f8d8fa4c15765b57702797f44fcf2bbc0e637b570141d439ad465fce6c72",
   "models": [
     {

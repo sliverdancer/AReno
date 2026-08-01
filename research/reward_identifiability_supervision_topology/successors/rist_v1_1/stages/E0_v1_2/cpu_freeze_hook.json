@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v1.1",
+  "phase": "E0_V1_2_CPU_FREEZE",
+  "source_phase_decision": "PASS_E0_V1_2_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "decision": "STAY_DIAGNOSTIC_WAIT_E0_V1_2_GPU_CANARY",
+  "upgraded": false,
+  "main_conference_route_open": false,
+  "reason": "The revision corrects only a preflight module path. No serving response, scientific trajectory, reward-resolution estimate, or seed-level training interaction exists.",
+  "required_next_gate": "Both frozen model families must pass the independent native-backend canary before P2.1 may be frozen."
+}

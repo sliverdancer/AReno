@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-E0-v1.2",
+  "phase": "E0_V1_2_CPU_FREEZE",
+  "phase_status": "PASS",
+  "decision": "PASS_E0_V1_2_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "source_commit_required": "626fd7ba96d13f56a76082b4d675ce90205494eb",
+  "canary_tasks_sha256": "c0a4f8d8fa4c15765b57702797f44fcf2bbc0e637b570141d439ad465fce6c72",
+  "runner_sha256": "435372bb85a44daf3cc102ec9d41641b9e87362b884ce3ed2669adbb43739d42",
+  "validator_sha256": "8d84d5066cf288c547bb0c72f029bff86be449b6a5ea35f1ece9c0d645ca9168",
+  "checks": {
+    "remote_cpu_tests_passed": 5,
+    "remote_cpu_tests_failed": 0,
+    "remote_cpu_tests_deselected": 7,
+    "python_syntax_valid": true,
+    "json_valid": true,
+    "registered_extension_import_command_frozen": true,
+    "v1_1_runner_logic_changed_beyond_protocol_namespace": false,
+    "v1_1_validator_logic_changed_beyond_protocol_namespace": false,
+    "gpu_processes_after_cpu_tests": 0
+  },
+  "parent_terminal_protocol": "RIST-E0-v1.1",
+  "parent_terminal_decision": "INVALID_E0_PREFLIGHT_STOP",
+  "gpu_used": false,
+  "model_used": false,
+  "training_performed": false,
+  "qualification_data_opened": false,
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_ONLY",
+  "next_action": "Request new authorization for at most 30 GPU minutes of sequential native-backend RIST-E0-v1.2 serving."
+}
