@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import json
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 V2_ROOT = REPO_ROOT / "research" / "structured_action_supervision_v2"
@@ -25,9 +28,128 @@ protocol = _load("sas_v2_protocol", V2_ROOT / "prepare_protocol.py")
 hook = _load("sas_v2_hook", V2_ROOT / "stage_completion_hook.py")
 b2 = _load("sas_v2_b2_inference", V2_ROOT / "b2_inference.py")
 b2_analysis = _load("sas_v2_b2_analysis", V2_ROOT / "analyze_b2.py")
+b2_controller = _load("sas_v2_b2_controller", V2_ROOT / "run_b2_controller.py")
 
 
 class SasV2ToolReadinessTests(unittest.TestCase):
+    def test_v2_1_manifest_changes_capacity_only(self):
+        successor = json.loads(
+            (V2_ROOT / "stages" / "B2_1" / "manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        parent = json.loads(
+            (V2_ROOT / "stages" / "B1" / "manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertEqual(successor["protocol_id"], "SAS-TR-v2.1")
+        self.assertEqual(successor["runtime"]["max_running_prompts"], 1)
+        self.assertEqual(successor["runtime"]["client_workers"], 1)
+        self.assertEqual(successor["scientific_contract"]["cells"], parent["cells"])
+        self.assertEqual(
+            successor["scientific_contract"]["sampling_seeds"],
+            parent["sampling_seeds"],
+        )
+        self.assertEqual(
+            successor["scientific_contract"]["selection_order"],
+            parent["selection_order"],
+        )
+        self.assertEqual(
+            successor["scientific_contract"]["calibration_gates"],
+            parent["calibration_gates"],
+        )
+        self.assertEqual(
+            successor["scientific_contract"]["request_seed_salt"],
+            "SAS-TR-v2.0",
+        )
+        self.assertFalse(successor["scientific_contract"]["reuse_v2_0_trajectories"])
+
+    def test_v2_1_fail_fast_rejects_transport_loss_only(self):
+        valid_trajectory = {
+            "terminal_reason": "MISSING_TOOL_CALL",
+            "turns": [{"raw_response": {"choices": []}}],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "cell.json"
+            payload = {
+                "summary": {"raw_evidence_complete": True},
+                "trajectories": [dict(valid_trajectory) for _ in range(16)],
+            }
+            path.write_text(json.dumps(payload), encoding="utf-8")
+
+            b2_controller._require_complete_client_evidence(path)
+
+            payload["trajectories"][0]["terminal_reason"] = "REQUEST_ERROR"
+            payload["summary"]["raw_evidence_complete"] = False
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "fail-fast evidence gate"):
+                b2_controller._require_complete_client_evidence(path)
+
+    def test_v2_1_preflight_uses_no_frozen_row_and_preserves_response(self):
+        response_body = json.dumps(
+            {
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {"role": "assistant", "content": ""},
+                        "finish_reason": "length",
+                    }
+                ]
+            }
+        ).encode()
+
+        class FakeResponse(io.BytesIO):
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                self.close()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "preflight.json"
+            with mock.patch.object(
+                b2_controller.urllib.request,
+                "urlopen",
+                return_value=FakeResponse(response_body),
+            ):
+                b2_controller._preflight(
+                    base_url="http://127.0.0.1:8765",
+                    mode="disabled",
+                    output=output,
+                    deadline=time.time() + 60,
+                )
+            payload = json.loads(output.read_text(encoding="utf-8"))
+
+        self.assertEqual(payload["status"], "PASS")
+        self.assertFalse(payload["uses_frozen_task_row"])
+        self.assertEqual(payload["raw_response"]["choices"][0]["finish_reason"], "length")
+
+    def test_v2_1_serve_command_freezes_single_running_prompt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(b2_controller.subprocess, "Popen") as popen:
+                process, log_file = b2_controller._serve(
+                    areno_bin=Path("/opt/areno"),
+                    model_path=Path("/models/qwen"),
+                    base_host="127.0.0.1",
+                    port=8765,
+                    disabled=True,
+                    log_path=Path(tmp) / "serve.log",
+                    max_running_prompts=1,
+                )
+                command = popen.call_args.args[0]
+                log_file.close()
+
+        self.assertIs(process, popen.return_value)
+        index = command.index("--max-running-prompts")
+        self.assertEqual(command[index + 1], "1")
+        self.assertIn("--disable-thinking", command)
+
+    def test_v2_1_signal_handler_is_fail_closed(self):
+        with self.assertRaises(SystemExit):
+            b2_controller._raise_controller_signal(15, None)
+
     def test_b2_request_seed_is_stable_and_factor_sensitive(self):
         first = b2.request_seed(3101, 0, 0)
 

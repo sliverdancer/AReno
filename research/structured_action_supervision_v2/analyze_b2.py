@@ -1,4 +1,4 @@
-"""Aggregate SAS-TR-v2.0 B2 evidence and apply the frozen decision rule."""
+"""Aggregate SAS B2 evidence and apply the frozen decision rule."""
 
 from __future__ import annotations
 
@@ -16,9 +16,13 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def aggregate(paths: list[Path], expected_split: str) -> dict[str, Any]:
+def aggregate(
+    paths: list[Path],
+    expected_split: str,
+    protocol_id: str = core.PROTOCOL_ID,
+) -> dict[str, Any]:
     payloads = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
-    if any(payload.get("protocol_id") != core.PROTOCOL_ID for payload in payloads):
+    if any(payload.get("protocol_id") != protocol_id for payload in payloads):
         raise ValueError("protocol mismatch in B2 evidence")
     if any(payload.get("split") != expected_split for payload in payloads):
         raise ValueError("split mismatch in B2 evidence")
@@ -55,7 +59,7 @@ def aggregate(paths: list[Path], expected_split: str) -> dict[str, Any]:
     selected = select_eligible_cell(selection_input) if expected_split == "calibration" else None
     return {
         "schema_version": 1,
-        "protocol_id": core.PROTOCOL_ID,
+        "protocol_id": protocol_id,
         "split": expected_split,
         "files": files,
         "cell_results": cell_results,
@@ -71,10 +75,19 @@ def aggregate(paths: list[Path], expected_split: str) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", required=True, choices=("calibration", "validation"))
+    parser.add_argument(
+        "--protocol-id",
+        choices=("SAS-TR-v2.0", "SAS-TR-v2.1"),
+        default="SAS-TR-v2.0",
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("evidence", type=Path, nargs="+")
     args = parser.parse_args()
-    result = aggregate([path.resolve() for path in args.evidence], args.split)
+    result = aggregate(
+        [path.resolve() for path in args.evidence],
+        args.split,
+        args.protocol_id,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"decision": result["decision"], "selected_cell": result["selected_cell"]}, sort_keys=True))

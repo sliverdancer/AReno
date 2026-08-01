@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.1",
+  "stage": "B2.1-CPU-FREEZE",
+  "parent": {
+    "protocol_id": "SAS-TR-v2.0",
+    "decision": "INVALID_B2_INFRASTRUCTURE_KV_CACHE_OOM",
+    "b1_manifest_sha256": "a8d5fa17e788e711ab16cbb36c3cb97a36de27ca2a26e1e4fedccc06daaa57e5",
+    "invalid_evidence_archive_sha256": "fad582cccd17d70135ce698f851c921d687e4a541d3748b3826232b1de9b3def"
+  },
+  "model": {
+    "checkpoint": "Qwen/Qwen3-0.6B",
+    "weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+  },
+  "data": {
+    "calibration_sha256": "164d0aac8d4468fc6057b1c8aeaf8361a2ea33234f0e5753afe7076373927711",
+    "validation_sha256": "318d573a111f74cc84ca5bcf7006a401e49e59ba5abb4187200e9026021a3f76",
+    "reserve_sha256": "473eaf83a40824711576160d3cd7ee71f4a987c7e095451b70321137e0f8604d"
+  },
+  "scientific_contract": {
+    "cells": {
+      "D128": {"thinking_mode": "tokenizer_default", "max_new_tokens": 128, "role": "diagnostic_only"},
+      "D512": {"thinking_mode": "tokenizer_default", "max_new_tokens": 512, "role": "diagnostic_only"},
+      "N128": {"thinking_mode": "disabled", "max_new_tokens": 128, "role": "eligible_interface"},
+      "N512": {"thinking_mode": "disabled", "max_new_tokens": 512, "role": "eligible_interface"}
+    },
+    "sampling_seeds": [3101, 3202],
+    "request_seed_salt": "SAS-TR-v2.0",
+    "selection_order": ["N128", "N512"],
+    "calibration_gates": {
+      "first_turn_executable_rate_min": 0.95,
+      "four_turn_completion_rate_min": 0.75,
+      "positive_reward_rate_min": 0.05,
+      "positive_reward_rate_max": 0.95,
+      "fabricated_call_count_max": 0
+    },
+    "restart_all_calibration_cells": true,
+    "reuse_v2_0_trajectories": false
+  },
+  "runtime": {
+    "max_running_prompts": 1,
+    "client_workers": 1,
+    "capacity_preflight_per_thinking_mode": true,
+    "preflight_uses_frozen_task_row": false,
+    "fail_fast_on_request_error": true,
+    "fail_fast_on_incomplete_raw_evidence": true,
+    "signal_cleanup_required": true,
+    "gpu_time_limit_seconds": 3600
+  },
+  "claim_boundary": "SAS-TR-v2.1 repairs serving capacity only. It cannot reuse v2.0 trajectories or produce AF/LF efficacy evidence."
+}

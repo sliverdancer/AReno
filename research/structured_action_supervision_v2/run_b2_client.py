@@ -1,4 +1,4 @@
-"""Run one frozen SAS-TR-v2.0 cell/seed against an AReno endpoint."""
+"""Run one frozen SAS tool-readiness cell/seed against an AReno endpoint."""
 
 from __future__ import annotations
 
@@ -166,6 +166,11 @@ def run_trajectory(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", required=True)
+    parser.add_argument(
+        "--protocol-id",
+        choices=("SAS-TR-v2.0", "SAS-TR-v2.1"),
+        default="SAS-TR-v2.0",
+    )
     parser.add_argument("--model", required=True)
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, required=True)
@@ -207,13 +212,16 @@ def main() -> int:
     trajectories.sort(key=lambda item: item["row_index"])
     result = {
         "schema_version": 1,
-        "protocol_id": core.PROTOCOL_ID,
+        "protocol_id": args.protocol_id,
         "cell_id": args.cell_id,
         "split": args.split,
         "max_new_tokens": args.max_new_tokens,
         "sampling_seed": args.sampling_seed,
         "sampling_policy": {"temperature": 1.0, "top_p": 1.0, "top_k": -1},
-        "request_seed_derivation": "sha256(protocol_id, base_seed, row_index, turn_index) mod 2^31",
+        "request_seed_derivation": (
+            "sha256(SAS-TR-v2.0, base_seed, row_index, turn_index) mod 2^31; "
+            "preserved unchanged in SAS-TR-v2.1"
+        ),
         "started_epoch": started,
         "finished_epoch": time.time(),
         "summary": core.summarize(trajectories),

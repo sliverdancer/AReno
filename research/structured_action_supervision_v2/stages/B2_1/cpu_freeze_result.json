@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.1",
+  "stage": "B2.1-CPU-FREEZE",
+  "stage_status": "PASS",
+  "decision": "PASS_B2_1_CPU_FREEZE_TO_AUTHORIZED_GPU_EXECUTION",
+  "authorization": {
+    "status": "USER_AUTHORIZED",
+    "date": "2026-08-01",
+    "scope": "SAS-TR-v2.1 AReno serving and inference qualification",
+    "gpu_time_limit_seconds": 3600
+  },
+  "execution": {
+    "cpu_contract_tests": "14 passed",
+    "gpu_used": false,
+    "v2_0_trajectories_reused": false,
+    "validation_consumed": false,
+    "reserve_consumed": false
+  },
+  "qualification": {
+    "max_running_prompts_frozen_to_one": true,
+    "client_workers_frozen_to_one": true,
+    "non_task_preflight_per_thinking_mode": true,
+    "request_error_fail_fast": true,
+    "incomplete_raw_evidence_fail_fast": true,
+    "signal_cleanup_registered": true,
+    "scientific_cells_unchanged": true,
+    "sampling_seed_salt_unchanged": true,
+    "selection_and_reward_gates_unchanged": true
+  },
+  "provenance": {
+    "successor_manifest_sha256": "f85601525db704388dea7cfc7a966bc38b4b1a8a0e6f5be8ba0244a9c7804ca1",
+    "parent_b1_manifest_sha256": "a8d5fa17e788e711ab16cbb36c3cb97a36de27ca2a26e1e4fedccc06daaa57e5",
+    "parent_invalid_evidence_archive_sha256": "fad582cccd17d70135ce698f851c921d687e4a541d3748b3826232b1de9b3def"
+  },
+  "next_action": "Create an exact source archive, deploy it, run both capacity preflights, and restart all four calibration cells under the 3600-second controller ceiling."
+}

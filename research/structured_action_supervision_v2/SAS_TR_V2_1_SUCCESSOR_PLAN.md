@@ -1,6 +1,6 @@
 # SAS-TR-v2.1 Successor Plan — Serving Capacity Repair
 
-Status: `CPU_PLAN_FROZEN_GPU_AUTHORIZATION_REQUIRED`
+Status: `CPU_FREEZE_PASS_GPU_AUTHORIZED`
 
 Parent: terminal invalid `SAS-TR-v2.0` B2 attempt
 
@@ -33,6 +33,7 @@ zero; no v2.0 output may be spliced into v2.1.
 
 ## GPU gate
 
-This is a new protocol version. It remains unopened until the repair has CPU
-regression coverage, a fresh source archive and manifest are frozen, and the
-user explicitly authorizes a new bounded GPU serving attempt.
+This is a new protocol version. The repair passed 14 CPU contract tests and the
+user authorized a bounded one-hour GPU serving attempt on 2026-08-01. Execution
+must use the exact source commit and archive recorded in the B2.1 evidence; any
+preflight or fail-fast failure terminates the attempt without a partial rerun.
