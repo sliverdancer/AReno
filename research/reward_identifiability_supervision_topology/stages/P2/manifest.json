@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-P2-v1.0",
+  "status": "FROZEN_AWAITING_GPU_AUTHORIZATION",
+  "source_commit_required": null,
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "heldout_sha256_forbidden": "a318c50d7036abf8f58922730b7ba9b19324679bf1ee20459842cd742756c756",
+  "models": [
+    {
+      "cell": "qwen3_0_6b",
+      "model_id": "Qwen/Qwen3-0.6B",
+      "model_hub": "modelscope",
+      "adapter": "qwen3"
+    },
+    {
+      "cell": "gemma4_e2b_it",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_hub": "huggingface",
+      "adapter": "gemma4"
+    }
+  ],
+  "rollout_seeds": [6101, 6202, 6303, 6404, 6505, 6606, 6707, 6808],
+  "tasks_per_model": 32,
+  "trajectories_per_task": 8,
+  "trajectories_per_model": 256,
+  "total_trajectories": 512,
+  "sampling": {
+    "enable_thinking": false,
+    "max_new_tokens": 128,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "max_running_prompts": 1
+  },
+  "gpu_time_limit_seconds": 7200,
+  "training_permitted": false
+}
