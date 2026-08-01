@@ -1,0 +1,193 @@
+{
+  "failures": [],
+  "records": [
+    {
+      "query": "multi-turn tool agent reward diversity credit assignment",
+      "result": {
+        "entries": [
+          {
+            "authors": [
+              "Zhuofeng Li",
+              "Haoxiang Zhang",
+              "Seungju Han",
+              "Sheng Liu",
+              "Jianwen Xie",
+              "Yu Zhang",
+              "Yejin Choi",
+              "James Zou",
+              "Pan Lu"
+            ],
+            "id": "http://arxiv.org/abs/2510.05592v2",
+            "published": "2025-10-07T05:32:44Z",
+            "summary": "Outcome-driven reinforcement learning has advanced reasoning in large language models (LLMs), but prevailing tool-augmented approaches train a single, monolithic policy that interleaves thoughts and tool calls under full context; this scales poorly with long horizons and diverse tools and generalizes weakly to new scenarios. Agentic systems offer a promising alternative by decomposing work across specialized modules, yet most remain training-free or rely on offline training decoupled from the live dynamics of multi-turn interaction. We introduce AgentFlow, a trainable, in-the-flow agentic framework that coordinates four modules (planner, executor, verifier, generator) through an evolving memory and directly optimizes its planner inside the multi-turn loop. To train on-policy in live environments, we propose Flow-based Group Refined Policy Optimization (Flow-GRPO), which tackles long-horizon, sparse-reward credit assignment by converting multi-turn optimization into a sequence of tractable single-turn policy updates. It broadcasts a single, verifiable trajectory-level outcome to every turn to align local planner decisions with global success and stabilizes learning with group-normalized advantages. Across ten benchmarks, AgentFlow with a 7B-scale backbone outperforms top-performing baselines with average accuracy gains of 14.9% on search, 14.0% on agentic, 14.5% on mathematical, and 4.1% on scientific tasks, even surpassing larger proprietary models like GPT-4o. Further analyses confirm the benefits of in-the-flow optimization, showing improved planning, enhanced tool-calling reliability, and positive scaling with model size and reasoning turns.",
+            "title": "In-the-Flow Agentic System Optimization for Effective Planning and Tool Use",
+            "updated": "2026-07-22T06:43:23Z"
+          },
+          {
+            "authors": [
+              "Zefang Zong",
+              "Dingwei Chen",
+              "Yang Li",
+              "Qi Yi",
+              "Bo Zhou",
+              "Chengming Li",
+              "Bo Qian",
+              "Peng Chen",
+              "Jie Jiang"
+            ],
+            "id": "http://arxiv.org/abs/2601.04767v1",
+            "published": "2026-01-08T09:35:49Z",
+            "summary": "LLM agents have emerged as powerful systems for tackling multi-turn tasks by interleaving internal reasoning and external tool interactions. Agentic Reinforcement Learning has recently drawn significant research attention as a critical post-training paradigm to further refine these capabilities. In this paper, we present AT$^2$PO (Agentic Turn-based Policy Optimization via Tree Search), a unified framework for multi-turn agentic RL that addresses three core challenges: limited exploration diversity, sparse credit assignment, and misaligned policy optimization. AT$^2$PO introduces a turn-level tree structure that jointly enables Entropy-Guided Tree Expansion for strategic exploration and Turn-wise Credit Assignment for fine-grained reward propagation from sparse outcomes. Complementing this, we propose Agentic Turn-based Policy Optimization, a turn-level learning objective that aligns policy updates with the natural decision granularity of agentic interactions. ATPO is orthogonal to tree search and can be readily integrated into any multi-turn RL pipeline. Experiments across seven benchmarks demonstrate consistent improvements over the state-of-the-art baseline by up to 1.84 percentage points in average, with ablation studies validating the effectiveness of each component. Our code is available at https://github.com/zzfoutofspace/ATPO.",
+            "title": "AT$^2$PO: Agentic Turn-based Policy Optimization via Tree Search",
+            "updated": "2026-01-08T09:35:49Z"
+          },
+          {
+            "authors": [
+              "Fanqi Kong",
+              "Jiayi Zhang",
+              "Mingyi Deng",
+              "Chenglin Wu",
+              "Yuyu Luo",
+              "Bang Liu"
+            ],
+            "id": "http://arxiv.org/abs/2603.00656v2",
+            "published": "2026-02-28T13:58:14Z",
+            "summary": "Real-world user requests to LLM agents are often underspecified. Agents must interact to acquire missing information and make correct downstream decisions. However, current multi-turn GRPO-based methods often rely on trajectory-level reward computation, which leads to credit assignment problems and insufficient advantage signals within rollout groups. A feasible approach is to identify valuable interaction turns at a fine granularity to drive more targeted learning. To address this, we introduce InfoPO (Information-Driven Policy Optimization), which frames multi-turn interaction as a process of active uncertainty reduction and computes an information-gain reward that credits turns whose feedback measurably changes the agent's subsequent action distribution compared to a masked-feedback counterfactual. It then combines this signal with task outcomes via an adaptive variance-gated fusion to identify information importance while maintaining task-oriented goal direction. Across diverse tasks, including intent clarification, collaborative coding, and tool-augmented decision making, InfoPO consistently outperforms prompting and multi-turn RL baselines. It also demonstrates robustness under user simulator shifts and generalizes effectively to environment-interactive tasks. Overall, InfoPO provides a principled and scalable mechanism for optimizing complex agent-user collaboration. Code is available at https://github.com/kfq20/InfoPO.",
+            "title": "InfoPO: Information-Driven Policy Optimization for User-Centric Agents",
+            "updated": "2026-06-17T05:20:41Z"
+          },
+          {
+            "authors": [
+              "Zichen Liu",
+              "Anya Sims",
+              "Keyu Duan",
+              "Changyu Chen",
+              "Simon Yu",
+              "Xiangxin Zhou",
+              "Haotian Xu",
+              "Shaopan Xiong",
+              "Bo Liu",
+              "Chenmien Tan",
+              "Chuen Yang Beh",
+              "Weixun Wang",
+              "Hao Zhu",
+              "Weiyan Shi",
+              "Diyi Yang",
+              "Michael Shieh",
+              "Yee Whye Teh",
+              "Wee Sun Lee",
+              "Min Lin"
+            ],
+            "id": "http://arxiv.org/abs/2510.01051v2",
+            "published": "2025-10-01T15:55:57Z",
+            "summary": "The training paradigm for large language models (LLMs) is moving from static datasets to experience-based learning, where agents acquire skills via interacting with complex environments. To facilitate this transition we introduce GEM (General Experience Maker), an open-source environment simulator designed for the age of LLMs. Analogous to OpenAI-Gym for traditional reinforcement learning (RL), GEM provides a standardized framework for the environment-agent interface, including asynchronous vectorized execution for high throughput, and flexible wrappers for easy extensibility. GEM also features a diverse suite of environments, robust integrated tools, and single-file example scripts demonstrating using GEM with five popular RL training frameworks. Along with this, we also provide a set of baselines across 24 environments using REINFORCE with Return Batch Normalization (ReBN), which -- unlike GRPO -- is compatible with the full RL setting of dense per-turn rewards and offers better credit assignment. We further conduct apple-to-apple benchmarking of PPO, GRPO and REINFORCE in both single- and multi-turn settings using GEM to shed light on the algorithmic designs. Lastly, GEM also functions as a convenient evaluation toolkit besides a training environment. We hope this framework can help accelerate future agentic LLM research.",
+            "title": "GEM: A Gym for Agentic LLMs",
+            "updated": "2026-03-01T14:06:03Z"
+          },
+          {
+            "authors": [
+              "Dingwei Chen",
+              "Zefang Zong",
+              "Zhipeng Ma",
+              "Leo Luo",
+              "Yang Li",
+              "Chengming Li",
+              "Peng Chen",
+              "Jie Jiang"
+            ],
+            "id": "http://arxiv.org/abs/2605.06200v1",
+            "published": "2026-05-07T13:09:31Z",
+            "summary": "Reinforcement learning for agentic large language models (LLMs) typically relies on a sparse, trajectory-level outcome reward, making it difficult to evaluate the contribution of individual tool-calls within multi-turn interactions. Existing approaches to such process credit assignment either depend on separate external process reward models that introduce additional consumption, or tree-based structural rollout that merely redistributes the outcome signal while constraining trajectory diversity. A promising alternative leverages the per-turn change in the policy's predicted probability of the ground-truth, termed Information Gain (IG), as an intrinsic process signal without an external evaluator. However, prior work on leveraging IG signals within the RL training loop faces three systematic challenges: normalizing across turns that face heterogeneous positional contexts can distort the relative standing of individual turns, accumulating a variable number of terms causes advantage magnitudes to drift with trajectory depth, and a fixed clipping range governs policy updates identically for turns with vastly different IG signals. In this paper, we propose A$^2$TGPO (Agentic Turn-Group Policy Optimization with Adaptive Turn-level Clipping), which retains IG as the intrinsic signal but re-designs how it is normalized, accumulated, and consumed: (i) turn-group normalization: normalizes IG within each (prompt, turn-index) group so that each turn is compared only against peers at the same interaction depth; (ii) variance-rescaled discounted accumulation: divides cumulative normalized IG by square root of accumulated terms to keep advantage magnitudes comparable across turn positions; and (iii) adaptive turn-level clipping: modulates each turn's clipping range based on its normalized IG, widening the update region for informative turns and narrowing it for uninformative ones.",
+            "title": "A$^2$TGPO: Agentic Turn-Group Policy Optimization with Adaptive Turn-level Clipping",
+            "updated": "2026-05-07T13:09:31Z"
+          },
+          {
+            "authors": [
+              "Yubao Zhao",
+              "Weiquan Huang",
+              "Sudong Wang",
+              "Ruochen Zhao",
+              "Chen Chen",
+              "Yao Shu",
+              "Chengwei Qin"
+            ],
+            "id": "http://arxiv.org/abs/2602.03719v2",
+            "published": "2026-02-03T16:43:09Z",
+            "summary": "Agentic reinforcement learning enables large language models to perform multi-turn planning and tool use, but long-horizon training remains challenging under sparse trajectory-level rewards, where a single outcome is uniformly assigned to all decisions. Prior methods introduce finer-grained supervision via tree-based exploration or process-level evaluation, but often incur high cost or produce noisy credit signals. In agentic trajectories, early mistakes may still be corrected by later actions, while seemingly promising intermediate states can fail due to poor subsequent decisions. We call this property non-monotonic correctness, which makes outcome rewards or state values insufficient for guiding what actions should be taken from each state. To address this, we propose Branching Relative Policy Optimization (\\textbf{BranPO}), a value-free method that constructs localized contrastive supervision without dense rewards. BranPO truncates trajectories at intermediate prefixes and resamples continuations to form contrastive branches that share the same prefix but diverge in final outcomes, thereby isolating decisions that drive success or failure. We further introduce difficulty-aware branch sampling and Redundant Step Masking to improve sampling efficiency and suppress redundant updates. Experiments show that BranPO consistently outperforms diverse baseline categories across multiple multi-hop QA benchmarks without additional training cost, and generalizes to broader long-horizon agentic tasks with consistent improvements. Our code is available at https://github.com/YubaoZhao/BranPO.",
+            "title": "BranPO: Scalable Contrastive Branch Sampling for Long-Horizon Agentic Reinforcement Learning",
+            "updated": "2026-06-01T15:06:05Z"
+          }
+        ],
+        "query": "multi-turn tool agent reward diversity credit assignment",
+        "raw_entry_count": 6
+      }
+    },
+    {
+      "query": "tool calling advantage collapse reward variation GRPO",
+      "result": {
+        "entries": [],
+        "query": "tool calling advantage collapse reward variation GRPO",
+        "raw_entry_count": 0
+      }
+    },
+    {
+      "query": "action span supervision all turn last turn tool agent",
+      "result": {
+        "entries": [],
+        "query": "action span supervision all turn last turn tool agent",
+        "raw_entry_count": 0
+      }
+    },
+    {
+      "query": "function name argument supervision tool calling",
+      "result": {
+        "entries": [
+          {
+            "authors": [
+              "Omer Nacar",
+              "Deema Alquffari",
+              "Saleh Alsharideh",
+              "Adeem AlOtaibi",
+              "Abdulaziz Alabdulkarim",
+              "Leen Alhazmi",
+              "Nada Alomar",
+              "Wareef Alzubaidi",
+              "Nada Alsultan",
+              "Ahmed Alrabghi",
+              "Demah Alhoshan",
+              "Rana Alsayyari",
+              "Hamed Alruwaili",
+              "Albaraa Jaafar",
+              "Khaled Alusmani",
+              "Abdulaziz Alsohimy",
+              "Munirah Alsubaie",
+              "Shahd Aldukhayil",
+              "Arwa Alali",
+              "Yazeed BinShihah",
+              "Razan Alsulaymi",
+              "Nourah Alhumaid",
+              "Razan Abdulsalam",
+              "Reem Alamoudi",
+              "Mohammed Alkhalifa"
+            ],
+            "id": "http://arxiv.org/abs/2603.16901v1",
+            "published": "2026-03-04T12:27:27Z",
+            "summary": "Function-calling language models are essential for agentic AI systems that translate natural language into executable structured actions, yet existing models exhibit severe structural instability when applied to Arabic. We present AISA-AR-FunctionCall, a production-oriented Arabic function-calling framework built on a 270M-parameter FunctionGemma backbone and trained through systematic dataset auditing, schema repair, tool-aware prompt restructuring, and full-parameter supervised fine-tuning. On a held-out test set, fine-tuning reduces parse failures from 87\\% to below 1\\%, improves function name accuracy by more than eightfold, and substantially enhances argument alignment across dialects and domains. Error analysis reveals a transition from structural collapse to semantic misalignment, suggesting that serialization stability and decision-level reasoning are separable challenges. We further explore a reasoning-augmented LoRA variant that introduces explicit intermediate reasoning prior to tool invocation. All datasets and models are publicly released under the AISA framework.",
+            "title": "From Language to Action in Arabic: Reliable Structured Tool Calling via Data-Centric Fine-Tuning",
+            "updated": "2026-03-04T12:27:27Z"
+          }
+        ],
+        "query": "function name argument supervision tool calling",
+        "raw_entry_count": 1
+      }
+    },
+    {
+      "query": "agent benchmark task difficulty reward resolution",
+      "result": {
+        "entries": [],
+        "query": "agent benchmark task difficulty reward resolution",
+        "raw_entry_count": 0
+      }
+    }
+  ]
+}

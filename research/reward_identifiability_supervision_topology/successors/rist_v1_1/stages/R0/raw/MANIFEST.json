@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-R0-v1.1",
+  "generated_by": "research/reward_identifiability_supervision_topology/stages/P0/search_literature.py",
+  "generator_metadata_note": "The immutable search_manifest.json retains the generator's historical RIST-P0-v1.0 label; this stage manifest binds those raw bytes to RIST-R0-v1.1 without rewriting evidence.",
+  "search_date": "2026-08-01",
+  "files": {
+    "search/arxiv.json": "dbed628bc7c4787eed97657cf770b44ff994bc89160a6d4d061250b6cd86b9ce",
+    "search/crossref.json": "bfc53921efd6139699e3d59f4769fe91eb9849e82b0d724157d1426535dad388",
+    "search/openalex.json": "db05414af906d227aeb2a9f4c5f62d92cac558ecdac34cd4b601effeb7e8633c",
+    "search/search_manifest.json": "971f6959ed3db5ffcacf2cd56b0eaa2bdff7642dc6550166540d0d46386aef3b",
+    "search/semantic_scholar.json": "6424d4fed7429d8667f35717824ab5f0e70dc81bd91245ad7174d4775daa4a14"
+  },
+  "retrieval": {
+    "raw_records": 557,
+    "deduplicated_titles": 496,
+    "ranked_candidates_retained": 150,
+    "arxiv_records": 7,
+    "openalex_records": 250,
+    "crossref_records": 250,
+    "semantic_scholar_records": 50,
+    "semantic_scholar_successful_queries": 1,
+    "semantic_scholar_failed_queries": 4
+  }
+}

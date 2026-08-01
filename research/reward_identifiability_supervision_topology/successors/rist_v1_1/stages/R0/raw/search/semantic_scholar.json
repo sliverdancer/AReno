@@ -1,0 +1,1775 @@
+{
+  "failures": [
+    {
+      "error": "HTTP Error 429: ",
+      "error_type": "HTTPError",
+      "query": "multi-turn tool agent reward diversity credit assignment"
+    },
+    {
+      "error": "HTTP Error 429: ",
+      "error_type": "HTTPError",
+      "query": "tool calling advantage collapse reward variation GRPO"
+    },
+    {
+      "error": "HTTP Error 429: ",
+      "error_type": "HTTPError",
+      "query": "function name argument supervision tool calling"
+    },
+    {
+      "error": "HTTP Error 429: ",
+      "error_type": "HTTPError",
+      "query": "agent benchmark task difficulty reward resolution"
+    }
+  ],
+  "records": [
+    {
+      "query": "action span supervision all turn last turn tool agent",
+      "result": {
+        "data": [
+          {
+            "abstract": "Recent unified multimodal models show a single architecture can jointly perform vision/language understanding and image generation/editing. However, they repeatedly feed all historical visual and textual inputs into a shared context window, limiting long-horizon multimodal dialogue due to visual token explosion and unreliable cross-turn referencing. We propose a Cognitive-structured Multimodal Agent that externalizes visual information into an Episodic Visual Memory and selectively reactivates relevant episodes during reasoning. The agent consists of a Perceptual Abstraction Engine for structured visual abstraction, a Cognitive Retrieval Engine for cross-turn memory retrieval, and a Multimodal Executive Controller for autonomous task inference and action planning. To address the lack of turn-level retrieval supervision in existing datasets, we develop a Unified Scenario Engine that programmatically generates structured multi-turn conversations with fine-grained retrieval annotations, enabling reinforcement learning to optimize abstraction and retrieval policies. We also construct a long-horizon visual-dialogue benchmark stratified by difficulty to evaluate episodic visual recall. Our 8B agent achieves 91.4% retrieval accuracy over 20-turn sessions, surpassing 32B baselines by +8.2% while nearly halving per-turn inference time (23.1s ->12.7s). We further present the Cognitive-structured Multimodal Agent Harness (CMA-Harness), a tool-augmented deployment of the same cognitive structure integrating persistent multimodal memory, web access, image generation/editing/composition tools, and OpenAI-compatible serving. Structured memory and modular decision-making offer a more scalable, efficient paradigm for long-horizon multimodal agents than monolithic parameter scaling. Code: https://github.com/caseclose/cma-harness ; Project page: https://caseclose.github.io/cma-harness/",
+            "authors": [
+              {
+                "authorId": "2324104105",
+                "name": "Feng Wang"
+              },
+              {
+                "authorId": "2348905731",
+                "name": "Canmiao Fu"
+              },
+              {
+                "authorId": "2348349959",
+                "name": "Zhipeng Huang"
+              },
+              {
+                "authorId": "2334702567",
+                "name": "Chen Li"
+              },
+              {
+                "authorId": "2394072431",
+                "name": "Jing Lyu"
+              },
+              {
+                "authorId": "2294517847",
+                "name": "Ge Li"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2607.08497",
+              "CorpusId": 290009972
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2607.08497, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "b7e3951a3a1bfcb1079cd6f16c5697e539b2250c",
+            "title": "Cognitive-structured Multimodal Agent for Multimodal Understanding, Generation, and Editing",
+            "url": "https://www.semanticscholar.org/paper/b7e3951a3a1bfcb1079cd6f16c5697e539b2250c",
+            "venue": "",
+            "year": 2026
+          },
+          {
+            "abstract": "Diffusion large language models (DLLMs) have emerged as an alternative to autoregressive (AR) decoding with appealing efficiency and modeling properties, yet their implications for agentic multi-step decision making remain underexplored. We ask a concrete question: when the generation paradigm is changed but the agent framework and supervision are held fixed, do diffusion backbones induce systematically different planning and tool-use behaviors, and do these differences translate into end-to-end efficiency gains? We study this in a controlled setting by instantiating DLLM and AR backbones within the same agent workflow (DeepDiver) and performing matched agent-oriented fine-tuning on the same trajectory data, yielding diffusion-backed DLLM Agents and directly comparable AR agents. Across benchmarks and case studies, we find that, at comparable accuracy, DLLM Agents are on average over 30% faster end to end than AR agents, with some cases exceeding 8x speedup. Conditioned on correct task completion, DLLM Agents also require fewer interaction rounds and tool invocations, consistent with higher planner hit rates that converge earlier to a correct action path with less backtracking. We further identify two practical considerations for deploying diffusion backbones in tool-using agents. First, naive DLLM policies are more prone to structured tool-call failures, necessitating stronger tool-call-specific training to emit valid schemas and arguments. Second, for multi-turn inputs interleaving context and action spans, diffusion-style span corruption requires aligned attention masking to avoid spurious context-action information flow; without such alignment, performance degrades. Finally, we analyze attention dynamics across workflow stages and observe paradigm-specific coordination patterns, suggesting stronger global planning signals in diffusion-backed agents.",
+            "authors": [
+              {
+                "authorId": "2363579575",
+                "name": "Huiling Zhen"
+              },
+              {
+                "authorId": "2363456991",
+                "name": "Weizhe Lin"
+              },
+              {
+                "authorId": "2400366043",
+                "name": "Renxi Liu"
+              },
+              {
+                "authorId": "2405844053",
+                "name": "Kai Han"
+              },
+              {
+                "authorId": "2344697521",
+                "name": "Yiming Li"
+              },
+              {
+                "authorId": "2268731598",
+                "name": "Yuchuan Tian"
+              },
+              {
+                "authorId": "2118023932",
+                "name": "Hanting Chen"
+              },
+              {
+                "authorId": "2370954376",
+                "name": "Xiaoguang Li"
+              },
+              {
+                "authorId": "2363668047",
+                "name": "Xiaosong Li"
+              },
+              {
+                "authorId": "2344109446",
+                "name": "Chen Chen"
+              },
+              {
+                "authorId": "2331879839",
+                "name": "Xianzhi Yu"
+              },
+              {
+                "authorId": "2347712297",
+                "name": "Ming-Hu Yuan"
+              },
+              {
+                "authorId": "2359513302",
+                "name": "Youliang Yan"
+              },
+              {
+                "authorId": "2359452628",
+                "name": "Peifeng Qin"
+              },
+              {
+                "authorId": "2367226811",
+                "name": "Jun Wang"
+              },
+              {
+                "authorId": "2316017010",
+                "name": "Yu Wang"
+              },
+              {
+                "authorId": "2259752319",
+                "name": "Dacheng Tao"
+              },
+              {
+                "authorId": "2354961454",
+                "name": "Yunhe Wang"
+              }
+            ],
+            "citationCount": 4,
+            "externalIds": {
+              "ArXiv": "2602.07451",
+              "CorpusId": 285451896,
+              "DBLP": "journals/corr/abs-2602-07451",
+              "DOI": "10.48550/arXiv.2602.07451"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2602.07451, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "35ce19079b2c23c5fb5b5c77e878dd0a3a1ec828",
+            "title": "DLLM Agent: See Farther, Run Faster",
+            "url": "https://www.semanticscholar.org/paper/35ce19079b2c23c5fb5b5c77e878dd0a3a1ec828",
+            "venue": "arXiv.org",
+            "year": 2026
+          },
+          {
+            "abstract": "Covering: 2012 to 2023The human population is aging. Thus, the greatest risk factor for numerous diseases, such as diabetes, cancer and neurodegenerative disorders, is increasing worldwide. Age-related diseases do not typically occur in isolation, but as a result of multi-factorial causes, which in turn require holistic approaches to identify and decipher the mode of action of potential remedies. With the advent of C. elegans as the primary model organism for aging, researchers now have a powerful in vivo tool for identifying and studying agents that effect lifespan and health span. Natural products have been focal research subjects in this respect. This review article covers key developments of the last decade (2012-2023) that have led to the discovery of natural products with healthy aging properties in C. elegans. We (i) discuss the state of knowledge on the effects of natural products on worm aging including methods, assays and involved pathways; (ii) analyze the literature on natural compounds in terms of their molecular properties and the translatability of effects on mammals; (iii) examine the literature on multi-component mixtures with special attention to the studied organisms, extraction methods and efforts regarding the characterization of their chemical composition and their bioactive components. (iv) We further propose to combine small in vivo model organisms such as C. elegans and sophisticated analytical approaches (\"wormomics\") to guide the way to dissect complex natural products with anti-aging properties.",
+            "authors": [
+              {
+                "authorId": "50989700",
+                "name": "B. Kirchweger"
+              },
+              {
+                "authorId": "51191356",
+                "name": "J. Zwirchmayr"
+              },
+              {
+                "authorId": "4339650",
+                "name": "Ulrike Grienke"
+              },
+              {
+                "authorId": "2707774",
+                "name": "J. Rollinger"
+              }
+            ],
+            "citationCount": 23,
+            "externalIds": {
+              "CorpusId": 260955484,
+              "DOI": "10.1039/d3np00021d",
+              "PubMed": "37585263"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1039/d3np00021d?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1039/d3np00021d, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": "CCBYNC",
+              "status": "HYBRID",
+              "url": "https://pubs.rsc.org/en/content/articlepdf/2023/np/d3np00021d"
+            },
+            "paperId": "b214a880ab2a79dea6b03d354837941b908a23db",
+            "title": "The role of Caenorhabditis elegans in the discovery of natural products for healthy aging.",
+            "url": "https://www.semanticscholar.org/paper/b214a880ab2a79dea6b03d354837941b908a23db",
+            "venue": "Natural product reports (Print)",
+            "year": 2023
+          },
+          {
+            "abstract": "Tool-augmented LLMs are increasingly deployed as agents that interleave natural-language reasoning with executable Python actions, as in CodeAct-style frameworks. In deployment, these agents rely on runtime state that persists across steps. By contrast, the traces used to post-train these models rarely encode how interpreter state is managed. We ask whether interpreter persistence is merely a runtime scaffold, or a property of the training data that shapes how agents learn to use the interpreter. We isolate state persistence as a training-time variable. We introduce Opaque Knapsack, a procedurally generated family of partially observable optimization tasks designed to prevent one-shot solutions. Item attributes and constraints are hidden behind budgeted tool calls, forcing multi-turn control flow and iterative state revision. Holding task instances, prompts, tools, model, and supervision fixed, we generate matched trajectories differing only in whether interpreter state persists across steps or resets after each action. We then fine-tune identical base models (Qwen3-8B) on each trace variant and evaluate all four train-runtime combinations. Our 2x2 cross-evaluation shows that interpreter persistence shapes how agents reach solutions, not whether they do: solution quality is statistically indistinguishable across conditions, but token cost and stability differ substantially. A persistent-trained model in a stateless runtime triggers missing-variable errors in roughly 80% of episodes; a stateless-trained model in a persistent runtime redundantly re-derives retained state, using roughly 3.5x more tokens. Interpreter persistence should be treated as a first-class semantic of agent traces. Aligning fine-tuning data with deployment runtimes improves efficiency and reduces brittle train-runtime mismatches.",
+            "authors": [
+              {
+                "authorId": "2294360874",
+                "name": "Victor May"
+              },
+              {
+                "authorId": "2079444707",
+                "name": "Aaditya Salgarkar"
+              },
+              {
+                "authorId": "2289906367",
+                "name": "Yishan Wang"
+              },
+              {
+                "authorId": "2253641873",
+                "name": "Diganta Misra"
+              },
+              {
+                "authorId": "2331568229",
+                "name": "Huu Nguyen"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2603.01209",
+              "CorpusId": 286224654,
+              "DBLP": "journals/corr/abs-2603-01209",
+              "DOI": "10.48550/arXiv.2603.01209"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2603.01209, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "617460255ef6e4690e555b2197da302f16ebc670",
+            "title": "Agents Learn Their Runtime: Interpreter Persistence as Training-Time Semantics",
+            "url": "https://www.semanticscholar.org/paper/617460255ef6e4690e555b2197da302f16ebc670",
+            "venue": "arXiv.org",
+            "year": 2026
+          },
+          {
+            "abstract": "Time series analysis underpins forecasting, monitoring, and decision making in domains such as finance and weather, where solving a task often requires both numerical accuracy and contextual reasoning. Recent progress has moved from specialized neural predictors to approaches built on LLMs and foundation models that can reason over time series inputs and use external tools. However, most such systems remain execution-centric: they focus on solving the current instance but learn little from exploratory execution. This is especially limiting in verifiable numeric settings, where multiple candidate executions and tool-use procedures may all be task-valid yet differ sharply in quantitative quality, and where early success can trigger tool-prior collapse that suppresses further exploration. To address this limitation, we present TimeClaw, an exploratory execution learning framework that turns exploratory execution into reusable hierarchical distilled experience through a four-stage loop: Explore, Compare, Distill, and Reinject. TimeClaw combines metric-supervised exploratory execution learning, task-aware tool dropout, and hierarchical distilled experience for inference-time reinjection, while keeping the base model frozen and avoiding online test-time adaptation. In an MTBench-aligned evaluation with 17 tasks that span finance and weather prediction and reasoning tasks, TimeClaw delivers consistent gains over the baselines. These results suggest that, for scientific systems, the bottleneck is not only execution-time capability, but how exploratory experience is compared, distilled, and reused.",
+            "authors": [
+              {
+                "authorId": "2243527573",
+                "name": "Hangchen Liu"
+              },
+              {
+                "authorId": "2242195007",
+                "name": "Dongyuan Li"
+              },
+              {
+                "authorId": "2299193401",
+                "name": "Renhe Jiang"
+              },
+              {
+                "authorId": "2261097032",
+                "name": "Jiewen Deng"
+              },
+              {
+                "authorId": "2193630738",
+                "name": "Weiwei Ye"
+              },
+              {
+                "authorId": "2703973",
+                "name": "Y. Sekimoto"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2605.10038",
+              "CorpusId": 288260201,
+              "DBLP": "journals/corr/abs-2605-10038",
+              "DOI": "10.48550/arXiv.2605.10038"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.10038, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "bb703439a771f3fc7b6f9fd8e58a9d8e8b0f9693",
+            "title": "TimeClaw: A Time-Series AI Agent with Exploratory Execution Learning",
+            "url": "https://www.semanticscholar.org/paper/bb703439a771f3fc7b6f9fd8e58a9d8e8b0f9693",
+            "venue": "arXiv.org",
+            "year": 2026
+          },
+          {
+            "abstract": "Language-model agents are increasingly deployed under standing instructions: a system prompt, a policy file, or a skills document is placed in context, and the agent is trusted to let it govern every action that follows. Existing benchmarks rarely test this deployment pattern directly; they measure whether an agent can complete a task, not whether a long, binding policy document actually constrains its behavior over an extended tool-use horizon. We present HANDBOOK_md, a benchmark of 65 agentic tasks modeled on how enterprise employees follow company handbooks. Each task places an agent in a self-contained company environment, a file workspace together with mock email, chat, calendar, issue-tracking, and commerce services exposed over the Model Context Protocol, and instructs it to carry out routine professional work governed by an expert-written standard operating procedure of 20 to 124 pages. Tasks span five domains (finance, medical billing, insurance, logistics, and HR) and ten fictional companies. To resist memorization, every task modifies one of ten base handbooks, altering the specific rules and thresholds on which grading turns, so no two tasks share a policy. Grading is fully deterministic: each task carries a rubric of programmatic criteria (824 in total) that check both that required actions occurred and that prohibited actions did not. Under strict grading, where a trial passes only if every criterion is satisfied, the best of thirty evaluated model configurations passes 36.2% of trials, and most frontier configurations remain below 25%. Failures follow consistent patterns: agents let a plausible in-environment request override the standing policy, perform a required check and then act against its result, lose rule details over long horizons, and report compliance they did not achieve. We release all tasks, environments, and the evaluation harness.",
+            "authors": [
+              {
+                "authorId": "32733269",
+                "name": "Liudas Panavas"
+              },
+              {
+                "authorId": "2453962251",
+                "name": "Sebastian Minus"
+              },
+              {
+                "authorId": "2453962263",
+                "name": "Bradley Monton"
+              },
+              {
+                "authorId": "2453962322",
+                "name": "Derek Ray"
+              },
+              {
+                "authorId": "1805946482",
+                "name": "Suhaas Garre"
+              },
+              {
+                "authorId": "2366442470",
+                "name": "Sushant Mehta"
+              },
+              {
+                "authorId": "2444839629",
+                "name": "Edwin Chen"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2607.25398",
+              "CorpusId": 290634770
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2607.25398, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "3969b282552df85774f597eebe9c0b88dab24d9c",
+            "title": "HANDBOOK.md: A Benchmark for Long-Context Agentic Instruction Following",
+            "url": "https://www.semanticscholar.org/paper/3969b282552df85774f597eebe9c0b88dab24d9c",
+            "venue": "",
+            "year": 2026
+          },
+          {
+            "abstract": "Agentic reinforcement learning enables large language models to perform multi-turn planning and tool use, but long-horizon training remains challenging under sparse trajectory-level rewards, where a single outcome is uniformly assigned to all decisions. Prior methods introduce finer-grained supervision via tree-based exploration or process-level evaluation, but often incur high cost or produce noisy credit signals. In agentic trajectories, early mistakes may still be corrected by later actions, while seemingly promising intermediate states can fail due to poor subsequent decisions. We call this property non-monotonic correctness, which makes outcome rewards or state values insufficient for guiding what actions should be taken from each state. To address this, we propose Branching Relative Policy Optimization (\\textbf{BranPO}), a value-free method that constructs localized contrastive supervision without dense rewards. BranPO truncates trajectories at intermediate prefixes and resamples continuations to form contrastive branches that share the same prefix but diverge in final outcomes, thereby isolating decisions that drive success or failure. We further introduce difficulty-aware branch sampling and Redundant Step Masking to improve sampling efficiency and suppress redundant updates. Experiments show that BranPO consistently outperforms diverse baseline categories across multiple multi-hop QA benchmarks without additional training cost, and generalizes to broader long-horizon agentic tasks with consistent improvements. Our code is available at https://github.com/YubaoZhao/BranPO.",
+            "authors": [
+              {
+                "authorId": "2408580550",
+                "name": "Yubao Zhao"
+              },
+              {
+                "authorId": "2376522499",
+                "name": "Weiquan Huang"
+              },
+              {
+                "authorId": "2384067482",
+                "name": "Sudong Wang"
+              },
+              {
+                "authorId": "2091437375",
+                "name": "Ruochen Zhao"
+              },
+              {
+                "authorId": "2362593556",
+                "name": "Chen Chen"
+              },
+              {
+                "authorId": "2374961123",
+                "name": "Yao Shu"
+              },
+              {
+                "authorId": "2375166779",
+                "name": "Chengwei Qin"
+              }
+            ],
+            "citationCount": 2,
+            "externalIds": {
+              "ArXiv": "2602.03719",
+              "CorpusId": 285276010
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2602.03719, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "43153c29c95c94afd92acc5054a3b7f20be4e7a1",
+            "title": "BranPO: Scalable Contrastive Branch Sampling for Long-Horizon Agentic Reinforcement Learning",
+            "url": "https://www.semanticscholar.org/paper/43153c29c95c94afd92acc5054a3b7f20be4e7a1",
+            "venue": "",
+            "year": 2026
+          },
+          {
+            "abstract": "As LLMs advance into autonomous agents with tool-use capabilities, they introduce security challenges that extend beyond traditional content-based LLM safety concerns. This paper introduces Sequential Tool Attack Chaining (\\STAC), a novel multi-turn attack framework that exploits agent tool use. \\STAC chains together tool calls that each appear harmless in isolation but, when combined, collectively enable harmful operations that only become apparent at the final execution step. At the core of \\STAC is an automated, closed-loop pipeline that synthesizes executable multi-step tool chains, validates them through in-environment execution, and reverse-engineers stealthy multi-turn prompts that reliably induce agents to execute the verified malicious sequence. Using this framework, we generate and systematically evaluate 483 \\STAC cases, featuring 1,352 sets of user-agent-environment interactions and spanning diverse domains, tasks, agent types, and 10 failure modes. Our evaluations show that state-of-the-art LLM agents are highly vulnerable to \\STAC, with an average final attack success rate (ASR) of 91.2\\% -- exceeding 90\\% for all but one of the eight agents evaluated. We further perform defense analysis and find that existing prompt-based defenses provide limited protection. To address this gap, we propose a new reasoning-driven defense prompt that achieves the strongest initial-turn protection, cutting ASR by up to 28.8\\%; however, this advantage erodes sharply under adaptive attacks, and an experience-based defense (ToolShield) proves more durable over sustained multi-turn interactions. These results highlight a crucial gap: defending tool-enabled agents requires reasoning over entire action sequences and their cumulative effects, rather than evaluating isolated prompts or responses.",
+            "authors": [
+              {
+                "authorId": "2327112125",
+                "name": "Jing-Jing Li"
+              },
+              {
+                "authorId": "2290199349",
+                "name": "Jianfeng He"
+              },
+              {
+                "authorId": "2382927439",
+                "name": "Chao Shang"
+              },
+              {
+                "authorId": "38321735",
+                "name": "Devang Kulshreshtha"
+              },
+              {
+                "authorId": "1603059979",
+                "name": "Xun Xian"
+              },
+              {
+                "authorId": "2383099189",
+                "name": "Yi Zhang"
+              },
+              {
+                "authorId": "2386090479",
+                "name": "Hang Su"
+              },
+              {
+                "authorId": "2382929178",
+                "name": "Sandesh Swamy"
+              },
+              {
+                "authorId": "2385500212",
+                "name": "Yanjun Qi"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2509.25624",
+              "CorpusId": 290374191
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2509.25624, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "26f3ab8affbb95ff4a8c01dfe6f2b9266db6e3ae",
+            "title": "STAC: When Innocent Tools Form Dangerous Chains for LLM Agents",
+            "url": "https://www.semanticscholar.org/paper/26f3ab8affbb95ff4a8c01dfe6f2b9266db6e3ae",
+            "venue": "",
+            "year": 2025
+          },
+          {
+            "abstract": "Existing benchmarks for Large Language Model (LLM) agents focus on task completion under idealistic settings but overlook reliability in real-world, user-facing applications. In domains, such as in-car voice assistants, users often issue incomplete or ambiguous requests, creating intrinsic uncertainty that agents must manage through dialogue, tool use, and policy adherence. We introduce CAR-bench, a benchmark for evaluating consistency, uncertainty handling, and capability awareness in multi-turn, tool-using LLM agents in an in-car assistant domain. The environment features an LLM-simulated user, domain policies, and 58 interconnected tools spanning navigation, productivity, charging, and vehicle control. Beyond standard task completion, CAR-bench introduces Hallucination tasks that test agents'limit-awareness under missing tools or information, and Disambiguation tasks that require resolving uncertainty through clarification or internal information gathering. Baseline results reveal large gaps between occasional and consistent success on all task types. Even frontier reasoning LLMs achieve less than 50% consistent pass rate on Disambiguation tasks due to premature actions, and frequently violate policies or fabricate information to satisfy user requests in Hallucination tasks, underscoring the need for more reliable and self-aware LLM agents in real-world settings.",
+            "authors": [
+              {
+                "authorId": "2340393556",
+                "name": "Johannes Kirmayr"
+              },
+              {
+                "authorId": "2340390480",
+                "name": "Lukas Stappen"
+              },
+              {
+                "authorId": "2407461916",
+                "name": "Elisabeth Andr'e"
+              }
+            ],
+            "citationCount": 5,
+            "externalIds": {
+              "ArXiv": "2601.22027",
+              "CorpusId": 285141070,
+              "DBLP": "journals/corr/abs-2601-22027",
+              "DOI": "10.48550/arXiv.2601.22027"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.22027, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "8e4edc0ff6a6ef30255e39b94ff563ed466681c8",
+            "title": "CAR-bench: Evaluating the Consistency and Limit-Awareness of LLM Agents under Real-World Uncertainty",
+            "url": "https://www.semanticscholar.org/paper/8e4edc0ff6a6ef30255e39b94ff563ed466681c8",
+            "venue": "Volume 1",
+            "year": 2026
+          },
+          {
+            "abstract": "This paper focuses on embodied task planning, where an agent acquires visual observations from the environment and executes atomic actions to accomplish a given task. Although recent Vision-Language Models (VLMs) have achieved impressive results in multimodal understanding and reasoning, their performance remains limited when applied to embodied planning that involves multi-turn interaction, long-horizon reasoning, and extended context analysis. To bridge this gap, we propose RoboAgent, a capability-driven planning pipeline in which the model actively invokes different sub-capabilities. Each capability maintains its own context, and produces intermediate reasoning results or interacts with the environment according to the query given by a scheduler. This framework decomposes complex planning into a sequence of basic vision-language problems that VLMs can better address, enabling a more transparent and controllable reasoning process. The scheduler and all capabilities are implemented with a single VLM, without relying on external tools. To train this VLM, we adopt a multi-stage paradigm that consists of: (1) behavior cloning with expert plans, (2) DAgger training using trajectories collected by the model, and (3) reinforcement learning guided by an expert policy. Across these stages, we exploit the internal information of the environment simulator to construct high-quality supervision for each capability, and we further introduce augmented and synthetic data to enhance the model's performance in more diverse scenarios. Extensive experiments on widely used embodied task planning benchmarks validate the effectiveness of the proposed approach. Our codes will be available at https://github.com/woyut/RoboAgent_CVPR26.",
+            "authors": [
+              {
+                "authorId": "2240803189",
+                "name": "Peiran Xu"
+              },
+              {
+                "authorId": "2304159889",
+                "name": "Jiaqi Zheng"
+              },
+              {
+                "authorId": "2240531027",
+                "name": "Yadong Mu"
+              }
+            ],
+            "citationCount": 4,
+            "externalIds": {
+              "ArXiv": "2604.07774",
+              "CorpusId": 287255780,
+              "DBLP": "journals/corr/abs-2604-07774",
+              "DOI": "10.48550/arXiv.2604.07774"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.07774, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "18ff9a0d586fda86c47ff64b4a72ae57f13d5ab3",
+            "title": "RoboAgent: Chaining Basic Capabilities for Embodied Task Planning",
+            "url": "https://www.semanticscholar.org/paper/18ff9a0d586fda86c47ff64b4a72ae57f13d5ab3",
+            "venue": "arXiv.org",
+            "year": 2026
+          },
+          {
+            "abstract": "Cybersecurity operations demand assistant LLMs that support diverse workflows without exposing sensitive data. Existing solutions either rely on proprietary APIs with privacy risks or on open models lacking domain adaptation. To bridge this gap, we curate 11.8B tokens of cybersecurity-focused continual pretraining data via large-scale web filtering and manual collection of high-quality resources, spanning 28.6K documents across frameworks, offensive techniques, and security tools. Building on this, we design an agentic augmentation pipeline that simulates expert workflows to generate 266K multi-turn cybersecurity samples for supervised fine-tuning. Combined with general open-source LLM data, these resources enable the training of RedSage, an open-source, locally deployable cybersecurity assistant with domain-aware pretraining and post-training. To rigorously evaluate the models, we introduce RedSage-Bench, a benchmark with 30K multiple-choice and 240 open-ended Q&A items covering cybersecurity knowledge, skills, and tool expertise. RedSage is further evaluated on established cybersecurity benchmarks (e.g., CTI-Bench, CyberMetric, SECURE) and general LLM benchmarks to assess broader generalization. At the 8B scale, RedSage achieves consistently better results, surpassing the baseline models by up to +5.59 points on cybersecurity benchmarks and +5.05 points on Open LLM Leaderboard tasks. These findings demonstrate that domain-aware agentic augmentation and pre/post-training can not only enhance cybersecurity-specific expertise but also help to improve general reasoning and instruction-following. All models, datasets, and code are publicly available.",
+            "authors": [
+              {
+                "authorId": "2008159459",
+                "name": "Naufal Suryanto"
+              },
+              {
+                "authorId": "40894826",
+                "name": "Muzammal Naseer"
+              },
+              {
+                "authorId": "2330146033",
+                "name": "Pengfei Li"
+              },
+              {
+                "authorId": "2174126602",
+                "name": "Syed Talal Wasim"
+              },
+              {
+                "authorId": "2311878028",
+                "name": "Jinhui Yi"
+              },
+              {
+                "authorId": "2311882857",
+                "name": "Juergen Gall"
+              },
+              {
+                "authorId": "1734072",
+                "name": "P. Ceravolo"
+              },
+              {
+                "authorId": "2341173634",
+                "name": "Ernesto Damiani"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "ArXiv": "2601.22159",
+              "CorpusId": 285140227,
+              "DBLP": "journals/corr/abs-2601-22159",
+              "DOI": "10.48550/arXiv.2601.22159"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.22159, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "5cf96f3b673e0ace012d6973dac1415d0accc557",
+            "title": "RedSage: A Cybersecurity Generalist LLM",
+            "url": "https://www.semanticscholar.org/paper/5cf96f3b673e0ace012d6973dac1415d0accc557",
+            "venue": "arXiv.org",
+            "year": 2026
+          },
+          {
+            "abstract": "Mixture-of-Experts (MoE) models scale capacity without proportional compute cost and have become a key architecture for frontier large language models (LLMs). Yet domain-specific post-training inherits an expert pool shaped by mixed-domain pre-training: a substantial subset of experts contributes little on the target domain, and standard supervised fine-tuning (SFT) leaves the composition of this pool unchanged. We propose a simple, budget-preserving pipeline that realigns the expert pool to the target domain before fine-tuning. Given a target domain, we (1) prune the experts with lowest domain-aligned saliency, (2) regrow the expert pool to its original size through perturbation-based expert expansion, and (3) apply standard SFT. The resulting model preserves the original expert count, parameter count, and inference cost. With a single frozen recipe and no per-domain hyperparameter tuning, UMoE consistently improves over direct sft across two MoE architectures (Qwen3-30B-A3B and Qwen3.5-35B-A3B), five domains (math, code, science, tool-use, and agentic coding), and 12 benchmarks. Representative improvements are 3.4 points in math average accuracy, 6.0 points on SWE-bench Verified. On a strong in-house math corpus, direct sft already surpasses Qwen3-30B-A3B-Thinking (82.81 vs.\\ 81.06), yet UMoE further raises the average to 84.17, an additional 1.36 points, demonstrating robustness to a substantially stronger SFT regime. Data-scaling experiments further show that the gain persists as training data grows. Analysis reveals that the direct-SFT model allocates substantial routed-expert compute to a low-saliency subset that can be removed post hoc with little average degradation; UMoE turns this redundant capacity into useful domain capacity and achieves lower training loss, with gains spanning all difficulty levels in downstream evaluation.",
+            "authors": [
+              {
+                "authorId": "2284732801",
+                "name": "Xuefeng Li"
+              },
+              {
+                "authorId": "2310467204",
+                "name": "Pengfei Liu"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "ArXiv": "2607.11444",
+              "CorpusId": 290143228
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2607.11444, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "52d8a984716df0778af7dc571d79e37b6b81806c",
+            "title": "UMoE:Unlocking Every Expert in Domain-Specific Training",
+            "url": "https://www.semanticscholar.org/paper/52d8a984716df0778af7dc571d79e37b6b81806c",
+            "venue": "",
+            "year": 2026
+          },
+          {
+            "abstract": "Metallomics is an emerging area of the omics disciplines that has grown enormously since its conception as an academic discipline in 2004. This discipline integrates research related to biometals, along with other disciplines such as genomics, proteomics, metabolomics, and bioinorganic chemistry. It is defined as the study of the metallome, the interactions and functional connections of metal ions or species with genes, proteins, metabolites, and other biomolecules in biological systems. The study of the metallome of a species can provide information on the distribution of an element between cellular compartments, on the coordination environment in which a biomolecule is incorporated, or on the concentration of individual metal species present. In this regard, it plays a very important role in providing integrated information that connects metallomics with other omics disciplines.1,2 The term ‘metallomics’ was pronounced for the first time in June 2002 during the Tokushima Seminar on Chemical Engineering held in Tokushima, Japan, where the development of this new omics discipline was suggested, which was closely influenced by the progress of Analytical Atomic Spectrometry, in particular by Inductively Coupled Plasma Mass Spectrometry (ICP-MS) and Inductively Coupled Plasma Atomic Emission Spectrometry (ICP-AES). Since the mid-1970s, ICP-MS and ICP-AES techniques have been positioned as highly sensitive analytical tools with excellent possibilities for simultaneous quantification of multiple elements. Nowadays, it is possible to carry out analyses of basically all the elements in any type of sample using one of these two techniques. Likewise, the use of several other techniques for metallomic studies has been reported, such as Electrothermal Atomic Absorption Spectrometry (ETAAS), Microwave Plasma Atomic Emission Spectrometry (MP-AES), Laser Induced Plasma Spectroscopy (LIBS), and Energy Dispersive X-Ray Fluorescence Spectrometry (EDXRF), among others.2 A very useful bioanalytical study, within the field of metallomics, is the cellular uptake assay of potential metallodrugs. Using an adequate analytical technique, the metallic center of a given metallodrug can be monitored, and thus the fraction capable of entering a certain type of cell can be evaluated. Likewise, the distribution at the subcellular level and the association of the studied metallodrug with biomacromolecules of interest may be studied. In this context, our research group has been working on the optimization and validation of different bioanalytical methods for monitoring potential metallodrugs with activity against Trypanosoma cruzi, a protozoan parasite that causes Chagas disease, which is a pressing health problem in high-poverty areas of Latin America.3 A large number of metallic compounds with anti-Trypanosoma cruzi activity have been synthesized by our group, using as a strategy the coordination of metal ions or organometallic centers of pharmacological importance with bioactive organic ligands that have proven activity against Trypanosoma cruzi. Binding to metal can modify properties such as the solubility, lipophilicity, stability, and electronic and transport properties of the organic ligand, generating compounds that may be more active and/or less toxic. These metallic compounds can act by affecting two or more targets in the parasite: the ligand itself and others resulting from the presence of the metal. The biological properties of the metal–bioactive ligand compound will depend on the nature of the metallic center and the bioactive ligand, the presence of other ligands, and, fundamentally, its physicochemical-structural properties. In this regard, our group has focused its attention on the rational design of antiparasitic metallic compounds based on the relationships between chemical structure, physicochemical properties, and biological activity. This research line has led to important contributions that have been transferred to the scientific field, showing the vital importance of cellular uptake metallomic studies to understand the fate of potential metallodrugs and elucidate targets and mechanisms of action. In this context, the potential as an antitrypanosomal agent of a new rhenium(I) tricarbonyl compound with the formula fac-[Re(I)(CO)3(tmp)(CTZ)](PF6), where CTZ = clotrimazole and tmp = 3,4,7,8-tetramethyl-1,10-phenanthroline, was recently evaluated. It showed very good activity against the epimastigote form of Trypanosoma cruzi, with IC50 values (half maximal inhibitory concentration) in the low micromolar range. For this task, a new bioanalytical method based on the MP-AES technique was developed and validated.3 This technique has reemerged in the last few years with several improvements and can be considered as a good strategy for the determination of highly refractory elements such as rhenium. The method was applied to the determination of the percentage of rhenium taken up by the parasites and the association of the compound with the main biomacromolecules: soluble proteins, insoluble fraction, DNA, and RNA. The results of the metallomic study showed a low percentage of total rhenium taken up by the parasites, around 1 %, and a preferential accumulation in the soluble protein fraction, around 83 %. Also, the low localization of the compound in the DNA and RNA fractions, less than 1 %, made it possible to discard these biomolecules as the main targets of action. The developed method turned out to be an economical and efficient alternative for metallomic studies of potential rhenium metallodrugs, applied for the first time for the analysis of this particular element.3 In order to deepen in the localization of the compound taken up in the whole parasite, confocal Raman microscopy was performed.4 However, the main bands of the rhenium(I) tricarbonyl compound showed a strong overlap with signals coming from lipids, proteins, and DNA from the parasite, and due to the low concentration assayed, signals associated with ν(CO) could not be detected. Notwithstanding that, the overlap found by confocal Raman spectroscopy gave us a clue to the actual location of the compound inside the parasite, constituting an interesting indirect metallomic tool.4 Similar bulk studies were previously carried out by our research group using the ETAAS technique. For this task, novel bioanalytical methods were developed and validated, which were successfully applied to study the cellular uptake of potential palladium, platinum, and vanadium metallodrugs against Trypanosoma cruzi.5,6 This example of interdisciplinary work highlights the importance of developing and validating bioanalytical methods such as metallomic strategies to carry out cellular uptake studies, in order to assess the fate and possible targets and mechanisms of action of potential metallodrugs. Likewise, they promote the key role of Bioanalytical Chemistry in supporting Medicinal Inorganic Chemistry during the development of new potential metallodrugs, in the search for answers to important Public Health issues.",
+            "authors": [
+              {
+                "authorId": "48436405",
+                "name": "I. Machado"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 264067872,
+              "DOI": "10.30744/brjac.2179-3425.letter-imachado.n41"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.30744/brjac.2179-3425.letter-imachado.n41?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.30744/brjac.2179-3425.letter-imachado.n41, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "GOLD",
+              "url": "https://doi.org/10.30744/brjac.2179-3425.letter-imachado.n41"
+            },
+            "paperId": "9db253f96a6df3901c6d745488ea392a5c78cb25",
+            "title": "Metallomics as an Essential Analytical Tool for the Development of Potential Metallodrugs",
+            "url": "https://www.semanticscholar.org/paper/9db253f96a6df3901c6d745488ea392a5c78cb25",
+            "venue": "Brazilian Journal of Analytical Chemistry",
+            "year": 2023
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2262471",
+                "name": "Carliss Y. Baldwin"
+              }
+            ],
+            "citationCount": 4,
+            "externalIds": {
+              "CorpusId": 267845405,
+              "DOI": "10.2139/SSRN.3270955",
+              "MAG": "2958147200"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.2139/SSRN.3270955?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.2139/SSRN.3270955, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "5ba05fab74ea239870c59cc217b6b885b301c193",
+            "title": "Design Rules, Volume 2: How Technology Shapes Organizations: Chapter 7 The Value Structure of Technologies, Part 2: Technical and Strategic Bottlenecks as Guides for Action",
+            "url": "https://www.semanticscholar.org/paper/5ba05fab74ea239870c59cc217b6b885b301c193",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": "The last 15 years have witnessed a revolution in the scalability and applicability of measurable/minimal residual disease (MRD) testing for the monitoring of various hematologic neoplasms. In acute lymphoblastic leukemia (ALL), MRD has emerged as the most important prognostic parameter, as well as a crucial component for a personalized approach to the management of patients. Beyond the layers of morphology and the lens of light microscopy, these sensitive MRD tests can detect persistent or re-emerging leukemic blasts at a deeper level by multiparametric flow cytometry and, in particular, real-time quantitative polymerase chain reaction (RT-PCR). The development of novel technologies such as high-throughput next-generation sequencing (NGS) and digital droplet PCR (ddPCR) is likely to increase the depth of MRD monitoring. ddPCR has convincingly shown that it allows to refine MRD monitoring in Philadelphia (Ph)-positive and Ph-negative adult and childhood ALL. MRD assessment after leukemia-directed therapy is a cornerstone for assessing the risk of relapse and guiding clinical decisionmaking regarding escalating or de-intensifying therapy, deploying novel agents (such as blinatumomab), and pursuing or deferring hematopoietic stem cell transplantation (HSCT). A step closer toward individualized therapy, MRD-adapted approaches marry the dynamic response to therapy over time to the baseline risk stratification, previously determined solely based on the biological characteristics of leukemia and the clinical characteristics of the patient. Studies spanning various ages in Ph-positive and Ph-negative ALL have established MRD status as a powerful—often the single most powerful— prognostic and predictive factor. In Ph-positive ALL, RT-PCR for BCR::ABL1 fusion transcripts has been used as the standard of care method of MRD assessment in addition to techniques used in Ph-negative ALL, such as multiparametric flow cytometry and RT-PCR analysis of the immunoglobulin/T-cell receptor (Ig/TCR) gene rearrangements. With the ability to detect low levels of fusion mRNA transcripts in Ph-positive ALL comes the importance of discerning Ph-positive leukemic blasts from other non-neoplastic populations of cells harboring the BCR::ABL1 translocation. To this end, different MRD assessments may be complementary, and searching for an optimal testing strategy is an important feat to undertake. In this issue of the American Journal of Hematology, Short et al present NGS-based MRD assessment as a prognostic tool with the capacity of distinguishing patients with BCR::ABL1 transcripts detected at a low level by RT-PCR with a low likelihood of relapse or benefit from additional or different therapies. The authors report a numerically lower likelihood of relapse in patients who achieve NGS MRD negativity within 6 months of the start of therapy. While the primary analysis was performed on a retrospective cohort of marrow specimens from patients who were treated differently, this thoughtprovoking study and previous publications highlight the need for prospectively assessing the utility of NGS MRD in a larger and more homogeneous group of patients. Ph-positive ALL may not always arise from a process restricted to the lymphoid lineage; there is evidence that the BCR::ABL1 gene fusion could be found in other cells reflecting a chronic myeloid leukemia (CML)-like biology. Interestingly, while it is conceivable that those other non-blast Ph-positive cells might predispose to ALL relapse, this was not observed in the group of patients who had negative MRD by NGS as reported by Short et al and others. Of note, Zuna et al reported data from a pediatric cohort raising the question of the preponderance of this discrepancy between RT-PCR testing for BCR::ABL1 fusion transcripts and NGSbased testing for Ig/TCR gene rearrangements in children as compared to adults. NGS-based MRD assessment is virtually universally applicable to any ALL as it relies on Ig/TCR gene rearrangement detection with a sensitivity of 1 10 6 exceeding that of RT-PCR. On the other hand, turn-around time is longer (1–2 weeks), cost remains high, and implementation requires advanced bioinformatic expertise and standardization, which to date are lacking. In fact, different NGS technologies are used in the US and in Europe, and no comparison has been carried out so far. In addition, the nature of the test requires a baseline diagnostic sample for calibration and tracking—unlike the difference from normal approach used in flow cytometry and ddPCR. When compared to multiparametric flow cytometry, NGS-based MRD assessment is more sensitive, minimizes interlaboratory variability, and circumvents the effects of immunophenotypic drift. When compared to RT-PCR to identify Ig/TCR clonal rearrangements, NGS has a higher sensitivity. NGS also relies on a multiplex PCR technique for the amplification of its targets and does not require the time-consuming baseline preparation of unique allele-specific oligonucleotide primers. In B-ALL, high-throughput NGS has been shown to be more sensitive and precise than flow cytometry. In the phase II SWOG S0333 study, at the time of registration for a second induction, the seven patients with B-ALL with negative MRD by multiparametric flow cytometry and NGS had a favorable relapse-free and overall survival when compared to the group of five patients with detectable MRD by both techniques; the outcomes of patients with negative MRD status by multiparametric flow cytometry but detectable MRD by NGS were intermediate. However, the clinical predictive value of NGS MRD Received: 24 May 2023 Accepted: 2 June 2023",
+            "authors": [
+              {
+                "authorId": "38860528",
+                "name": "Antoine N. Saliba"
+              },
+              {
+                "authorId": "4222955",
+                "name": "R. Foà"
+              }
+            ],
+            "citationCount": 2,
+            "externalIds": {
+              "CorpusId": 259154150,
+              "DOI": "10.1002/ajh.26993",
+              "PubMed": "37314420"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/ajh.26993?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/ajh.26993, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "f5a89a247ab51fefc99692a52afb182e359557cb",
+            "title": "Minimal residual disease in Philadelphia‐positive acute lymphoblastic leukemia: Maximizing the clinical yield of testing",
+            "url": "https://www.semanticscholar.org/paper/f5a89a247ab51fefc99692a52afb182e359557cb",
+            "venue": "American journal of hematology/oncology",
+            "year": 2023
+          },
+          {
+            "abstract": "Conspectus The last decades have witnessed unprecedented scientific breakthroughs in all the fields of knowledge, from basic sciences to translational research, resulting in the drastic improvement of the lifespan and overall quality of life. However, despite these great advances, the treatment and diagnosis of some diseases remain a challenge. Inspired by nature, scientists have been exploring biomolecules and their derivatives as novel therapeutic/diagnostic agents. Among biomolecules, proteins raise much interest due to their high versatility, biocompatibility, and biodegradability. Protein binders (binders) are proteins that bind other proteins, in certain cases, inhibiting or modulating their action. Given their therapeutic potential, binders are emerging as the next generation of biopharmaceuticals. The most well-known example of binders are antibodies, and inspired by them researchers have developed alternative binders using protein design approaches. Protein design can be based on naturally occurring proteins in which, by means of rational design or combinatorial approaches, new binding interfaces can be engineered to obtain specific functions or based on de novo proteins emerging from state-of-the-art computational methodologies. Among the novel designed proteins, a class of engineered repeat proteins, the consensus tetratricopeptide repeat (CTPR) proteins, stand out due to their stability and robustness. The CTPR unit is a helix-turn-helix motif constituted of 34 amino acids, of which only 8 are essential to ensure correct folding of the structure. The small number of conserved residues of CTPR proteins leaves plenty of freedom for functional mutations, making them a base scaffold that can be easily and reproducibly tailored to endow desired functions to the protein. For example, the introduction of metal-binding residues (e.g., histidines, cysteines) drives the coordination of metal ions and the subsequent formation of nanomaterials. Additionally, the CTPR unit can be conjugated with other peptides/proteins or repeated in tandem to encode larger CTPR proteins with superhelical structures. These properties allow for the design of both binder and nanomaterial-coordination modules as well as their combination within the same molecule, making the CTPR proteins, as we have demonstrated in several recent examples, the ideal platform to develop protein–nanomaterial hybrids. Generally, the fusion of two distinct materials exploits the best properties of each; however, in protein–nanomaterial hybrids, the fusion takes on a new dimension as new properties arise. These hybrids have ushered the use of protein-based nanomaterials as biopharmaceuticals beyond their original therapeutic scope and paved the way for their use as theranostic agents. Despite several reports of protein-stabilized nanomaterials found in the literature, these systems offer limited control in the synthesis and properties of the grown nanomaterials, as the protein acts just as a stabilizing agent with no significant functional contribution. Therefore, the rational design of protein-based nanomaterials as true theranostic agents is still incipient. In this context, CTPR proteins have emerged as promising scaffolds to hold simultaneously therapeutic and diagnostic functions through protein engineering, as it has been recently demonstrated in pioneering in vitro and in vivo examples.",
+            "authors": [
+              {
+                "authorId": "5016193",
+                "name": "K. Uribe"
+              },
+              {
+                "authorId": "11921804",
+                "name": "E. Guisasola"
+              },
+              {
+                "authorId": "38127508",
+                "name": "A. Aires"
+              },
+              {
+                "authorId": "1413016911",
+                "name": "Elena López-Martínez"
+              },
+              {
+                "authorId": "2132604810",
+                "name": "Gabriela Guedes"
+              },
+              {
+                "authorId": "14234006",
+                "name": "I. R. Sasselli"
+              },
+              {
+                "authorId": "3914622",
+                "name": "A. Cortajarena"
+              }
+            ],
+            "citationCount": 18,
+            "externalIds": {
+              "CorpusId": 242940870,
+              "DOI": "10.1021/acs.accounts.1c00440",
+              "PubMed": "34730945",
+              "PubMedCentral": "8600599"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8600599, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": "CCBYNCND",
+              "status": "HYBRID",
+              "url": "https://pubs.acs.org/doi/pdf/10.1021/acs.accounts.1c00440"
+            },
+            "paperId": "3df4b0a560158f469467ea616f96b38dc404548d",
+            "title": "Engineered Repeat Protein Hybrids: The New Horizon for Biologic Medicines and Diagnostic Tools",
+            "url": "https://www.semanticscholar.org/paper/3df4b0a560158f469467ea616f96b38dc404548d",
+            "venue": "Accounts of Chemical Research",
+            "year": 2021
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1716158",
+                "name": "Jaime Simão Sichman"
+              },
+              {
+                "authorId": "49323336",
+                "name": "R. Conte"
+              },
+              {
+                "authorId": "39762878",
+                "name": "N. Gilbert"
+              }
+            ],
+            "citationCount": 66,
+            "externalIds": {
+              "CorpusId": 10928555,
+              "DBLP": "conf/mabs/1998",
+              "DOI": "10.1007/b71639",
+              "MAG": "57661916"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/b71639?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/b71639, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "GREEN",
+              "url": "https://doi.org/10.1007/b71639"
+            },
+            "paperId": "3460413f0f5169ed5422c24cd8e11210e3d2a496",
+            "title": "Multi-Agent Systems and Agent-Based Simulation",
+            "url": "https://www.semanticscholar.org/paper/3460413f0f5169ed5422c24cd8e11210e3d2a496",
+            "venue": "Lecture Notes in Computer Science",
+            "year": 1998
+          },
+          {
+            "abstract": "We are delighted to publish two more articles in the “the design of my research” section in which colleagues with prestigious reputations agree to look back over various stages of their careers and to reflect on the place and role survey methods have played in them. This time it is Paul M. Sniderman, known for his work on prejudice, who has greatly contributed to the development of an experimental approach to opinion; and Pierre Lascoumes, a sociologist of law and public action, who at one point in his career was called on to supervise a collective project on the representations of probity. We are very grateful to these colleagues for having accepted our invitation, each in their own way, and for offering us the fruits of their reflections, while observing how difficult it is to anticipate the way in which each of them will interpret the proposal we are making. There is no need here for inclusive writing as we are struggling to find female colleagues available for the adventure. Nonna Mayer kindly agreed to take part early on, as did Christine Musselin, and we thank them. However, this means there are only two testimonies from women for every ten contributions from men. Seeing this, we had the idea of having a quick look at the overall publications in BMS over the last five years and we were surprised to see the overall ratio was also very unbalanced, especially when removing from the count the contributions to the two guest issues on children and gender, both of which mostly contained articles (co-)authored by women. We do not have the means here to put these observations into perspective with the kind of articles published in general social science journals. All we can say is this result surprised us. We had indeed felt that since methods are not a particularly renowned field in our disciplines, they should be more easily open to women’s work. Apparently this is not the case. We are interested in the issue and will certainly return to it in a future editorial. In addition, we will double our efforts to convince women colleagues to contribute to this section. For now, we hope you will enjoy the two new contributions by Paul Sniderman and Pierre Lascoumes, whom we thank again. This issue also includes two ‘implementation’ articles, both of which focus on data collection. The first, written by Sven Stadtmüller in collaboration with several colleagues from GESIS in Mannheim, examines the efficiency of mixed-mode selfadministered surveys, focusing in particular on how different incentive systems and mode choice designs influence response rates, net sample composition and survey costs, depending in particular on the age of respondents. The second, also co-authored, with Anica Bowe as corresponding author, presents the NGO BECO’s Equity Audit tool, designed to measure racial diversity, equity and inclusion in the workplace. The tool is assessed both quantitatively and qualitatively. The",
+            "authors": [
+              {
+                "authorId": "48391229",
+                "name": "S. Duchesne"
+              },
+              {
+                "authorId": "2133980170",
+                "name": "Ahmed Fouad El Haddad"
+              },
+              {
+                "authorId": "2076999896",
+                "name": "X. Itçaina"
+              },
+              {
+                "authorId": "2094930789",
+                "name": "Viviane Le Hay"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 260063358,
+              "DOI": "10.1177/07591063231184240a"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/07591063231184240a?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/07591063231184240a, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "BRONZE",
+              "url": "https://journals.sagepub.com/doi/pdf/10.1177/07591063231184240a"
+            },
+            "paperId": "9629fa3768f44e88f14840f232541650ca0a3f05",
+            "title": "Where it turns out that the method does not break the glass ceiling…",
+            "url": "https://www.semanticscholar.org/paper/9629fa3768f44e88f14840f232541650ca0a3f05",
+            "venue": "Bulletin of Sociological Methodology/Bulletin de Méthodologie Sociologique",
+            "year": 2023
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1703124",
+                "name": "B. Edmonds"
+              }
+            ],
+            "citationCount": 8,
+            "externalIds": {
+              "CorpusId": 15816291,
+              "DBLP": "books/ox/13/Edmonds13",
+              "DOI": "10.1093/acprof:oso/9780199812677.003.0003",
+              "MAG": "2484667470"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1093/acprof:oso/9780199812677.003.0003?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1093/acprof:oso/9780199812677.003.0003, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "4b273fc5b9d28fa129e901660739b581355a94db",
+            "title": "Agent-Based Social Simulation and Its Necessity for Understanding Socially Embedded Phenomena",
+            "url": "https://www.semanticscholar.org/paper/4b273fc5b9d28fa129e901660739b581355a94db",
+            "venue": "Minding Norms",
+            "year": 2013
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2089298131",
+                "name": "Viviana Vitari"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "CorpusId": 252386172
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://repository.ifla.org/bitstream/123456789/2049/1/s5-2022-vitari-en.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "8915da2f847f54c799d82022cf271dcec34d1d55",
+            "title": "Wikidata/Wikibase: A Green Platform Solution for Coworking",
+            "url": "https://www.semanticscholar.org/paper/8915da2f847f54c799d82022cf271dcec34d1d55",
+            "venue": "",
+            "year": 2022
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "145121421",
+                "name": "P. Nielsen"
+              }
+            ],
+            "citationCount": 19,
+            "externalIds": {
+              "CorpusId": 9442540,
+              "DOI": "10.1038/sj.gt.3302507",
+              "MAG": "2041142640",
+              "PubMed": "15759014"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1038/sj.gt.3302507?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1038/sj.gt.3302507, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "08b66aa50553b6e72d20cb4957029ab806980007",
+            "title": "Systemic delivery: The last hurdle?",
+            "url": "https://www.semanticscholar.org/paper/08b66aa50553b6e72d20cb4957029ab806980007",
+            "venue": "Gene Therapy",
+            "year": 2005
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "49323336",
+                "name": "R. Conte"
+              },
+              {
+                "authorId": "2065304321",
+                "name": "G. Gilbert"
+              },
+              {
+                "authorId": "1716158",
+                "name": "Jaime Simão Sichman"
+              }
+            ],
+            "citationCount": 105,
+            "externalIds": {
+              "CorpusId": 14083077
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://www2.pcs.usp.br/~jaime/papers/conte_mabs98_e.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "9c8586023bd151bafc38edb08cdddf4c5e7e89f8",
+            "title": "Social Simulation : A Suitable Commitment",
+            "url": "https://www.semanticscholar.org/paper/9c8586023bd151bafc38edb08cdddf4c5e7e89f8",
+            "venue": "",
+            "year": 1998
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "75089001",
+                "name": "Steve Cocheo"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 107342196,
+              "MAG": "11619651"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "f5d7ebf95dcbca5a40e24d55cd9d17dfdadb6374",
+            "title": "Striking a Risk-Based Balance When Things Are Very Good; FDIC Supervision Head Nick Ketcha Pushes for Moderation among Both Bankers and Examiners",
+            "url": "https://www.semanticscholar.org/paper/f5d7ebf95dcbca5a40e24d55cd9d17dfdadb6374",
+            "venue": "",
+            "year": 1997
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1789878",
+                "name": "H. Rieser"
+              }
+            ],
+            "citationCount": 3,
+            "externalIds": {
+              "CorpusId": 46235367,
+              "DBLP": "conf/esslli/Rieser17",
+              "MAG": "2912258238"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-1863/paper_8.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "46385ba5522481868a861c630fc1f023e903ef46",
+            "title": "A process algebra account of speech-gesture interaction",
+            "url": "https://www.semanticscholar.org/paper/46385ba5522481868a861c630fc1f023e903ef46",
+            "venue": "FADLI@ESSLLI",
+            "year": 2017
+          },
+          {
+            "abstract": "The great eighteenth-century music historian Charles Burney wrote that the pipe organ was ‘the largest, most comprehensive, and harmonious of musical instruments’ (‘Organ’, in The Cyclopædia; or, Universal Dictionary of Arts, Sciences, and Literature, ed. Abraham Rees (London: Longman, Hurst, Rees, Orme and Brown, ), volume , ). Once known simply as ‘the instrument’ on account of its all-encompassing excellence, the baroque organ represents a stand-out state of perfection in organ construction, establishing a model that has been an inspiration for later periods, including our own. In the last few decades, music historiography in the anglophone sphere has experienced three major methodological developments: the performative turn that puts human actions at the centre of musical meaning; the material turn that bridges the chasm between theory and practice through ontology; and, more recently, the global turn, which treats music as a broad historical, cultural and geographic phenomenon, exploring paradigms and terminologies in order to write a music history that encompasses different voices. Embodying technological sophistication, capturing aesthetic attention and the product of networks of cross-cultural influences, the baroque organ – a vital agent in the history of music – might be seen as a nexus of those differing critical strands in contemporary musical scholarship. Thus the conference ‘The Organ in the Global Baroque’ offered a timely opportunity to explore the instrument as a social artefact, with renewed critical objectives relating to a shifting global order. Organized by the Westfield Center for Historical Keyboard Studies with support from Cornell University and the Andrew W. Mellon Foundation, the conference took place on Cornell University’s campus over a three-day weekend. In honour of the late Dutch organist Jacques vanOortmerssen, the conference featured a cosmopolitan cast of scholars and performers, including numerous friends, colleagues and former students of van Oortmerssen. Their diverse research topics and recital repertory were heard and discussed via two keynote lectures, four paper sessions and eight recitals. John Butt (University of Glasgow) gave the opening keynote address, provocatively entitled ‘The Global Baroque Organ Today – Any Use in an Uncertain Age?’, providing a wide-ranging analysis of the global trajectories of the baroque organ and articulating some of the difficult yet pressing questions confronting music historians, performers and organ builders today. Moving back and forth between the present and the past, Butt framed the story of the baroque organ using the concept of musical modernity. Not only did the baroque organ signify a high point in the development and dissemination of a globalizing organ culture, Butt asserted, it has also provided an important impetus for greater historical awareness. Certainly, from theOrgelbewegung of Protestant Europe to the flourishing of all-purpose concert-hall organs in East Asia, it is knowledge of the historical principles surrounding the baroque organ that has sowed inspiration and, in turn, given a sense of vitality to our present-day musical culture. While making a strong case for the phenomenon of the baroque organ as a tool for recharging and imagining the future, Butt cautioned scholars from seeking refuge in two extreme positions represented by, on the one hand, meta-narratives of progress compelled by modernity’s pretensions to universality and, on the other hand, radical relativism that denies values and offers no fruitful responses in our post-truth era. Butt argued that a nuanced understanding of musical modernity might offer a critical toolkit that helps us navigate a path between cultural absolutism and valuefree relativism. On modernity’s relation to historical reconstruction, Butt pointed out that the twentiethand twentieth-first-century rejuvenation of the baroque organ, along with a renewed interest in craft tradition and heritage, was conditioned by modernity’s logic and simultaneously compensated for the negative aspects of that logic: today’s baroque organ culture, he contended, is less about replicating seventeenthand eighteenth-century instruments than it is a project, kindled by a modernist mindset, to rework the past. commun icat ion s",
+            "authors": [
+              {
+                "authorId": "152803810",
+                "name": "Morton Wan"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 202376140,
+              "DOI": "10.1017/S1478570619000137",
+              "MAG": "2969638488"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1017/S1478570619000137?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1017/S1478570619000137, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "5de02a5aaf629623426b7cbbdee4a99cb5c3dbdb",
+            "title": "THE ORGAN IN THE GLOBAL BAROQUE CORNELL UNIVERSITY, 6–8 SEPTEMBER 2018",
+            "url": "https://www.semanticscholar.org/paper/5de02a5aaf629623426b7cbbdee4a99cb5c3dbdb",
+            "venue": "Eighteenth-Century Music",
+            "year": 2019
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "48577176",
+                "name": "A. Gerber"
+              },
+              {
+                "authorId": "144014707",
+                "name": "J. Houle"
+              },
+              {
+                "authorId": "2107672908",
+                "name": "H. Nguyen"
+              },
+              {
+                "authorId": "1751891",
+                "name": "M. Roughan"
+              },
+              {
+                "authorId": "35049639",
+                "name": "S. Sen"
+              }
+            ],
+            "citationCount": 84,
+            "externalIds": {
+              "CorpusId": 17758255,
+              "MAG": "7892163"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://internal.maths.adelaide.edu.au/people/mroughan/Papers/ncta_2003.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "809636f511603ce26ce5ae7b90339f0cd611f703",
+            "title": "P2P the gorilla in the cable",
+            "url": "https://www.semanticscholar.org/paper/809636f511603ce26ce5ae7b90339f0cd611f703",
+            "venue": "",
+            "year": 2003
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2155552740",
+                "name": "Huili Chen"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "CorpusId": 49732120
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://robotic.media.mit.edu/wp-content/uploads/sites/14/2018/06/hchen25-ms-18.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "c8124a95d740579ce4d018a355eac10247a5f66a",
+            "title": "Adaptive Role Switching in Socially Interactive Agents for Children ’ s Language Learning",
+            "url": "https://www.semanticscholar.org/paper/c8124a95d740579ce4d018a355eac10247a5f66a",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "3712717",
+                "name": "W. Mehal"
+              }
+            ],
+            "citationCount": 2,
+            "externalIds": {
+              "CorpusId": 8868295,
+              "DOI": "10.1002/hep.28348",
+              "MAG": "2174199380",
+              "PubMed": "26567082"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1002/hep.28348?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/hep.28348, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "BRONZE",
+              "url": "https://aasldpubs.onlinelibrary.wiley.com/doi/pdf/10.1002/hep.28348"
+            },
+            "paperId": "89edc43bf2efc94d163a0703fa2497ba222943f2",
+            "title": "We are not in kansas anymore: The unfamiliar landscape of NASH",
+            "url": "https://www.semanticscholar.org/paper/89edc43bf2efc94d163a0703fa2497ba222943f2",
+            "venue": "Hepatology",
+            "year": 2016
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1711777",
+                "name": "C. Breazeal"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 91182090
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://dspace.mit.edu/bitstream/handle/1721.1/119081/1057896853-MIT.pdf?sequence=1, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "40d171bf41d32c407907e6f1ece44b14c31442e8",
+            "title": "Adaptive Role Switching in Socially Interactive Agents for Children ' s Language Learning",
+            "url": "https://www.semanticscholar.org/paper/40d171bf41d32c407907e6f1ece44b14c31442e8",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1695372",
+                "name": "L. Magnani"
+              }
+            ],
+            "citationCount": 54,
+            "externalIds": {
+              "CorpusId": 14307534,
+              "DBLP": "conf/icai/Magnani02",
+              "DOI": "10.1515/semi.2005.2005.153-1-4.261",
+              "MAG": "58864475"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1515/semi.2005.2005.153-1-4.261?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1515/semi.2005.2005.153-1-4.261, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "31bdc880b77c02a473b070c18b67598115251e50",
+            "title": "An Abductive Theory of Scientific Reasoning",
+            "url": "https://www.semanticscholar.org/paper/31bdc880b77c02a473b070c18b67598115251e50",
+            "venue": "International Conference on Artificial Intelligence",
+            "year": 2005
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "49735033",
+                "name": "Carol Reynolds"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 158912604,
+              "MAG": "2886255929"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://digitalcommons.mtu.edu/cgi/viewcontent.cgi?article=1000&context=humanities-p, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "ae5a289ac3afbd2b99a08aa18beba98f2c240c1f",
+            "title": "Deconstructing definitions: Repositioning technological access & literacy within agent ability",
+            "url": "https://www.semanticscholar.org/paper/ae5a289ac3afbd2b99a08aa18beba98f2c240c1f",
+            "venue": "",
+            "year": 2012
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2144081322",
+                "name": "Man Xia"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 55791278
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://download.atlantis-press.com/article/25857563.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "4581090bc304f1b541d3bdd04feb7cfd0fb56904",
+            "title": "Problems and Approaches Analysis of Henan Cultural Communication and Rural Cultural Governance",
+            "url": "https://www.semanticscholar.org/paper/4581090bc304f1b541d3bdd04feb7cfd0fb56904",
+            "venue": "",
+            "year": 2016
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2392853733",
+                "name": "G P M F Mols"
+              },
+              {
+                "authorId": "2392853730",
+                "name": "H J Van Den Herik Copromotor"
+              },
+              {
+                "authorId": "2392852977",
+                "name": "J W H M Uiterwijk"
+              },
+              {
+                "authorId": "2087319201",
+                "name": "A J Van Zanten"
+              },
+              {
+                "authorId": "2394679051",
+                "name": "E. de Bruin"
+              },
+              {
+                "authorId": "2226514001",
+                "name": "Rotterdam Universiteit"
+              },
+              {
+                "authorId": "2392852962",
+                "name": "H Coolen"
+              },
+              {
+                "authorId": "2076689396",
+                "name": "Iida"
+              },
+              {
+                "authorId": "2392853727",
+                "name": "E O Postma"
+              }
+            ],
+            "citationCount": 28,
+            "externalIds": {
+              "CorpusId": 153079492
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://dke.maastrichtuniversity.nl/m.winands/documents/informed_search.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "abc0b39e7dd6a21613640af7069fb2f947b9b840",
+            "title": "Informed Search in Complex Games",
+            "url": "https://www.semanticscholar.org/paper/abc0b39e7dd6a21613640af7069fb2f947b9b840",
+            "venue": "",
+            "year": 2000
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "30154937",
+                "name": "Engelstad"
+              },
+              {
+                "authorId": "2349246804",
+                "name": "Rund"
+              },
+              {
+                "authorId": "2436737926",
+                "name": "Torgalsboen"
+              },
+              {
+                "authorId": "2097476899",
+                "name": "Vaskinn"
+              },
+              {
+                "authorId": "2096883957",
+                "name": "Montalvo"
+              },
+              {
+                "authorId": "2083240809",
+                "name": "Estrada"
+              },
+              {
+                "authorId": "145074048",
+                "name": "A. Pérez"
+              },
+              {
+                "authorId": "2436972114",
+                "name": "Cabezas"
+              },
+              {
+                "authorId": "2250009088",
+                "name": "Paños"
+              },
+              {
+                "authorId": "46794432",
+                "name": "Solé"
+              },
+              {
+                "authorId": "48492987",
+                "name": "Monreal"
+              },
+              {
+                "authorId": "2436733930",
+                "name": "Sanchez-gistau"
+              },
+              {
+                "authorId": "2436737914",
+                "name": "Vilella"
+              },
+              {
+                "authorId": "2353626795",
+                "name": "Palao"
+              },
+              {
+                "authorId": "2104008740",
+                "name": "Labad"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 288444902
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "fcd85be0ebd87ee99053032863572ae7baa290b7",
+            "title": "F87. SERUM PROLACTIN LEVELS AND COGNITIVE OUTCOME IN FIRST EPISODE PSYCHOSIS: A PROSPECTIVE 1-YEAR FOLLOW-UP STUDY",
+            "url": "https://www.semanticscholar.org/paper/fcd85be0ebd87ee99053032863572ae7baa290b7",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "122270442",
+                "name": "I. Reist"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "CorpusId": 165382882,
+              "DOI": "10.1086/700448",
+              "MAG": "2891782453"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1086/700448?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1086/700448, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "50c7c37bf79a4cd17b523cfcb644a56b98bc2f01",
+            "title": "A Rothschild Renaissance: Treasures from the Waddesdon Bequest. Dora Thornton. London: British Museum Press, 2015. 352 pp. £30.",
+            "url": "https://www.semanticscholar.org/paper/50c7c37bf79a4cd17b523cfcb644a56b98bc2f01",
+            "venue": "Renaissance Quarterly",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1753646241",
+                "name": "Chloe-Lynn Chartouni"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 211381941,
+              "DOI": "10.2139/ssrn.3419192",
+              "MAG": "2982364093"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.2139/ssrn.3419192?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.2139/ssrn.3419192, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "9682ef66b8b3e3f4ef693cd2c47100cacc2faeab",
+            "title": "In Search for the Existence of the 'Holy-Grail, One Size Fits All' Theory: An Examination of Corporate Governance from Robber-Barons to Unicorns",
+            "url": "https://www.semanticscholar.org/paper/9682ef66b8b3e3f4ef693cd2c47100cacc2faeab",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2108290479",
+                "name": "Sourabh Singh"
+              },
+              {
+                "authorId": "104154064",
+                "name": "S. Mitra"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 165010786,
+              "MAG": "2944154047"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "27134e311ea3d77c30dba97341ff51dfde8e78cb",
+            "title": "Study of surface to bulk coupling and Coulomb interaction in Topological Insulator thin films",
+            "url": "https://www.semanticscholar.org/paper/27134e311ea3d77c30dba97341ff51dfde8e78cb",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "1749315",
+                "name": "Á. Figueira"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "CorpusId": 59703325,
+              "MAG": "73159616"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "e1579ea9d9ea4948d4d8a3bdd3f55c190fe82d81",
+            "title": "ORCHESTRATING ONLINE GROUP WORK WHILE ASSESSING INDIVIDUAL PARTICIPATIONS",
+            "url": "https://www.semanticscholar.org/paper/e1579ea9d9ea4948d4d8a3bdd3f55c190fe82d81",
+            "venue": "",
+            "year": 2015
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "34602455",
+                "name": "J. Kurata"
+              },
+              {
+                "authorId": "145919755",
+                "name": "H. Hemmings"
+              }
+            ],
+            "citationCount": 7,
+            "externalIds": {
+              "CorpusId": 33928127,
+              "DOI": "10.1093/bja/aev224",
+              "MAG": "2317378271",
+              "PubMed": "26174293"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1093/bja/aev224?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1093/bja/aev224, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": "publisher-specific-oa",
+              "status": "HYBRID",
+              "url": "http://bjanaesthesia.org/article/S0007091217310000/pdf"
+            },
+            "paperId": "b6c28c6c8efee295812ac92072e2e6d46b16921a",
+            "title": "Memory and awareness in anaesthesia.",
+            "url": "https://www.semanticscholar.org/paper/b6c28c6c8efee295812ac92072e2e6d46b16921a",
+            "venue": "British Journal of Anaesthesia",
+            "year": 2015
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2083420543",
+                "name": "F. Bourdillon"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 30961964,
+              "MAG": "2406892298",
+              "PubMed": "25510127"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "9cd3ec35d4bb819af029ab0fbab09f9d069bf709",
+            "title": "[Prevention and screening of HIV infection ].",
+            "url": "https://www.semanticscholar.org/paper/9cd3ec35d4bb819af029ab0fbab09f9d069bf709",
+            "venue": "La Revue du praticien",
+            "year": 2014
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "98664098",
+                "name": "Tom Mouck"
+              }
+            ],
+            "citationCount": 30,
+            "externalIds": {
+              "CorpusId": 27888641,
+              "DOI": "10.1016/S0361-3682(99)00049-5",
+              "MAG": "3121289068"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1016/S0361-3682(99)00049-5?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/S0361-3682(99)00049-5, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "0ff64932624b1723757cef8ddc94c3d34f279d90",
+            "title": "Beyond Panglossian theory: strategic capital investing in a complex adaptive world",
+            "url": "https://www.semanticscholar.org/paper/0ff64932624b1723757cef8ddc94c3d34f279d90",
+            "venue": "",
+            "year": 2000
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "4424500",
+                "name": "Marianna Taffi"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 130496296,
+              "MAG": "2291533055"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "827a8d0063f2ca67b1bdbd1a44681e41897ee37d",
+            "title": "Bioaccumulation and bioremediation modelling in Aquatic ecosystems: the Adriatic Sea case study",
+            "url": "https://www.semanticscholar.org/paper/827a8d0063f2ca67b1bdbd1a44681e41897ee37d",
+            "venue": "",
+            "year": 2015
+          },
+          {
+            "abstract": "To keep public finances healthy in the long term, the operation of public entities requires effective performance of financial resources. The Balanced Scorecard (BSC) is a management tool for senior management born in the business world, which is also used in non-profit organizations, such as public entities. With the purpose to present financial performance in a visual way that gets attention of the viewer and can be quickly understood in one glance to those interested, this paper focuses on the application of the BSC in the public sector: the general balance sheet of a public entity was analyzed and financial ratios were applied to it, concluding with the development of a BSC using a web application, converting the results of the financial ratios into gauge charts, where colors indicate the severity status for each financial ratio. The interpretation of these colors is what you should expect: green indicates an acceptable status, yellow indicate a warning status, and red indicates a severe status. The proposed BSC can be used by auditors or the public entity ́s administrators to define the area which must be improved to achieve financial goals. Introduction The demand of the population for a transparent and effective execution of public spending has motivated the governments of several countries to improve the efficiency in which they provide their services to the population. This trend has materialized in the introduction of the Results Based Budget (RBB) in countries belonging to the Organization for Economic Cooperation and Development (OECD). 5th International Conference on New Ideas in Management, Economics and Accounting Paris, France November 2-4, 2018 181 The RBB model emerges as a means to improve the way in which governments manage their resources through public entities, in order to consolidate their social and economic development and provide better services to the population (Perez, 2012). The main objective of public finances is to investigate and structure in which the state or any other public power, such as public entities, obtain the material and financial resources necessary for their operation. The scientific study and the practical application of public finances are a factor of stabilization and economic growth of a country and its companies as centers of decent and fair employment generation, therefore, public finances and policies must seek sustainable business and labor development through effective spending monitoring strategies (Ibarra, 2009). Public entities are non-profit organizations, whose sole purpose is to satisfy public services by focusing on the collective needs derived from the social organization in which man lives, and are run by people called public servants, who have the obligation to make efficient use of public resources, which are bound by the Federal Law on the Responsibilities of Public Servants (CDHCU, 2012a). To improve the efficiency with which organizations exercise the resources for their correct functioning, there are several tools, one of which is the Balanced Scorecard (BSC) whose objective is to translate the strategy and the mission of an organization in a coherent set of indicators (González, 2008). The BSC is a control tool to monitor the performance of the organization. The BSC differs from other Business Intelligence tools, such as Decision Support Systems (DSS) and Executive Information Systems (EIS) in that they are more oriented towards monitoring of indicators that to the meticulous analysis of information. The use of the BSC is commonly carried out by the top management while the DSS and EIS are more focused on departmental management (Sinnexus, 2018). Kaplan and Norton (1996), the BSC creators, mentioned that financial results are indicators of delay that reports consequences of past actions, so both financial performance measures and non-financial measures should be used to promote the creation of long-term value. The strategic focus of the BSC retains measures of financial 5th International Conference on New Ideas in Management, Economics and Accounting Paris, France November 2-4, 2018 182 performance, that is, indicators of the results of past actions, and complements them with other key factors that influences performance (see figure 1). Figure 1. The four perspectives of vision and strategy (Kaplan&Norton, 1996). The BSC was first introduced back in 1992 in an article in Harvard Business Review article, which in turn was based on an investigation by the Nolan consulting company Norton, on measuring the performance of companies whose intangible assets are central the creation of value. After the publication in 1992, several public, private and non-profit companies adopted the BSC, whose use was extended to a tool to communicate and implement strategies within companies (Kaplan&Norton, 1996). Kaplan (2010) had the firm belief that measurement is fundamental for both scientists and organization managers, and if managers want to improve the management of their intangible assets, they have to integrate the measurement of intangible assets in their management systems, which gave rise to the development of the BSC. So Developed initially with an approach and use in lucrative companies, the BSC took relevance also in nonprofit companies and public entities, since it helps to keep finances within the budget and communicate the results and future plans to comply with the mission and strategic objectives of the entity (Gonzalez, 2008). In Mexico as in many other countries in Latin America, the administration of public resources is one of the most criticized issues in public opinion because of bad management. The journalistic investigations and surveys show the deterioration of the administrators of the public entities. Deviations, misappropriation of funds, influence peddling, simulations, among others, are 5th International Conference on New Ideas in Management, Economics and Accounting Paris, France November 2-4, 2018 183 frequent news in the media. Consequently, the citizens are frequently demanding better management of public resources. As public entities are obliged by law to do financial statements, they are used to work and report only numbers. As an auditor I have examined several of them, and I have seen the necessity of having better ways to show the results of final reports, so they can be better understood by the administrators and third parties, who are not always experts in the area or do not have the time to read a lot of numbers and text. Therefore a method was developed to show financial performance in a visual way that gets attention of the viewer and can be quickly understood with one glance. So this paper is focused mainly on the design of a BSC from the financial perspective of a public entity, whose operation results are reported in the financial statements. The results obtained from the financial ratios applied to the general balance sheet were used as the main source of data for the BSC. For Leach (2010) a ratio is simply one number divided by another, but talking in financial terms, a financial or accounting ratio is one figure from a set of accounts divided by another figure, so when calculating any ratio, one must use the consolidated financial statements; financial ratios are intended to assist the process of identifying some aspect of an organization, such as its profitability, efficiency or liquidity, they can also be early indicators of problems. Methods Quantitative analysis is a technique that seeks to understand behavior by using mathematical measurement, aiming to represent a given reality, belonging in the past or future, in terms of a numerical value. Thus a quantitative focus was employed in this paper and included the evaluation of financial information using financial ratios and mathematical operations, in order to understand past events, such as the financial performance of an organization in numerical terms in a given fiscal year. For Radnitzky (1970) hermeneutics is primarily concerned with the meaning of a text, and the basic question in hermeneutics is: what is he meaning of this text? For Myers (1997) hermeneutics can be treated as both an underlying philosophy and a specific mode of analysis, as a mode of analysis it suggests a way of understanding 5th International Conference on New Ideas in Management, Economics and Accounting Paris, France November 2-4, 2018 184 textual data. So another method applied in this paper was concerned with using hermeneutics as a specific mode of text analysis, mainly related to mexican laws and financial texts related to financial ratios. This paper limits the financial perspective of management through the information contained in the financial statements, specifically the general balance sheet. This last is the main source of information from which the mexican supervising bodies use to evaluate the financial performance and situation of public entities. The financial statements are documents that must be issued by all public, private and non-profit organizations, whose elaboration rules are regulated in Mexico by the Mexican Council of Financial Information Standards (CINIF) and are the initial basis for financial and budgetary audits. Also they are available to the general public for revision and research purposes. Currently all public entities are bound by the General Law of Transparency and Access to Public Information to publish in the portals of federal and state transparency the information on the way they handle public resources, according to article 49 of the General Law on Transparency and Access to Public Information (CDHCU, 2012b). Likewise, the Law on Fiscalization and Accountability of the Federation in its first and second article (CDHCU, 2016a) determines that the Superior Audit of the Federation may inspect the financial administration of public entities to verify compliance with the Income Law and the Budget of Expenditures of the Federation regarding:",
+            "authors": [
+              {
+                "authorId": "1673480003",
+                "name": "Tadeo Roberto Baeza Beltrán"
+              },
+              {
+                "authorId": "2340253981",
+                "name": "Guillermo Torres"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 217195025,
+              "DOI": "10.33422/5imea.2018.02.64",
+              "MAG": "3003971027"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.33422/5imea.2018.02.64?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.33422/5imea.2018.02.64, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "GOLD",
+              "url": "http://www.dpublication.com/wp-content/uploads/2019/01/IMEA-5-172.pdf"
+            },
+            "paperId": "07b3fa4065bb1df66416bf8a7c099ca06e483827",
+            "title": "The Balanced Scorecard for public-sector organizations: a practical approach for measuring a public entity performance using financial ratios",
+            "url": "https://www.semanticscholar.org/paper/07b3fa4065bb1df66416bf8a7c099ca06e483827",
+            "venue": "",
+            "year": 2018
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "5553845",
+                "name": "S. Bhattacharyya"
+              },
+              {
+                "authorId": "89180070",
+                "name": "Supervisor Dr. Arindam Mukherjee"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 104178276,
+              "MAG": "2794832913"
+            },
+            "openAccessPdf": {
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "206c04e137af4bc3082eeee7148e24c7e5ae704f",
+            "title": "Nitrogen Based Heterocycles and their MetalComplexes: From Anti-Cancer to Anti-DyslipidemicAgents",
+            "url": "https://www.semanticscholar.org/paper/206c04e137af4bc3082eeee7148e24c7e5ae704f",
+            "venue": "",
+            "year": 2017
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "144489777",
+                "name": "M. Ibrahim"
+              }
+            ],
+            "citationCount": 1,
+            "externalIds": {
+              "CorpusId": 114487697,
+              "DOI": "10.5339/QPROC.2016.QGBC.28",
+              "MAG": "2606065396"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.5339/QPROC.2016.QGBC.28?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.5339/QPROC.2016.QGBC.28, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "d2f9db3e7d92da24a86db3e7c1f2c2838139077f",
+            "title": "EcoBIM for micro-sustainability",
+            "url": "https://www.semanticscholar.org/paper/d2f9db3e7d92da24a86db3e7c1f2c2838139077f",
+            "venue": "",
+            "year": 2016
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "50422473",
+                "name": "Kathryn M. Olson"
+              }
+            ],
+            "citationCount": 21,
+            "externalIds": {
+              "CorpusId": 154311994,
+              "DOI": "10.1111/J.1741-5705.2004.00047.X",
+              "MAG": "2163156965"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1111/J.1741-5705.2004.00047.X?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1111/J.1741-5705.2004.00047.X, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "CLOSED",
+              "url": ""
+            },
+            "paperId": "770f6dfc435a82f71ec07ab27a764c75ad63b96f",
+            "title": "Democratic Enlargement's Value Hierarchy and Rhetorical Forms: An Analysis of Clinton's Use of a Post‐Cold War Symbolic Frame to Justify Military Interventions",
+            "url": "https://www.semanticscholar.org/paper/770f6dfc435a82f71ec07ab27a764c75ad63b96f",
+            "venue": "",
+            "year": 2004
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "2229652347",
+                "name": "Oliveira Azevedo"
+              },
+              {
+                "authorId": "144143437",
+                "name": "M. M. Santos"
+              },
+              {
+                "authorId": "2266369957",
+                "name": "Javier Jerez-Roig"
+              },
+              {
+                "authorId": "2445323985",
+                "name": "Dyego Leandro Bezerra de"
+              },
+              {
+                "authorId": "2445313272",
+                "name": "Souza"
+              }
+            ],
+            "citationCount": 2,
+            "externalIds": {
+              "CorpusId": 55239695
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://periodicos.ufpe.br/revistas/revistaenfermagem/article/download/13595/16413, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "b05ac98faeae1fb9b7207e761f1f737dd0083e94",
+            "title": "INCIDENCE OF VIRAL HEPATITIS IN BRAZIL FROM 1997 TO",
+            "url": "https://www.semanticscholar.org/paper/b05ac98faeae1fb9b7207e761f1f737dd0083e94",
+            "venue": "",
+            "year": 2015
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "80246381",
+                "name": "Surinderpal Kaur"
+              },
+              {
+                "authorId": "51023322",
+                "name": "Navjot Kaur"
+              }
+            ],
+            "citationCount": 0,
+            "externalIds": {
+              "CorpusId": 155734218,
+              "DOI": "10.9790/0837-19975051",
+              "MAG": "2318202035"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://www.iosrjournals.org/iosr-jhss/papers/Vol19-issue9/Version-7/H019975051.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "BRONZE",
+              "url": "https://doi.org/10.9790/0837-19975051"
+            },
+            "paperId": "b054272bbc1087b4f15cf92285d800e4f5fa00b8",
+            "title": "Role of Media in Present Indian Social Scenario",
+            "url": "https://www.semanticscholar.org/paper/b054272bbc1087b4f15cf92285d800e4f5fa00b8",
+            "venue": "",
+            "year": 2014
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "119326685",
+                "name": "Dunn Crutcher Llp"
+              },
+              {
+                "authorId": "2071153043",
+                "name": "Gibson"
+              }
+            ],
+            "citationCount": 19,
+            "externalIds": {
+              "CorpusId": 154842203,
+              "DOI": "10.2139/SSRN.210468",
+              "MAG": "2152862040"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.2139/SSRN.210468?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.2139/SSRN.210468, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": "GREEN",
+              "url": "https://doi.org/10.2139/ssrn.210468"
+            },
+            "paperId": "7ed422f9a81bf6bb518999832e1afc4a74dda6c4",
+            "title": "The Gramm-Leach-Bliley Act, P.L. 106-102, Financial Services Modernization, Working Summary No. 4",
+            "url": "https://www.semanticscholar.org/paper/7ed422f9a81bf6bb518999832e1afc4a74dda6c4",
+            "venue": "",
+            "year": 1999
+          },
+          {
+            "abstract": null,
+            "authors": [
+              {
+                "authorId": "70421845",
+                "name": "L. Phan"
+              }
+            ],
+            "citationCount": 11,
+            "externalIds": {
+              "CorpusId": 108548170,
+              "MAG": "1584565380"
+            },
+            "openAccessPdf": {
+              "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://dspace.mit.edu/bitstream/handle/1721.1/75664/819330678-MIT.pdf;jsessionid=DB2CDB17BE79E435DBBA0A3DC9182875?sequence=2, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+              "license": null,
+              "status": null,
+              "url": ""
+            },
+            "paperId": "1a09e16c8363f7c65de1b8fc0bfb5c1bcbb971d5",
+            "title": "Automated rapid thermal imaging systems technology",
+            "url": "https://www.semanticscholar.org/paper/1a09e16c8363f7c65de1b8fc0bfb5c1bcbb971d5",
+            "venue": "",
+            "year": 2012
+          }
+        ],
+        "next": 50,
+        "offset": 0,
+        "total": 118
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v1.1",
+  "stage": "R0",
+  "source_stage_decision": "PASS_NOVELTY_CONDITIONAL_TO_E0",
+  "decision": "STAY_DIAGNOSTIC_OPEN_E0_CANARY_PREPARATION",
+  "upgraded": false,
+  "reason": "Novelty is conditional and no valid GPU canary or seed-level interaction estimate exists."
+}

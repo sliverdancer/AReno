@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "protocol_id": "RIST-R0-v1.1",
+  "stage": "R0",
+  "stage_status": "PASS",
+  "decision": "PASS_NOVELTY_CONDITIONAL_TO_E0",
+  "search_date": "2026-08-01",
+  "screening": {
+    "raw_records": 557,
+    "deduplicated_titles": 496,
+    "ranked_candidates_retained": 150,
+    "full_text_records_in_matrix": 16,
+    "mandatory_full_text_records": 8,
+    "uninspectable_likely_direct_substitutes": 0,
+    "semantic_scholar_failed_queries": 4
+  },
+  "direct_substitutes": [],
+  "strongest_threats": [
+    "CIGPO",
+    "Signal Reshaping for GRPO in Weak-Feedback Agentic Code Repair",
+    "MatchTIR",
+    "ToolPRM",
+    "TopoCurate",
+    "ProxMO"
+  ],
+  "surviving_claim": "A prospective factorial estimate of how pre-training conditional strict-reward resolution moderates AF/LF/AN/LN action-span gradient eligibility under update-count and cumulative-trainable-token matching.",
+  "terminology": [
+    "gradient-resolvable",
+    "estimable under group-relative objectives"
+  ],
+  "claim_boundary": "Static masking, reward collapse, turn credit, all-versus-last failure routing, and function-name/argument decomposition are occupied adjacent contributions.",
+  "gpu_used": false,
+  "model_used": false,
+  "main_conference_hook": {
+    "decision": "STAY_DIAGNOSTIC_OPEN_E0_CANARY_PREPARATION",
+    "upgraded": false,
+    "reason": "The exact interaction survives, but no valid serving canary or independently seeded training estimand exists."
+  },
+  "next_action": "Freeze and CPU-test an independent non-scientific native-backend serving canary; stop before GPU execution."
+}
