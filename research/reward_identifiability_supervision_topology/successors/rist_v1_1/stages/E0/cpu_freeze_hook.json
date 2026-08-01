@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v1.1",
+  "phase": "E0_CPU_FREEZE",
+  "source_phase_decision": "PASS_E0_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "decision": "STAY_DIAGNOSTIC_WAIT_E0_GPU_CANARY",
+  "upgraded": false,
+  "reason": "CPU tests validate only the independent canary harness; no model serving or seed-level scientific interaction has been observed."
+}

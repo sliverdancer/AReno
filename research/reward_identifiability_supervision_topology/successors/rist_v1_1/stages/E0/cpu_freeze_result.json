@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-E0-v1.1",
+  "phase": "E0_CPU_FREEZE",
+  "phase_status": "PASS",
+  "decision": "PASS_E0_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "source_commit": "cfaa8bdcbea293ea59ae3cce1ef3a1a0146b55b1",
+  "canary_tasks_sha256": "53966aeb1d0a4c050b01bc58e6113c759abf961a226d7b6ea7e49c142fe8b640",
+  "checks": {
+    "targeted_cpu_tests_passed": 10,
+    "targeted_cpu_tests_failed": 0,
+    "python_syntax_valid": true,
+    "json_valid": true,
+    "canary_task_count": 2,
+    "turns_per_task": 4,
+    "p1_qualification_ids_disjoint": true,
+    "mock_raw_responses": 8,
+    "mock_fabricated_calls": 0,
+    "mock_retries": 0
+  },
+  "gpu_used": false,
+  "model_used": false,
+  "training_performed": false,
+  "qualification_data_opened_by_e0_runner": false,
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_ONLY",
+  "next_action": "Request authorization for at most 30 GPU minutes of sequential native-backend E0 serving."
+}

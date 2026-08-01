@@ -4,7 +4,7 @@ Protocol: `RIST-E0-v1.1`
 
 Frozen: `2026-08-01`
 
-Status: `FROZEN_CPU_PREP_IN_PROGRESS`
+Status: `FROZEN_AWAITING_GPU_AUTHORIZATION`
 
 ## Purpose
 

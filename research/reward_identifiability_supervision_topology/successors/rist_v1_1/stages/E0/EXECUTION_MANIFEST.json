@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-E0-v1.1",
+  "status": "FROZEN_AWAITING_GPU_AUTHORIZATION",
+  "source_commit_required": "cfaa8bdcbea293ea59ae3cce1ef3a1a0146b55b1",
+  "canary_tasks_sha256": "53966aeb1d0a4c050b01bc58e6113c759abf961a226d7b6ea7e49c142fe8b640",
+  "models": [
+    {
+      "cell": "qwen3_0_6b",
+      "model_id": "Qwen/Qwen3-0.6B",
+      "model_hub": "modelscope",
+      "adapter": "qwen3",
+      "prior_snapshot_manifest_sha256": "ffe4fab0fed7e695aff4f17b876a091e0f984674da045d96e681f835c94715f0"
+    },
+    {
+      "cell": "gemma4_e2b_it",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_hub": "huggingface",
+      "adapter": "gemma4",
+      "prior_snapshot_manifest_sha256": "74c6a28bb8465bc710cef8fb88e9d921f7bc1114aec363d12acb99c5d2f65b7f"
+    }
+  ],
+  "model_order": [
+    "qwen3_0_6b",
+    "gemma4_e2b_it"
+  ],
+  "serve": {
+    "tp_size": 1,
+    "world_size": 1,
+    "attn_backend": "native",
+    "eager_decode": true,
+    "disable_thinking": true,
+    "max_running_prompts": 1,
+    "port": 8000
+  },
+  "request_seed": 9101,
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_new_tokens": 96
+  },
+  "tasks_per_model": 2,
+  "turns_per_task": 4,
+  "expected_raw_responses_per_model": 8,
+  "expected_raw_responses_total": 16,
+  "retry_limit": 0,
+  "gpu_time_limit_seconds": 1800,
+  "training_permitted": false,
+  "qualification_data_permitted": false,
+  "heldout_data_permitted": false,
+  "checkpoint_download_permitted": false
+}
