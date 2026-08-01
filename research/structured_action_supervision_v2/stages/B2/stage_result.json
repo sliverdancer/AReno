@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.0",
+  "stage": "B2",
+  "stage_status": "INVALID",
+  "decision": "INVALID_B2_INFRASTRUCTURE_KV_CACHE_OOM",
+  "authorization": {
+    "status": "USER_AUTHORIZED",
+    "date": "2026-08-01",
+    "scope": "AReno serving and SAS-TR-v2.0 B2 inference qualification on the remote RTX 4090D",
+    "gpu_time_limit_seconds": 3600
+  },
+  "execution": {
+    "source_commit": "d04a23e",
+    "remote_cpu_contract_tests": "9 passed",
+    "compiled_extension_import": "PASS",
+    "controller_started_epoch": 1785553692.971729,
+    "gpu_idle_confirmed_epoch": 1785553818,
+    "conservative_gpu_wall_upper_bound_seconds": 125.028271,
+    "attempted_cells": [
+      "D128",
+      "D512"
+    ],
+    "unopened_cells": [
+      "N128",
+      "N512"
+    ],
+    "attempted_trajectories": 64,
+    "valid_raw_model_responses": 0,
+    "request_errors": 64,
+    "validation_consumed": false,
+    "reserve_consumed": false,
+    "model_weights_updated": false,
+    "gpu_processes_after_stop": []
+  },
+  "failure": {
+    "reason_code": "SERVE_KV_CACHE_CUDA_OOM",
+    "exception_type": "torch.OutOfMemoryError",
+    "first_failure": "Tried to allocate 642.00 MiB with 557.44 MiB free after PyTorch allocated 22.51 GiB",
+    "root_cause": "The B2 controller configured max_running_prompts=8, causing AReno to allocate a KV cache too large for the 24GB RTX 4090D before the first model response.",
+    "worker_outcome": "rank 0 exited after the first OOM; subsequent requests returned HTTP 500 worker-exited errors",
+    "controller_defect": "The client returned zero after preserving request-error records, so the controller continued until manually stopped instead of enforcing the frozen repeated-server-failure stop rule.",
+    "scientific_data_interpretable": false,
+    "cell_selection_permitted": false,
+    "selective_rerun_permitted_under_protocol_v2_0": false,
+    "material_protocol_deviation": true
+  },
+  "provenance": {
+    "source_archive_sha256": "f083fa43ec95b6b3b79d7e785b515fa04dc5e7ea3cf792c7f7aa432d3a398814",
+    "b1_manifest_sha256": "a8d5fa17e788e711ab16cbb36c3cb97a36de27ca2a26e1e4fedccc06daaa57e5",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "remote_evidence_archive_sha256": "fad582cccd17d70135ce698f851c921d687e4a541d3748b3826232b1de9b3def",
+    "serve_log_sha256": "c13fbebd1af5067d86e47e6c1b380614ad2a2bcb4d973924acbee155cbdab7fb",
+    "evidence_root": "attempt_20260801_invalid_infrastructure"
+  },
+  "next_action": "Do not rerun or interpret SAS-TR-v2.0. Implement and CPU-freeze the capacity-only SAS-TR-v2.1 successor, then request fresh bounded GPU authorization.",
+  "main_track_evidence": {
+    "tool_readiness_causally_validated": false,
+    "af_lf_contrast_instantiated": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_benchmark_or_method": false,
+    "no_material_protocol_deviation": false
+  }
+}

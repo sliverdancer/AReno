@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.0",
+  "attempt": "B2-20260801-d04a23e",
+  "reason": "Manual fail-closed intervention after repeated serving worker failure",
+  "controller_started_epoch": 1785553692.971729,
+  "gpu_idle_confirmed_epoch": 1785553818,
+  "conservative_gpu_wall_upper_bound_seconds": 125.028271,
+  "controller_pid": 2438,
+  "serve_pid": 3023,
+  "controller_pid_present_after_stop": false,
+  "serve_pid_present_after_stop": false,
+  "gpu_memory_after_stop": "0 MiB",
+  "gpu_utilization_after_stop": "0 %",
+  "note": "The immutable remote controller_result.json remains RUNNING because the external stop terminated a controller that did not install signal handlers. This observation records the independently verified terminal process and GPU state."
+}

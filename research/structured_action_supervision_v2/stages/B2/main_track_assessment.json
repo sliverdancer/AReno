@@ -1,0 +1,38 @@
+{
+  "criteria": [
+    "tool_readiness_causally_validated",
+    "af_lf_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_benchmark_or_method",
+    "no_material_protocol_deviation"
+  ],
+  "decision": "KILL_MAIN_TRACK",
+  "protocol_id": "SAS-TR-v2.0",
+  "reasons": [
+    "bridge stage closed with terminal status INVALID"
+  ],
+  "schema_version": 1,
+  "stage": "B2",
+  "stage_result_sha256": "652d542a402e618eb0e90fc0f5a5dda4e11e58725f51431b28666225ae49bb31",
+  "stage_status": "INVALID",
+  "unmet_criteria": [
+    "tool_readiness_causally_validated",
+    "af_lf_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "novel_benchmark_or_method",
+    "no_material_protocol_deviation"
+  ]
+}

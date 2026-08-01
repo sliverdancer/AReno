@@ -4,7 +4,7 @@ Plan ID: `SAS-TR-v2.0`
 
 Date: `2026-07-30`
 
-Status: `B1_CPU_FROZEN_GPU_AUTHORIZATION_REQUIRED`
+Status: `B2_INVALID_INFRASTRUCTURE_KV_CACHE_OOM`
 
 ## 1. Research judgment
 
@@ -136,10 +136,15 @@ Required artifacts:
 
 ### B2 — GPU inference qualification
 
-Status: `UNOPENED_GPU_AUTHORIZATION_REQUIRED`
+Status: `INVALID_INFRASTRUCTURE_KV_CACHE_OOM`
 
-B2 runs AReno serving and bounded inference only. It does not update model
-weights. GPU serving still requires explicit authorization under `AGENTS.md`.
+B2 was authorized and opened on 2026-08-01. The exact source and model hashes
+passed, but the server configured eight running prompts and allocated about
+22.5 GiB of KV cache. The first inference request then failed while attempting
+another 642 MiB allocation with only 557 MiB free. No raw model response was
+returned. The 64 HTTP failures from D128/D512 are infrastructure failures and
+must not enter the scientific cell analysis. N128, N512, validation, and reserve
+remain unopened. `SAS-TR-v2.0` is terminal; see `stages/B2/REPORT.md`.
 
 ### B3 — New AF/LF pilot
 

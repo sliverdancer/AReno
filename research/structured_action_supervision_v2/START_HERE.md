@@ -6,7 +6,7 @@ Branch: `research/structured-action-supervision-v2-tool-readiness`
 
 Parent evidence: consumed `SAS-P0-v1.1`
 
-Status: `B1_CPU_FROZEN_GPU_AUTHORIZATION_REQUIRED`
+Status: `B2_INVALID_INFRASTRUCTURE_KV_CACHE_OOM`
 
 ## Answer first
 
@@ -23,15 +23,13 @@ observations to Q1.
 
 1. Read `RESEARCH_PLAN.md`, `LITERATURE_REVIEW.md`, and
    `stages/B0/forensic_result.json`.
-2. Verify `stages/B1/manifest.json` and run the CPU test before using a GPU.
-3. Do not modify the four B2 cells, their sampling seeds, split membership, or
-   selection rule after outcome inspection.
-4. B2 is inference-only but requires GPU serving, so request explicit
-   authorization under `AGENTS.md`.
-5. Stop if neither `N128` nor `N512` passes. Do not escalate to a larger model,
-   relax validation, or manufacture calls inside this protocol.
-6. If a cell passes calibration, validate only the prespecified selected cell
-   on the untouched validation split. The reserve split remains unopened.
+2. Treat `stages/B2/stage_result.json` as terminal for `SAS-TR-v2.0`.
+3. Do not interpret the 64 HTTP failures as model/tool-call failures. The
+   serving worker exhausted memory before returning any raw model response.
+4. Do not modify and rerun the consumed B2 attempt. Any capacity repair must
+   use the separately frozen `SAS-TR-v2.1` successor described in
+   `SAS_TR_V2_1_SUCCESSOR_PLAN.md` and obtain new GPU authorization.
+5. Keep validation, reserve, N128, and N512 unopened under v2.0.
 
 ## Evidence paths
 
@@ -41,6 +39,8 @@ observations to Q1.
 - Dataset and protocol freezer: `prepare_protocol.py`
 - CPU contract test: `../../tests/test_sas_v2_tool_readiness_cpu.py`
 - Scientific flow: `figures/tool_readiness_causal_flow.svg`
+- Invalid B2 evidence: `stages/B2/attempt_20260801_invalid_infrastructure/`
+- B2 closure: `stages/B2/stage_result.json` and `stages/B2/REPORT.md`
 
 ## Current decisions
 
@@ -48,7 +48,9 @@ observations to Q1.
 - `PASS_B1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST`
 - `KILL_SAS_STATIC_MASK_AS_PRIMARY_METHOD_NOVELTY`
 - `KILL_CURRENT_MAIN_TRACK`
-- `B2_GPU_INFERENCE_UNOPENED`
+- `INVALID_B2_INFRASTRUCTURE_KV_CACHE_OOM`
+- `SAS_TR_V2_0_TERMINAL_NO_SCIENTIFIC_RESULT`
+- `SAS_TR_V2_1_SUCCESSOR_UNOPENED_GPU_AUTHORIZATION_REQUIRED`
 
 ## Claim boundary
 
