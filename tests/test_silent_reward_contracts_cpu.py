@@ -26,7 +26,8 @@ from research.silent_reward_contracts.openrlhf_adapter import build_heldout_case
 from research.silent_reward_contracts.summarize_p3 import write_summary
 from research.silent_reward_contracts.areal_adapter import build_replication
 from research.silent_reward_contracts.p4.collect_p4 import build_rows
-from research.silent_reward_contracts.p4.prepare_p4 import build_commands
+from research.silent_reward_contracts.p4.prepare_p4 import build_commands, prepare
+from research.silent_reward_contracts.p4.execute_p4 import EXPECTED_ORDER
 from research.silent_reward_contracts.p4.reward_canonical import (
     reward_fn as canonical_reward,
 )
@@ -350,6 +351,25 @@ def test_p4_command_matrix_is_paired_and_minimal(tmp_path):
         assert len(differing) == 2
         assert "reward_strict.py" in differing[0][0]
         assert "reward_canonical.py" in differing[0][1]
+
+
+def test_p4_manifest_persists_frozen_run_order(tmp_path, monkeypatch):
+    def fake_git(command, **_):
+        stdout = "b280a85\n" if command[1:3] == ["rev-parse", "HEAD"] else ""
+        return SimpleNamespace(stdout=stdout)
+
+    monkeypatch.setattr(
+        "research.silent_reward_contracts.p4.prepare_p4.subprocess.run",
+        fake_git,
+    )
+    manifest = prepare(REPO_ROOT, tmp_path, "/model")
+    assert manifest["protocol"] == "ARCA-P4-DYNAMIC-v0.2"
+    assert manifest["supersedes_protocol"] == "ARCA-P4-DYNAMIC-v0.1"
+    assert manifest["run_order"] == EXPECTED_ORDER
+    reloaded = json.loads(
+        (tmp_path / "manifest.json").read_text(encoding="utf-8")
+    )
+    assert reloaded["run_order"] == EXPECTED_ORDER
 
 
 def test_p4_collector_aligns_two_arms_by_three_seeds():

@@ -1,8 +1,13 @@
 # P4 frozen dynamic contract validation
 
-Protocol: `ARCA-P4-DYNAMIC-v0.1`
+Protocol: `ARCA-P4-DYNAMIC-v0.2`
 
 State: `AWAITING_NEW_GPU_INSTANCE_AND_EXPLICIT_AUTHORIZATION`
+
+This protocol supersedes the unexecuted v0.1 preparation. In v0.1, sorted JSON
+object keys changed the intended paired command order after manifest reload.
+No model was loaded and no training command ran. v0.2 persists an explicit
+`run_order` and permits execution only through the fail-closed controller.
 
 P4 asks one narrow question: does canonicalizing the exact reward boundary
 restore an informative reward in a live agentic rollout while the historical

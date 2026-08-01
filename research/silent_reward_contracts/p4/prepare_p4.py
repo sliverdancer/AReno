@@ -12,7 +12,7 @@ import subprocess
 from typing import Any
 
 
-PROTOCOL = "ARCA-P4-DYNAMIC-v0.1"
+PROTOCOL = "ARCA-P4-DYNAMIC-v0.2"
 ARMS = ("strict", "canonical")
 SEEDS = (3101, 3102, 3103)
 
@@ -79,6 +79,11 @@ def prepare(repo_root: Path, run_root: Path, ckpt: str) -> dict[str, Any]:
     manifest = {
         "schema_version": 1,
         "protocol": PROTOCOL,
+        "supersedes_protocol": "ARCA-P4-DYNAMIC-v0.1",
+        "engineering_change_scope": [
+            "persist the frozen paired run order separately from sorted JSON object keys",
+            "execute commands only through the fail-closed manifest controller",
+        ],
         "authorization": "PREPARE_ONLY_GPU_NOT_AUTHORIZED",
         "git_commit": subprocess.run(
             ["git", "rev-parse", "HEAD"], cwd=repo_root, check=True,
@@ -94,6 +99,7 @@ def prepare(repo_root: Path, run_root: Path, ckpt: str) -> dict[str, Any]:
         "max_steps": 1,
         "dataset": {"path": str(dataset_path), "seed": 7301, "count": 64, "sha256": _sha256(dataset_path)},
         "commands": {key: shlex.join(value) for key, value in commands.items()},
+        "run_order": list(commands),
         "controlled_difference": ["--reward-fn-path", "--metrics-log-dir"],
         "source_sha256": {str(path.relative_to(repo_root)): _sha256(path) for path in source_paths},
         "ceilings": {"single_run_minutes": 60, "total_gpu_hours": 6, "instance_hours": 8, "cny": 60},
