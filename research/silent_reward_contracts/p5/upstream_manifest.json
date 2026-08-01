@@ -1,0 +1,33 @@
+{
+  "protocol_id": "ARCA-P5-EXTERNAL-v0.1",
+  "freeze_date": "2026-08-01",
+  "source_inspection_started": false,
+  "selection_rule": "registered public agentic-RL candidates satisfying all four criteria in FREEZE.md",
+  "candidates": [
+    {
+      "name": "slime",
+      "repository": "https://github.com/THUDM/slime.git",
+      "commit": "aaf5c2092b01219fa0d5c2d323741d409086ca32"
+    },
+    {
+      "name": "Agent-R1",
+      "repository": "https://github.com/AgentR1/Agent-R1.git",
+      "commit": "b124aa46534cbf2fb8bc8af11405774984c42ac7"
+    },
+    {
+      "name": "RAGEN",
+      "repository": "https://github.com/mll-lab-nu/RAGEN.git",
+      "commit": "20daedc47558e000f7de912b060646bf2e8026bd"
+    },
+    {
+      "name": "rllm",
+      "repository": "https://github.com/rllm-org/rllm.git",
+      "commit": "75926c15e58fa29e4183d01292d10462d2047be9"
+    },
+    {
+      "name": "Agent-Lightning",
+      "repository": "https://github.com/microsoft/agent-lightning.git",
+      "commit": "f0a77cfad71e6222a3edb7dfc7a0f611bd231364"
+    }
+  ]
+}
