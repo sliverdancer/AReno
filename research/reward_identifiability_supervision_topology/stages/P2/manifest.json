@@ -2,7 +2,7 @@
   "schema_version": 1,
   "protocol": "RIST-P2-v1.0",
   "status": "FROZEN_AWAITING_GPU_AUTHORIZATION",
-  "source_commit_required": null,
+  "source_commit_required": "9176964a0394be1b5f54c7166a8ca033cd0b4318",
   "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
   "heldout_sha256_forbidden": "a318c50d7036abf8f58922730b7ba9b19324679bf1ee20459842cd742756c756",
   "models": [
