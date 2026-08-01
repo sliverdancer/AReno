@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-B3-v3.0",
+  "stage": "B3-A",
+  "status": "FROZEN_BEFORE_GPU_EXECUTION",
+  "parent": {
+    "protocol_id": "SAS-TR-v2.1",
+    "decision": "PASS_B2_INTERFACE_N128",
+    "stage_result_sha256": "ff18335a01a031b1885bd7f456dadfe8a0f17a30f12ce4ce7a2c6a7e52dc8666"
+  },
+  "model": {
+    "checkpoint": "Qwen/Qwen3-0.6B",
+    "weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+  },
+  "dataset": {
+    "path": "research/structured_action_supervision_v2/stages/B1/calibration.jsonl",
+    "rows": 16,
+    "sha256": "164d0aac8d4468fc6057b1c8aeaf8361a2ea33234f0e5753afe7076373927711"
+  },
+  "interface": {
+    "thinking": "disabled",
+    "max_new_tokens": 128,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": -1,
+    "max_running_prompts": 1,
+    "client_workers": 1,
+    "request_seed_salt": "SAS-TR-v2.0"
+  },
+  "sampling_seeds": [5101, 5202, 5303, 5404, 5505, 5606, 5707, 5808],
+  "trajectory_count": 128,
+  "gates": {
+    "first_turn_executable_rate_min": 0.95,
+    "four_turn_completion_rate_min": 0.75,
+    "positive_reward_rate_min": 0.05,
+    "positive_reward_rate_max": 0.95,
+    "mixed_strict_success_groups_min": 4,
+    "nonzero_advantage_trajectories_min": 32,
+    "fabricated_call_count_max": 0,
+    "raw_evidence_complete": true
+  },
+  "protected_splits": [
+    "research/structured_action_supervision_v2/stages/B1/validation.jsonl",
+    "research/structured_action_supervision_v2/stages/B1/reserve.jsonl",
+    "research/structured_action_supervision_v1/stages/Q0/dataset/heldout.jsonl"
+  ],
+  "pass_decision": "PASS_B3A_WITHIN_GROUP_SIGNAL_OPEN_FACTORIAL_TRAINING",
+  "fail_decision": "KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL",
+  "claim_boundary": "B3-A qualifies within-group GSPO signal only; it estimates no supervision effect."
+}
