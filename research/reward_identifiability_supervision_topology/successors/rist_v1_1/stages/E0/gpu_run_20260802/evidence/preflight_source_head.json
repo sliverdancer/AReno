@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/root/autodl-tmp/rist_e0_05da707/source",
+    "rev-parse",
+    "HEAD"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "05da707f19df590f613cd2403746495460809253\n"
+}

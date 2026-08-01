@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/root/autodl-tmp/rist_e0_05da707/venv/bin/python",
+    "-c",
+    "import areno.accel._areno_accel as ext; import areno; print(ext.__file__); print(areno.__file__)"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "/root/autodl-tmp/rist_e0_05da707/source/areno/accel/_areno_accel.cpython-312-x86_64-linux-gnu.so\n/root/autodl-tmp/rist_e0_05da707/source/areno/__init__.py\n"
+}

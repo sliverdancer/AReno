@@ -1,0 +1,16 @@
+{
+  "actual_extension_import_passed": true,
+  "areno_check_passed": true,
+  "captured_at_utc": "2026-08-01T17:10:11.256536+00:00",
+  "cuda_passed": true,
+  "expected_commit": "05da707f19df590f613cd2403746495460809253",
+  "frozen_import_passed": false,
+  "gpu_process_list_clean": true,
+  "passed": false,
+  "protocol": "RIST-E0-v1.1",
+  "schema_version": 1,
+  "serving_started": false,
+  "source_clean_passed": true,
+  "source_head_passed": true,
+  "training_performed": false
+}

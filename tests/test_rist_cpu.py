@@ -443,3 +443,47 @@ def test_rist_e0_collects_mock_raw_calls_without_retry_or_repair(tmp_path, monke
     assert result["fabricated_call_count"] == 0
     assert result["retry_count"] == 0
     assert json.loads(output_path.read_text(encoding="utf-8"))["model_cell"] == "qwen3_0_6b"
+
+
+def test_rist_e0_v1_2_is_a_minimal_registered_extension_revision():
+    import hashlib
+    import json
+
+    e0_v1_1 = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0"
+    e0_v1_2 = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0_v1_2"
+    manifest = json.loads(
+        (e0_v1_2 / "EXECUTION_MANIFEST.json").read_text(encoding="utf-8")
+    )
+    tasks_path = e0_v1_2 / "canary_tasks.json"
+    tasks = json.loads(tasks_path.read_text(encoding="utf-8"))
+    protocol = (e0_v1_2 / "PROTOCOL.md").read_text(encoding="utf-8")
+
+    assert manifest["protocol"] == "RIST-E0-v1.2"
+    assert tasks["protocol"] == "RIST-E0-v1.2"
+    assert manifest["parent_terminal_decision"] == "INVALID_E0_PREFLIGHT_STOP"
+    assert manifest["correction_scope"] == "REGISTERED_EXTENSION_IMPORT_ONLY"
+    assert manifest["canary_tasks_sha256"] == hashlib.sha256(
+        tasks_path.read_bytes()
+    ).hexdigest()
+    assert 'python -c "import areno.accel._areno_accel"' in protocol
+    assert 'python -c "import areno_accel"' not in protocol
+
+    for filename in ("run_e0_canary.py", "validate_e0.py"):
+        prior = (e0_v1_1 / filename).read_text(encoding="utf-8")
+        revised = (e0_v1_2 / filename).read_text(encoding="utf-8")
+        assert revised == prior.replace("RIST-E0-v1.1", "RIST-E0-v1.2")
+
+
+def test_rist_e0_v1_2_canary_and_validator_remain_fail_closed():
+    e0_dir = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0_v1_2"
+    runner = _load_module("rist_run_e0_v1_2", e0_dir / "run_e0_canary.py")
+    validator = _load_module("rist_validate_e0_v1_2", e0_dir / "validate_e0.py")
+    payload = __import__("json").loads(
+        (e0_dir / "canary_tasks.json").read_text(encoding="utf-8")
+    )
+
+    runner.validate_canary_tasks(payload)
+    assert validator.validate([], preflight_passed=False)["decision"] == (
+        "INVALID_E0_PREFLIGHT_STOP"
+    )
+    assert all(len(task["turns"]) == 4 for task in payload["tasks"])

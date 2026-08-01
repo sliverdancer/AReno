@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/root/autodl-tmp/rist_e0_05da707/source",
+    "status",
+    "--porcelain"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": ""
+}

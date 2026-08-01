@@ -1,0 +1,20 @@
+{
+  "captured_at_utc": "2026-08-01T17:13:35.472448+00:00",
+  "checkpoints_downloaded_or_replaced": false,
+  "decision": "INVALID_E0_PREFLIGHT_STOP",
+  "gpu_serving_seconds": 0,
+  "model_requests_sent": 0,
+  "models": [],
+  "next_action": "Freeze a new E0 protocol revision that checks the actual registered extension module; do not reinterpret or repair RIST-E0-v1.1.",
+  "preflight_result_sha256": "238623fede5b9c8440a7e68bc7b4ce7fea8caf531e6c2f6aed3ac09ea3dd9e95",
+  "protocol": "RIST-E0-v1.1",
+  "qualification_or_heldout_data_opened": false,
+  "schema_version": 1,
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_ONLY",
+  "serving_started": false,
+  "source_commit": "05da707f19df590f613cd2403746495460809253",
+  "stage": "E0",
+  "stage_status": "INVALID",
+  "terminal_reason": "Frozen command `python -c \\\"import areno_accel\\\"` failed because the compiled extension is registered as `areno.accel._areno_accel`; the actual extension import and `areno check` both passed.",
+  "training_performed": false
+}

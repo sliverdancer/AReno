@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/root/autodl-tmp/rist_e0_05da707/venv/bin/python",
+    "-c",
+    "import areno_accel"
+  ],
+  "returncode": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'areno_accel'\n",
+  "stdout": ""
+}

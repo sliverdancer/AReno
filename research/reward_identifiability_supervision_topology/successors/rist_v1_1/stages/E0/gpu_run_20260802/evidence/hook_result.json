@@ -1,0 +1,11 @@
+{
+  "decision": "STAY_DIAGNOSTIC_FREEZE_E0_V1_2",
+  "main_conference_route_open": false,
+  "phase": "E0_GPU_CANARY",
+  "protocol_family": "RIST-v1.1",
+  "reason": "No serving request or scientific response was produced. The failure is a frozen preflight symbol mismatch, so it neither supports nor falsifies the reward-resolution or supervision-topology hypothesis.",
+  "required_next_gate": "A separately frozen E0 revision must pass native serving for both model families before any P2.1 qualification protocol can open.",
+  "schema_version": 1,
+  "source_phase_decision": "INVALID_E0_PREFLIGHT_STOP",
+  "upgraded": false
+}

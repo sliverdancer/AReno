@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/root/autodl-tmp/rist_e0_05da707/venv/bin/python",
+    "-c",
+    "import torch; assert torch.cuda.is_available(); print(torch.__version__); print(torch.version.cuda); print(torch.cuda.get_device_name(0))"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "2.8.0+cu128\n12.8\nNVIDIA GeForce RTX 4090 D\n"
+}

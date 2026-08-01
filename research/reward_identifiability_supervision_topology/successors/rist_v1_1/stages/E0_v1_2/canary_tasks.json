@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-E0-v1.2",
+  "tasks": [
+    {
+      "id": "e0_forced_explicit_chain",
+      "mode": "forced",
+      "prompt": "Infrastructure canary. Follow each turn's explicit function and code exactly. This is not a capability test.",
+      "turns": [
+        {
+          "expected_tool": "probe_catalog",
+          "expected_code": "CANARY-F1",
+          "offered_tools": ["probe_catalog"],
+          "argument_candidates": ["CANARY-F1", "CANARY-FX"]
+        },
+        {
+          "expected_tool": "probe_route",
+          "expected_code": "CANARY-F2",
+          "offered_tools": ["probe_route"],
+          "argument_candidates": ["CANARY-F2", "CANARY-FY"]
+        },
+        {
+          "expected_tool": "probe_schema",
+          "expected_code": "CANARY-F3",
+          "offered_tools": ["probe_schema"],
+          "argument_candidates": ["CANARY-F3", "CANARY-FZ"]
+        },
+        {
+          "expected_tool": "probe_commit",
+          "expected_code": "CANARY-F4",
+          "offered_tools": ["probe_commit"],
+          "argument_candidates": ["CANARY-F4", "CANARY-FW"]
+        }
+      ]
+    },
+    {
+      "id": "e0_required_explicit_chain",
+      "mode": "required",
+      "prompt": "Infrastructure canary with distractors. Follow each turn's explicit function and code exactly. This is not a capability test.",
+      "turns": [
+        {
+          "expected_tool": "inspect_alpha",
+          "expected_code": "CANARY-R1",
+          "offered_tools": ["inspect_alpha", "ignore_alpha"],
+          "argument_candidates": ["CANARY-R1", "CANARY-RX"]
+        },
+        {
+          "expected_tool": "inspect_beta",
+          "expected_code": "CANARY-R2",
+          "offered_tools": ["inspect_beta", "ignore_beta"],
+          "argument_candidates": ["CANARY-R2", "CANARY-RY"]
+        },
+        {
+          "expected_tool": "inspect_gamma",
+          "expected_code": "CANARY-R3",
+          "offered_tools": ["inspect_gamma", "ignore_gamma"],
+          "argument_candidates": ["CANARY-R3", "CANARY-RZ"]
+        },
+        {
+          "expected_tool": "inspect_delta",
+          "expected_code": "CANARY-R4",
+          "offered_tools": ["inspect_delta", "ignore_delta"],
+          "argument_candidates": ["CANARY-R4", "CANARY-RW"]
+        }
+      ]
+    }
+  ]
+}
