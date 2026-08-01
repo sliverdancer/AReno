@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-P2-v1.0",
+  "stage": "P2",
+  "stage_status": "INVALID",
+  "decision": "INVALID_P2_INFRASTRUCTURE",
+  "scientific_interpretation": "NOT_ESTIMABLE",
+  "source_commit": "9176964a0394be1b5f54c7166a8ca033cd0b4318",
+  "manifest_commit": "c70aaae",
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "remote": {
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "gpu_memory_mib": 24564,
+    "gpu_window_start_utc": "2026-08-01T05:19:46Z",
+    "gpu_window_end_utc": "2026-08-01T05:26:05Z",
+    "gpu_window_conservative_seconds": 379,
+    "gpu_time_limit_seconds": 7200
+  },
+  "model_snapshots": {
+    "qwen3_0_6b_file_manifest_sha256": "ffe4fab0fed7e695aff4f17b876a091e0f984674da045d96e681f835c94715f0",
+    "gemma4_e2b_it_file_manifest_sha256": "74c6a28bb8465bc710cef8fb88e9d921f7bc1114aec363d12acb99c5d2f65b7f",
+    "gemma4_e2b_it_download_complete": true
+  },
+  "execution": {
+    "qwen_server_attempts": 2,
+    "qwen_trajectory_count": 0,
+    "gemma_server_started": false,
+    "gemma_trajectory_count": 0,
+    "training_performed": false,
+    "fabricated_call_count": 0,
+    "scientific_response_count": 0,
+    "stop_rule": "REPEATED_SERVER_FAILURE",
+    "protocol_deviation": false
+  },
+  "failures": [
+    {
+      "attempt": 1,
+      "phase": "qwen_first_request_preflight",
+      "http_status": 500,
+      "root_cause": "MISSING_COMPILED_ARENO_ACCEL_EXTENSION",
+      "scientific_response_produced": false,
+      "remediation": "Installed the documented frozen-source editable build with CUDA extension."
+    },
+    {
+      "attempt": 2,
+      "phase": "qwen_first_request_preflight",
+      "http_status": 500,
+      "root_cause": "MISSING_FLASH_ATTN_OPTIONAL_DEPENDENCY_ON_DEFAULT_BACKEND",
+      "scientific_response_produced": false,
+      "remediation": "NONE_PROTOCOL_STOP"
+    }
+  ],
+  "evidence_bundle_sha256": "e5cf647466963a8fb7015a499b2c6271e448f9d37dc93aa0d8ac646c7b5c388c"
+}

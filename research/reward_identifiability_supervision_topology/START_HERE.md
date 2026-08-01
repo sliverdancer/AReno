@@ -4,7 +4,7 @@ Branch: `research/reward-identifiability-supervision-topology`
 
 Protocol family: `RIST-v1`
 
-Status: `P0_PROTOCOL_FROZEN`
+Status: `P2_TERMINAL_INVALID_INFRASTRUCTURE`
 
 ## Owner goal
 
@@ -25,6 +25,16 @@ masking method. The primary interaction is:
 `KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL`. Its 128 trajectories are
 historical motivation only. They may not be repaired, selectively rerun, or
 spliced into `RIST-v1`.
+
+## Current terminal result
+
+P0 returned `PASS_NOVELTY_CONDITIONAL` and P1 returned
+`PASS_P1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST`. P2 then returned
+`INVALID_P2_INFRASTRUCTURE`: Qwen serving failed twice before producing any
+scientific response, triggering the frozen repeated-server-failure stop rule.
+No trajectory or training result exists, Gemma was not served, and the research
+hypothesis remains unestimated. The main-conference hook is
+`INVALID_PROTOCOL_STOP`.
 
 ## First-turn behavior
 
@@ -47,7 +57,9 @@ support the factorial estimand.
 ## Evidence roots
 
 - prior terminal evidence: `../structured_action_supervision_v2/stages/B3/`
-- current protocol: `stages/P0/PROTOCOL.md`
-- current search evidence: `stages/P0/`
-- future generated tasks: `stages/P1/`
-
+- novelty evidence: `stages/P0/`
+- frozen task instrument: `stages/P1/`
+- terminal inference result: `stages/P2/stage_result.json`
+- terminal report and hook: `stages/P2/REPORT.md`,
+  `stages/P2/hook_result.json`
+- raw evidence manifest: `stages/P2/raw/MANIFEST.json`

@@ -1,0 +1,16 @@
+{
+  "elapsed_seconds": 2.8360325396060944,
+  "expected_trajectories": 256,
+  "infrastructure_error": {
+    "error": "HTTP 500: Internal Server Error",
+    "error_type": "RuntimeError",
+    "rollout_seed": 6101,
+    "task_index": 0
+  },
+  "model_cell": "qwen3_0_6b",
+  "protocol": "RIST-P2-v1.0",
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "schema_version": 1,
+  "trajectories": [],
+  "trajectory_count": 0
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-P2-v1.0",
+  "bundle": "evidence_bundle.tar",
+  "bundle_sha256": "e5cf647466963a8fb7015a499b2c6271e448f9d37dc93aa0d8ac646c7b5c388c",
+  "qwen_first_server_log_sha256": "7f1fc21e0a85d5eea6ed2661fd249e13434af3c0a03ada421dd374557ad5fd6a",
+  "qwen_second_server_log_sha256": "40f9ee261503be4764f4fcd91e54bab66da745cdae8ecefc659bceba7d3f04a9",
+  "qwen_result_sha256": "a264a2c876f8f5306421499fd03a49bb3efd11384df5910c955fe940fc23c2c9",
+  "verification": "cd raw && tar -xf evidence_bundle.tar && sha256sum -c evidence_files.sha256"
+}

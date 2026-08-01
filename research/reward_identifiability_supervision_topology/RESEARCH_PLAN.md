@@ -2,7 +2,13 @@
 
 Date: `2026-08-01`
 
-Status: `P0_PROTOCOL_FROZEN`
+Status: `P2_TERMINAL_INVALID_INFRASTRUCTURE`
+
+Terminal note: P0 and P1 passed their frozen gates. P2 stopped under
+`REPEATED_SERVER_FAILURE` before any scientific response and returned
+`INVALID_P2_INFRASTRUCTURE`. P3-P5 remain unopened. A new attempt requires a
+newly frozen protocol and fresh authorization; it cannot be spliced into
+`RIST-P2-v1.0`.
 
 ## Research question
 
@@ -139,4 +145,3 @@ Run after every completed stage.
   training-seed replications.
 - Negative or null outcomes are terminal under the same reporting standard as
   positive outcomes.
-

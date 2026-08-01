@@ -1,0 +1,8 @@
+{
+  "decision": "INVALID_PROTOCOL_STOP",
+  "protocol_family": "RIST-v1",
+  "schema_version": 1,
+  "source_stage_decision": "INVALID_P2_INFRASTRUCTURE",
+  "stage": "P2",
+  "upgraded": false
+}
