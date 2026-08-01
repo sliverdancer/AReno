@@ -81,3 +81,19 @@ def test_b3_signal_gate_kills_aggregate_only_reward_support(tmp_path):
     assert result["metrics"]["positive_reward_rate"] == 0.25
     assert result["metrics"]["mixed_strict_success_groups"] == 0
     assert result["decision"] == "KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL"
+
+
+def test_b3_completion_hook_stays_diagnostic_on_signal_kill():
+    spec = importlib.util.spec_from_file_location(
+        "sas_b3_hook", ROOT / "b3_stage_completion_hook.py"
+    )
+    hook = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(hook)
+    payload = json.loads((ROOT / "stages/B3/stage_result.json").read_text(encoding="utf-8"))
+
+    result = hook.assess(payload)
+
+    assert result["decision"] == "STAY_DIAGNOSTIC"
+    assert result["protocol_action"] == "KILL_CURRENT_PROTOCOL"
+    assert "within_group_learning_signal_valid" in result["unmet_criteria"]

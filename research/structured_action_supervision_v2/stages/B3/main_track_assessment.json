@@ -1,0 +1,42 @@
+{
+  "criteria": [
+    "tool_interface_valid",
+    "within_group_learning_signal_valid",
+    "af_lf_contrast_instantiated",
+    "full_vs_name_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "independent_seeds_sufficient",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "artifact_reproducible",
+    "novel_benchmark_or_method",
+    "no_material_protocol_deviation"
+  ],
+  "decision": "STAY_DIAGNOSTIC",
+  "protocol_action": "KILL_CURRENT_PROTOCOL",
+  "protocol_id": "SAS-B3-v3.0",
+  "reasons": [
+    "the current GSPO pilot has no qualified within-group learning signal",
+    "B3-A estimates no supervision effect and cannot support a main-conference upgrade"
+  ],
+  "schema_version": 1,
+  "stage": "B3-A",
+  "stage_result_sha256": "dbbd8668e23af3b8b40910fea957191663a9079f3902d3bc07333c5175fb415b",
+  "stage_status": "KILL",
+  "unmet_criteria": [
+    "within_group_learning_signal_valid",
+    "af_lf_contrast_instantiated",
+    "full_vs_name_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "independent_seeds_sufficient",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "novel_benchmark_or_method"
+  ]
+}

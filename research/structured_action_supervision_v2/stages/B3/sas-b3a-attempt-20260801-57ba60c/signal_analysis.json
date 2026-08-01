@@ -1,0 +1,188 @@
+{
+  "checks": {
+    "first_turn_executable": true,
+    "four_turn_completion": true,
+    "mixed_strict_success_groups": false,
+    "no_fabricated_calls": true,
+    "nonzero_advantage_trajectories": false,
+    "positive_reward_support": true,
+    "raw_evidence_complete": true
+  },
+  "decision": "KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL",
+  "metrics": {
+    "fabricated_call_count": 0,
+    "first_turn_executable_rate": 1.0,
+    "four_turn_completion_rate": 1.0,
+    "group_rewards": {
+      "train-000": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-009": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-010": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "train-011": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "train-013": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-014": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-016": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-017": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-019": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-020": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "train-021": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "train-029": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-035": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-039": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-041": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "train-044": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5
+      ]
+    },
+    "mixed_strict_success_groups": 0,
+    "nonzero_advantage_trajectories": 0,
+    "positive_reward_rate": 0.25,
+    "raw_evidence_complete": true,
+    "trajectory_count": 128
+  },
+  "passed": false,
+  "protocol_id": "SAS-B3-v3.0",
+  "schema_version": 1,
+  "stage": "B3-A"
+}

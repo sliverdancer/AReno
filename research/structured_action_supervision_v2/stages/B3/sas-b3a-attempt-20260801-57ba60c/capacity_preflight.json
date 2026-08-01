@@ -1,0 +1,78 @@
+{
+  "finished_epoch": 1785556624.5074322,
+  "mode": "disabled",
+  "protocol_id": "SAS-TR-v2.1",
+  "raw_response": {
+    "choices": [
+      {
+        "finish_reason": "length",
+        "index": 0,
+        "message": {
+          "content": "<tool_call>",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1785556624,
+    "id": "chatcmpl-26062d8d9f894748a54763b9d6da7546",
+    "model": "policy",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1,
+      "prompt_tokens": 174,
+      "total_tokens": 175
+    }
+  },
+  "request": {
+    "max_tokens": 1,
+    "messages": [
+      {
+        "content": "This is a serving-capacity preflight.",
+        "role": "system"
+      },
+      {
+        "content": "Call the provided catalog tool once.",
+        "role": "user"
+      }
+    ],
+    "model": "policy",
+    "seed": 20260801,
+    "stream": false,
+    "temperature": 1.0,
+    "tool_choice": {
+      "function": {
+        "name": "search_catalog"
+      },
+      "type": "function"
+    },
+    "tools": [
+      {
+        "function": {
+          "description": "Capacity preflight tool.",
+          "name": "search_catalog",
+          "parameters": {
+            "properties": {
+              "categories": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "categories"
+            ],
+            "type": "object"
+          }
+        },
+        "type": "function"
+      }
+    ],
+    "top_k": -1,
+    "top_p": 1.0
+  },
+  "schema_version": 1,
+  "started_epoch": 1785556616.2468903,
+  "status": "PASS",
+  "uses_frozen_task_row": false
+}

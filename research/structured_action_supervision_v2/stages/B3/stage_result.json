@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-B3-v3.0",
+  "stage": "B3-A",
+  "stage_status": "KILL",
+  "decision": "KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL",
+  "authorization": {
+    "status": "USER_AUTO_AUTHORIZED",
+    "date": "2026-08-01",
+    "scope": "automatic in-scope continuation through completion or failure",
+    "gpu_time_limit_seconds": 1800
+  },
+  "execution": {
+    "source_commit": "57ba60c",
+    "source_archive_sha256": "7f0b8d1b7fe29fc201c472786b9b4bb2ebe535f37266241f7619ded6ec102d21",
+    "remote_cpu_contract_tests": "17 passed",
+    "compiled_extension_sha256": "ecaa56635690978eeae6dbe6bbe69688893a9a13d2b6d1dbd5ec11bfd0b60ec9",
+    "controller_elapsed_gpu_wall_seconds": 238.32225632667542,
+    "trajectory_count": 128,
+    "optimizer_steps": 0,
+    "model_weights_updated": false,
+    "b1_validation_consumed": false,
+    "b1_reserve_consumed": false,
+    "q0_heldout_consumed": false,
+    "gpu_after": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %"
+  },
+  "metrics": {
+    "first_turn_executable_rate": 1.0,
+    "four_turn_completion_rate": 1.0,
+    "positive_reward_rate": 0.25,
+    "mixed_strict_success_groups": 0,
+    "mixed_strict_success_groups_required": 4,
+    "nonzero_advantage_trajectories": 0,
+    "nonzero_advantage_trajectories_required": 32,
+    "fabricated_call_count": 0,
+    "raw_evidence_complete": true
+  },
+  "failed_gates": [
+    "mixed_strict_success_groups",
+    "nonzero_advantage_trajectories"
+  ],
+  "interpretation": "The N128 tool interface remains valid, but every task produced an identical strict reward across eight frozen samples. The current GSPO group construction therefore has no qualified relative-advantage signal.",
+  "claim_boundary": "This result does not estimate AF versus LF or full-call versus name-only effects and is not evidence of their equivalence.",
+  "provenance": {
+    "remote_evidence_archive_sha256": "b29820e4ff2f3f289a15763eef44a0009dc1519941cc4904e6fe2a02d6ae9ca5",
+    "controller_result_sha256": "d153978a5791bce454b6e96aee360757afbeadf8e7aa57eb5576c09b95a8aa52",
+    "signal_analysis_sha256": "b20f7fdb70a2183ebd6ec64c5666728458e4d69b3c367c1cdb0a966e52686955",
+    "independent_analysis_sha256": "b20f7fdb70a2183ebd6ec64c5666728458e4d69b3c367c1cdb0a966e52686955",
+    "evidence_root": "sas-b3a-attempt-20260801-57ba60c"
+  },
+  "next_action": "Do not start factorial training under SAS-B3-v3.0. Any change to reward, sampling, task distribution, algorithm, or model requires a new protocol and a new falsification gate.",
+  "main_track_evidence": {
+    "tool_interface_valid": true,
+    "within_group_learning_signal_valid": false,
+    "af_lf_contrast_instantiated": false,
+    "full_vs_name_contrast_instantiated": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "independent_seeds_sufficient": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "artifact_reproducible": true,
+    "novel_benchmark_or_method": false,
+    "no_material_protocol_deviation": true
+  }
+}

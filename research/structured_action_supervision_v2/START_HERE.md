@@ -6,7 +6,7 @@ Branch: `research/structured-action-supervision-v2-tool-readiness`
 
 Parent evidence: consumed `SAS-P0-v1.1`
 
-Status: `PASS_B2_INTERFACE_N128_STAY_DIAGNOSTIC`
+Status: `KILL_B3_CURRENT_GSPO_PILOT_STAY_DIAGNOSTIC`
 
 ## Answer first
 
@@ -28,8 +28,9 @@ observations to Q1.
 3. Use `stages/B2_1/stage_result.json` as the current instrument decision.
 4. The selected interface is Qwen3-0.6B with thinking disabled and a 128-token
    response budget (`N128`). Do not substitute D512 or N512 post hoc.
-5. B3 training remains unopened and requires a new protocol plus explicit GPU
-   training authorization. Reserve remains unopened.
+5. Read `stages/B3/stage_result.json` before proposing training. B3-A proved
+   that all 16 task groups had zero within-group reward variation across eight
+   samples. Factorial training is terminally closed under `SAS-B3-v3.0`.
 
 ## Evidence paths
 
@@ -44,6 +45,8 @@ observations to Q1.
 - Successful successor evidence: `stages/B2_1/attempt_20260801_pass/`
 - Successor closure: `stages/B2_1/stage_result.json` and
   `stages/B2_1/REPORT.md`
+- B3-A raw evidence: `stages/B3/sas-b3a-attempt-20260801-57ba60c/`
+- B3-A closure: `stages/B3/stage_result.json` and `stages/B3/REPORT.md`
 
 ## Current decisions
 
@@ -55,11 +58,14 @@ observations to Q1.
 - `SAS_TR_V2_0_TERMINAL_NO_SCIENTIFIC_RESULT`
 - `PASS_B2_INTERFACE_N128`
 - `STAY_DIAGNOSTIC`
-- `B3_TRAINING_UNOPENED_NEW_PROTOCOL_AND_AUTHORIZATION_REQUIRED`
+- `KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL`
+- `B3_FACTORIAL_TRAINING_NOT_OPENED`
+- `STAY_DIAGNOSTIC`
 
 ## Claim boundary
 
-The v2.1 factorial validates a tool-ready inference interface and strongly
-supports a thinking-budget mechanism on this checkpoint/runtime/task. It does
-not estimate AF/LF performance, stability, or sample efficiency, and it does
-not by itself reopen the main-conference route.
+The v2.1 factorial validates a tool-ready inference interface. B3-A then shows
+that aggregate reward diversity hides zero within-task reward diversity under
+the frozen GSPO sampling groups. Neither stage estimates AF/LF or full-call
+versus name-only performance, stability, or sample efficiency. No
+main-conference upgrade is supported.

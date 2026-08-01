@@ -4,7 +4,7 @@ Plan ID: `SAS-TR-v2.0`
 
 Date: `2026-07-30`
 
-Status: `SAS_TR_V2_0_INVALID_SAS_TR_V2_1_PASS_N128`
+Status: `SAS_TR_V2_1_PASS_N128_B3_GSPO_SIGNAL_KILL`
 
 ## 1. Research judgment
 
@@ -148,11 +148,18 @@ remain unopened. `SAS-TR-v2.0` is terminal; see `stages/B2/REPORT.md`.
 
 ### B3 — New AF/LF pilot
 
-Status: `UNOPENED`
+Status: `KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL`
 
-B3 may open only after B2 validation passes. It requires a new protocol
-version, fresh manifest, separate GPU-training authorization, distinct emitted
-masks on real multi-turn trajectories, and non-degenerate reward support.
+B3-A opened under the new `SAS-B3-v3.0` protocol after B2.1 passed. It ran 16
+already-consumed calibration tasks with eight samples each before any weight
+update. Although all 128 trajectories completed the four-call protocol and
+25% earned positive reward, no task group contained both success and failure.
+The frozen gate therefore observed zero mixed groups and zero trajectories
+with non-zero group-normalized advantage. AF/LF/AN/LN training did not open.
+
+This closes only the current GSPO identification strategy. It is not an AF/LF
+null result. Any new reward, sampling, task, algorithm, or model design is a new
+protocol and cannot reuse this result as a repaired pilot.
 
 ### B2.1 — Capacity-only successor
 

@@ -1,0 +1,56 @@
+{
+  "decision": "KILL_CURRENT_GSPO_PILOT_NO_WITHIN_GROUP_SIGNAL",
+  "elapsed_gpu_wall_s": 238.32225632667542,
+  "finished_epoch": 1785556832.507871,
+  "gpu_after": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %",
+  "gpu_before": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %",
+  "gpu_limit_s": 1800,
+  "protocol_id": "SAS-B3-v3.0",
+  "runs": [
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5101.json",
+      "seed": 5101
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5202.json",
+      "seed": 5202
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5303.json",
+      "seed": 5303
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5404.json",
+      "seed": 5404
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5505.json",
+      "seed": 5505
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5606.json",
+      "seed": 5606
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5707.json",
+      "seed": 5707
+    },
+    {
+      "path": "/root/autodl-tmp/sas-b3a-attempt-20260801-57ba60c/signal_seed_5808.json",
+      "seed": 5808
+    }
+  ],
+  "schema_version": 1,
+  "source_commit": "57ba60c",
+  "stage": "B3-A",
+  "started_epoch": 1785556594.185615,
+  "status": "COMPLETE",
+  "verification": {
+    "b2_stage_result": "/root/autodl-tmp/areno-sas-b3a-57ba60c/research/structured_action_supervision_v2/stages/B2_1/stage_result.json",
+    "b2_stage_result_sha256": "ff18335a01a031b1885bd7f456dadfe8a0f17a30f12ce4ce7a2c6a7e52dc8666",
+    "dataset": "/root/autodl-tmp/areno-sas-b3a-57ba60c/research/structured_action_supervision_v2/stages/B1/calibration.jsonl",
+    "dataset_sha256": "164d0aac8d4468fc6057b1c8aeaf8361a2ea33234f0e5753afe7076373927711",
+    "weight_file": "/root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master/model.safetensors",
+    "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+  }
+}
