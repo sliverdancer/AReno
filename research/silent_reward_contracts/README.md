@@ -1,6 +1,6 @@
 # ARCA: auditing silent reward contracts in agentic RL
 
-Status: `PASS_P3_CPU_AUDITOR_TO_GPU_AUTHORIZATION_REQUEST`
+Status: `P3_PASS_P4_INVALID_INFRASTRUCTURE`
 
 ARCA is a falsification-first audit package for failures that allow an agentic
 RL job to execute and emit finite metrics while its scientific treatment is
@@ -48,6 +48,6 @@ authorization.
 | P1 AReno production reproduction | pass | `p1/artifacts/production_contract_cases.json` |
 | P2 cross-system prevalence gate | pass | `p2/artifacts/cross_system_cases.json` |
 | P3 frozen transfer | pass with stated mutation limit | `p3/artifacts/summary/gate_summary.json` |
-| P4 dynamic consequence | awaiting GPU and authorization | `p4/GPU_PROTOCOL.md` |
+| P4 dynamic consequence | invalid before model load; not evaluated | `p4/GPU_GATE_DECISION_20260801.md` |
 
 Read `CLAIM_LEDGER.md` before reusing any result in a paper or abstract.

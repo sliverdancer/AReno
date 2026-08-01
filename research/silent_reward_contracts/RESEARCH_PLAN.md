@@ -26,21 +26,26 @@ paper than a method paper.
   two systems;
 - P3 frozen held-out transfer: passed, plus one AReaL post-freeze replication;
 - reviewer red-team and claim ledger: completed;
-- GPU harness: CPU-prepared and tested, not executed.
+- GPU harness: v0.2 attempted once and terminated as infrastructure-invalid
+  before model loading; no dynamic scientific result exists.
 
 ## Remaining stages
 
 ### P4 — bounded dynamic consequence
 
-Execute `ARCA-P4-DYNAMIC-v0.1` once on a newly rented GPU after authorization.
-The intervention normalizes string/object tool arguments; it does not change
-the model, prompts, data, optimizer, or selected trainable tokens. A pass shows
-that the contract changes the observed reward signal in the live pipeline. A
-kill ends dynamic escalation and the paper remains CPU/source-audit only.
+The consumed `ARCA-P4-DYNAMIC-v0.2` attempt failed during reward-module import
+before model loading and cannot be resumed. Its intended intervention was to
+normalize string/object tool arguments; it did not change the model, prompts,
+data, optimizer, or selected trainable tokens. Because the attempt was invalid,
+the intervention was not evaluated and the paper remains CPU/source-audit only.
+Any v0.3 proposal needs a separate owner decision and a new run root.
 
 ### P5 — natural external validation
 
-Open only if P4 passes. Solicit or independently reproduce at least two
+State: `UNOPENED_P4_NOT_PASSED`.
+
+Open only if a separately authorized P4 successor passes. Solicit or
+independently reproduce at least two
 maintainer-confirmed cases outside the development systems, with disclosure
 authorization handled separately. Freeze case inclusion criteria before
 contacting maintainers. No public issue or PR may be opened automatically.
@@ -60,10 +65,11 @@ anonymous artifact audit and a separate paper-review gate before submission.
 
 | Gate | GO | KILL / fallback |
 |---|---|---|
-| P4 | canonical arm restores informative reward | retain CPU audit paper; no rerun |
+| P4-v0.2 | not evaluated; infrastructure invalid | retain CPU audit paper; no rerun |
 | P5 | two new natural cases, one unseen system | TMLR narrow claim |
 | Paper audit | no critical validity blocker | revise before submission |
 | Main-conference positioning | natural breadth plus downstream consequence | TMLR first |
 
 The current strongest defensible route is TMLR. “Main-conference method paper”
-remains an aspiration contingent on P4–P5 evidence, not an achieved status.
+remains an aspiration contingent on a valid P4 successor and P5 evidence, not
+an achieved status.

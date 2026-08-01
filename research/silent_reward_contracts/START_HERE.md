@@ -5,7 +5,7 @@ Protocol: `ARCA-CPU-AUDIT-v0.1`
 Target: TMLR empirical/audit paper; conditional NeurIPS Evaluations & Datasets
 or ACL Findings submission only after the frozen CPU gate passes.
 
-Current state: `PASS_P3_CPU_AUDITOR_TO_GPU_AUTHORIZATION_REQUEST`
+Current state: `P3_PASS_P4_INVALID_INFRASTRUCTURE`
 
 ## Owner goal
 
@@ -52,8 +52,7 @@ replications.
 ## Current executable work
 
 P0 through P3 are complete. The frozen held-out evaluation passed, and a
-post-freeze AReaL replication was recorded separately. P4 is now
-`AWAITING_NEW_GPU_INSTANCE_AND_EXPLICIT_AUTHORIZATION`; no model download,
-serving, or GPU process may start from this state. Start with `README.md`, then
-use `p4/GPU_PROTOCOL.md` only after the owner supplies a new instance and a
-fresh budget authorization.
+post-freeze AReaL replication was recorded separately. P4-v0.2 terminated
+before model loading with `INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT`; it may not
+be resumed. Start with `README.md` and `p4/GPU_GATE_DECISION_20260801.md`. A
+scientifically new GPU attempt requires a separately authorized protocol.

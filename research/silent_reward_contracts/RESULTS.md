@@ -36,5 +36,14 @@ machine-readable metrics should be used for per-rule finite-sample reporting.
 | OpenRLHF native preflight | 0.25 | 0.00 |
 | ARCA | 1.00 | 0.00 |
 
-No GPU work, model download, serving, paid API, external issue, or pull request
-was performed in this protocol.
+## P4 dynamic validation
+
+P4-v0.2 attempted its first frozen command and stopped after 12.82 seconds
+during reward-module import. No model was loaded, no trajectory was generated,
+and no update ran. The result is
+`INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT`, not a scientific failure. Five runs
+remain unopened and v0.2 may not be resumed.
+
+No P4 model execution, serving, paid API, external issue, or pull request was
+performed. The measured failed-command occupancy was `0.00356` single-GPU
+hours.

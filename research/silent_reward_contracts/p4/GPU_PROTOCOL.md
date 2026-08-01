@@ -2,7 +2,7 @@
 
 Protocol: `ARCA-P4-DYNAMIC-v0.2`
 
-State: `AWAITING_NEW_GPU_INSTANCE_AND_EXPLICIT_AUTHORIZATION`
+State: `INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT`
 
 This protocol supersedes the unexecuted v0.1 preparation. In v0.1, sorted JSON
 object keys changed the intended paired command order after manifest reload.
@@ -40,3 +40,10 @@ reward mean or standard deviation. Otherwise return
 Any learning comparison, longer training, new model, or new framework is a new
 protocol. The historical CARe P3-v0.2 result remains terminal and cannot be
 spliced into P4.
+
+## Consumed outcome
+
+The first v0.2 command failed during production reward-module import, before
+model loading or any scientific trajectory. The controller stopped and left
+five runs unopened. See `GPU_GATE_DECISION_20260801.md`. v0.2 is terminal and
+must not be repaired or resumed.

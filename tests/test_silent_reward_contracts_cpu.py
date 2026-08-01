@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from pathlib import Path
 
@@ -389,3 +390,18 @@ def test_p4_collector_aligns_two_arms_by_three_seeds():
         for arm in ("strict", "canonical")
         for seed in (3101, 3102, 3103)
     }
+
+
+def test_p4_terminal_gpu_artifact_is_frozen_and_non_scientific():
+    root = REPO_ROOT / "research/silent_reward_contracts/p4"
+    gate = json.loads((root / "gpu_gate_decision.json").read_text(encoding="utf-8"))
+    archive = (
+        root
+        / "evidence/ARCA-P4-DYNAMIC-v0.2_eeb7f73_20260801_INVALID.tar.gz"
+    )
+    assert gate["decision"] == "INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT"
+    assert gate["scientific_outcome"] == "NOT_EVALUATED"
+    assert gate["execution"]["model_loaded"] is False
+    assert gate["execution"]["scientific_trajectories"] == 0
+    assert gate["execution"]["remaining_runs_unopened"] == 5
+    assert hashlib.sha256(archive.read_bytes()).hexdigest() == gate["archive_sha256"]

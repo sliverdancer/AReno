@@ -1,0 +1,27 @@
+{
+  "archive_sha256": "74f61630a19f924c8419cb613bc3bf7fbb6388ebc0462bc9832ff7073cc83706",
+  "decision": "INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT",
+  "execution": {
+    "gpu_after_stop": {
+      "memory_used_mib": 0,
+      "utilization_percent": 0
+    },
+    "model_loaded": false,
+    "remaining_runs_unopened": 5,
+    "returncode": 1,
+    "run_id": "strict-seed-3101",
+    "scientific_trajectories": 0,
+    "total_single_gpu_hours": 0.0035604296629834506,
+    "training_updates": 0,
+    "wall_seconds": 12.817546786740422
+  },
+  "failure": {
+    "exception": "ModuleNotFoundError",
+    "message": "No module named 'examples'",
+    "phase": "production reward module import"
+  },
+  "frozen_source_commit": "eeb7f73c5efcbd91388b77e99f5f43c391c2e8c2",
+  "protocol": "ARCA-P4-DYNAMIC-v0.2",
+  "scientific_outcome": "NOT_EVALUATED",
+  "schema_version": "arca.p4.gpu_gate.v1"
+}
