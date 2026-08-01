@@ -1,10 +1,10 @@
 # START HERE — CARe: Risk-Controlled Turn Credit for Agentic RL
 
 Protocol ID: `CARE-P3-PILOT-v0.2`
-Decision date: `2026-07-30`
+Decision date: `2026-08-01`
 Target: main-conference method paper
-Current authorization: completed CPU requalification only
-GPU training status: `BLOCKED_PENDING_EXPLICIT_USER_AUTHORIZATION`
+Current authorization: completed frozen P3-v0.2 GPU qualification
+GPU training status: `COMPLETED_TERMINAL_KILL_NO_FURTHER_RUNS`
 
 ## Owner goal
 
@@ -34,21 +34,22 @@ credit routing under noisy turn-credit estimates.
 
 ## Current gate
 
-`P3-v0.2-CPU-FREEZE-PASSED-GPU-BLOCKED`
+`KILL_P3_SIGNAL_DEGENERATE`
 
 Read in order:
 
-1. `p3/gpu_gate_decision_20260730.md`
-2. `p3_v02/LITERATURE_REFRESH.md`
-3. `p3_v02/POSTMORTEM_AND_PROTOCOL.md`
-4. `p3_v02/CPU_GATE_DECISION.md`
-5. `RESEARCH_PLAN.md`
-6. `HYPOTHESES_AND_GATES.md`
+1. `p3_v02/GPU_GATE_DECISION_20260801.md`
+2. `p3/gpu_gate_decision_20260730.md`
+3. `p3_v02/LITERATURE_REFRESH.md`
+4. `p3_v02/POSTMORTEM_AND_PROTOCOL.md`
+5. `p3_v02/CPU_GATE_DECISION.md`
+6. `RESEARCH_PLAN.md`
+7. `HYPOTHESES_AND_GATES.md`
 
-Then inspect the worktree and the completed P0/P1/P2/P3 CPU decisions. The
-frozen P3 runner, task, router, asset manifest, artifact collector, commands,
-resource cap, and GO/KILL rule exist. Do not provision a host, download model
-weights, train, serve, or use a paid API without a new explicit authorization.
+Then inspect the worktree and the completed P0/P1/P2/P3 decisions. The six
+frozen P3-v0.2 commands completed, but reward collapsed to zero in both arms
+for all three seeds. The unchanged gate returned a terminal
+`KILL_P3_SIGNAL_DEGENERATE`. Do not repair, rerun, or proceed to P4.
 
 For an AutoDL instance, read `p3/AUTODL_HANDOFF.md` before remote access.
 
@@ -79,19 +80,19 @@ flowchart LR
 | P2 AReno instrument qualification | `PASS_P2_INSTRUMENT_TO_P3_DESIGN` | Completed |
 | P3-v0.1 bounded GPU pilot | `KILL_P3_EXECUTABILITY` | Terminal first-run loader crash; evidence preserved |
 | P3-v0.2 CPU requalification | `PASS_P3_V02_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST` | Completed; GPU not run |
-| P3-v0.2 bounded GPU pilot | `BLOCKED_PENDING_EXPLICIT_USER_AUTHORIZATION` | New authorization for the frozen commit and ceilings |
-| P4 variance/resource freeze | `UNOPENED` | P3-v0.2 GPU qualification has not passed |
-| P5 confirmatory multi-seed study | `UNOPENED` | Frozen manifest plus new explicit authorization |
+| P3-v0.2 bounded GPU pilot | `KILL_P3_SIGNAL_DEGENERATE` | Terminal; six runs completed but reward collapsed in both arms |
+| P4 variance/resource freeze | `UNOPENED` | P3-v0.2 GPU qualification did not pass |
+| P5 confirmatory multi-seed study | `UNOPENED` | P4 never opened after the P3 signal kill |
 | P6 transfer/robustness study | `UNOPENED` | P5 primary gate passes |
 | P7 paper claim gate | `UNOPENED` | All admissible evidence archived |
 
 ## First executable work
 
-There is no further executable stage under `CARE-P3-PILOT-v0.1`. P3-v0.2
-preserves its evidence and scientific design while adding only a production
-loader fix and CPU regression. The reviewed source commit is now frozen. The
-next legal action is a read-only remote preflight followed by a new explicit
-GPU authorization. P4–P7 remain unopened.
+There is no further executable stage under `CARE-P3-PILOT-v0.1` or v0.2.
+P3-v0.2 repaired the loader and established executability, but the qualification
+reward was exactly zero in all six runs. The frozen signal gate is terminal;
+P4–P7 remain unopened. A different task or reward would be a new research route,
+not a continuation or repair of this consumed pilot.
 
 ## Evidence and artifact roots
 
@@ -103,15 +104,17 @@ GPU authorization. P4–P7 remain unopened.
   `research/care_turn_credit_mainconf/`
 - P3-v0.2 protocol and CPU decision:
   `research/care_turn_credit_mainconf/p3_v02/`
+- P3-v0.2 GPU evidence and decision:
+  `research/care_turn_credit_mainconf/p3_v02/evidence/autodl_a800_20260801_kill_p3_signal_degenerate/`
 
 The frozen P3-v0.2 source is
 `c96bcf2da464dff36593d43c8d29991d4b998059`; use the docs-only branch tip for
-navigation and that exact commit for any remote preparation.
+navigation. The frozen commit is recorded for provenance, not for another
+remote execution.
 
 ## Stop rules
 
 - Stop at the first terminal `KILL`, `INVALID`, or `BLOCKED` decision.
 - Do not repair a consumed confirmatory run or selectively rerun failed seeds.
 - Do not use a pilot reward curve as efficacy evidence.
-- Do not rent or start a GPU until the user approves the exact frozen command,
-  model, expected GPU-hours, and spending ceiling.
+- Do not start another GPU run under the consumed v0.2 protocol.

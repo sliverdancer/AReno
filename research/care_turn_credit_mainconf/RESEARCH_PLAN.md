@@ -1,6 +1,6 @@
 # CARe: Complete Main-Conference Research Plan
 
-Status: `P3_V01_KILL_EXECUTABILITY_P3_V02_CPU_PASS_GPU_BLOCKED`
+Status: `P3_V02_KILL_SIGNAL_DEGENERATE_P4_TO_P7_UNOPENED`
 Working title: **CARe: Risk-Controlled Abstention for Turn-Level Credit in
 Agentic Reinforcement Learning**
 
@@ -277,13 +277,20 @@ P3-v0.1 returned `KILL_P3_EXECUTABILITY` on the first run because the dynamic
 turn-credit module was not registered before a Python 3.12 dataclass executed.
 No model initialization or update occurred and five runs remain unopened.
 
-P3-v0.2 is a separately versioned requalification. It preserves the arms,
+P3-v0.2 was a separately versioned requalification. It preserved the arms,
 seeds, model asset, dataset, order, hyperparameters, estimands, ceilings, and
 GO/KILL rule. Its only changes are the loader registration/cleanup fix and an
-exact production-loader CPU preflight. Passing its CPU gate does not reopen P4
-and does not authorize GPU execution.
+exact production-loader CPU preflight.
 
-Requires explicit user authorization after presenting:
+The authorized six-run GPU qualification completed on `2026-08-01`. All runs
+exited zero, all 120 trajectories were valid, audits matched, optimizer
+statistics were finite, and CARe selected positive but lower token mass than
+the uncalibrated arm in every paired seed. However, reward mean and standard
+deviation were exactly zero in both arms for every seed. The frozen gate
+therefore returned `KILL_P3_SIGNAL_DEGENERATE`. This establishes engineering
+executability but does not open P4 or support an efficacy claim.
+
+The completed authorization covered:
 
 - exact commit and clean diff;
 - exact remote commands;
@@ -291,8 +298,8 @@ Requires explicit user authorization after presenting:
 - one checkpoint, one task, two arms, three qualification seeds;
 - hard step/time/GPU-hour ceiling.
 
-This pilot measures executability, variance, throughput, memory, and artifact
-completeness. It is not efficacy evidence.
+This pilot measured executability, throughput, routing mass, and artifact
+completeness. Its collapsed reward is not usable variance or efficacy evidence.
 
 The frozen provider route is one AutoDL A800 80GB. Remote work is split into
 two authorization boundaries:
@@ -303,12 +310,13 @@ two authorization boundaries:
    reports a clean commit, accepted asset hashes, live price, and resource
    inventory.
 
-The exact metadata handoff and stop conditions are in
-`p3/AUTODL_HANDOFF.md`.
+The exact commands are in `p3_v02/REMOTE_GPU_COMMANDS.md`; the terminal decision
+and hashes are in `p3_v02/GPU_GATE_DECISION_20260801.md`.
 
 ### P4 — Power and resource freeze, about 1 week, CPU
 
-Use only P3 qualification data to freeze:
+This stage remains unopened because P3-v0.2 failed its signal gate. Had P3
+passed, it would have used qualification data to freeze:
 
 - seed count;
 - steps/interactions;
@@ -363,10 +371,10 @@ Use GPU-hours, not currency, until actual provider rates are selected.
 | Tier | Purpose | Provisional envelope | Decision |
 |---|---|---:|---|
 | CPU | P0–P2 | local | Authorized |
-| GPU-Q | P3 executability | 1× AutoDL A800 80GB; ≤6 training GPU-hours, ≤8 billed hours, ≤CNY 60 | Ask first |
-| GPU-P | limited variance pilot | 40–120 GPU-hours | Ask first after GPU-Q |
-| GPU-C | confirmatory 1.7B/4B matrix | provisional 400–1,000 GPU-hours | Freeze from measured throughput |
-| GPU-X | larger-scale/long-horizon extension | not budgeted | Open only after P5 pass |
+| GPU-Q | P3 executability | 1× AutoDL A800 80GB; observed 0.0991 training GPU-hours | Completed; terminal signal kill |
+| GPU-P | limited variance pilot | 40–120 GPU-hours | Unopened after P3 signal kill |
+| GPU-C | confirmatory 1.7B/4B matrix | provisional 400–1,000 GPU-hours | Unopened after P3 signal kill |
+| GPU-X | larger-scale/long-horizon extension | not budgeted | Unopened after P3 signal kill |
 
 These are planning envelopes, not quotes. The confirmatory envelope can change
 substantially with horizon, group size, counterfactual branch count, and AReno
@@ -374,7 +382,7 @@ throughput. Rent nothing until GPU-Q benchmarks the real path.
 
 ## 9. Timeline and venue strategy
 
-From `2026-07-29`, a credible route needs roughly 20–24 weeks:
+The original route estimated roughly 20–24 weeks from `2026-07-29`:
 
 - Weeks 1–2: P0;
 - Weeks 3–6: P1;
@@ -392,8 +400,8 @@ For an NLP-centered framing, ACL 2027 is also plausible, but its official site
 currently lists submission dates as TBA:
 [ACL 2027](https://2027.aclweb.org/).
 
-Venue choice is frozen only after P3 shows the method is executable and the
-official calls are available.
+P3 showed that the implementation is executable but failed the signal gate, so
+this venue timeline is no longer active for the frozen CARe route.
 
 ## 10. Remote GPU operating contract
 
@@ -401,11 +409,11 @@ All source changes happen locally on a dedicated branch, are tested, committed,
 and pushed. The remote host only fetches and checks out that exact commit.
 Never copy uncommitted source to the remote host.
 
-Current exact CPU preparation and issue #199 smoke commands already exist in:
+Exact CPU preparation and issue #199 smoke commands exist in:
 
 `examples/agentic/trainable_turns_ablation/README.md`
 
-The safe current remote preparation command is:
+The following remains a CPU-only issue #199 preparation command:
 
 ```bash
 python examples/agentic/trainable_turns_ablation/run_ablation.py \
@@ -416,13 +424,12 @@ python examples/agentic/trainable_turns_ablation/run_ablation.py \
   --prepare
 ```
 
-It does not train. The existing explicit GPU command must still be presented to
-the user for approval before use.
+It does not train. It must not be mistaken for permission to rerun the consumed
+CARe P3-v0.2 pilot.
 
-CARe training commands do not yet exist and must not be fabricated in this
-plan. P2 will create and CPU-test the runner; P3 then freezes the exact,
-placeholder-free remote commands, commit, asset hashes, and ceiling for user
-approval.
+The frozen CARe P3-v0.2 training commands are preserved in
+`p3_v02/REMOTE_GPU_COMMANDS.md`; they are historical reproduction commands, not
+authorization for another run.
 
 Remote prerequisites remain:
 
@@ -461,7 +468,7 @@ Before P3:
 > We have identified a conditional research gap and specified a falsifiable,
 > risk-controlled turn-credit method.
 
-After a valid P3:
+After a valid P3 (not reached by v0.2):
 
 > The proposed path executes and produces complete artifacts under the recorded
 > qualification setting.

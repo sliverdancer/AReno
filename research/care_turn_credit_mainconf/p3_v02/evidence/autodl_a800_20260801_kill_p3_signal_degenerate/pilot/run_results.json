@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "arm": "care",
+      "returncode": 0,
+      "run_id": "care-seed-3101",
+      "seed": 3101,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3101/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3101/stdout.log",
+      "wall_seconds": 62.27063985541463
+    },
+    {
+      "arm": "uncalibrated",
+      "returncode": 0,
+      "run_id": "uncalibrated-seed-3101",
+      "seed": 3101,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3101/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3101/stdout.log",
+      "wall_seconds": 58.845580680295825
+    },
+    {
+      "arm": "care",
+      "returncode": 0,
+      "run_id": "care-seed-3102",
+      "seed": 3102,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3102/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3102/stdout.log",
+      "wall_seconds": 58.59809466637671
+    },
+    {
+      "arm": "uncalibrated",
+      "returncode": 0,
+      "run_id": "uncalibrated-seed-3102",
+      "seed": 3102,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3102/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3102/stdout.log",
+      "wall_seconds": 58.6622902713716
+    },
+    {
+      "arm": "care",
+      "returncode": 0,
+      "run_id": "care-seed-3103",
+      "seed": 3103,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3103/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/care-seed-3103/stdout.log",
+      "wall_seconds": 58.83079678937793
+    },
+    {
+      "arm": "uncalibrated",
+      "returncode": 0,
+      "run_id": "uncalibrated-seed-3103",
+      "seed": 3103,
+      "status": "completed",
+      "stderr": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3103/stderr.log",
+      "stdout": "/root/autodl-tmp/care-p3-v02-work/pilot/runs/uncalibrated-seed-3103/stdout.log",
+      "wall_seconds": 59.408759504556656
+    }
+  ],
+  "schema_version": 1,
+  "total_single_gpu_hours": 0.09906004493538705
+}
