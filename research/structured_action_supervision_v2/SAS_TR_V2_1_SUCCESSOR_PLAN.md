@@ -1,6 +1,6 @@
 # SAS-TR-v2.1 Successor Plan — Serving Capacity Repair
 
-Status: `CPU_FREEZE_PASS_GPU_AUTHORIZED`
+Status: `PASS_B2_INTERFACE_N128`
 
 Parent: terminal invalid `SAS-TR-v2.0` B2 attempt
 
@@ -37,3 +37,8 @@ This is a new protocol version. The repair passed 14 CPU contract tests and the
 user authorized a bounded one-hour GPU serving attempt on 2026-08-01. Execution
 must use the exact source commit and archive recorded in the B2.1 evidence; any
 preflight or fail-fast failure terminates the attempt without a partial rerun.
+
+The authorized attempt completed in 437.90 GPU-wall seconds. Both preflights
+passed, all 128 calibration trajectories were preserved, and the mechanically
+selected N128 interface passed the 32-trajectory validation gate. B3 remains
+unopened pending a new training protocol and explicit GPU-training permission.

@@ -4,7 +4,7 @@ Plan ID: `SAS-TR-v2.0`
 
 Date: `2026-07-30`
 
-Status: `B2_INVALID_INFRASTRUCTURE_KV_CACHE_OOM`
+Status: `SAS_TR_V2_0_INVALID_SAS_TR_V2_1_PASS_N128`
 
 ## 1. Research judgment
 
@@ -153,6 +153,21 @@ Status: `UNOPENED`
 B3 may open only after B2 validation passes. It requires a new protocol
 version, fresh manifest, separate GPU-training authorization, distinct emitted
 masks on real multi-turn trajectories, and non-degenerate reward support.
+
+### B2.1 — Capacity-only successor
+
+Status: `PASS_B2_INTERFACE_N128`
+
+The separately frozen v2.1 successor restarted all four calibration cells with
+one running prompt and one client worker. Both non-task capacity preflights
+passed. Calibration selected N128 mechanically: N128 and N512 each achieved
+100% first-turn executability, 100% four-turn completion, 25% positive reward,
+zero fabricated calls, and complete raw evidence. N128 validation independently
+achieved 100% first-turn executability, 100% four-turn completion, and 34.375%
+positive reward across 32 trajectories. Reserve remains unopened.
+
+This qualifies N128 for a separately authorized B3 protocol. It does not
+estimate AF versus LF efficacy and does not return `GO_MAIN_TRACK`.
 
 ## 6. Main-conference hook
 

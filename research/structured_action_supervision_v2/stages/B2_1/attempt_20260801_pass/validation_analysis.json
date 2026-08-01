@@ -1,0 +1,28 @@
+{
+  "cell_results": {
+    "N128": {
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 1.0,
+      "four_turn_completion_rate": 1.0,
+      "passes_frozen_gates": true,
+      "positive_reward_rate": 0.34375,
+      "raw_evidence_complete": true,
+      "trajectory_count": 32
+    }
+  },
+  "decision": "VALIDATION_AGGREGATED",
+  "files": [
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/validation_N128_seed_3101.json",
+      "sha256": "1532972595c0240e5c47087b2d2d468d69c78b97dbe8078f7be593e1f143bff1"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/validation_N128_seed_3202.json",
+      "sha256": "fd66f158acf42d4ba30a74e1b2976d878dd19be931747231075534e53eb665af"
+    }
+  ],
+  "protocol_id": "SAS-TR-v2.1",
+  "schema_version": 1,
+  "selected_cell": null,
+  "split": "validation"
+}

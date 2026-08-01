@@ -1,0 +1,36 @@
+{
+  "criteria": [
+    "tool_readiness_causally_validated",
+    "af_lf_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "artifact_reproducible",
+    "novel_benchmark_or_method",
+    "no_material_protocol_deviation"
+  ],
+  "decision": "STAY_DIAGNOSTIC",
+  "protocol_id": "SAS-TR-v2.1",
+  "reasons": [
+    "SAS-TR-v2.1 is an instrument-qualification bridge and cannot produce main-track efficacy evidence"
+  ],
+  "schema_version": 1,
+  "stage": "B2",
+  "stage_result_sha256": "ff18335a01a031b1885bd7f456dadfe8a0f17a30f12ce4ce7a2c6a7e52dc8666",
+  "stage_status": "PASS",
+  "unmet_criteria": [
+    "af_lf_contrast_instantiated",
+    "primary_effect_practical",
+    "primary_interval_excludes_zero",
+    "multi_environment_complete",
+    "multi_model_complete",
+    "multi_algorithm_complete",
+    "direct_baselines_complete",
+    "independent_seeds_sufficient",
+    "novel_benchmark_or_method"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "cell_results": {
+    "D128": {
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 0.0,
+      "four_turn_completion_rate": 0.0,
+      "passes_frozen_gates": false,
+      "positive_reward_rate": 0.0,
+      "raw_evidence_complete": true,
+      "trajectory_count": 32
+    },
+    "D512": {
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 0.875,
+      "four_turn_completion_rate": 0.3125,
+      "passes_frozen_gates": false,
+      "positive_reward_rate": 0.0625,
+      "raw_evidence_complete": true,
+      "trajectory_count": 32
+    },
+    "N128": {
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 1.0,
+      "four_turn_completion_rate": 1.0,
+      "passes_frozen_gates": true,
+      "positive_reward_rate": 0.25,
+      "raw_evidence_complete": true,
+      "trajectory_count": 32
+    },
+    "N512": {
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 1.0,
+      "four_turn_completion_rate": 1.0,
+      "passes_frozen_gates": true,
+      "positive_reward_rate": 0.25,
+      "raw_evidence_complete": true,
+      "trajectory_count": 32
+    }
+  },
+  "decision": "PASS_CALIBRATION_SELECT_N128",
+  "files": [
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D128_seed_3101.json",
+      "sha256": "e8c00b6945c338c5c3b3bc0171e329f9b3da10914b287284a1dbb572990b26bd"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D128_seed_3202.json",
+      "sha256": "a26ac7abc0fb2a7073dbb153d1cd9f6bab69d788d397e575b5db9cc019b57ff8"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D512_seed_3101.json",
+      "sha256": "94707f1ff6d10a7d8d3b4a20c1b1a3cc628ed171956a4f66d55debfab7c97fcc"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D512_seed_3202.json",
+      "sha256": "fbb6b25622be69c5a410c77fe0ab5c6f1b2ab6bfca77a760148c95297c39b1ab"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N128_seed_3101.json",
+      "sha256": "b7aa650b06c84b1d97959def68e6d161b433998ddd26550c7fe0557969589951"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N128_seed_3202.json",
+      "sha256": "6273dbde562c5fc0b92b3380bc1ad81359a71e7343ad36b9aa9d6ff89bf5b577"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N512_seed_3101.json",
+      "sha256": "af879df2b64bb77091d2dcc2fbc1c28d8d1484f3fbceeadecf08cd20b939f11e"
+    },
+    {
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N512_seed_3202.json",
+      "sha256": "2006279623d8f5538a2a7a2766c37d8f7e5d36bdb779d49ac2f0e413ef1dc68c"
+    }
+  ],
+  "protocol_id": "SAS-TR-v2.1",
+  "schema_version": 1,
+  "selected_cell": "N128",
+  "split": "calibration"
+}

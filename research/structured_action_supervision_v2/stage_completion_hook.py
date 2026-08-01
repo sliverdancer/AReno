@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-PROTOCOL_ID = "SAS-TR-v2.0"
+PROTOCOL_IDS = {"SAS-TR-v2.0", "SAS-TR-v2.1"}
 STAGES = {"B0", "B1", "B2", "B3"}
 STATUSES = {"PASS", "BLOCKED", "KILL", "INVALID"}
 TERMINAL = {"KILL", "INVALID"}
@@ -38,14 +38,14 @@ def assess(payload: dict[str, Any]) -> dict[str, Any]:
     else:
         decision = "STAY_DIAGNOSTIC"
         reasons = [
-            "SAS-TR-v2.0 is an instrument-qualification bridge and cannot "
+            f"{payload['protocol_id']} is an instrument-qualification bridge and cannot "
             "produce main-track efficacy evidence"
         ]
         if status == "BLOCKED":
             reasons.append("the current bridge stage remains blocked")
     return {
         "schema_version": 1,
-        "protocol_id": PROTOCOL_ID,
+        "protocol_id": payload["protocol_id"],
         "stage": payload["stage"],
         "stage_status": status,
         "decision": decision,
@@ -75,8 +75,8 @@ def finalize(stage_result: Path, output: Path | None = None) -> Path:
 def _validate(payload: dict[str, Any]) -> None:
     if payload.get("schema_version") != 1:
         raise ValueError("schema_version must be 1")
-    if payload.get("protocol_id") != PROTOCOL_ID:
-        raise ValueError(f"protocol_id must be {PROTOCOL_ID}")
+    if payload.get("protocol_id") not in PROTOCOL_IDS:
+        raise ValueError(f"unsupported protocol_id: {payload.get('protocol_id')!r}")
     if payload.get("stage") not in STAGES:
         raise ValueError(f"unsupported stage: {payload.get('stage')!r}")
     if payload.get("stage_status") not in STATUSES:

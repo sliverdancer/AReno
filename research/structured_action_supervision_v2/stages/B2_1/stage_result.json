@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "protocol_id": "SAS-TR-v2.1",
+  "stage": "B2",
+  "stage_status": "PASS",
+  "decision": "PASS_B2_INTERFACE_N128",
+  "authorization": {
+    "status": "USER_AUTHORIZED",
+    "date": "2026-08-01",
+    "scope": "SAS-TR-v2.1 AReno serving and inference qualification",
+    "gpu_time_limit_seconds": 3600
+  },
+  "execution": {
+    "source_commit": "12531bd",
+    "source_archive_sha256": "0b09a688e4384702b08633c2167ce76802113fde096a9694dc4cb4d20d16169c",
+    "remote_cpu_contract_tests": "14 passed",
+    "capacity_preflights_passed": [
+      "default",
+      "disabled"
+    ],
+    "controller_elapsed_gpu_wall_seconds": 437.9045715332031,
+    "calibration_trajectories": 128,
+    "validation_trajectories": 32,
+    "total_trajectories": 160,
+    "v2_0_trajectories_reused": false,
+    "reserve_consumed": false,
+    "model_weights_updated": false,
+    "gpu_after": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %"
+  },
+  "calibration": {
+    "decision": "PASS_CALIBRATION_SELECT_N128",
+    "D128": {
+      "first_turn_executable_rate": 0.0,
+      "four_turn_completion_rate": 0.0,
+      "positive_reward_rate": 0.0
+    },
+    "D512": {
+      "first_turn_executable_rate": 0.875,
+      "four_turn_completion_rate": 0.3125,
+      "positive_reward_rate": 0.0625
+    },
+    "N128": {
+      "first_turn_executable_rate": 1.0,
+      "four_turn_completion_rate": 1.0,
+      "positive_reward_rate": 0.25
+    },
+    "N512": {
+      "first_turn_executable_rate": 1.0,
+      "four_turn_completion_rate": 1.0,
+      "positive_reward_rate": 0.25
+    },
+    "fabricated_call_count": 0,
+    "raw_evidence_complete": true
+  },
+  "validation": {
+    "selected_cell": "N128",
+    "first_turn_executable_rate": 1.0,
+    "four_turn_completion_rate": 1.0,
+    "positive_reward_rate": 0.34375,
+    "fabricated_call_count": 0,
+    "raw_evidence_complete": true,
+    "passes_frozen_gates": true
+  },
+  "provenance": {
+    "successor_manifest_sha256": "f85601525db704388dea7cfc7a966bc38b4b1a8a0e6f5be8ba0244a9c7804ca1",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "compiled_extension_sha256": "ecaa56635690978eeae6dbe6bbe69688893a9a13d2b6d1dbd5ec11bfd0b60ec9",
+    "controller_result_sha256": "1950580fcb45d627a446ba893f9768aeb136ea4f89896068fa9063c50222dfeb",
+    "calibration_analysis_sha256": "2501d95efd67a5c6d5041adcb0611e75c5ded99f6b5995c94fd990452a816757",
+    "validation_analysis_sha256": "2ad652e8a38d4f3034535d255e2775bbfb68aaf924eaa4f3c823ecf1d00f94ae",
+    "remote_evidence_archive_sha256": "9eced7ff87d13234d0b8a893900066c266128de39aa2c97f9d8271a2155a44a5",
+    "evidence_root": "attempt_20260801_pass"
+  },
+  "next_action": "B3 is eligible for planning only. Freeze a new AF/LF training protocol and request explicit GPU-training authorization before execution.",
+  "main_track_evidence": {
+    "tool_readiness_causally_validated": true,
+    "af_lf_contrast_instantiated": false,
+    "primary_effect_practical": false,
+    "primary_interval_excludes_zero": false,
+    "multi_environment_complete": false,
+    "multi_model_complete": false,
+    "multi_algorithm_complete": false,
+    "direct_baselines_complete": false,
+    "independent_seeds_sufficient": false,
+    "artifact_reproducible": true,
+    "novel_benchmark_or_method": false,
+    "no_material_protocol_deviation": true
+  }
+}

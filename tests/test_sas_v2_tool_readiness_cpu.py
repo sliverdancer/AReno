@@ -348,6 +348,23 @@ class SasV2ToolReadinessTests(unittest.TestCase):
             assessment["unmet_criteria"],
         )
 
+    def test_v2_1_passed_interface_stays_diagnostic(self):
+        payload = json.loads(
+            (V2_ROOT / "stages" / "B2_1" / "stage_result.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        assessment = hook.assess(payload)
+
+        self.assertEqual(assessment["protocol_id"], "SAS-TR-v2.1")
+        self.assertEqual(assessment["decision"], "STAY_DIAGNOSTIC")
+        self.assertNotIn(
+            "tool_readiness_causally_validated",
+            assessment["unmet_criteria"],
+        )
+        self.assertIn("af_lf_contrast_instantiated", assessment["unmet_criteria"])
+
 
 if __name__ == "__main__":
     unittest.main()

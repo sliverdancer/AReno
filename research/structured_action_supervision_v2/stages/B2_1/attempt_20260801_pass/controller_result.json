@@ -1,0 +1,90 @@
+{
+  "decision": "PASS_B2_INTERFACE_N128",
+  "elapsed_gpu_wall_s": 437.9045715332031,
+  "finished_epoch": 1785554926.2617261,
+  "gpu_after": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %",
+  "gpu_before": "NVIDIA GeForce RTX 4090 D, 24564 MiB, 0 MiB, 0 %",
+  "gpu_limit_s": 3600,
+  "protocol_id": "SAS-TR-v2.1",
+  "runs": [
+    {
+      "cell_id": "D128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D128_seed_3101.json",
+      "seed": 3101,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "D128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D128_seed_3202.json",
+      "seed": 3202,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "D512",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D512_seed_3101.json",
+      "seed": 3101,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "D512",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_D512_seed_3202.json",
+      "seed": 3202,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "N128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N128_seed_3101.json",
+      "seed": 3101,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "N128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N128_seed_3202.json",
+      "seed": 3202,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "N512",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N512_seed_3101.json",
+      "seed": 3101,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "N512",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/calibration_N512_seed_3202.json",
+      "seed": 3202,
+      "split": "calibration"
+    },
+    {
+      "cell_id": "N128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/validation_N128_seed_3101.json",
+      "seed": 3101,
+      "split": "validation"
+    },
+    {
+      "cell_id": "N128",
+      "path": "/root/autodl-tmp/sas-tr-v2-1-attempt-20260801-12531bd/validation_N128_seed_3202.json",
+      "seed": 3202,
+      "split": "validation"
+    }
+  ],
+  "runtime_config": {
+    "capacity_preflight": true,
+    "client_workers": 1,
+    "fail_fast_evidence": true,
+    "max_running_prompts": 1
+  },
+  "schema_version": 1,
+  "selected_cell": "N128",
+  "source_commit": "12531bd",
+  "started_epoch": 1785554488.3571558,
+  "status": "COMPLETE",
+  "verification": {
+    "manifest": "/root/autodl-tmp/areno-sas-tr-v2-1-12531bd/research/structured_action_supervision_v2/stages/B1/manifest.json",
+    "manifest_sha256": "a8d5fa17e788e711ab16cbb36c3cb97a36de27ca2a26e1e4fedccc06daaa57e5",
+    "successor_manifest": "/root/autodl-tmp/areno-sas-tr-v2-1-12531bd/research/structured_action_supervision_v2/stages/B2_1/manifest.json",
+    "successor_manifest_sha256": "f85601525db704388dea7cfc7a966bc38b4b1a8a0e6f5be8ba0244a9c7804ca1",
+    "weight_file": "/root/autodl-tmp/modelscope-cache/models/Qwen--Qwen3-0.6B/snapshots/master/model.safetensors",
+    "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+  }
+}
