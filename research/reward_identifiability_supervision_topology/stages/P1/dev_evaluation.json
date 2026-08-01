@@ -1,0 +1,33 @@
+{
+  "factor_cell_count": 32,
+  "gates": {
+    "action_reward_diversity_separated": true,
+    "balanced_32_cell_factorial": true,
+    "byte_identical_regeneration": true,
+    "expected_task_count": true,
+    "finite_exact_analytic_measurements": true,
+    "low_intermediate_high_resolution": true,
+    "unique_cross_split_signatures": true,
+    "unique_four_action_strict_oracle": true
+  },
+  "max_score": 8,
+  "mixed_group_probability_g8": {
+    "max": 0.9608291418991006,
+    "min": 0.0
+  },
+  "passed": true,
+  "possible_action_sequences": {
+    "max": 7776,
+    "min": 1
+  },
+  "protocol": "RIST-P1-v1.0",
+  "resolution_strata": [
+    "high",
+    "intermediate",
+    "low"
+  ],
+  "schema_version": 1,
+  "score": 8,
+  "split": "train",
+  "task_count": 96
+}

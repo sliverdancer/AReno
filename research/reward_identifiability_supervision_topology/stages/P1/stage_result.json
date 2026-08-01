@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "protocol_id": "RIST-P1-v1.0",
+  "stage": "P1",
+  "stage_status": "PASS",
+  "decision": "PASS_P1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "execution": {
+    "initial_material_commit": "7f4c8b5",
+    "gpu_used": false,
+    "model_used": false,
+    "train_evaluator_score": 8,
+    "train_evaluator_max": 8,
+    "qualification_evaluator_score": 8,
+    "qualification_evaluator_max": 8,
+    "arbor_cycles": 0,
+    "arbor_best_node": "n0"
+  },
+  "data": {
+    "seed": 20260801,
+    "generator_version": "rist-workflow-v1",
+    "train_tasks": 96,
+    "qualification_tasks": 32,
+    "heldout_tasks": 32,
+    "factor_cells_per_split": 32,
+    "possible_action_sequences_min": 1,
+    "possible_action_sequences_max": 7776,
+    "mixed_group_probability_g8_min": 0.0,
+    "mixed_group_probability_g8_max": 0.9608291418991006,
+    "qualification_resolution_counts": {
+      "low": 20,
+      "intermediate": 3,
+      "high": 9
+    }
+  },
+  "hashes": {
+    "train_sha256": "8487a3587cc634409d9465af2c091982ccad8f6f4426007e96268513cdab3ded",
+    "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+    "heldout_sha256": "a318c50d7036abf8f58922730b7ba9b19324679bf1ee20459842cd742756c756",
+    "manifest_sha256": "80eb3bbe9ae9ae23ade34f724233d7c61919bd183b7dc3dd4ba4a93ccd0b14f1"
+  },
+  "claim_boundary": "CPU analytic resolution is not checkpoint behavior and does not estimate a supervision effect.",
+  "next_action": "Request separate GPU/serving authorization for P2 inference-only cross-family qualification.",
+  "main_conference_hook": {
+    "decision": "STAY_DIAGNOSTIC_OPEN_P2_GPU_AUTHORIZATION",
+    "upgraded": false
+  }
+}
+

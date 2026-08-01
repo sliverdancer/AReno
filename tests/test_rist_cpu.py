@@ -82,3 +82,26 @@ def test_rist_train_and_qualification_evaluators_pass(tmp_path):
     assert train["score"] == train["max_score"] == 8
     assert qualification["passed"] is True
     assert qualification["score"] == qualification["max_score"] == 8
+
+
+def test_rist_stage_hook_keeps_p1_diagnostic_and_kills_failed_stages():
+    hook = _load_module(
+        "rist_stage_completion_hook",
+        RESEARCH_DIR / "stage_completion_hook.py",
+    )
+
+    passed = hook.assess(
+        {
+            "stage": "P1",
+            "stage_status": "PASS",
+            "decision": "PASS_P1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+        }
+    )
+    killed = hook.assess(
+        {"stage": "P2", "stage_status": "KILL", "decision": "NO_SIGNAL"}
+    )
+
+    assert passed["decision"] == "STAY_DIAGNOSTIC_OPEN_P2_GPU_AUTHORIZATION"
+    assert passed["upgraded"] is False
+    assert killed["decision"] == "KILL_CURRENT_ROUTE"
+    assert killed["upgraded"] is False

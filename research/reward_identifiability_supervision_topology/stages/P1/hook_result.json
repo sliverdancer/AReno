@@ -1,0 +1,8 @@
+{
+  "decision": "STAY_DIAGNOSTIC_OPEN_P2_GPU_AUTHORIZATION",
+  "protocol_family": "RIST-v1",
+  "schema_version": 1,
+  "source_stage_decision": "PASS_P1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "stage": "P1",
+  "upgraded": false
+}

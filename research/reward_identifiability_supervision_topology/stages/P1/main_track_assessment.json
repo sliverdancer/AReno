@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "stage": "P1",
+  "decision": "STAY_DIAGNOSTIC_OPEN_P2_GPU_AUTHORIZATION",
+  "p0_novelty_conditional": true,
+  "task_generator_reproducible": true,
+  "action_reward_diversity_separated": true,
+  "analytic_resolution_range_complete": true,
+  "model_resolution_validated": false,
+  "factorial_training_complete": false,
+  "primary_effect_estimated": false,
+  "multi_environment_complete": false,
+  "multi_model_complete": false,
+  "multi_algorithm_complete": false,
+  "go_main_track": false
+}

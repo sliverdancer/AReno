@@ -1,0 +1,8 @@
+{
+  "decision": "STAY_DIAGNOSTIC_OPEN_P1_CPU_FREEZE",
+  "protocol_family": "RIST-v1",
+  "schema_version": 1,
+  "source_stage_decision": "PASS_NOVELTY_CONDITIONAL",
+  "stage": "P0",
+  "upgraded": false
+}
