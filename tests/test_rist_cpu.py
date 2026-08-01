@@ -273,3 +273,173 @@ def test_rist_p2_analyzer_passes_only_cross_family_resolution_signal():
         and model["raw_parsed_agreement_rate"] == 1.0
         for model in result["models"]
     )
+
+
+def test_rist_e0_canary_is_independent_explicit_and_four_turn():
+    e0_dir = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0"
+    runner = _load_module("rist_run_e0_canary", e0_dir / "run_e0_canary.py")
+    payload = __import__("json").loads(
+        (e0_dir / "canary_tasks.json").read_text(encoding="utf-8")
+    )
+
+    runner.validate_canary_tasks(payload)
+    assert {task["mode"] for task in payload["tasks"]} == {"forced", "required"}
+    assert all(len(task["turns"]) == 4 for task in payload["tasks"])
+    assert all(
+        "CANARY" in turn["expected_code"]
+        for task in payload["tasks"]
+        for turn in task["turns"]
+    )
+
+    qualification = {
+        __import__("json").loads(line)["id"]
+        for line in (RESEARCH_DIR / "stages" / "P1" / "data" / "qualification.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    }
+    assert {task["id"] for task in payload["tasks"]}.isdisjoint(qualification)
+
+
+def test_rist_e0_parser_and_cross_model_gate_are_fail_closed():
+    e0_dir = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0"
+    runner = _load_module("rist_run_e0_canary_parser", e0_dir / "run_e0_canary.py")
+    validator = _load_module("rist_validate_e0", e0_dir / "validate_e0.py")
+
+    valid = runner.parse_tool_call(
+        {
+            "tool_calls": [
+                {
+                    "id": "canary-1",
+                    "function": {
+                        "name": "probe_catalog",
+                        "arguments": '{"code":"CANARY-F1"}',
+                    },
+                }
+            ]
+        },
+        {"probe_catalog"},
+    )
+    missing = runner.parse_tool_call({}, {"probe_catalog"})
+    assert valid["valid"] is True
+    assert valid["call"]["arguments"] == {"code": "CANARY-F1"}
+    assert missing["reason"] == "MISSING_TOOL_CALL"
+
+    def payload(model_cell, *, exact=True, infrastructure_error=None):
+        return {
+            "model_cell": model_cell,
+            "infrastructure_error": infrastructure_error,
+            "fabricated_call_count": 0,
+            "retry_count": 0,
+            "trajectories": [
+                {
+                    "raw_response_count": 4,
+                    "records": [
+                        {
+                            "parse_valid": True,
+                            "exact_instruction": bool(exact),
+                        }
+                        for _ in range(4)
+                    ],
+                }
+                for _ in range(2)
+            ],
+        }
+
+    passed = validator.validate(
+        [payload("qwen3_0_6b"), payload("gemma4_e2b_it")]
+    )
+    failed = validator.validate(
+        [payload("qwen3_0_6b"), payload("gemma4_e2b_it", exact=False)]
+    )
+    invalid = validator.validate(
+        [
+            payload("qwen3_0_6b"),
+            payload(
+                "gemma4_e2b_it",
+                infrastructure_error={"error_type": "RuntimeError"},
+            ),
+        ]
+    )
+    preflight_invalid = validator.validate([], preflight_passed=False)
+
+    assert passed["decision"] == "PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE"
+    assert failed["decision"] == "FAIL_E0_MODEL_INTERFACE_STOP"
+    assert invalid["decision"] == "INVALID_E0_INFRASTRUCTURE_STOP"
+    assert preflight_invalid["decision"] == "INVALID_E0_PREFLIGHT_STOP"
+
+
+def test_rist_e0_collects_mock_raw_calls_without_retry_or_repair(tmp_path, monkeypatch):
+    import hashlib
+    import json
+    import re
+
+    e0_dir = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "E0"
+    runner = _load_module("rist_run_e0_canary_collect", e0_dir / "run_e0_canary.py")
+    tasks_path = e0_dir / "canary_tasks.json"
+    manifest = {
+        "protocol": "RIST-E0-v1.1",
+        "canary_tasks_sha256": hashlib.sha256(tasks_path.read_bytes()).hexdigest(),
+        "models": [
+            {"cell": "qwen3_0_6b"},
+            {"cell": "gemma4_e2b_it"},
+        ],
+        "request_seed": 9101,
+        "sampling": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "max_new_tokens": 96,
+        },
+    }
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    calls = []
+
+    def fake_post(url, payload, *, api_key, timeout_seconds):
+        del url, api_key, timeout_seconds
+        instruction = payload["messages"][-1]["content"]
+        matched = re.search(r"call function (\w+) with code ([A-Z0-9-]+)", instruction)
+        assert matched is not None
+        name, code = matched.groups()
+        calls.append((name, code, payload["seed"]))
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "tool_calls": [
+                            {
+                                "id": f"mock-{len(calls)}",
+                                "function": {
+                                    "name": name,
+                                    "arguments": json.dumps({"code": code}),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ]
+        }
+
+    monkeypatch.setattr(runner, "_post_json", fake_post)
+    output_path = tmp_path / "qwen.json"
+    result = runner.collect(
+        base_url="http://127.0.0.1:8000/v1",
+        api_key="EMPTY",
+        model_cell="qwen3_0_6b",
+        tasks_path=tasks_path,
+        manifest_path=manifest_path,
+        output_path=output_path,
+        timeout_seconds=1.0,
+    )
+
+    assert result["infrastructure_error"] is None
+    assert len(result["trajectories"]) == 2
+    assert len(calls) == 8
+    assert all(
+        record["parse_valid"] and record["exact_instruction"]
+        for trajectory in result["trajectories"]
+        for record in trajectory["records"]
+    )
+    assert result["fabricated_call_count"] == 0
+    assert result["retry_count"] == 0
+    assert json.loads(output_path.read_text(encoding="utf-8"))["model_cell"] == "qwen3_0_6b"
