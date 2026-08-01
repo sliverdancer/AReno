@@ -1,0 +1,134 @@
+{
+  "cases": [
+    {
+      "case_id": "P5-SLIME-F6-MISSING-EVAL-REWARD",
+      "conclusion_flip": false,
+      "expected_violations": [
+        "ARCA-F6-STATUS"
+      ],
+      "framework": "slime",
+      "natural_case": true,
+      "payload": {
+        "execution_failures": [
+          {
+            "failure": "reward missing at replay boundary",
+            "numeric_reward": 0.0,
+            "structured_status": null
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "medium",
+      "workload": "forge-eval-replay"
+    },
+    {
+      "case_id": "P5-SLIME-CLEAN-PRESENT-EVAL-REWARD",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "slime",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "failure": "reward present",
+            "numeric_reward": 1.0,
+            "structured_status": "reward_present"
+          }
+        ]
+      },
+      "seed": 1,
+      "severity": "control",
+      "workload": "forge-eval-replay"
+    },
+    {
+      "case_id": "P5-RLLM-F3-DICT-REWARD-DEFAULT",
+      "conclusion_flip": true,
+      "expected_violations": [
+        "ARCA-F3-INFORMATIVE"
+      ],
+      "framework": "rllm",
+      "natural_case": true,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          0.0
+        ]
+      },
+      "seed": 0,
+      "severity": "high",
+      "workload": "python-module-evaluator"
+    },
+    {
+      "case_id": "P5-RLLM-CLEAN-EXPLICIT-DICT-REWARD",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "rllm",
+      "natural_case": false,
+      "payload": {
+        "reward_controls": [
+          0.0,
+          1.0
+        ]
+      },
+      "seed": 1,
+      "severity": "control",
+      "workload": "python-module-evaluator"
+    },
+    {
+      "case_id": "P5-AGENTR1-CLEAN-STRUCTURED-ENV-ERROR",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "Agent-R1",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "numeric_reward": 0.0,
+            "structured_status": "step_info.error"
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "control",
+      "workload": "webshop-agent-flow"
+    },
+    {
+      "case_id": "P5-RAGEN-CLEAN-STRUCTURED-TIMEOUT",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "RAGEN",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "numeric_reward": 0.0,
+            "structured_status": "timeout"
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "control",
+      "workload": "lean-environment"
+    },
+    {
+      "case_id": "P5-AGENTLIGHTNING-CLEAN-MISSING-REWARD-PROVENANCE",
+      "conclusion_flip": false,
+      "expected_violations": [],
+      "framework": "Agent-Lightning",
+      "natural_case": false,
+      "payload": {
+        "execution_failures": [
+          {
+            "numeric_reward": 0.0,
+            "structured_status": "warning;has_reward=false"
+          }
+        ]
+      },
+      "seed": 0,
+      "severity": "control",
+      "workload": "verl-daemon"
+    }
+  ],
+  "schema_version": "arca.p5.cases.v1",
+  "split": "external"
+}

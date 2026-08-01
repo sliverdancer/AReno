@@ -15,8 +15,10 @@ paper than a method paper.
 2. production-path natural cases in three pinned systems;
 3. a frozen, CPU-verifiable auditor with clean controls, registered mutations,
    source hashes, and one-shot held-out evaluation;
-4. a bounded dynamic intervention showing what ordinary successful execution
-   fails to reveal, if P4 passes.
+4. an external natural-validation sample covering five previously unseen
+   systems, with two qualifying cases and bounded negative inspections;
+5. a bounded dynamic intervention only if a future P4 successor is separately
+   frozen and authorized.
 
 ## Completed stages
 
@@ -28,6 +30,8 @@ paper than a method paper.
 - reviewer red-team and claim ledger: completed;
 - GPU harness: v0.2 attempted once and terminated as infrastructure-invalid
   before model loading; no dynamic scientific result exists.
+- P5 external natural validation: passed with two cases in two unseen systems,
+  zero rule changes, and five framework-level clean controls.
 
 ## Remaining stages
 
@@ -42,23 +46,27 @@ Any v0.3 proposal needs a separate owner decision and a new run root.
 
 ### P5 — natural external validation
 
-State: `UNOPENED_P4_NOT_PASSED`.
+State: `PASS_P5_EXTERNAL_NATURAL_TO_PAPER`.
 
-Open only if a separately authorized P4 successor passes. Solicit or
-independently reproduce at least two
-maintainer-confirmed cases outside the development systems, with disclosure
-authorization handled separately. Freeze case inclusion criteria before
-contacting maintainers. No public issue or PR may be opened automatically.
+P5 was opened by owner decision as an independent CPU evidence gate for the
+TMLR route; it did not depend on or retroactively validate P4. Five candidates
+were pinned before inspection. Exact upstream function bodies reproduced one
+rLLM evaluator-coercion case and one slime evaluation-replay case. Agent-R1,
+RAGEN, and Agent Lightning remain bounded negative inspections. No disclosure
+was performed.
 
-Main-conference GO requires at least two new natural cases, at least one in an
-unseen framework, and no rule changes after case intake. Otherwise target TMLR
-with a narrower audit claim.
+This satisfies the preregistered case-count gate for paper drafting, but not a
+main-conference method-paper gate: the sample is purposive, the clean-control
+interval is wide, the slime boundary is not core training, and no valid
+downstream consequence experiment exists.
 
-### P6 — paper and artifact release
+### P6 — paper and artifact review
+
+State: `OPEN_AFTER_P5_PASS`.
 
 Draft the paper around failure contracts and scientific validity, not model
-performance. Release source pins, fixtures, mutation operators, frozen hashes,
-artifact schemas, negative controls, and all terminal outcomes. Run an
+performance. Include all negative inspections, source pins, fixtures, mutation
+operators, frozen hashes, artifact schemas, and terminal P4 outcomes. Run an
 anonymous artifact audit and a separate paper-review gate before submission.
 
 ## Decision schedule
@@ -66,10 +74,10 @@ anonymous artifact audit and a separate paper-review gate before submission.
 | Gate | GO | KILL / fallback |
 |---|---|---|
 | P4-v0.2 | not evaluated; infrastructure invalid | retain CPU audit paper; no rerun |
-| P5 | two new natural cases, one unseen system | TMLR narrow claim |
+| P5 | passed: two new natural cases in two unseen systems | bounded transfer only; no prevalence claim |
 | Paper audit | no critical validity blocker | revise before submission |
-| Main-conference positioning | natural breadth plus downstream consequence | TMLR first |
+| Main-conference positioning | core-training breadth plus valid downstream consequence | TMLR first |
 
-The current strongest defensible route is TMLR. “Main-conference method paper”
-remains an aspiration contingent on a valid P4 successor and P5 evidence, not
-an achieved status.
+The current strongest defensible route is a TMLR empirical audit/tooling paper.
+“Main-conference method paper” remains contingent on evidence beyond this P5
+pass and is not the current claim.

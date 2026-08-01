@@ -21,5 +21,12 @@ source-derived clean controls and synthetic faults only. That domain gap is the
 main unresolved threat. AReaL's post-freeze natural replication reduces, but
 does not eliminate, the threat.
 
-The next admissible refinement is the frozen P4 dynamic intervention. It is
-prepared but remains unopened until explicit GPU authorization.
+P5 added a frozen external natural-validation node without changing the
+evaluator. Two cases transferred in slime and rLLM, while Agent-R1, RAGEN, and
+Agent Lightning remained bounded negative inspections. The merge score tied
+the existing best (`1.0`) and therefore did not replace it; this is confirming
+external evidence, not an optimization improvement. The reusable lesson is
+that boundary relevance must be reported separately from detection accuracy.
+
+P4-v0.2 remains infrastructure-invalid before model loading. No GPU refinement
+is currently open.

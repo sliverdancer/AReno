@@ -1,0 +1,188 @@
+{
+  "inspections": [
+    {
+      "boundary": "official forge evaluation replay",
+      "finding": "missing reward is exported as numeric 0.0 without a reward-present status",
+      "framework": "slime",
+      "inspection_status": "QUALIFYING_NATURAL_CASE",
+      "natural_case_count": 1
+    },
+    {
+      "boundary": "WebShop agent-flow environment step",
+      "finding": "numeric fallback retains step_info.error; loud failures and structured fallbacks were excluded",
+      "framework": "Agent-R1",
+      "inspection_status": "NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY",
+      "natural_case_count": 0
+    },
+    {
+      "boundary": "Lean environment timeout and server-error handling",
+      "finding": "timeout/server_error status and diagnostics remain structured",
+      "framework": "RAGEN",
+      "inspection_status": "NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY",
+      "natural_case_count": 0
+    },
+    {
+      "boundary": "documented lightweight Python evaluator return coercion",
+      "finding": "dict without reward is accepted as 0.0 even when is_correct is true, with empty metadata",
+      "framework": "rllm",
+      "inspection_status": "QUALIFYING_NATURAL_CASE",
+      "natural_case_count": 1
+    },
+    {
+      "boundary": "veRL daemon reward fill and validation metrics",
+      "finding": "missing reward is warned and preserved as has_reward=false; explicit fallback is excluded",
+      "framework": "Agent-Lightning",
+      "inspection_status": "NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY",
+      "natural_case_count": 0
+    }
+  ],
+  "probes": {
+    "bounded_negative_controls": {
+      "Agent-Lightning": {
+        "qualifying_natural_case": false,
+        "structured_status_fragments_verified": 2
+      },
+      "Agent-R1": {
+        "qualifying_natural_case": false,
+        "structured_status_fragments_verified": 2
+      },
+      "RAGEN": {
+        "qualifying_natural_case": false,
+        "structured_status_fragments_verified": 2
+      }
+    },
+    "rllm": {
+      "documented_dict_return": true,
+      "duplicated_production_paths": [
+        {
+          "missing_false_reward": 0.0,
+          "missing_true_is_correct": true,
+          "missing_true_metadata": {},
+          "missing_true_reward": 0.0,
+          "positive_reward": 1.0,
+          "source_file": "module_evaluator.py"
+        },
+        {
+          "missing_false_reward": 0.0,
+          "missing_true_is_correct": true,
+          "missing_true_metadata": {},
+          "missing_true_reward": 0.0,
+          "positive_reward": 1.0,
+          "source_file": "evaluator_loader.py"
+        }
+      ]
+    },
+    "slime": {
+      "missing_reward": {
+        "has_reward_field_present": false,
+        "rewards": [
+          0.0
+        ],
+        "truncated": [
+          false
+        ]
+      },
+      "positive_control": {
+        "has_reward_field_present": false,
+        "rewards": [
+          1.0
+        ],
+        "truncated": [
+          false
+        ]
+      }
+    }
+  },
+  "schema_version": "arca.p5.evidence.v1",
+  "sources": [
+    {
+      "commit": "aaf5c2092b01219fa0d5c2d323741d409086ca32",
+      "files": [
+        {
+          "observed_sha256": "0957f1b42ef0b8ce5552e5050eaad82a08ae58134d278b6adc84e88ce9f4aa73",
+          "path": "slime/rollout/forge_load.py",
+          "sha256": "0957f1b42ef0b8ce5552e5050eaad82a08ae58134d278b6adc84e88ce9f4aa73"
+        }
+      ],
+      "framework": "slime",
+      "repository": "https://github.com/THUDM/slime.git"
+    },
+    {
+      "commit": "b124aa46534cbf2fb8bc8af11405774984c42ac7",
+      "files": [
+        {
+          "observed_sha256": "c7757aa4e88e3c9e055f8fc9c31c9abbcfccccfb86affd45d13a96486922c051",
+          "path": "recipes/webshop/webshop_agent_flow.py",
+          "sha256": "c7757aa4e88e3c9e055f8fc9c31c9abbcfccccfb86affd45d13a96486922c051"
+        }
+      ],
+      "framework": "Agent-R1",
+      "repository": "https://github.com/AgentR1/Agent-R1.git"
+    },
+    {
+      "commit": "20daedc47558e000f7de912b060646bf2e8026bd",
+      "files": [
+        {
+          "observed_sha256": "06d6fbb2f1d31e202618ab0ce525024cf5b7c3acf9380468513787f493c4c791",
+          "path": "ragen/env/lean/env.py",
+          "sha256": "06d6fbb2f1d31e202618ab0ce525024cf5b7c3acf9380468513787f493c4c791"
+        }
+      ],
+      "framework": "RAGEN",
+      "repository": "https://github.com/mll-lab-nu/RAGEN.git"
+    },
+    {
+      "commit": "75926c15e58fa29e4183d01292d10462d2047be9",
+      "files": [
+        {
+          "observed_sha256": "a3f94c2ab7098d5c9b69fda3c9c08084dfe1cd526413f6538b77983ec5540bdd",
+          "path": "rllm/eval/module_evaluator.py",
+          "sha256": "a3f94c2ab7098d5c9b69fda3c9c08084dfe1cd526413f6538b77983ec5540bdd"
+        },
+        {
+          "observed_sha256": "1f2b39fcbe802b5e8703c5e5bbbbefcb7a85b6ade7266e84a3006da77af77aa1",
+          "path": "rllm/eval/evaluator_loader.py",
+          "sha256": "1f2b39fcbe802b5e8703c5e5bbbbefcb7a85b6ade7266e84a3006da77af77aa1"
+        },
+        {
+          "observed_sha256": "513ab157a4ca128d7ef0be5f146810e79af682a56c2606175fce4a5969324eee",
+          "path": "docs/core-concepts/tasks.mdx",
+          "sha256": "513ab157a4ca128d7ef0be5f146810e79af682a56c2606175fce4a5969324eee"
+        }
+      ],
+      "framework": "rllm",
+      "repository": "https://github.com/rllm-org/rllm.git"
+    },
+    {
+      "commit": "f0a77cfad71e6222a3edb7dfc7a0f611bd231364",
+      "files": [
+        {
+          "observed_sha256": "0cbce7e1185e278ddbf95a66c55fee9495d2e85070b781074ed35f68de13b5b3",
+          "path": "agentlightning/verl/daemon.py",
+          "sha256": "0cbce7e1185e278ddbf95a66c55fee9495d2e85070b781074ed35f68de13b5b3"
+        }
+      ],
+      "framework": "Agent-Lightning",
+      "repository": "https://github.com/microsoft/agent-lightning.git"
+    }
+  ],
+  "summary": {
+    "all_case_predictions_exact": true,
+    "candidate_framework_count": 5,
+    "clean_false_positive_rate": 0.0,
+    "clean_false_positive_wilson_95": [
+      0.0,
+      0.43448246478317476
+    ],
+    "decision": "PASS_P5_EXTERNAL_NATURAL_TO_PAPER",
+    "external_disclosure_performed": false,
+    "frozen_rule_changes": 0,
+    "gpu_executed": false,
+    "high_natural_recall": 1.0,
+    "natural_conclusion_flips_detected": 1,
+    "new_natural_case_count": 2,
+    "new_natural_framework_count": 2,
+    "protocol_id": "ARCA-P5-EXTERNAL-v0.1",
+    "schema_version": "arca.p5.summary.v1"
+  }
+}

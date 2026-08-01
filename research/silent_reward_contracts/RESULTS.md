@@ -8,6 +8,8 @@
 | veRL | `tool_rewards` producer vs `reward_scores` consumer | high | successful, reward contribution absent | F2 | yes |
 | veRL | timeout mapped to numeric 0 without status | medium | successful return | F6 | no |
 | AReaL | missing reward mapped to numeric 0 without status | medium | successful tensorization | F6 | no |
+| slime | missing eval-replay reward mapped to numeric 0 without reward-present status | medium | successful replay export | F6 | no |
+| rLLM | documented dict evaluator without `reward` defaults to 0 despite `is_correct=True` | high | successful coercion | F3 | yes |
 
 The issue #199 `last_assistant` and `final_answer` masks were identical on the
 registered well-formed trajectory by design. They are retained as a declared
@@ -47,3 +49,16 @@ remain unopened and v0.2 may not be resumed.
 No P4 model execution, serving, paid API, external issue, or pull request was
 performed. The measured failed-command occupancy was `0.00356` single-GPU
 hours.
+
+## P5 external natural validation
+
+Five previously unseen systems were pinned before source inspection. Frozen
+ARCA rules detected two qualifying natural cases in slime and rLLM with no rule
+changes. Five framework-level clean controls produced zero false positives,
+but their Wilson 95% upper bound is `0.4345`; the result supports case-based
+transfer, not an ecosystem false-positive guarantee. Agent-R1, RAGEN, and
+Agent Lightning are retained as bounded negative inspections.
+
+The P5 decision is `PASS_P5_EXTERNAL_NATURAL_TO_PAPER`. The slime finding is
+limited to an official evaluation-replay boundary. P4 remains invalid and no
+downstream training consequence has been demonstrated.

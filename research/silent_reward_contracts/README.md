@@ -1,6 +1,6 @@
 # ARCA: auditing silent reward contracts in agentic RL
 
-Status: `P3_PASS_P4_INVALID_INFRASTRUCTURE`
+Status: `P5_PASS_EXTERNAL_NATURAL_P4_INVALID_INFRASTRUCTURE`
 
 ARCA is a falsification-first audit package for failures that allow an agentic
 RL job to execute and emit finite metrics while its scientific treatment is
@@ -27,16 +27,26 @@ positive rate on 40 source-derived clean controls. This is transfer under a
 controlled mutation protocol, not field-wide prevalence or proof that ARCA
 prevents reward hacking.
 
+P5 then froze five previously unseen systems before inspection. Direct CPU AST
+probes reproduced two additional natural cases: slime's eval-replay path
+conflated missing reward with numeric zero, and rLLM's documented lightweight
+dict evaluator defaulted a missing reward to zero even when
+`is_correct=True`. Agent-R1, RAGEN, and Agent Lightning remain bounded negative
+inspections. This strengthens the TMLR audit/tooling route but does not establish
+prevalence or a main-conference method contribution.
+
 ## Reproduce
 
 ```bash
 python -m pytest tests/test_silent_reward_contracts_cpu.py -q
+python -m pytest tests/test_arca_p5_cpu.py -q
 python -m research.silent_reward_contracts.summarize_p3 \
   --output-dir research/silent_reward_contracts/p3/artifacts/summary
 ```
 
 Exact upstream CPU commands are in `p2/REMOTE_CPU_COMMANDS.md` and
-`p3/REMOTE_CPU_COMMANDS.md`. The prepared-only GPU handoff is in
+`p3/REMOTE_CPU_COMMANDS.md`; P5 commands are in `p5/REMOTE_CPU_COMMANDS.md`.
+The terminal GPU handoff is in
 `p4/REMOTE_GPU_COMMANDS.md`; it must not be executed without a new explicit
 authorization.
 
@@ -49,5 +59,6 @@ authorization.
 | P2 cross-system prevalence gate | pass | `p2/artifacts/cross_system_cases.json` |
 | P3 frozen transfer | pass with stated mutation limit | `p3/artifacts/summary/gate_summary.json` |
 | P4 dynamic consequence | invalid before model load; not evaluated | `p4/GPU_GATE_DECISION_20260801.md` |
+| P5 external natural validation | pass with two bounded natural cases in two unseen systems | `p5/artifacts/external_evidence.json` |
 
 Read `CLAIM_LEDGER.md` before reusing any result in a paper or abstract.

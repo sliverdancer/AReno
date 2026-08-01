@@ -1,0 +1,6 @@
+framework,inspection_status,natural_case_count,boundary,finding
+slime,QUALIFYING_NATURAL_CASE,1,official forge evaluation replay,missing reward is exported as numeric 0.0 without a reward-present status
+Agent-R1,NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY,0,WebShop agent-flow environment step,numeric fallback retains step_info.error; loud failures and structured fallbacks were excluded
+RAGEN,NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY,0,Lean environment timeout and server-error handling,timeout/server_error status and diagnostics remain structured
+rllm,QUALIFYING_NATURAL_CASE,1,documented lightweight Python evaluator return coercion,"dict without reward is accepted as 0.0 even when is_correct is true, with empty metadata"
+Agent-Lightning,NO_QUALIFYING_CASE_IN_INSPECTED_BOUNDARY,0,veRL daemon reward fill and validation metrics,missing reward is warned and preserved as has_reward=false; explicit fallback is excluded

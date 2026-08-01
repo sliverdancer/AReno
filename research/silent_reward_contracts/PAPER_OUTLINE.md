@@ -2,9 +2,10 @@
 
 ## Abstract contract
 
-State the problem, four natural cases in three pinned systems, the frozen
-OpenRLHF mutation-transfer result with its clean-control denominator, and the
-fact that dynamic GPU consequence is pending. Do not advertise model gains.
+State the problem, six natural cases in five pinned systems, the frozen
+OpenRLHF mutation-transfer result, and the five-system P5 external-validation
+sample with its clean-control denominator. State that P4 was infrastructure
+invalid before model loading. Do not advertise model gains.
 
 ## Sections
 
@@ -17,12 +18,15 @@ fact that dynamic GPU consequence is pending. Do not advertise model gains.
 4. **Study design** — discovery/development/held-out split, single-fault
    mutations, source pins, frozen hashes, baselines, and gates.
 5. **Natural case studies** — AReno, veRL reward flow, veRL timeout provenance,
-   and post-freeze AReaL replication.
-6. **Frozen transfer evaluation** — per-family recall, clean false positives,
-   baselines, and sensitivity analysis.
-7. **Dynamic consequence** — include only if P4 passes; otherwise report it as
-   unopened future work.
-8. **Limitations and responsible disclosure** — no prevalence sampling, no
+   post-freeze AReaL replication, slime eval replay, and rLLM evaluator
+   coercion.
+6. **Frozen transfer evaluation** — OpenRLHF mutation transfer, P5 natural
+   external validation, per-family recall, clean false positives, negative
+   inspections, and sensitivity analysis.
+7. **Invalid dynamic attempt** — report the terminal pre-model import failure
+   and exclude it from scientific results.
+8. **Limitations and responsible disclosure** — purposive rather than
+   prevalence sampling, wide external-control interval, no
    general reward-hacking defense, mutation dependence, and disclosure policy.
 
 ## Primary tables and figures
@@ -32,7 +36,7 @@ fact that dynamic GPU consequence is pending. Do not advertise model gains.
 - Table 2: natural cases with source commit and conclusion flip;
 - Figure 2: held-out macro recall and clean FPR by baseline, with denominators;
 - Table 3: per-rule Wilson intervals and framework/workload cells;
-- optional Figure 3: paired strict/canonical P4 reward traces by seed.
+- Table 4: all five P5 candidates, audited boundary, result, and source hash.
 
 ## Statistical rules
 
@@ -40,9 +44,10 @@ fact that dynamic GPU consequence is pending. Do not advertise model gains.
   repeated measurements.
 - Report macro recall, clean false-positive rate, Wilson 95% intervals, and the
   preregistered hierarchical bootstrap.
-- For P4, show all six raw step rows and paired differences. With only three
-  seeds, use the mechanical informativeness gate and descriptive intervals;
-  do not claim significance from an underpowered sign test.
+- Do not plot or analyze P4 arm differences: no scientific P4 trajectory was
+  generated.
+- Report the P5 clean point estimate and Wilson interval together; do not imply
+  that `0/5` proves an ecosystem FPR below 5%.
 - Report all natural and synthetic denominators separately. Missing or failed
   runs are terminal outcomes, never silently excluded.
 

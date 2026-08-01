@@ -33,3 +33,16 @@ No candidate may be replaced because its inspection is negative. Search logs,
 official source URLs, repository pins, inspected paths, and file hashes are
 part of the final artifact.
 
+## Executed source results
+
+The registered queries were executed on `2026-08-01`. Official repository
+results anchored all five systems. Matching primary paper records were found
+on arXiv for Agent-R1 (`2511.14460`), RAGEN (`2504.20073`), and Agent
+Lightning (`2508.03680`). No matching rLLM primary paper was found by the
+registered title query, so only its official repository and documentation are
+used as system sources. OpenReview supplied adjacent multi-turn reward and
+reasoning-collapse studies, not a direct substitute.
+
+The audit retained all five candidates: two qualifying cases and three bounded
+negative inspections. Exact source paths and hashes are recorded in
+`upstream_manifest.json`; technical outcomes are in `artifacts/`.

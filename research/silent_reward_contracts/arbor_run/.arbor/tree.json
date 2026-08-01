@@ -1,5 +1,5 @@
 {
-  "_counter": 4,
+  "_counter": 5,
   "root": "n0",
   "nodes": {
     "n0": {
@@ -8,7 +8,7 @@
       "depth": 0,
       "status": "root",
       "hypothesis": "Maximize held-out macro detection recall for silent agentic-RL contract failures while keeping clean-fixture false-positive rate at or below 5 percent",
-      "insight": "[from n1] Successful agentic-RL execution does not establish typed reward-boundary equivalence; production-boundary positive controls are required\n[from n2] Reward contracts must cover namespace flow and structured failure provenance in addition to schema types\n[from n3] Preflight identifiability needs declared treatment aliases and nondegenerate group variance",
+      "insight": "[from n1] Successful agentic-RL execution does not establish typed reward-boundary equivalence; production-boundary positive controls are required\n[from n2] Reward contracts must cover namespace flow and structured failure provenance in addition to schema types\n[from n3] Preflight identifiability needs declared treatment aliases and nondegenerate group variance\n[from n5] Frozen reward-contract checks transfer to natural missing-reward defaults in unseen systems; boundary relevance must be reported separately from detection correctness",
       "metadata": {
         "dev_score": null,
         "test_score": null,
@@ -16,7 +16,7 @@
         "branch_ref": null
       },
       "created_at": 1785557168,
-      "updated_at": 1785558860
+      "updated_at": 1785566874
     },
     "n1": {
       "id": "n1",
@@ -40,7 +40,7 @@
       "depth": 1,
       "status": "merged",
       "hypothesis": "Semantic trajectory and reward invariants are required because schema-valid traces can still be scientifically invalid",
-      "insight": "Schema validity is insufficient when producer and consumer namespaces differ or failure status is erased",
+      "insight": "Schema validity is insufficient when producer and consumer namespaces differ or failure status is erased\n[from n5] Frozen reward-contract checks transfer to natural missing-reward defaults in unseen systems; boundary relevance must be reported separately from detection correctness",
       "metadata": {
         "dev_score": 1.0,
         "test_score": 1.0,
@@ -48,7 +48,7 @@
         "branch_ref": "research/silent-reward-contracts"
       },
       "created_at": 1785557180,
-      "updated_at": 1785558927
+      "updated_at": 1785566874
     },
     "n3": {
       "id": "n3",
@@ -81,6 +81,22 @@
       },
       "created_at": 1785557767,
       "updated_at": 1785558859
+    },
+    "n5": {
+      "id": "n5",
+      "parent": "n2",
+      "depth": 2,
+      "status": "executed",
+      "hypothesis": "Frozen ARCA semantic contracts detect at least two natural silent failures in a source-pinned sample of previously unseen agentic-RL systems without rule changes",
+      "insight": "External transfer is supported at evaluator-coercion and eval-replay boundaries, but the slime case is not evidence of core training-path prevalence",
+      "metadata": {
+        "dev_score": null,
+        "test_score": 1.0,
+        "result": "P5 inspected five frozen upstreams; direct AST probes reproduced two qualifying natural cases in slime and rLLM, three systems yielded bounded negative inspections, all seven cases matched frozen rules, and five clean controls produced zero false positives",
+        "branch_ref": "research/silent-reward-contracts"
+      },
+      "created_at": 1785566872,
+      "updated_at": 1785566874
     }
   }
 }

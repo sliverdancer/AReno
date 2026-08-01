@@ -1,0 +1,8 @@
+case_id,framework,workload,seed,natural_case,expected,predicted,exact_match
+P5-SLIME-F6-MISSING-EVAL-REWARD,slime,forge-eval-replay,0,True,ARCA-F6-STATUS,ARCA-F6-STATUS,True
+P5-SLIME-CLEAN-PRESENT-EVAL-REWARD,slime,forge-eval-replay,1,False,,,True
+P5-RLLM-F3-DICT-REWARD-DEFAULT,rllm,python-module-evaluator,0,True,ARCA-F3-INFORMATIVE,ARCA-F3-INFORMATIVE,True
+P5-RLLM-CLEAN-EXPLICIT-DICT-REWARD,rllm,python-module-evaluator,1,False,,,True
+P5-AGENTR1-CLEAN-STRUCTURED-ENV-ERROR,Agent-R1,webshop-agent-flow,0,False,,,True
+P5-RAGEN-CLEAN-STRUCTURED-TIMEOUT,RAGEN,lean-environment,0,False,,,True
+P5-AGENTLIGHTNING-CLEAN-MISSING-REWARD-PROVENANCE,Agent-Lightning,verl-daemon,0,False,,,True
