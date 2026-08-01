@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "protocol_id": "RIST-P0-v1.0",
+  "stage": "P0",
+  "stage_status": "PASS",
+  "decision": "PASS_NOVELTY_CONDITIONAL",
+  "search_date": "2026-08-01",
+  "screening": {
+    "raw_records": 522,
+    "deduplicated_titles": 458,
+    "ranked_candidates_retained": 150,
+    "arxiv_records": 7,
+    "openalex_records": 250,
+    "crossref_records": 250,
+    "semantic_scholar_records": 15,
+    "semantic_scholar_failed_queries": 4
+  },
+  "closest_threats": [
+    "TopoCurate",
+    "RC-GRPO",
+    "Advantage Collapse in GRPO / AVSPO",
+    "Multi-Turn RL with Iterative Reward Calibration",
+    "Retrieval, Reward, and Training Protocols"
+  ],
+  "surviving_claim": "A prospective causal benchmark of how conditional reward resolution modulates all-versus-last and full-call-versus-name-only action supervision in multi-turn tool-agent training.",
+  "claim_boundary": "Reward collapse, task difficulty selection, turn-level credit, action-token emphasis, and name/argument decomposition are occupied adjacent contributions. Static masking is not a novel method.",
+  "main_conference_hook": {
+    "decision": "STAY_DIAGNOSTIC_OPEN_P1_CPU_FREEZE",
+    "upgraded": false,
+    "reason": "Novelty is conditional and fragile; no training estimand has been instantiated."
+  },
+  "next_action": "Build and test the frozen P1 research-only task generator without model or GPU execution."
+}
+

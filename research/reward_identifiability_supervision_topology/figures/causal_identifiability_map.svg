@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Reward identifiability and supervision topology causal map</title>
+  <desc id="desc">Task structure affects action diversity and reward resolution. Reward resolution determines whether group-relative advantages exist. Supervision topology determines where those advantages are applied. Both affect training outcomes.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333333"/>
+    </marker>
+    <style>
+      .box { stroke: #222; stroke-width: 2; rx: 14; ry: 14; }
+      .label { font: 22px sans-serif; fill: #111; text-anchor: middle; }
+      .small { font: 17px sans-serif; fill: #222; text-anchor: middle; }
+      .arrow { stroke: #333; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 9 7; }
+    </style>
+  </defs>
+  <rect width="1200" height="650" fill="#ffffff"/>
+  <text x="600" y="42" class="label" font-weight="bold">When is an action-span contrast identifiable?</text>
+
+  <rect x="45" y="115" width="260" height="190" class="box" fill="#56B4E9"/>
+  <text x="175" y="150" class="label" font-weight="bold">Task structure</text>
+  <text x="175" y="188" class="small">constraint slack</text>
+  <text x="175" y="218" class="small">distractors</text>
+  <text x="175" y="248" class="small">dependency depth</text>
+  <text x="175" y="278" class="small">argument entropy</text>
+
+  <rect x="395" y="90" width="295" height="125" class="box" fill="#E69F00"/>
+  <text x="542" y="132" class="label" font-weight="bold">Action diversity</text>
+  <text x="542" y="169" class="small">distinct calls and paths</text>
+  <text x="542" y="196" class="small">not sufficient by itself</text>
+
+  <rect x="395" y="260" width="295" height="135" class="box" fill="#F0E442"/>
+  <text x="542" y="302" class="label" font-weight="bold">Reward resolution</text>
+  <text x="542" y="339" class="small">H(R | task), mixed groups</text>
+  <text x="542" y="370" class="small">measured before training</text>
+
+  <rect x="785" y="250" width="355" height="145" class="box" fill="#009E73"/>
+  <text x="962" y="294" class="label" font-weight="bold">Gradient-bearing signal</text>
+  <text x="962" y="332" class="small">non-zero group advantages</text>
+  <text x="962" y="365" class="small">precision of treatment contrast</text>
+
+  <rect x="395" y="470" width="295" height="135" class="box" fill="#CC79A7"/>
+  <text x="542" y="512" class="label" font-weight="bold">Supervision topology</text>
+  <text x="542" y="549" class="small">all vs last actions</text>
+  <text x="542" y="580" class="small">full call vs name only</text>
+
+  <rect x="785" y="470" width="355" height="135" class="box" fill="#D55E00"/>
+  <text x="962" y="512" class="label" font-weight="bold" fill="#ffffff">Training outcomes</text>
+  <text x="962" y="549" class="small" fill="#ffffff">strict success and stability</text>
+  <text x="962" y="580" class="small" fill="#ffffff">sample efficiency</text>
+
+  <path d="M305 170 L395 150" class="arrow"/>
+  <path d="M305 245 L395 310" class="arrow"/>
+  <path d="M690 325 L785 325" class="arrow"/>
+  <path d="M690 540 L785 540" class="arrow"/>
+  <path d="M962 395 L962 470" class="arrow"/>
+  <path d="M690 150 C785 150 745 275 785 290" class="arrow dash"/>
+
+  <rect x="45" y="425" width="260" height="125" class="box" fill="#eeeeee" stroke-dasharray="8 6"/>
+  <text x="175" y="463" class="label" font-weight="bold">B3 terminal case</text>
+  <text x="175" y="500" class="small">many action paths</text>
+  <text x="175" y="530" class="small">zero within-task reward variation</text>
+  <path d="M305 485 C350 460 365 385 395 355" class="arrow dash"/>
+</svg>
+

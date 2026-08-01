@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "stage": "P0",
+  "decision": "STAY_DIAGNOSTIC_OPEN_P1_CPU_FREEZE",
+  "direct_substitute_found": false,
+  "closest_threat_readable": true,
+  "joint_interaction_gap_survives": true,
+  "static_mask_method_novel": false,
+  "reward_collapse_claim_novel": false,
+  "task_difficulty_claim_novel": false,
+  "factorial_training_complete": false,
+  "multi_environment_complete": false,
+  "multi_model_complete": false,
+  "multi_algorithm_complete": false,
+  "primary_effect_estimated": false,
+  "artifact_reproducible": true,
+  "go_main_track": false
+}

@@ -1,0 +1,34 @@
+{
+  "protocol": "RIST-P0-v1.0",
+  "queries": [
+    "multi-turn tool agent reward diversity credit assignment",
+    "tool calling advantage collapse reward variation GRPO",
+    "action span supervision all turn last turn tool agent",
+    "function name argument supervision tool calling",
+    "agent benchmark task difficulty reward resolution"
+  ],
+  "schema_version": 1,
+  "search_date": "2026-08-01",
+  "sources": {
+    "arxiv": {
+      "failed_queries": 0,
+      "path": "research/reward_identifiability_supervision_topology/stages/P0/raw/arxiv.json",
+      "successful_queries": 5
+    },
+    "crossref": {
+      "failed_queries": 0,
+      "path": "research/reward_identifiability_supervision_topology/stages/P0/raw/crossref.json",
+      "successful_queries": 5
+    },
+    "openalex": {
+      "failed_queries": 0,
+      "path": "research/reward_identifiability_supervision_topology/stages/P0/raw/openalex.json",
+      "successful_queries": 5
+    },
+    "semantic_scholar": {
+      "failed_queries": 4,
+      "path": "research/reward_identifiability_supervision_topology/stages/P0/raw/semantic_scholar.json",
+      "successful_queries": 1
+    }
+  }
+}
