@@ -863,6 +863,42 @@ def test_v2_1_p4_analyzer_detects_token_matched_sign_failure():
     assert result["main_track_eligible"] is False
 
 
+def test_v2_1_token_matching_covers_full_interval_and_rejects_narrow_overlap():
+    matcher = _load_module(
+        "rist_v2_1_token_matching_support",
+        V2_1 / "stages" / "P3_DESIGN" / "token_matching.py",
+    )
+    broad = {
+        arm: [
+            {"cumulative_trainable_tokens": 10.0, "strict_success": 0.1},
+            {"cumulative_trainable_tokens": 100.0, "strict_success": 0.5},
+        ]
+        for arm in ("AF", "LF", "AN", "LN")
+    }
+    result = matcher.match_curves(broad)
+    assert result["grid"] == [10.0, 32.5, 55.0, 77.5, 100.0]
+    assert result["minimum_common_support_fraction"] == 1.0
+    assert result["common_support_endpoint"] == {
+        arm: 0.5 for arm in ("AF", "LF", "AN", "LN")
+    }
+
+    narrow = {arm: [dict(point) for point in curve] for arm, curve in broad.items()}
+    narrow["AF"] = [
+        {"cumulative_trainable_tokens": 0.0, "strict_success": 0.1},
+        {"cumulative_trainable_tokens": 100.0, "strict_success": 0.5},
+    ]
+    narrow["LN"] = [
+        {"cumulative_trainable_tokens": 90.0, "strict_success": 0.1},
+        {"cumulative_trainable_tokens": 110.0, "strict_success": 0.5},
+    ]
+    try:
+        matcher.match_curves(narrow)
+    except ValueError as error:
+        assert "less than 50%" in str(error)
+    else:
+        raise AssertionError("narrow common support must not count as robustness")
+
+
 def test_v2_1_p4_analyzer_rejects_missing_run():
     analyzer = _load_module(
         "rist_v2_1_p4_analysis_missing",
@@ -1447,3 +1483,128 @@ def test_x2_1_archived_qualification_passes_without_restricted_access():
     assert result["inference_run"] is False
     assert result["training_run"] is False
     assert result["gpu_used"] is False
+
+
+def test_x3_tau3_dataset_uses_only_frozen_training_ids(tmp_path):
+    builder = _load_module(
+        "rist_x3_tau3_data_builder",
+        V2_1 / "stages" / "X3_TAU3" / "build_train_dataset.py",
+    )
+    partitions_path = V2_1 / "stages" / "X2_TAU3" / "PARTITIONS.json"
+    partitions = __import__("json").loads(partitions_path.read_text())
+    rows = builder.build_rows(partitions)
+    assert len(rows) == 22
+    assert {row["domain"] for row in rows} == {"airline"}
+    assert {row["id"] for row in rows} == {
+        value
+        for value in partitions["partitions"]["training"]
+        if value.startswith("airline:")
+    }
+    assert {row["id"] for row in rows}.isdisjoint(
+        partitions["partitions"]["development"]
+    )
+    manifest = builder.write_dataset(partitions_path, tmp_path / "data" / "train.jsonl")
+    assert manifest["count"] == 22
+    assert manifest["blocked_retail_count"] == 66
+    assert manifest["upstream_test_opened"] is False
+    assert manifest["task_content_copied"] is False
+    assert manifest["execution_authorized"] is False
+
+
+def test_x3_tau3_loader_and_reward_keep_samples_separate(tmp_path):
+    loader = _load_module(
+        "rist_x3_tau3_dataset_loader",
+        REPO_ROOT / "examples" / "agentic" / "rist_v2_1_tau3" / "dataset_loader.py",
+    )
+    reward = _load_module(
+        "rist_x3_tau3_reward",
+        REPO_ROOT / "examples" / "agentic" / "rist_v2_1_tau3" / "reward.py",
+    )
+    row = {
+        "id": "airline:0",
+        "split": "tau3_train",
+        "domain": "airline",
+        "task_id": "0",
+        "prompt": "p",
+        "tau3_tag": "v1.0.1",
+        "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+    }
+    train_path = tmp_path / "data" / "train.jsonl"
+    train_path.parent.mkdir()
+    train_path.write_text("unused")
+    loaded = loader.load_training_dataset(
+        str(train_path), default_loader=lambda _: [row]
+    )
+    assert loaded == [row]
+
+    class Record:
+        metadata = {"prompt_index": 0, "sample_index": 1}
+        source_record = {
+            **row,
+            reward.RUNTIME_KEY: {
+                "0": {
+                    "domain": "airline",
+                    "task_id": "0",
+                    "reward": 0.0,
+                    "evaluator": "tau2.EvaluationType.ALL",
+                },
+                "1": {
+                    "domain": "airline",
+                    "task_id": "0",
+                    "reward": 1.0,
+                    "terminated": True,
+                    "truncated": False,
+                    "runtime_evidence_sha256": "a" * 64,
+                    "evaluator": "tau2.EvaluationType.ALL",
+                },
+            },
+        }
+
+    assert reward.reward_fn(Record()) == 1.0
+
+
+def test_x3_tau3_policy_action_and_runtime_result_are_fail_closed():
+    runner = _load_module(
+        "rist_x3_tau3_runner",
+        REPO_ROOT / "examples" / "agentic" / "rist_v2_1_tau3" / "run_agent.py",
+    )
+
+    class Function:
+        name = "cancel_reservation"
+        arguments = '{"reservation_id":"4WQ150"}'
+
+    class Call:
+        id = "call-1"
+        type = "function"
+        function = Function()
+
+    class Message:
+        content = None
+        tool_calls = [Call()]
+
+    class Choice:
+        message = Message()
+
+    class Response:
+        choices = [Choice()]
+
+    action, assistant = runner.response_to_action(Response())
+    assert __import__("json").loads(action) == {
+        "name": "cancel_reservation",
+        "arguments": {"reservation_id": "4WQ150"},
+    }
+    assert assistant["tool_calls"][0]["id"] == "call-1"
+
+    class Item:
+        sample_index = 2
+        record = {}
+
+    item = Item()
+    runner.store_runtime_result(item, {"reward": 0.0})
+    assert item.record[runner.RUNTIME_KEY]["2"] == {"reward": 0.0}
+    try:
+        runner.store_runtime_result(item, {"reward": 1.0})
+    except ValueError as error:
+        assert "duplicate" in str(error)
+    else:
+        raise AssertionError("a sample runtime result may not be overwritten")

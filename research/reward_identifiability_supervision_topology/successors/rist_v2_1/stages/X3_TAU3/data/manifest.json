@@ -1,0 +1,16 @@
+{
+  "blocked_retail_count": 66,
+  "blocked_retail_reason": "domain-wide NL_ASSERTION confound",
+  "count": 22,
+  "domain_counts": {
+    "airline": 22,
+    "retail": 0
+  },
+  "execution_authorized": false,
+  "partition_sha256": "0ada02578c2d8ca378fc2db2f2013d2782826a635d67c2db034f46718aef4e26",
+  "protocol": "RIST-X3-TAU3-DATA-v1",
+  "runtime_loader_may_parse_unified_retired_source": true,
+  "task_content_copied": false,
+  "train_sha256": "1a3f762af0cff8a3920dd5c80204bf79e433e6442321699244ea24d5ba5815bf",
+  "upstream_test_opened": false
+}

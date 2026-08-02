@@ -35,6 +35,14 @@ reports normalized AUC and its same paired interaction. A token curve with fewer
 than two valid observations or no common support is not estimable and blocks
 the main route.
 
+The common grid includes both boundaries and the 25/50/75 percent interior
+points. The common interval must cover at least 50 percent of every arm's
+observed token range; an arbitrarily narrow overlap is not robustness evidence.
+Both normalized-AUC and common-support-endpoint interactions must preserve the
+step-matched interaction sign. Catastrophic arms contribute strict success zero
+throughout their available token curve rather than their observed development
+scores.
+
 Resolution-band endpoints are reported separately for mechanism diagnosis.
 Their direction may be learned in the three-seed pilot, but any confirmatory
 moderation direction and threshold must be frozen before additional seeds.
@@ -48,7 +56,8 @@ family/algorithm blocks:
 2. absolute mean step interaction at least 0.10;
 3. deterministic seed-bootstrap 95 percent interval excluding zero;
 4. the same nonzero sign across all four blocks;
-5. token-AUC interaction with the same sign and no block sign reversal;
+5. token-AUC and common-support-endpoint interactions with the same sign and no
+   block sign reversal;
 6. catastrophic-run and zero-advantage-run rates each at most 0.10;
 7. complete raw evidence and no post-outcome exclusions.
 

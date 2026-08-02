@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-GRID_FRACTIONS = (0.25, 0.50, 0.75, 1.00)
+GRID_FRACTIONS = (0.00, 0.25, 0.50, 0.75, 1.00)
+MIN_COMMON_SUPPORT_FRACTION = 0.50
 
 
 def _validate_curve(curve: list[dict[str, float]]) -> None:
@@ -53,6 +54,21 @@ def match_curves(
     """Interpolate every arm on the outcome-blind common token grid."""
 
     grid = token_grid(curves)
+    common_width = grid[-1] - grid[0]
+    support_fraction_by_arm = {
+        arm: common_width
+        / (
+            float(curve[-1]["cumulative_trainable_tokens"])
+            - float(curve[0]["cumulative_trainable_tokens"])
+        )
+        for arm, curve in curves.items()
+    }
+    minimum_support_fraction = min(support_fraction_by_arm.values())
+    if minimum_support_fraction < MIN_COMMON_SUPPORT_FRACTION:
+        raise ValueError(
+            "common cumulative-token support covers less than "
+            f"{MIN_COMMON_SUPPORT_FRACTION:.0%} of at least one arm"
+        )
     matched = {
         arm: [_interpolate(curve, token_value, metric) for token_value in grid]
         for arm, curve in curves.items()
@@ -71,5 +87,11 @@ def match_curves(
         "grid": grid,
         "matched": matched,
         "normalized_auc": auc,
+        "common_support_endpoint": {
+            arm: values[-1] for arm, values in matched.items()
+        },
+        "support_fraction_by_arm": support_fraction_by_arm,
+        "minimum_common_support_fraction": minimum_support_fraction,
+        "required_common_support_fraction": MIN_COMMON_SUPPORT_FRACTION,
         "grid_uses_outcomes": False,
     }

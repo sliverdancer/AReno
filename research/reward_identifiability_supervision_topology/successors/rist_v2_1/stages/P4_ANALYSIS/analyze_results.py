@@ -193,7 +193,9 @@ def analyze_bundle(
             arm: [
                 {
                     "cumulative_trainable_tokens": float(point["cumulative_trainable_tokens"]),
-                    "strict_success": float(point["strict_success"]),
+                    "strict_success": (
+                        0.0 if row["catastrophic"] else float(point["strict_success"])
+                    ),
                 }
                 for point in row["curve"]
             ]
@@ -202,9 +204,13 @@ def analyze_bundle(
         try:
             token_result = matching.match_curves(curves)
             token_contrasts = _contrasts(token_result["normalized_auc"])
+            token_endpoint_contrasts = _contrasts(
+                token_result["common_support_endpoint"]
+            )
         except ValueError as exc:
             token_result = None
             token_contrasts = None
+            token_endpoint_contrasts = None
             token_not_estimable.append(
                 {"family": family, "algorithm": algorithm, "seed": seed, "reason": str(exc)}
             )
@@ -215,6 +221,7 @@ def analyze_bundle(
                 "seed": seed,
                 "step": _contrasts(endpoints),
                 "token_auc": token_contrasts,
+                "token_endpoint": token_endpoint_contrasts,
                 "resolution": resolution,
                 "catastrophic_arms": sorted(
                     arm for arm, row in arms.items() if row["catastrophic"]
@@ -223,6 +230,11 @@ def analyze_bundle(
                     arm for arm, row in arms.items() if row["nonzero_advantage_groups"] == 0
                 ),
                 "token_grid": None if token_result is None else token_result["grid"],
+                "minimum_common_support_fraction": (
+                    None
+                    if token_result is None
+                    else token_result["minimum_common_support_fraction"]
+                ),
             }
         )
 
@@ -240,10 +252,23 @@ def analyze_bundle(
                 for row in rows
                 if row["token_auc"] is not None
             ]
+            token_endpoint_values = [
+                row["token_endpoint"]["interaction"]
+                for row in rows
+                if row["token_endpoint"] is not None
+            ]
             step_summary = _bootstrap_mean(step_values, f"{family}:{algorithm}:step")
             token_summary = (
                 _bootstrap_mean(token_values, f"{family}:{algorithm}:token")
                 if len(token_values) == len(rows)
+                else None
+            )
+            token_endpoint_summary = (
+                _bootstrap_mean(
+                    token_endpoint_values,
+                    f"{family}:{algorithm}:token-endpoint",
+                )
+                if len(token_endpoint_values) == len(rows)
                 else None
             )
             resolution_summary = {
@@ -268,6 +293,11 @@ def analyze_bundle(
             )
             step_sign = _sign(float(step_summary["mean"]))
             token_sign = 0 if token_summary is None else _sign(float(token_summary["mean"]))
+            token_endpoint_sign = (
+                0
+                if token_endpoint_summary is None
+                else _sign(float(token_endpoint_summary["mean"]))
+            )
             block_rows.append(
                 {
                     "family": family,
@@ -275,12 +305,18 @@ def analyze_bundle(
                     "seed_count": len(rows),
                     "step_interaction": step_summary,
                     "token_auc_interaction": token_summary,
+                    "token_endpoint_interaction": token_endpoint_summary,
                     "resolution_interaction": resolution_summary,
                     "resolution_moderation_high_minus_low": resolution_moderation,
                     "required_paired_seeds": required_seeds,
                     "effect_threshold_pass": abs(float(step_summary["mean"])) >= MIN_INTERACTION,
                     "step_ci_excludes_zero": step_summary["ci95"][0] > 0.0 or step_summary["ci95"][1] < 0.0,
-                    "token_sign_consistent": token_summary is not None and step_sign != 0 and step_sign == token_sign,
+                    "token_sign_consistent": (
+                        token_summary is not None
+                        and token_endpoint_summary is not None
+                        and step_sign != 0
+                        and step_sign == token_sign == token_endpoint_sign
+                    ),
                     "power_pass": len(rows) >= required_seeds,
                 }
             )
