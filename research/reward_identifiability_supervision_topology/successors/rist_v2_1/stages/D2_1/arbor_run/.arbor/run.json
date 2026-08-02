@@ -1,0 +1,15 @@
+{
+  "objective": "Raise the successor CPU split-local structural evaluator from the archived M0 score 7/8 to 8/8 without changing frozen D2, generator semantics, data, thresholds, or accessing heldout",
+  "metric_direction": "max",
+  "dev_eval": "python3 research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/htr_eval.py --phase dev --candidate research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/candidates/h1_bytes.py --output research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/arbor_run/dev_result.json",
+  "test_eval": "python3 research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/htr_eval.py --phase test --candidate research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/candidates/h1_bytes.py --one-shot-ledger /tmp/rist-v2-1-qualification-consumed.json --output research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/D2_1/arbor_run/test_result.json",
+  "material": "49b09ec03caf1daf4714630757421ad59c89bb3f",
+  "branching": 2,
+  "max_depth": 1,
+  "budget_cycles": 2,
+  "cycles_used": 2,
+  "best_node": "n1",
+  "best_test_score": 8.0,
+  "best_branch_ref": "arbor/rist-v2-1-h1@fdb26a5",
+  "created_at": 1785647068
+}

@@ -1,0 +1,54 @@
+{
+  "_counter": 2,
+  "root": "n0",
+  "nodes": {
+    "n0": {
+      "id": "n0",
+      "parent": null,
+      "depth": 0,
+      "status": "root",
+      "hypothesis": "Raise the successor CPU split-local structural evaluator from the archived M0 score 7/8 to 8/8 without changing frozen D2, generator semantics, data, thresholds, or accessing heldout",
+      "insight": "[from n1] Split-local exact bytes are the transferable reproducibility contract; language-runtime container types are not scientific evidence",
+      "metadata": {
+        "dev_score": null,
+        "test_score": null,
+        "result": "",
+        "branch_ref": null
+      },
+      "created_at": 1785647068,
+      "updated_at": 1785648017
+    },
+    "n1": {
+      "id": "n1",
+      "parent": "n0",
+      "depth": 1,
+      "status": "merged",
+      "hypothesis": "H1: Generated JSONL bytes are the reproducibility source of truth; Python tuple/list representation equality must not override equal bytes",
+      "insight": "Byte equality is sufficient for the reproducibility estimand; Python tuple/list representation metadata must not veto identical JSONL bytes",
+      "metadata": {
+        "dev_score": 8.0,
+        "test_score": 8.0,
+        "result": "H1 passed all eight calibration gates without test, qualification, or heldout access",
+        "branch_ref": "arbor/rist-v2-1-h1@fdb26a5:/tmp/areno-rist-v2-h1"
+      },
+      "created_at": 1785647069,
+      "updated_at": 1785648263
+    },
+    "n2": {
+      "id": "n2",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "H2: JSON-domain normalization of metadata fragments plus exact file-byte equality removes representation drift while retaining redundant semantic validation",
+      "insight": "JSON-domain normalization can retain semantic redundancy, but it adds no dev-score benefit over direct byte truth",
+      "metadata": {
+        "dev_score": 8.0,
+        "test_score": null,
+        "result": "H2 passed all eight calibration gates using recursive JSON-domain normalization plus exact bytes",
+        "branch_ref": "arbor/rist-v2-1-h2@f403847:/tmp/areno-rist-v2-h2"
+      },
+      "created_at": 1785647069,
+      "updated_at": 1785648017
+    }
+  }
+}

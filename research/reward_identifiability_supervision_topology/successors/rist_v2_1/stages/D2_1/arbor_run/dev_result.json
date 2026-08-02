@@ -1,0 +1,25 @@
+{
+  "candidate_sha256": "3ddc7fcbabc4eb7d28284dde47e4a6fb3f7267705f384fa3e3918a12f963c302",
+  "gates": {
+    "balanced_eight_cells": true,
+    "byte_identical_regeneration": true,
+    "cpu_only_no_model_or_training": true,
+    "difficulty_dimensions_vary": true,
+    "heldout_inaccessible": true,
+    "no_model_free_resolution_labels": true,
+    "unique_four_turn_oracles": true,
+    "unique_within_split_signatures": true
+  },
+  "gpu_used": false,
+  "heldout_data_opened": false,
+  "input_sha256": "5ab3a7245ab2f3cda8eba1f641927bdb4bb80ed2ea18db597099d8538c22c8fa",
+  "max_score": 8,
+  "model_accessed": false,
+  "passed": true,
+  "phase": "dev",
+  "protocol": "RIST-D2.1-v2.1-PREFREEZE",
+  "schema_version": 1,
+  "score": 8,
+  "split": "calibration",
+  "training_performed": false
+}

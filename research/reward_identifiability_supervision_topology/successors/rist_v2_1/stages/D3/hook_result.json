@@ -1,0 +1,6 @@
+{
+  "decision": "DO_NOT_UPGRADE_TO_MAIN_CONFERENCE_EXECUTION",
+  "next_gate": "PINNED_TAU3_BFCL_CPU_DOWNLOAD_AND_GOLD_REPLAY_AUTHORIZATION",
+  "reason": "The CPU instrument is reproducible, but no model, training-seed, token-matched, cross-family, cross-algorithm, or real-environment outcome exists.",
+  "stage": "D3"
+}

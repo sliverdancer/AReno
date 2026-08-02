@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v2.1",
+  "phase": "D2_1_CPU_EVALUATOR",
+  "source_phase_decision": "PASS_D2_1_CPU_POOL_TO_DOWNLOAD_AUDIT",
+  "decision": "STAY_DIAGNOSTIC_OPEN_DOWNLOAD_AUDIT",
+  "main_conference_route_open": false,
+  "upgraded": false,
+  "reason": "The split-local evaluator transferred from calibration to one-shot qualification, but no model, reward-resolution, training, algorithm, or real-environment result exists.",
+  "next_authorization": "Pinned Tau3 and BFCL source download plus isolated CPU environment qualification; GPU and training remain closed."
+}

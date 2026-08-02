@@ -1,0 +1,21 @@
+{
+  "decision": "PASS_D3_CPU_INSTRUMENT_TO_DOWNLOAD_AUTHORIZATION_BOUNDARY",
+  "gpu_used": false,
+  "heldout_data_opened": false,
+  "model_accessed": false,
+  "scientific_evidence_generated": false,
+  "split": {
+    "count": 32,
+    "structural_cells": 8,
+    "tasks_per_cell": 4,
+    "train_jsonl_sha256": "940b094d79d1f62433084daa8e1e8202d5aa2b02123d97070f13842c3fcde796"
+  },
+  "stage": "D3",
+  "status": "PASS",
+  "tests": {
+    "cpu_contract_tests_passed": 9,
+    "pytest_available": false,
+    "runner": "direct runpy harness"
+  },
+  "training_performed": false
+}
