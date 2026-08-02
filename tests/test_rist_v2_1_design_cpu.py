@@ -264,6 +264,44 @@ def test_v2_1_tokenizer_gate_distinguishes_argument_mask_from_name_only():
     assert result["name_only_all"] is True
 
 
+def test_v2_1_tokenizer_capture_builds_32_local_canonical_cases():
+    capture = _load_module(
+        "rist_v2_1_mask_capture",
+        V2_1 / "stages" / "T0" / "capture_mask_fixture.py",
+    )
+    evaluator = _load_module(
+        "rist_v2_1_mask_capture_eval",
+        V2_1 / "stages" / "T0" / "evaluate_mask_fixture.py",
+    )
+
+    class CharacterTokenizer:
+        special_tokens_map = {}
+
+        def get_vocab(self):
+            return {chr(index): index for index in range(128)}
+
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+        def decode(self, token_ids):
+            return "".join(chr(token_id) for token_id in token_ids)
+
+    def argument_range(tokenizer, token_ids):
+        text = tokenizer.decode(token_ids)
+        start = text.index('"arguments":') + len('"arguments":')
+        return start, len(text) - 1
+
+    fixture = capture.build_fixture(CharacterTokenizer(), "local/mock", argument_range)
+    result = evaluator.evaluate_fixture(fixture)
+    assert fixture["case_count"] == 32
+    assert fixture["local_files_only"] is True
+    assert result["argument_mask_all"] is True
+    assert result["name_only_all"] is False
+
+
 def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
     validator = _load_module(
         "rist_v2_1_capacity",

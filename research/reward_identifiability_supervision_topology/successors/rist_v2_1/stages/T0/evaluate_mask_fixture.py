@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-ROLES = ("name_indices", "argument_indices", "other_indices")
+ROLES = ("name_indices", "argument_indices", "other_indices", "shared_indices")
 
 
 def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
@@ -20,7 +20,9 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     if any(type(bit) is not bool for bit in mask):
         raise ValueError("loss_mask values must be booleans")
 
-    role_sets = {role: {int(index) for index in case[role]} for role in ROLES}
+    role_sets = {
+        role: {int(index) for index in case.get(role, [])} for role in ROLES
+    }
     universe = set(range(len(token_ids)))
     if any(not indices <= universe for indices in role_sets.values()):
         raise ValueError("role index lies outside token_ids")
@@ -39,15 +41,17 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     name = role_sets["name_indices"]
     arguments = role_sets["argument_indices"]
     other = role_sets["other_indices"]
+    shared = role_sets["shared_indices"]
     return {
         "case_id": str(case["case_id"]),
         "full_call_exact": enabled == universe,
-        "argument_mask_exact": name <= enabled and not (arguments & enabled),
-        "name_only_exact": enabled == name and not ((arguments | other) & enabled),
+        "argument_mask_exact": not shared and name <= enabled and not (arguments & enabled),
+        "name_only_exact": not shared and enabled == name and not ((arguments | other) & enabled),
         "enabled_indices": sorted(enabled),
         "name_indices": sorted(name),
         "argument_indices": sorted(arguments),
         "other_indices": sorted(other),
+        "shared_indices": sorted(shared),
     }
 
 

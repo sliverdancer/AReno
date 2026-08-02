@@ -16,10 +16,11 @@ IDs. Each case records a disjoint partition of response-token indices into:
 - `name_indices`: tokens attributable only to the tool name;
 - `argument_indices`: tokens touching the argument value;
 - `other_indices`: syntax, keys, whitespace, wrappers, or special tokens.
+- `shared_indices`: tokenizer tokens spanning a semantic boundary.
 
-It also records the actual loss mask emitted by the AReno training path. Cases
-with a token that jointly contains name and syntax are not exactly separable and
-fail the tool-name-only gate rather than being silently approximated.
+It also records the actual loss mask emitted by the AReno training path. Any
+non-empty `shared_indices` fails the tool-name-only gate rather than being
+silently approximated.
 
 ## Gates
 
