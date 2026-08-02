@@ -11,7 +11,7 @@ has not started.
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | capacity gate frozen; Qwen serving only, Gemma/24 GB rejected |
-| Exact content treatment | full call versus tool-name-only | exact public treatment implemented; checkpoint-tokenizer fixture pending |
+| Exact content treatment | full call versus tool-name-only | exact public treatment and runtime-token evaluator implemented; two-family runtime fixtures pending |
 | Token robustness | step-matched plus common-token endpoint/AUC | seed-level analyzer, raw-file audit, and blocked 48-run templates frozen |
 | Real training environment | Tau3 text airline, preferably retail replication | v1.0.1 isolated; deterministic airline/retail environment canary passed; no training |
 | Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 code isolated with benchmark data excluded and sealed |

@@ -1,0 +1,31 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0_CPU_RUNTIME_FIXTURE_INSTRUMENT",
+  "instrument_commit": "382c80b",
+  "decision": "GO_TOKENIZER_ONLY_PREFLIGHT",
+  "main_track_upgrade": false,
+  "reason": "The production-mask and runtime-token qualification instruments pass CPU tests, but no real tokenizer or model outcome exists.",
+  "validated": [
+    "production name-only mask is the required implementation",
+    "canonical tokenizer calls cannot qualify the scientific treatment",
+    "runtime qualification requires 32 actual response-token rows",
+    "runtime rows are balanced at eight cases per each of four turns",
+    "tokenizer-only snapshots reject model weights before content loading"
+  ],
+  "still_missing": [
+    "Qwen3 tokenizer-only canonical preflight",
+    "Gemma4 tokenizer-only canonical preflight",
+    "two-family runtime response-token fixtures",
+    "C0 mixed-reward calibration",
+    "E1 model and GPU capacity qualification",
+    "two-algorithm training outcomes",
+    "token-matched robustness outcomes",
+    "Tau3 real-environment training outcomes",
+    "sealed BFCL external evaluation"
+  ],
+  "model_or_tokenizer_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "bfcl_content_opened": false
+}

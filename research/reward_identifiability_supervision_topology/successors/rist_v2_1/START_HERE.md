@@ -32,8 +32,10 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 8. X1 acquired and isolated Tau3 `v1.0.1` and BFCL `v1.3` at exact commits;
    BFCL benchmark data was excluded and remains sealed.
 9. The public `--tool-call-supervision {full,name_only}` treatment is
-   implemented with a strict offset-mapped, fail-closed mask. T0 still requires
-   checkpoint-tokenizer fixtures before scientific execution.
+   implemented with a strict offset-mapped, fail-closed mask. T0 now freezes a
+   tokenizer-only canonical preflight and a separate qualifying runtime fixture
+   requiring actual response token IDs, balanced eight-per-turn across four
+   turns. Neither has accessed a tokenizer yet.
 10. E1 freezes per-checkpoint serving plus GSPO/GRPO one-step capacity gates.
 11. C0 freezes direct mixed-group resolution calibration and cross-family
     whole-cell selection before training.
@@ -49,8 +51,9 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 
 ## Current boundary
 
-The CPU-only reconstruction requested so far is complete. The next gate is
-checkpoint-specific tokenizer/model access for T0 fixtures and C0 calibration.
-It is not yet authorization to serve, infer, train, use GPU, or open sealed BFCL
-content. GPU capacity canaries, the 48-run pilot, and sealed BFCL evaluation
-remain separate later gates.
+The CPU-only reconstruction requested so far is complete. The next independent
+gate is T0a tokenizer-only access: resolve immutable revisions and download only
+allowlisted tokenizer/config files for Qwen3 and Gemma4. It does not authorize
+model weights, serving, inference, training, GPU use, C0 calibration, or sealed
+BFCL content. T0b runtime fixtures, GPU capacity canaries, the 48-run pilot, and
+sealed BFCL evaluation remain separate later gates.
