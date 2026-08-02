@@ -1,0 +1,66 @@
+{
+  "schema_version": "rist-x1-acquisition-v1",
+  "acquired_at_utc": "2026-08-02T11:45:00Z",
+  "python_version": "3.12.3",
+  "isolated_environments": true,
+  "areno_dependencies_modified": false,
+  "model_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "tau3_upstream_test_retired": true,
+  "test_tooling": {
+    "purpose": "X2.1 upstream tool-test execution only",
+    "package_lock": "locks/tau3-test-tooling.freeze.txt",
+    "package_lock_sha256": "7c5641905a2aa57d2bf241c8b4cc99f7cabd020ca5dedfff518f3ae231abfb90",
+    "pip_report_sha256": "1bcd7fbd6f9b3ed314ca9949ee1d33ebbbdfcfab8af1739852ef382eef2b1885",
+    "pip_report_size_bytes": 18255
+  },
+  "sources": {
+    "tau3": {
+      "tag": "v1.0.1",
+      "tag_object": "b711c1ead46f55111bf765cf44d5da8bacc2d28c",
+      "commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+      "tree_sha1": "4837da1c2b310152f63d3d7987f4325183ca6f7c",
+      "license": "MIT",
+      "license_sha256": "e67c5aa0074dfcaefd3c3a1aedb94cb539234aecd15d5a972574e3200e6252fe",
+      "installed_version": "1.0.1",
+      "pip_check_pass": true,
+      "import_pass": true,
+      "package_lock": "locks/tau3-py312.freeze.txt",
+      "package_lock_sha256": "1707e5dbc8fe8707d23e4c63914cd0a0b19f117b4be068029cc403892da008db",
+      "pip_report_sha256": "2194cc7c3a87aa2a0953cba735d62574078c0a19fa313fc2add292ff039d5e58",
+      "pip_report_size_bytes": 1143277,
+      "pip_report_package_count": 73,
+      "allowed_roles": [
+        "development",
+        "real_environment_training"
+      ]
+    },
+    "bfcl": {
+      "tag": "v1.3",
+      "tag_object": "ea13468e4423454d0c213704fb87cf7cb3990433",
+      "commit": "ea13468e4423454d0c213704fb87cf7cb3990433",
+      "tree_sha1": "b34aa53a73491f42dc69b8b18c92448d7c311f50",
+      "license": "Apache-2.0",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "installed_version": "0.0.0.dev0",
+      "pip_check_pass": true,
+      "import_pass": true,
+      "sparse_checkout_sha256": "ae44e6b48d8834bc1292d3a94f7a703b2336f05023fe30c000d7ec0bd48c3b28",
+      "benchmark_data_materialized": false,
+      "benchmark_content_opened": false,
+      "package_lock": "locks/bfcl-py312-no-data.freeze.txt",
+      "package_lock_sha256": "4a9f0fed0e55e07e56c65cc75e8d3592d76dee583d37c6088fcdcfd1a440b0de",
+      "pip_report_sha256": "35483786f6e86b13a30e6e93718c27b1d39451ece64e1f6095978152e5d17391",
+      "pip_report_size_bytes": 1655089,
+      "pip_report_package_count": 104,
+      "allowed_roles": [
+        "sealed_external_evaluation"
+      ]
+    }
+  },
+  "runtime_network_call_audit_complete": false,
+  "tau3_environment_qualification_complete": false,
+  "status": "PASS_SOURCE_INSTALL_TO_TAU3_QUALIFICATION"
+}

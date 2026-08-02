@@ -478,6 +478,30 @@ def test_v2_1_tau3_replay_gate_rejects_split_overlap():
         raise AssertionError("overlapping real-environment IDs must be rejected")
 
 
+def test_v2_1_tau3_partition_selection_is_structural_and_disjoint():
+    builder = _load_module(
+        "rist_v2_1_tau3_partitions",
+        V2_1 / "stages" / "X2_TAU3" / "build_partitions.py",
+    )
+    split_ids = {
+        "train": [str(index) for index in range(12)],
+        "test": ["20", "21"],
+        "base": [str(index) for index in range(12)] + ["20", "21"],
+    }
+    action_counts = {
+        str(index): 0 if index in {0, 3} else index + 1 for index in range(12)
+    }
+    result = builder.select_partitions(
+        split_ids,
+        action_counts,
+        development_count=4,
+    )
+    assert result["development"] == ["1", "2", "4", "5"]
+    assert set(result["development"]).isdisjoint(result["training"])
+    assert result["confirmatory"] == []
+    assert result["selection_uses_model_outcomes"] is False
+
+
 def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
     validator = _load_module(
         "rist_v2_1_capacity",
@@ -1252,3 +1276,39 @@ def test_v2_1_c0_collector_persists_complete_zero_reward_rows(tmp_path):
     assert result["trajectory_count"] == 2
     assert all(row["strict_success"] == 0 for row in result["trajectories"])
     assert all(row["split"] == "calibration" for row in result["trajectories"])
+
+
+def test_x2_1_tau3_canary_requires_state_mutation_and_stable_semantics():
+    module = _load_module(
+        "rist_x2_1_tau3_qualification",
+        V2_1 / "stages" / "X2_1_TAU3" / "run_environment_qualification.py",
+    )
+
+    class Response:
+        error = False
+
+        def model_dump(self, **_kwargs):
+            return {"content": "ok", "error": False, "timestamp": "excluded"}
+
+    class Call:
+        name = "mutate"
+        arguments = {"value": 1}
+
+    class Environment:
+        state = 0
+
+        def get_db_hash(self):
+            return str(self.state)
+
+        def get_user_db_hash(self):
+            return None
+
+        def get_response(self, _call):
+            self.state = 1
+            return Response()
+
+    first = module._canary_transcript("mock:mutate", Environment, Call)
+    second = module._canary_transcript("mock:mutate", Environment, Call)
+    assert first == second
+    assert first[1]["state_hash_before"] != first[1]["state_hash_after"]
+    assert "timestamp" not in first[1]["raw_tool_result"]

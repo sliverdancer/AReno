@@ -1,0 +1,22 @@
+{
+  "protocol": "RIST-X2-TAU3-GOLD-REPLAY-v1",
+  "decision": "KILL_X2_GOLD_ACTION_INSTRUMENT",
+  "terminal": true,
+  "execution_count": 1,
+  "failure_phase": "replay_a_retail_reference_actions",
+  "error_type": "ValueError",
+  "error_message": "Product not found",
+  "qualification_result_created": false,
+  "partial_raw_log_persisted": false,
+  "failure_scope": "instrument_alignment",
+  "tau3_nondeterminism_claimed": false,
+  "model_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "bfcl_content_opened": false,
+  "protocol_sha256_before_terminal_note": "960a1e9f1dd82b26642f2b9284cace485c93e3dd89b7bc627e33ad726b18be34",
+  "collector_sha256": "8e0d43917d891c765d9ca20ebcd9884c255c0b5b3b772f0000455fbffeca59b7",
+  "partitions_sha256": "0ada02578c2d8ca378fc2db2f2013d2782826a635d67c2db034f46718aef4e26",
+  "successor_allowed": "new_version_only_with_upstream_aligned_environment_canary"
+}
