@@ -63,3 +63,9 @@ allowlisted tokenizer/config files for Qwen3 and Gemma4. It does not authorize
 model weights, serving, inference, training, GPU use, C0 calibration, or sealed
 BFCL content. T0b runtime fixtures, GPU capacity canaries, the 48-run pilot, and
 sealed BFCL evaluation remain separate later gates.
+
+The previously used 24 GB 4090D is not an admissible GPU for the frozen
+two-family matrix: Gemma4 E2B already failed its first trajectory with CUDA OOM.
+The next authorization needed is still tokenizer-only, not GPU. After T0a/T0b,
+E1 requires either a fresh Gemma4 canary on a different larger-memory GPU or a
+new versioned design for a checkpoint-qualified non-Qwen substitute.

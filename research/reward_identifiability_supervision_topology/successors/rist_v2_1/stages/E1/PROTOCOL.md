@@ -27,3 +27,17 @@ The archived RIST-v1.1 run supports Qwen3-0.6B serving on a 24 GB 4090D. It does
 not qualify training. Gemma4 E2B returned HTTP 500/CUDA OOM on its first
 trajectory and therefore rejects that checkpoint/GPU pairing. This is an
 infrastructure result, not model-quality evidence.
+
+The current two-family matrix therefore cannot execute on that 24 GB pairing.
+There are only two admissible routes:
+
+1. retain Gemma4 E2B and pass a fresh E1 canary on a different, larger-memory
+   GPU; the protocol does not infer a sufficient memory size from the OOM; or
+2. open a new versioned design and qualify a smaller non-Qwen checkpoint from
+   tokenizer snapshot through actual runtime tokens, parser behavior, serving,
+   and both one-step training canaries.
+
+AReno's Llama adapter and generic JSON parser establish implementation
+availability only. With no frozen checkpoint-specific tokenizer/template or
+runtime fixture, they are not evidence that a Llama-family substitute is
+scientifically qualified. A silent checkpoint substitution is forbidden.

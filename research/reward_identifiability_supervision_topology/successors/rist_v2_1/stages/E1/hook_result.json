@@ -1,0 +1,23 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "E1_CPU_FEASIBILITY_AUDIT",
+  "decision": "BLOCK_CURRENT_24GB_TWO_FAMILY_MATRIX",
+  "main_track_upgrade": false,
+  "reason": "Gemma4 E2B is already rejected on the 24 GB pairing, while no smaller non-Qwen checkpoint has checkpoint-specific tokenizer, parser, runtime-token, serving, or training qualification.",
+  "known_evidence": {
+    "qwen3_0_6b_24gb_serving_observed": true,
+    "qwen3_0_6b_24gb_training_qualified": false,
+    "gemma4_e2b_24gb_rejected": true,
+    "gemma4_e2b_24gb_failure": "CUDA_OOM_ON_FIRST_TRAJECTORY"
+  },
+  "admissible_next_routes": [
+    "retain Gemma4 E2B and run a fresh E1 canary on a different larger-memory GPU after tokenizer/runtime qualification",
+    "open a new versioned design and qualify a smaller non-Qwen checkpoint from tokenizer through both algorithm canaries"
+  ],
+  "next_gate": "T0A_TOKENIZER_ONLY_AUTHORIZATION",
+  "model_or_tokenizer_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "bfcl_content_opened": false
+}

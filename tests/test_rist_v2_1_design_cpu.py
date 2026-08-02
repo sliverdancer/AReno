@@ -718,6 +718,7 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert manifest["resolution_filtered_dataset_ready"] is False
     assert manifest["train_sha256"] is None
     assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
+    assert "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED" in manifest["blocked_by"]
     assert "T0_EXACT_NAME_ONLY_TREATMENT" not in manifest["blocked_by"]
     assert "X1_EXTERNAL_ENVIRONMENT_QUALIFICATION" not in manifest["blocked_by"]
     assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 0
@@ -738,6 +739,10 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
         str(REPO_ROOT) not in " ".join(run["command"])
         for run in manifest["runs"]
     )
+    capacity = manifest["capacity_constraints"]
+    assert capacity["qwen3_0_6b_on_24gb"]["training_qualified"] is False
+    assert capacity["gemma4_e2b_on_24gb"]["known_rejected"] is True
+    assert not Path(capacity["gemma4_e2b_on_24gb"]["evidence"]).is_absolute()
 
 
 def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():

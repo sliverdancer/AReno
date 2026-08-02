@@ -19,6 +19,10 @@ TRAIN_PATH = (
 )
 DEFAULT_MAX_STEPS = 100
 DEFAULT_SAVE_INTERVAL = 25
+GEMMA_24GB_REJECTION_EVIDENCE = (
+    "research/reward_identifiability_supervision_topology/successors/rist_v1_1/"
+    "stages/P2_1/gpu_run_20260802/evidence/TERMINAL_REPORT.md"
+)
 
 
 def _load_design():
@@ -156,10 +160,28 @@ def build_manifest(
         "run_count": len(runs),
         "execution_authorized": False,
         "commands_are_templates_only": True,
+        "capacity_constraints": {
+            "qwen3_0_6b_on_24gb": {
+                "serving_observed": True,
+                "training_qualified": False,
+            },
+            "gemma4_e2b_on_24gb": {
+                "serving_qualified": False,
+                "known_rejected": True,
+                "reason": "CUDA_OOM_ON_FIRST_TRAJECTORY",
+                "evidence": GEMMA_24GB_REJECTION_EVIDENCE,
+            },
+            "two_family_execution_condition": (
+                "fresh E1 capacity pass for Gemma4 on a different GPU, or a "
+                "new versioned design with a tokenizer- and parser-qualified "
+                "non-Qwen checkpoint"
+            ),
+        },
         "blocked_by": [
             "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES",
             "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS",
             "E1_PER_CHECKPOINT_TRAINING_CAPACITY",
+            "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED",
             "EXPLICIT_GPU_TRAINING_AUTHORIZATION",
         ],
         "pilot_scope": "variance_and_power_only_three_seeds",
