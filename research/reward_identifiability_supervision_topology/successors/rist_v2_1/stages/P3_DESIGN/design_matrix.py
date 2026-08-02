@@ -17,10 +17,26 @@ FAMILIES = {
 }
 ALGORITHMS = ("gspo", "grpo")
 ARMS = {
-    "AF": {"trainable_turns": "all_assistant", "mask_tool_call_args": False},
-    "LF": {"trainable_turns": "last_assistant", "mask_tool_call_args": False},
-    "AN": {"trainable_turns": "all_assistant", "mask_tool_call_args": True},
-    "LN": {"trainable_turns": "last_assistant", "mask_tool_call_args": True},
+    "AF": {
+        "trainable_turns": "all_assistant",
+        "mask_tool_call_args": False,
+        "content_claim": "full_call",
+    },
+    "LF": {
+        "trainable_turns": "last_assistant",
+        "mask_tool_call_args": False,
+        "content_claim": "full_call",
+    },
+    "AN": {
+        "trainable_turns": "all_assistant",
+        "mask_tool_call_args": True,
+        "content_claim": "argument_masked_not_name_only",
+    },
+    "LN": {
+        "trainable_turns": "last_assistant",
+        "mask_tool_call_args": True,
+        "content_claim": "argument_masked_not_name_only",
+    },
 }
 PAIRED_SEEDS = (7101, 7202, 7303)
 
@@ -43,6 +59,7 @@ def build_matrix() -> list[dict[str, Any]]:
                 "seed": seed,
                 "trainable_turns": treatment["trainable_turns"],
                 "mask_tool_call_args": treatment["mask_tool_call_args"],
+                "content_claim": treatment["content_claim"],
                 "dataset_role": "train",
                 "group_size": 8,
                 "step_matched": True,
@@ -79,6 +96,8 @@ def validate_matrix(rows: list[dict[str, Any]]) -> None:
             raise ValueError("trainable-turn treatment mismatch")
         if row["mask_tool_call_args"] != expected_treatment["mask_tool_call_args"]:
             raise ValueError("argument-mask treatment mismatch")
+        if row["content_claim"] != expected_treatment["content_claim"]:
+            raise ValueError("content-treatment claim mismatch")
 
 
 def cli_treatment_args(row: dict[str, Any]) -> list[str]:

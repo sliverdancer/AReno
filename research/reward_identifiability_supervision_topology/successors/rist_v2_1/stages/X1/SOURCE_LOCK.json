@@ -1,0 +1,24 @@
+{
+  "bfcl": {
+    "allowed_roles": [
+      "sealed_external_evaluation"
+    ],
+    "commit": "ea13468e4423454d0c213704fb87cf7cb3990433",
+    "expected_license": "Apache-2.0",
+    "repository": "https://github.com/ShishirPatil/gorilla.git",
+    "tag": "v1.3"
+  },
+  "frozen_at_utc": "2026-08-02T00:00:00Z",
+  "network_lookup": "git ls-remote --tags --refs",
+  "schema_version": 1,
+  "tau3": {
+    "allowed_roles": [
+      "development",
+      "real_environment_training"
+    ],
+    "commit": "b711c1ead46f55111bf765cf44d5da8bacc2d28c",
+    "expected_license": "MIT",
+    "repository": "https://github.com/sierra-research/tau2-bench.git",
+    "tag": "v1.0.1"
+  }
+}

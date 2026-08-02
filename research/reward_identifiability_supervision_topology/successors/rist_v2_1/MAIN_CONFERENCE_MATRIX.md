@@ -9,10 +9,11 @@ is not yet open.
 |---|---|---|
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | missing |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
-| Model-family replication | at least 3 checkpoints across 2 families | adapters exist; no capacity-qualified matrix |
-| Token robustness | step-matched plus common-token endpoint/AUC | analyzer contract only |
-| Real training environment | Tau3 text airline, preferably retail replication | adapter contract only; package absent |
-| Sealed external evaluation | BFCL non-live multi-turn categories | contract only; package absent |
+| Model-family replication | at least 3 checkpoints across 2 families | capacity gate frozen; Qwen serving only, Gemma/24 GB rejected |
+| Exact content treatment | full call versus tool-name-only | current argument mask formally insufficient; public change pending |
+| Token robustness | step-matched plus common-token endpoint/AUC | analyzer and blocked 48-run templates frozen |
+| Real training environment | Tau3 text airline, preferably retail replication | v1.0.1 commit pinned; download absent |
+| Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 commit pinned; download and content absent |
 | Direct baselines | reward-collapse, turn-credit, and routing/masking neighbors | planned only |
 | Confirmatory inference | seed-level CI, prospective power, one-shot held-out | missing |
 

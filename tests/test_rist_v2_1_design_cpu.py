@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
 from pathlib import Path
 
@@ -35,6 +36,9 @@ def test_v2_1_factorial_matrix_has_48_paired_unauthorized_runs():
     assert {row["family"] for row in rows} == {"qwen3", "gemma4"}
     assert {row["arm"] for row in rows} == {"AF", "LF", "AN", "LN"}
     assert all(row["execution_authorized"] is False for row in rows)
+    assert {
+        row["content_claim"] for row in rows if row["arm"] in {"AN", "LN"}
+    } == {"argument_masked_not_name_only"}
     for row in rows:
         arguments = design.cli_treatment_args(row)
         assert "heldout" not in " ".join(arguments).lower()
@@ -230,3 +234,141 @@ def test_v2_1_strict_runner_accepts_exact_call_and_rejects_wrong_tool():
     result = runner.validate_response(wrong, turn)
     assert result["valid"] is False
     assert result["reason"] == "WRONG_TOOL"
+
+
+def test_v2_1_tokenizer_gate_distinguishes_argument_mask_from_name_only():
+    evaluator = _load_module(
+        "rist_v2_1_mask_fixture",
+        V2_1 / "stages" / "T0" / "evaluate_mask_fixture.py",
+    )
+    fixture = {
+        "checkpoint": "mock",
+        "tokenizer_sha256": "a" * 64,
+        "cases": [
+            {
+                "case_id": "argument-mask",
+                "token_ids": [10, 11, 12, 13],
+                "loss_mask": [True, True, False, True],
+                "name_indices": [1],
+                "argument_indices": [2],
+                "other_indices": [0, 3],
+            }
+        ],
+    }
+    result = evaluator.evaluate_fixture(fixture)
+    assert result["argument_mask_all"] is True
+    assert result["name_only_all"] is False
+
+    fixture["cases"][0]["loss_mask"] = [False, True, False, False]
+    result = evaluator.evaluate_fixture(fixture)
+    assert result["name_only_all"] is True
+
+
+def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
+    validator = _load_module(
+        "rist_v2_1_capacity",
+        V2_1 / "stages" / "E1" / "validate_capacity_evidence.py",
+    )
+    evidence = {
+        "checkpoint": "mock/model",
+        "model_revision": "b" * 40,
+        "tokenizer_sha256": "c" * 64,
+        "gpu_name": "Mock GPU",
+        "gpu_total_memory_gib": 80,
+        "serving_canary": {
+            "health_pass": True,
+            "task_count": 32,
+            "complete_four_turn_count": 32,
+            "raw_response_count": 128,
+            "peak_memory_gib": 20,
+            "oom": False,
+            "retry_count": 0,
+        },
+        "training_canaries": [
+            {
+                "algorithm": algorithm,
+                "optimizer_step_completed": True,
+                "trainable_tokens": 100,
+                "loss": 0.5,
+                "gradient_norm": 1.0,
+                "peak_memory_gib": peak,
+                "oom": False,
+                "checkpoint_roundtrip": True,
+            }
+            for algorithm, peak in (("gspo", 60), ("grpo", 64))
+        ],
+    }
+    assert validator.validate_capacity(evidence)["passed"] is True
+    evidence["training_canaries"][1]["peak_memory_gib"] = 70
+    result = validator.validate_capacity(evidence)
+    assert result["memory_headroom_pass"] is False
+    assert result["passed"] is False
+
+
+def test_v2_1_external_source_validator_checks_commit_origin_and_license(tmp_path):
+    validator = _load_module(
+        "rist_v2_1_source_validator",
+        V2_1 / "stages" / "X1" / "validate_checkout.py",
+    )
+    root = tmp_path / "source"
+    root.mkdir()
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    subprocess.run(
+        ["git", "-C", str(root), "config", "user.email", "cpu@test.invalid"],
+        check=True,
+    )
+    subprocess.run(
+        ["git", "-C", str(root), "config", "user.name", "CPU Test"],
+        check=True,
+    )
+    (root / "LICENSE").write_text("MIT License\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(root), "add", "LICENSE"], check=True)
+    subprocess.run(
+        ["git", "-C", str(root), "commit", "-q", "-m", "fixture"], check=True
+    )
+    remote = "https://github.com/example/source.git"
+    subprocess.run(
+        ["git", "-C", str(root), "remote", "add", "origin", remote], check=True
+    )
+    head = subprocess.run(
+        ["git", "-C", str(root), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    lock = {
+        "tau3": {
+            "commit": head,
+            "repository": "https://github.com/example/source",
+            "expected_license": "MIT",
+        }
+    }
+    result = validator.validate_checkout(root, "tau3", lock)
+    assert result["commit"] == head
+    assert result["benchmark_content_opened"] is False
+
+
+def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_execution_manifest",
+        V2_1 / "stages" / "P3_DESIGN" / "build_execution_manifest.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "run", max_steps=7)
+    assert manifest["run_count"] == 48
+    assert manifest["execution_authorized"] is False
+    assert "T0_EXACT_NAME_ONLY_TREATMENT" in manifest["blocked_by"]
+    assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 24
+    assert all("--max-steps" in run["command"] for run in manifest["runs"])
+    assert all("heldout" not in " ".join(run["command"]).lower() for run in manifest["runs"])
+
+
+def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():
+    planner = _load_module(
+        "rist_v2_1_power_plan",
+        V2_1 / "stages" / "P3_DESIGN" / "power_plan.py",
+    )
+    assert planner.required_paired_seeds(0.10, 0.05) == 3
+    assert planner.required_paired_seeds(0.10, 0.20) > 20
+    plan = planner.sensitivity_plan()
+    assert plan["statistical_unit"] == "paired_training_seed"
+    assert plan["three_seed_status"] == "pilot_variance_only"

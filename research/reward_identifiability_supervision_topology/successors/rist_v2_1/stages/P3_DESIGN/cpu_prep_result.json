@@ -1,0 +1,16 @@
+{
+  "decision": "PASS_CPU_PREP_TO_PUBLIC_API_AND_DOWNLOAD_AUTHORIZATION_BOUNDARY",
+  "external_sources_downloaded": false,
+  "gpu_used": false,
+  "heldout_data_opened": false,
+  "model_or_tokenizer_accessed": false,
+  "name_only_treatment_ready": false,
+  "reason": "The current mask is argument-masked rather than exact tool-name-only; real tokenizer, capacity, and external-environment gates remain unconsumed.",
+  "run_matrix_rows": 48,
+  "stage": "P3_DESIGN",
+  "tests": {
+    "cpu_contract_tests_passed": 14,
+    "runner": "direct runpy harness"
+  },
+  "training_performed": false
+}

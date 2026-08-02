@@ -1,0 +1,11 @@
+{
+  "decision": "DO_NOT_UPGRADE_TO_MAIN_CONFERENCE_EXECUTION",
+  "go_after": [
+    "exact_name_only_public_treatment",
+    "real_qwen_and_gemma_tokenizer_fixtures",
+    "per_checkpoint_gspo_grpo_capacity_pass",
+    "tau3_gold_replay_pass"
+  ],
+  "next_gate": "PUBLIC_NAME_ONLY_API_DECISION_AND_X1_CPU_DOWNLOAD_AUTHORIZATION",
+  "stage": "P3_DESIGN"
+}
