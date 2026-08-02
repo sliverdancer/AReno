@@ -605,6 +605,7 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert manifest["train_sha256"] is None
     assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
     assert "T0_EXACT_NAME_ONLY_TREATMENT" not in manifest["blocked_by"]
+    assert "X1_EXTERNAL_ENVIRONMENT_QUALIFICATION" not in manifest["blocked_by"]
     assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 0
     assert all("--tool-call-supervision" in run["command"] for run in manifest["runs"])
     assert all("--max-steps" in run["command"] for run in manifest["runs"])

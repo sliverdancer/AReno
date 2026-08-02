@@ -160,7 +160,6 @@ def build_manifest(
             "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES",
             "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS",
             "E1_PER_CHECKPOINT_TRAINING_CAPACITY",
-            "X1_EXTERNAL_ENVIRONMENT_QUALIFICATION",
             "EXPLICIT_GPU_TRAINING_AUTHORIZATION",
         ],
         "pilot_scope": "variance_and_power_only_three_seeds",
