@@ -349,17 +349,131 @@ def test_v2_1_tokenizer_capture_builds_32_local_canonical_cases():
         def decode(self, token_ids):
             return "".join(chr(token_id) for token_id in token_ids)
 
-    def argument_range(tokenizer, token_ids):
-        text = tokenizer.decode(token_ids)
-        start = text.index('"arguments":') + len('"arguments":')
-        return start, len(text) - 1
+    def production_mask(tokenizer, token_ids, base_mask, raw_calls):
+        raw = tokenizer.decode(token_ids)
+        name = __import__("json").loads(raw_calls[0])["name"]
+        start = raw.index(name)
+        return [
+            enabled and start <= index < start + len(name)
+            for index, enabled in enumerate(base_mask)
+        ]
 
-    fixture = capture.build_fixture(CharacterTokenizer(), "local/mock", argument_range)
+    fixture = capture.build_fixture(
+        CharacterTokenizer(),
+        "local/mock",
+        "mock-revision",
+        production_mask,
+        {"snapshot_sha256": "b" * 64},
+    )
+    fixture["mask_implementation"] = (
+        "areno.api.agentic._tool_call_name_only_loss_mask"
+    )
     result = evaluator.evaluate_fixture(fixture)
     assert fixture["case_count"] == 32
     assert fixture["local_files_only"] is True
-    assert result["argument_mask_all"] is True
-    assert result["name_only_all"] is False
+    assert result["localization_all"] is True
+    assert result["name_only_all"] is True
+    assert result["qualification_pass"] is False
+
+
+def test_v2_1_runtime_tokenizer_fixture_requires_balanced_actual_tokens():
+    capture = _load_module(
+        "rist_v2_1_runtime_mask_capture",
+        V2_1 / "stages" / "T0" / "capture_mask_fixture.py",
+    )
+    evaluator = _load_module(
+        "rist_v2_1_runtime_mask_eval",
+        V2_1 / "stages" / "T0" / "evaluate_mask_fixture.py",
+    )
+
+    class CharacterTokenizer:
+        special_tokens_map = {}
+
+        def get_vocab(self):
+            return {chr(index): index for index in range(128)}
+
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+        def decode(self, token_ids):
+            return "".join(chr(token_id) for token_id in token_ids)
+
+    def production_mask(tokenizer, token_ids, base_mask, raw_calls):
+        text = tokenizer.decode(token_ids)
+        payload = __import__("json").loads(raw_calls[0])
+        name = payload.get("function", payload)["name"]
+        start = text.index(name)
+        return [
+            enabled and start <= index < start + len(name)
+            for index, enabled in enumerate(base_mask)
+        ]
+
+    rows = []
+    for turn in range(4):
+        for sample in range(8):
+            name = "scan_registry"
+            raw = __import__("json").dumps(
+                {"name": name, "arguments": {"code": f"r{sample}"}},
+                separators=(",", ":"),
+            )
+            rows.append(
+                {
+                    "task_id": f"task-{sample}",
+                    "sample_index": sample,
+                    "turn_index": turn,
+                    "raw_response": {
+                        "areno": {"response_tokens": [ord(char) for char in raw]},
+                        "choices": [
+                            {
+                                "message": {
+                                    "tool_calls": [
+                                        {
+                                            "type": "function",
+                                            "function": {
+                                                "name": name,
+                                                "arguments": {"code": f"r{sample}"},
+                                            },
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                    },
+                }
+            )
+    fixture = capture.build_runtime_fixture(
+        CharacterTokenizer(),
+        "local/mock",
+        "mock-revision",
+        rows,
+        production_mask,
+        {"snapshot_sha256": "b" * 64},
+        "c" * 64,
+    )
+    result = evaluator.evaluate_fixture(fixture)
+    assert fixture["case_count"] == 32
+    assert fixture["turn_case_counts"] == {str(turn): 8 for turn in range(4)}
+    assert result["runtime_capture"] is True
+    assert result["balanced_four_turns"] is True
+    assert result["qualification_pass"] is True
+
+
+def test_v2_1_tokenizer_snapshot_rejects_weight_without_reading_it(tmp_path):
+    capture = _load_module(
+        "rist_v2_1_mask_capture_snapshot",
+        V2_1 / "stages" / "T0" / "capture_mask_fixture.py",
+    )
+    (tmp_path / "tokenizer_config.json").write_text("{}")
+    (tmp_path / "model.safetensors").write_text("must-not-be-read")
+    try:
+        capture.tokenizer_snapshot_manifest(tmp_path)
+    except ValueError as error:
+        assert "model weights" in str(error)
+    else:
+        raise AssertionError("tokenizer-only capture must reject model weights")
 
 
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():

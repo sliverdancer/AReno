@@ -10,9 +10,12 @@ must pass checkpoint-specific fixtures before use as a scientific treatment.
 
 ## Required fixture
 
-For each candidate checkpoint, capture at least 32 valid four-turn tool calls
-from calibration nonces using the exact serving tokenizer and response token
-IDs. Each case records a disjoint partition of response-token indices into:
+For each candidate checkpoint, first run the canonical tokenizer-only preflight.
+That preflight cannot qualify T0. Qualification requires exactly 32 valid
+runtime tool-call responses from calibration nonces: eight actual response-token
+rows from each of turns 0, 1, 2, and 3, using the exact serving tokenizer and
+the production name-only mask. Each case records a disjoint partition of
+response-token indices into:
 
 - `name_indices`: tokens attributable only to the tool name;
 - `argument_indices`: tokens touching the argument value;
@@ -35,3 +38,5 @@ silently approximated.
 
 Qwen and Gemma fixtures are evaluated independently. Any localization failure
 rejects that checkpoint/treatment pairing; the mask must not be approximated.
+Synthetic canonical calls, re-tokenized message fields without runtime response
+IDs, or unbalanced turn coverage cannot satisfy the gate.

@@ -1,0 +1,22 @@
+{
+  "protocol": "RIST-T0-CPU-PREFLIGHT-v2.1",
+  "status": "PASS_CPU_INSTRUMENT_TO_TOKENIZER_AUTHORIZATION_BOUNDARY",
+  "parent_commit": "aef3577",
+  "capture_sha256": "88aff6f66c520d12e8180a23668ada8b2d791d85828639f5b8bc37cde123e1b7",
+  "evaluator_sha256": "1f5362ff4f692046c6342c795892d9063aa928195ec10c181681b6c325ccdcd9",
+  "protocol_sha256": "3fa666959f3fc0bb3e7ac2cbd0835e9d9124e4981638e29ac34468747c4c5e44",
+  "authorization_boundary_sha256": "0f0b4a77563f71043599687bb8d48015466841feafd2b9013f80331bb8b7b66c",
+  "runtime_fixture_requires_actual_response_tokens": true,
+  "runtime_fixture_case_count": 32,
+  "runtime_fixture_cases_per_turn": 8,
+  "canonical_preflight_can_qualify": false,
+  "production_mask_required": "areno.api.agentic._tool_call_name_only_loss_mask",
+  "tokenizer_snapshot_rejects_weights": true,
+  "test_command": "/tmp/areno-p2b-tc-v1/bin/pytest -q tests/test_agentic_cpu.py tests/test_train_cli_config_cpu.py tests/test_config_data_cpu.py tests/test_rist_v2_1_htr_cpu.py tests/test_rist_v2_1_design_cpu.py",
+  "test_result": "232 passed in 30.00s",
+  "model_or_tokenizer_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "bfcl_content_opened": false
+}

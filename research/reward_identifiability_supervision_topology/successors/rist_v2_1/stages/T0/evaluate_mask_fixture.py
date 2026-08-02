@@ -44,6 +44,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     shared = role_sets["shared_indices"]
     return {
         "case_id": str(case["case_id"]),
+        "localization_pass": case.get("localization_pass") is True,
         "full_call_exact": enabled == universe,
         "argument_mask_exact": not shared and name <= enabled and not (arguments & enabled),
         "name_only_exact": not shared and enabled == name and not ((arguments | other) & enabled),
@@ -60,13 +61,46 @@ def evaluate_fixture(fixture: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(cases, list) or not cases:
         raise ValueError("fixture requires non-empty cases")
     results = [evaluate_case(case) for case in cases]
+    localization_all = all(result["localization_pass"] for result in results)
+    production_mask = (
+        fixture.get("mask_implementation")
+        == "areno.api.agentic._tool_call_name_only_loss_mask"
+    )
+    canonical_case_count = fixture.get("case_count") == 32 == len(results)
+    tokenizer_only = (
+        fixture.get("local_files_only") is True
+        and fixture.get("model_weights_present") is False
+        and isinstance(fixture.get("tokenizer_snapshot"), dict)
+    )
+    runtime_capture = fixture.get("runtime_response_tokens") is True
+    turn_case_counts = fixture.get("turn_case_counts")
+    balanced_four_turns = turn_case_counts == {str(turn): 8 for turn in range(4)}
+    name_only_all = all(result["name_only_exact"] for result in results)
     return {
         "checkpoint": fixture["checkpoint"],
+        "tokenizer_revision": fixture.get("tokenizer_revision"),
         "tokenizer_sha256": fixture["tokenizer_sha256"],
         "case_count": len(results),
+        "canonical_case_count": canonical_case_count,
+        "production_mask": production_mask,
+        "tokenizer_only": tokenizer_only,
+        "runtime_capture": runtime_capture,
+        "balanced_four_turns": balanced_four_turns,
+        "localization_all": localization_all,
         "full_call_all": all(result["full_call_exact"] for result in results),
         "argument_mask_all": all(result["argument_mask_exact"] for result in results),
-        "name_only_all": all(result["name_only_exact"] for result in results),
+        "name_only_all": name_only_all,
+        "qualification_pass": all(
+            (
+                canonical_case_count,
+                production_mask,
+                tokenizer_only,
+                runtime_capture,
+                balanced_four_turns,
+                localization_all,
+                name_only_all,
+            )
+        ),
         "cases": results,
     }
 
@@ -81,7 +115,7 @@ def main() -> int:
     args.output.write_text(
         json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    return 0 if result["name_only_all"] else 2
+    return 0 if result["qualification_pass"] else 2
 
 
 if __name__ == "__main__":
