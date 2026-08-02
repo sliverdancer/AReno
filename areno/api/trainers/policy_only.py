@@ -234,6 +234,7 @@ class PolicyOnlyTrainer:
             tool_results=bool(getattr(self.config, "train_tool_results", False)),
             trainable_turns=getattr(self.config, "trainable_turns", "all_assistant"),
             mask_tool_call_args=bool(getattr(self.config, "mask_tool_call_args", False)),
+            tool_call_supervision=getattr(self.config, "tool_call_supervision", "full"),
         )
 
     def _get_agent_run_fn(self):
@@ -303,13 +304,15 @@ class PolicyOnlyTrainer:
             loss_policy = self._loss_mask_policy()
             self.logger.info(
                 "agentic train batch built samples=%d tokens=%d trainable_tokens=%d masked_response_tokens=%d "
-                "trainable_turns=%s mask_tool_call_args=%s messages=%d tool_calls=%d tool_results=%d",
+                "trainable_turns=%s mask_tool_call_args=%s tool_call_supervision=%s "
+                "messages=%d tool_calls=%d tool_results=%d",
                 len(samples),
                 rows.total_tokens,
                 rows.trainable_tokens,
                 rows.masked_response_tokens,
                 loss_policy.trainable_turns,
                 loss_policy.mask_tool_call_args,
+                loss_policy.tool_call_supervision,
                 message_count,
                 tool_call_count,
                 tool_result_count,

@@ -62,6 +62,7 @@ class TrainerConfig:
     train_tool_results: bool = False
     trainable_turns: str = "all_assistant"
     mask_tool_call_args: bool = False
+    tool_call_supervision: str = "full"
     chat_template_enable_thinking: bool | None = None
 
     def __post_init__(self) -> None:
@@ -74,6 +75,12 @@ class TrainerConfig:
         if self.trainable_turns not in {"all_assistant", "last_assistant", "final_answer"}:
             raise ValueError(
                 "trainable_turns must be one of: all_assistant, last_assistant, final_answer"
+            )
+        if self.tool_call_supervision not in {"full", "name_only"}:
+            raise ValueError("tool_call_supervision must be one of: full, name_only")
+        if self.mask_tool_call_args and self.tool_call_supervision != "full":
+            raise ValueError(
+                "mask_tool_call_args cannot be combined with name_only tool_call_supervision"
             )
 
     def optimizer_config(self) -> dict:

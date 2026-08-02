@@ -18,6 +18,7 @@ import hashlib
 import importlib.util
 import json
 import logging
+import re
 import sys
 import threading
 import time
@@ -47,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 
 LossSelectionMode = Literal["all_assistant", "last_assistant", "final_answer"]
+ToolCallSupervisionMode = Literal["full", "name_only"]
 """Static trainable-turn selection modes for agentic trajectories.
 
 - ``all_assistant``: every assistant span contributes to policy loss (default,
@@ -68,6 +70,7 @@ class LossMaskPolicy:
     tool_results: bool = False
     trainable_turns: LossSelectionMode = "all_assistant"
     mask_tool_call_args: bool = False
+    tool_call_supervision: ToolCallSupervisionMode = "full"
     system_prompt: bool = False
     user_prompt: bool = False
 
@@ -445,7 +448,12 @@ class RolloutSession:
         policy = self._loss_mask_policy
         mode = policy.trainable_turns
         mask_args = policy.mask_tool_call_args
-        if mode == "all_assistant" and not mask_args:
+        tool_call_supervision = policy.tool_call_supervision
+        if mask_args and tool_call_supervision != "full":
+            raise ValueError(
+                "mask_tool_call_args cannot be combined with name_only tool_call_supervision"
+            )
+        if mode == "all_assistant" and not mask_args and tool_call_supervision == "full":
             return
         spans = sample.response_spans
         if not spans:
@@ -458,11 +466,15 @@ class RolloutSession:
         for span in spans:
             offsets.append((cursor, cursor + span.length))
             cursor += span.length
-        if mask_args:
+        if mask_args or tool_call_supervision == "name_only":
             tokenizer = self._trainer.get_tokenizer() if self._trainer is not None else None
+            if tokenizer is None and tool_call_supervision == "name_only":
+                raise ValueError("name_only tool-call supervision requires a tokenizer")
             if tokenizer is not None:
                 for (start, end), span in zip(offsets, spans, strict=True):
-                    if span.kind == "assistant_tool_call" and end > start:
+                    if span.kind != "assistant_tool_call" or end <= start:
+                        continue
+                    if mask_args:
                         arg_range = _tool_call_arg_token_range(
                             tokenizer, sample.response_tokens[start:end]
                         )
@@ -470,6 +482,14 @@ class RolloutSession:
                             for idx in range(start + arg_range[0], start + arg_range[1]):
                                 if 0 <= idx < len(base):
                                     base[idx] = False
+                    else:
+                        span_mask = _tool_call_name_only_loss_mask(
+                            tokenizer,
+                            sample.response_tokens[start:end],
+                            base[start:end],
+                            span.raw_tool_calls_json,
+                        )
+                        base[start:end] = span_mask
         if mode != "all_assistant":
             target = _select_trainable_span_indices(spans, mode)
             for i, (start, end) in enumerate(offsets):
@@ -1127,6 +1147,86 @@ def _tool_call_arg_token_range(tokenizer, span_tokens: list[int]) -> tuple[int, 
     if end_tok <= start_tok:
         return None
     return (start_tok, end_tok)
+
+
+_TOOL_NAME_FIELD = re.compile(r'"name"\s*:\s*("(?:\\.|[^"\\])*")')
+
+
+def _tool_call_name_only_loss_mask(
+    tokenizer,
+    span_tokens: list[int],
+    base_mask: list[bool],
+    raw_tool_calls_json: tuple[str, ...],
+) -> list[bool]:
+    """Return an exact name-only mask or fail when token boundaries mix semantics."""
+
+    if not span_tokens or len(span_tokens) != len(base_mask):
+        raise ValueError("name_only requires non-empty aligned response tokens and mask")
+    if any(type(enabled) is not bool for enabled in base_mask):
+        raise ValueError("name_only base mask must contain booleans")
+    expected_names = []
+    for raw_call in raw_tool_calls_json:
+        try:
+            call = json.loads(raw_call)
+            function = call.get("function", call)
+            name = function["name"]
+        except (json.JSONDecodeError, KeyError, TypeError) as exc:
+            raise ValueError("name_only requires structured tool-call names") from exc
+        if not isinstance(name, str) or not name:
+            raise ValueError("name_only requires non-empty tool-call names")
+        expected_names.append(name)
+    if not expected_names:
+        raise ValueError("name_only requires at least one parsed tool call")
+
+    try:
+        text = tokenizer.decode(span_tokens)
+        encoded = tokenizer(
+            text,
+            add_special_tokens=False,
+            return_offsets_mapping=True,
+        )
+    except Exception as exc:
+        raise ValueError("name_only requires exact tokenizer offset mappings") from exc
+    token_ids = [int(value) for value in encoded["input_ids"]]
+    offsets = [tuple(int(value) for value in pair) for pair in encoded["offset_mapping"]]
+    if token_ids != [int(value) for value in span_tokens] or len(offsets) != len(span_tokens):
+        raise ValueError("name_only tokenizer decode/encode is not response-token exact")
+
+    matches = list(_TOOL_NAME_FIELD.finditer(text))
+    observed_names = []
+    name_spans = []
+    for match in matches:
+        try:
+            observed_names.append(json.loads(match.group(1)))
+        except json.JSONDecodeError as exc:
+            raise ValueError("name_only found an invalid encoded tool name") from exc
+        quoted_start, quoted_end = match.span(1)
+        name_spans.append((quoted_start + 1, quoted_end - 1))
+    if sorted(observed_names) != sorted(expected_names) or len(observed_names) != len(expected_names):
+        raise ValueError("name_only raw response names do not match parsed tool calls")
+
+    selected: set[int] = set()
+    covered = [set() for _ in name_spans]
+    for token_index, (start, end) in enumerate(offsets):
+        if start < 0 or end < start or end > len(text):
+            raise ValueError("name_only received an invalid tokenizer offset")
+        for span_index, (name_start, name_end) in enumerate(name_spans):
+            overlaps = start < name_end and name_start < end
+            inside = name_start <= start and end <= name_end
+            if overlaps and not inside:
+                raise ValueError("name_only token mixes tool-name characters with syntax")
+            if inside and end > start:
+                selected.add(token_index)
+                covered[span_index].update(range(start, end))
+    for name_span, characters in zip(name_spans, covered, strict=True):
+        if characters != set(range(*name_span)):
+            raise ValueError("name_only tool-name characters are not exactly token-covered")
+    if not selected:
+        raise ValueError("name_only found no independently trainable tool-name token")
+    return [
+        bool(enabled and token_index in selected)
+        for token_index, enabled in enumerate(base_mask)
+    ]
 
 
 def _tool_results_from_messages(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:

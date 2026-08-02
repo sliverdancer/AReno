@@ -86,9 +86,9 @@ def _command(
         str(run_root / "runs" / row["run_id"] / "metrics"),
         "--trainable-turns",
         str(row["trainable_turns"]),
+        "--tool-call-supervision",
+        str(row["tool_call_supervision"]),
     ]
-    if row["mask_tool_call_args"]:
-        command.append("--mask-tool-call-args")
     return command
 
 
@@ -131,7 +131,7 @@ def build_manifest(
             {
                 **row,
                 "command": _command(row, run_root, max_steps, train_path),
-                "scientific_treatment_ready": row["content_claim"] == "full_call",
+                "scientific_treatment_ready": False,
                 "required_environment": {
                     "RIST_RAW_JOURNAL_PATH": str(
                         run_root / "runs" / row["run_id"] / "raw_responses.jsonl"
@@ -157,7 +157,6 @@ def build_manifest(
         "execution_authorized": False,
         "commands_are_templates_only": True,
         "blocked_by": [
-            "T0_EXACT_NAME_ONLY_TREATMENT",
             "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES",
             "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS",
             "E1_PER_CHECKPOINT_TRAINING_CAPACITY",

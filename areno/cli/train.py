@@ -93,6 +93,7 @@ TRAIN_OPTION_GROUPS: tuple[tuple[str, tuple[str, ...]], ...] = (
             "train_tool_results",
             "trainable_turns",
             "mask_tool_call_args",
+            "tool_call_supervision",
             "reward_fn_path",
             "turn_credit_fn_path",
             "turn_credit_config_path",
@@ -219,6 +220,13 @@ def _trainer_config_from_options(**options) -> TrainerConfig:
         raise click.UsageError("--reward-fn-path or --reward-ckpt is required")
     turn_credit_fn_path = getattr(args, "turn_credit_fn_path", None)
     turn_credit_config_path = getattr(args, "turn_credit_config_path", None)
+    tool_call_supervision = getattr(args, "tool_call_supervision", "full")
+    if tool_call_supervision not in {"full", "name_only"}:
+        raise click.UsageError("--tool-call-supervision must be one of: full, name_only")
+    if bool(getattr(args, "mask_tool_call_args", False)) and tool_call_supervision != "full":
+        raise click.UsageError(
+            "--mask-tool-call-args cannot be combined with --tool-call-supervision name_only"
+        )
     if turn_credit_config_path is not None and turn_credit_fn_path is None:
         raise click.UsageError("--turn-credit-config-path requires --turn-credit-fn-path")
     if turn_credit_fn_path is not None:
@@ -455,6 +463,7 @@ def _rollout_summary_rows(config: TrainerConfig) -> list[tuple[str, str]]:
         ("max_context_len", _format_optional(config.max_context_len, default="model limit")),
         ("trainable_turns", str(getattr(config, "trainable_turns", "all_assistant"))),
         ("mask_tool_call_args", _format_bool(getattr(config, "mask_tool_call_args", False))),
+        ("tool_supervision", str(getattr(config, "tool_call_supervision", "full"))),
     ]
     if not isinstance(config, RolloutTrainerConfig):
         return [
@@ -650,6 +659,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
     seed = getattr(args, "seed", 42)
     trainable_turns = getattr(args, "trainable_turns", "all_assistant")
     mask_tool_call_args = bool(getattr(args, "mask_tool_call_args", False))
+    tool_call_supervision = getattr(args, "tool_call_supervision", "full")
     turn_credit_fn_path = getattr(args, "turn_credit_fn_path", None)
     turn_credit_config_path = getattr(args, "turn_credit_config_path", None)
     if algorithm.name == "dpo":
@@ -692,6 +702,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             train_tool_results=args.train_tool_results,
             trainable_turns=trainable_turns,
             mask_tool_call_args=mask_tool_call_args,
+            tool_call_supervision=tool_call_supervision,
             chat_template_enable_thinking=chat_template_enable_thinking,
             ref_ckpt=args.ref_ckpt,
             dpo_beta=args.dpo_beta,
@@ -736,6 +747,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             train_tool_results=args.train_tool_results,
             trainable_turns=trainable_turns,
             mask_tool_call_args=mask_tool_call_args,
+            tool_call_supervision=tool_call_supervision,
             chat_template_enable_thinking=chat_template_enable_thinking,
         )
     if algorithm.name != "ppo":
@@ -789,6 +801,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             train_tool_results=args.train_tool_results,
             trainable_turns=trainable_turns,
             mask_tool_call_args=mask_tool_call_args,
+            tool_call_supervision=tool_call_supervision,
             chat_template_enable_thinking=chat_template_enable_thinking,
         )
     return PPOTrainerConfig(
@@ -855,6 +868,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
         train_tool_results=args.train_tool_results,
         trainable_turns=trainable_turns,
         mask_tool_call_args=mask_tool_call_args,
+        tool_call_supervision=tool_call_supervision,
         chat_template_enable_thinking=chat_template_enable_thinking,
     )
 
@@ -972,6 +986,7 @@ def _training_config_settings(config: TrainerConfig) -> dict:
                 "train_tool_results",
                 "trainable_turns",
                 "mask_tool_call_args",
+                "tool_call_supervision",
                 "reward_fn_path",
                 "turn_credit_fn_path",
                 "turn_credit_config_path",
@@ -1400,6 +1415,13 @@ def _dataset_builder_for_suffix(suffix: str) -> str:
     "--mask-tool-call-args",
     is_flag=True,
     help="Mask JSON argument tokens within tool-call spans (keep tool-name trainable). Research ablation; see docs for divergence from industry practice.",
+)
+@click.option(
+    "--tool-call-supervision",
+    type=click.Choice(["full", "name_only"]),
+    default="full",
+    show_default=True,
+    help="Tool-call token supervision: full response span or exact tool-name tokens only.",
 )
 @click.option(
     "--gspo-clip-eps", type=float, default=3.0e-4, show_default=True, help="GSPO sequence-ratio clipping epsilon."

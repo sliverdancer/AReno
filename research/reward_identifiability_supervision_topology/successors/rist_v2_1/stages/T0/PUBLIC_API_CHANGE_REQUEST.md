@@ -1,6 +1,6 @@
-# Deferred public API decision
+# Authorized public API decision
 
-No AReno public API was changed in T0.
+Status: `IMPLEMENTED_AWAITING_REAL_TOKENIZER_FIXTURES`
 
 If real tokenizer fixtures confirm that `--mask-tool-call-args` retains syntax
 tokens, the minimum scientifically aligned change is a new additive option:
@@ -19,5 +19,6 @@ The research-local `name_only_mask_contract.py` now provides an executable
 prototype of those semantics. It is not wired into `TrainerConfig`,
 `LossMaskPolicy`, or the CLI and therefore cannot make a scientific run ready.
 
-This proposal is intentionally unimplemented because `AGENTS.md` requires an
-explicit decision before changing public config dataclasses or CLI surfaces.
+The additive option is now implemented after explicit authorization. Scientific
+execution remains blocked until Qwen3 and Gemma4 fixtures verify exact offsets
+through the production path.

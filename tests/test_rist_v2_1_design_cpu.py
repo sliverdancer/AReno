@@ -38,11 +38,14 @@ def test_v2_1_factorial_matrix_has_48_paired_unauthorized_runs():
     assert all(row["execution_authorized"] is False for row in rows)
     assert {
         row["content_claim"] for row in rows if row["arm"] in {"AN", "LN"}
-    } == {"argument_masked_not_name_only"}
+    } == {"name_only"}
     for row in rows:
         arguments = design.cli_treatment_args(row)
         assert "heldout" not in " ".join(arguments).lower()
-        assert ("--mask-tool-call-args" in arguments) == (row["arm"] in {"AN", "LN"})
+        index = arguments.index("--tool-call-supervision")
+        expected = "name_only" if row["arm"] in {"AN", "LN"} else "full"
+        assert arguments[index + 1] == expected
+        assert "--mask-tool-call-args" not in arguments
 
 
 def test_v2_1_token_grid_is_outcome_blind_and_uses_common_support():
@@ -570,8 +573,9 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert manifest["resolution_filtered_dataset_ready"] is False
     assert manifest["train_sha256"] is None
     assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
-    assert "T0_EXACT_NAME_ONLY_TREATMENT" in manifest["blocked_by"]
-    assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 24
+    assert "T0_EXACT_NAME_ONLY_TREATMENT" not in manifest["blocked_by"]
+    assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 0
+    assert all("--tool-call-supervision" in run["command"] for run in manifest["runs"])
     assert all("--max-steps" in run["command"] for run in manifest["runs"])
     assert manifest["save_interval"] == 25
     assert manifest["saved_checkpoint_steps"] == [25, 50, 75, 100]

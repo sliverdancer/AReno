@@ -19,23 +19,23 @@ ALGORITHMS = ("gspo", "grpo")
 ARMS = {
     "AF": {
         "trainable_turns": "all_assistant",
-        "mask_tool_call_args": False,
+        "tool_call_supervision": "full",
         "content_claim": "full_call",
     },
     "LF": {
         "trainable_turns": "last_assistant",
-        "mask_tool_call_args": False,
+        "tool_call_supervision": "full",
         "content_claim": "full_call",
     },
     "AN": {
         "trainable_turns": "all_assistant",
-        "mask_tool_call_args": True,
-        "content_claim": "argument_masked_not_name_only",
+        "tool_call_supervision": "name_only",
+        "content_claim": "name_only",
     },
     "LN": {
         "trainable_turns": "last_assistant",
-        "mask_tool_call_args": True,
-        "content_claim": "argument_masked_not_name_only",
+        "tool_call_supervision": "name_only",
+        "content_claim": "name_only",
     },
 }
 PAIRED_SEEDS = (7101, 7202, 7303)
@@ -58,7 +58,7 @@ def build_matrix() -> list[dict[str, Any]]:
                 "arm": arm,
                 "seed": seed,
                 "trainable_turns": treatment["trainable_turns"],
-                "mask_tool_call_args": treatment["mask_tool_call_args"],
+                "tool_call_supervision": treatment["tool_call_supervision"],
                 "content_claim": treatment["content_claim"],
                 "dataset_role": "train",
                 "group_size": 8,
@@ -94,8 +94,8 @@ def validate_matrix(rows: list[dict[str, Any]]) -> None:
         expected_treatment = ARMS[str(row["arm"])]
         if row["trainable_turns"] != expected_treatment["trainable_turns"]:
             raise ValueError("trainable-turn treatment mismatch")
-        if row["mask_tool_call_args"] != expected_treatment["mask_tool_call_args"]:
-            raise ValueError("argument-mask treatment mismatch")
+        if row["tool_call_supervision"] != expected_treatment["tool_call_supervision"]:
+            raise ValueError("tool-call supervision treatment mismatch")
         if row["content_claim"] != expected_treatment["content_claim"]:
             raise ValueError("content-treatment claim mismatch")
 
@@ -111,6 +111,7 @@ def cli_treatment_args(row: dict[str, Any]) -> list[str]:
         "--trainable-turns",
         str(row["trainable_turns"]),
     ]
-    if row["mask_tool_call_args"]:
-        arguments.append("--mask-tool-call-args")
+    arguments.extend(
+        ["--tool-call-supervision", str(row["tool_call_supervision"])]
+    )
     return arguments

@@ -388,6 +388,30 @@ class ConfigAndDataTest(unittest.TestCase):
         self.assertTrue(cfg.keep_rollout_state)
         self.assertTrue(cfg.areno_config().runtime["keep_rollout_state"])
 
+    def test_trainer_config_validates_tool_call_supervision(self):
+        cfg = TrainerConfig(
+            algo="sft",
+            ckpt="unused",
+            dataset_path="unused",
+            tool_call_supervision="name_only",
+        )
+        self.assertEqual(cfg.tool_call_supervision, "name_only")
+        with self.assertRaisesRegex(ValueError, "one of: full, name_only"):
+            TrainerConfig(
+                algo="sft",
+                ckpt="unused",
+                dataset_path="unused",
+                tool_call_supervision="approximate",
+            )
+        with self.assertRaisesRegex(ValueError, "cannot be combined"):
+            TrainerConfig(
+                algo="sft",
+                ckpt="unused",
+                dataset_path="unused",
+                mask_tool_call_args=True,
+                tool_call_supervision="name_only",
+            )
+
     def test_train_cli_drop_rollout_state_inverts_runtime_flag(self):
         """The public CLI exposes the memory-saving inverse of keep_rollout_state."""
         args = _train_args(algo="sft", drop_rollout_state=True)

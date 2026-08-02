@@ -67,6 +67,24 @@ def test_train_config_rejects_negative_seed():
         _trainer_config_from_options(**_options(algo="gspo", seed=-1))
 
 
+def test_train_config_propagates_exact_tool_call_supervision():
+    config = _trainer_config_from_options(
+        **_options(algo="gspo", tool_call_supervision="name_only")
+    )
+    assert config.tool_call_supervision == "name_only"
+
+
+def test_train_config_rejects_ambiguous_tool_call_supervision():
+    with pytest.raises(UsageError, match="cannot be combined"):
+        _trainer_config_from_options(
+            **_options(
+                algo="gspo",
+                mask_tool_call_args=True,
+                tool_call_supervision="name_only",
+            )
+        )
+
+
 @pytest.mark.parametrize(
     ("field", "value", "message"),
     [
@@ -619,6 +637,14 @@ def test_train_help_places_epochs_under_basic_not_checkpointing():
     # save flags in the Checkpoint group.
     assert basic < epochs < next_section
     assert "--epochs" not in output[checkpoint:]
+
+
+def test_train_help_exposes_exact_tool_call_supervision_under_rollout():
+    output = _help_output()
+    rollout = output.index("Rollout:")
+    next_section = output.index("Train:", rollout)
+    option = output.index("--tool-call-supervision", rollout)
+    assert rollout < option < next_section
 
 
 def test_train_help_remains_complete_and_groups_every_declared_option():

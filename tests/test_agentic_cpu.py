@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import importlib.util
+import json
 import logging
 import sys
 import time
@@ -1166,6 +1167,7 @@ def test_loss_mask_policy_defaults_new_fields():
     policy = LossMaskPolicy()
     assert policy.trainable_turns == "all_assistant"
     assert policy.mask_tool_call_args is False
+    assert policy.tool_call_supervision == "full"
     # the dead `final_assistant_text` flag has been removed
     assert not hasattr(policy, "final_assistant_text")
 
@@ -1284,6 +1286,107 @@ def test_mask_tool_call_args_composes_with_existing_suppression():
     session._apply_trainable_turn_mode(sample)
     # token 1 (args) narrowed to False; token 2 stays False (not un-suppressed)
     assert sample.loss_mask_override == [True, False, False]
+
+
+def test_tool_call_supervision_name_only_keeps_exact_name_tokens():
+    raw = '{"name":"search","arguments":{"q":"x"}}'
+
+    class CharacterOffsetTokenizer:
+        def decode(self, tokens):
+            return "".join(chr(token) for token in tokens)
+
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+    trainer = _FakeTrainer(world_size=1, tp_size=1)
+    trainer.tokenizer = CharacterOffsetTokenizer()
+    session = RolloutSession(
+        trainer,
+        sampling_params=_FakeSamplingParams(),
+        loss_mask_policy=LossMaskPolicy(tool_call_supervision="name_only"),
+    )
+    item = next(AgentBatch(records=[{}], prompts=["p"], input_tokens=[[1]], n_samples=1).iter_samples())
+    tokens = [ord(character) for character in raw]
+    spans = [
+        agentic.ResponseSpan(
+            "assistant_tool_call",
+            len(tokens),
+            raw_text=raw,
+            raw_tool_calls_json=(
+                json.dumps(
+                    {
+                        "type": "function",
+                        "function": {"name": "search", "arguments": '{"q":"x"}'},
+                    }
+                ),
+            ),
+        )
+    ]
+    base = [True] * len(tokens)
+    name_start = raw.index("search")
+    base[name_start + 1] = False
+    sample = _spanned_sample(item, tokens, spans, base)
+    session._apply_trainable_turn_mode(sample)
+    assert sum(sample.loss_mask_override) == len("search") - 1
+    assert all(
+        enabled is (name_start <= index < name_start + len("search") and base[index])
+        for index, enabled in enumerate(sample.loss_mask_override)
+    )
+
+
+def test_tool_call_supervision_name_only_rejects_syntax_mixed_token():
+    pieces = ['{"name":"search', '","arguments":{}}']
+
+    class MixedOffsetTokenizer(_PieceTokenizer):
+        def __call__(self, text, **_):
+            assert text == "".join(pieces)
+            return {
+                "input_ids": [0, 1],
+                "offset_mapping": [(0, len(pieces[0])), (len(pieces[0]), len(text))],
+            }
+
+    trainer = _FakeTrainer(world_size=1, tp_size=1)
+    trainer.tokenizer = MixedOffsetTokenizer(pieces)
+    session = RolloutSession(
+        trainer,
+        sampling_params=_FakeSamplingParams(),
+        loss_mask_policy=LossMaskPolicy(tool_call_supervision="name_only"),
+    )
+    item = next(AgentBatch(records=[{}], prompts=["p"], input_tokens=[[1]], n_samples=1).iter_samples())
+    spans = [
+        agentic.ResponseSpan(
+            "assistant_tool_call",
+            2,
+            raw_text="".join(pieces),
+            raw_tool_calls_json=(json.dumps({"function": {"name": "search"}}),),
+        )
+    ]
+    sample = _spanned_sample(item, [0, 1], spans, [True, True])
+    with pytest.raises(ValueError, match="mixes tool-name"):
+        session._apply_trainable_turn_mode(sample)
+
+
+def test_tool_call_supervision_name_only_conflicts_with_legacy_argument_mask():
+    session = RolloutSession(
+        None,
+        sampling_params=None,
+        loss_mask_policy=LossMaskPolicy(
+            mask_tool_call_args=True,
+            tool_call_supervision="name_only",
+        ),
+    )
+    item = next(AgentBatch(records=[{}], prompts=["p"], input_tokens=[[1]], n_samples=1).iter_samples())
+    sample = _spanned_sample(
+        item,
+        [1],
+        [agentic.ResponseSpan("assistant_tool_call", 1)],
+        [True],
+    )
+    with pytest.raises(ValueError, match="cannot be combined"):
+        session._apply_trainable_turn_mode(sample)
 
 
 def test_call_result_pairing_rejects_mid_call_without_result():
