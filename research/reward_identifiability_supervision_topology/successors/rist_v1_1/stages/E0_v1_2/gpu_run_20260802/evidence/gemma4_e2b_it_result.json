@@ -1,0 +1,393 @@
+{
+  "canary_tasks_sha256": "c0a4f8d8fa4c15765b57702797f44fcf2bbc0e637b570141d439ad465fce6c72",
+  "elapsed_seconds": 81.5282407477498,
+  "expected_raw_responses": 8,
+  "expected_trajectories": 2,
+  "fabricated_call_count": 0,
+  "infrastructure_error": null,
+  "model_cell": "gemma4_e2b_it",
+  "protocol": "RIST-E0-v1.2",
+  "retry_count": 0,
+  "schema_version": 1,
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_ONLY",
+  "trajectories": [
+    {
+      "mode": "forced",
+      "raw_response_count": 4,
+      "raw_responses": [
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-F1\"}",
+                      "name": "probe_catalog"
+                    },
+                    "id": "call_e8de09791a7e4d87a429be14",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638016,
+          "id": "chatcmpl-3ebf2b382f0c43a8bdb7a18d9cbfd173",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 19,
+            "prompt_tokens": 154,
+            "total_tokens": 173
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-F2\"}",
+                      "name": "probe_route"
+                    },
+                    "id": "call_f60c8207564f47c6bd9ac455",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638027,
+          "id": "chatcmpl-32bd0ed9d3284bcdab79d875a043c5c9",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 19,
+            "prompt_tokens": 228,
+            "total_tokens": 247
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-F3\"}",
+                      "name": "probe_schema"
+                    },
+                    "id": "call_353315e74d3849e6bff7ba24",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638029,
+          "id": "chatcmpl-e5ee6a5a2bf245a99759f79f8551b5b3",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 46,
+            "prompt_tokens": 302,
+            "total_tokens": 348
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-F4\"}",
+                      "name": "probe_commit"
+                    },
+                    "id": "call_6329541f46244387a1da58ee",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638031,
+          "id": "chatcmpl-2045b861a4ce447f96635d7c7312a4a9",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 46,
+            "prompt_tokens": 376,
+            "total_tokens": 422
+          }
+        }
+      ],
+      "records": [
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-F1"
+            },
+            "id": "call_e8de09791a7e4d87a429be14",
+            "name": "probe_catalog",
+            "raw_arguments": "{\"code\":\"CANARY-F1\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 0
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-F2"
+            },
+            "id": "call_f60c8207564f47c6bd9ac455",
+            "name": "probe_route",
+            "raw_arguments": "{\"code\":\"CANARY-F2\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 1
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-F3"
+            },
+            "id": "call_353315e74d3849e6bff7ba24",
+            "name": "probe_schema",
+            "raw_arguments": "{\"code\":\"CANARY-F3\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 2
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-F4"
+            },
+            "id": "call_6329541f46244387a1da58ee",
+            "name": "probe_commit",
+            "raw_arguments": "{\"code\":\"CANARY-F4\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 3
+        }
+      ],
+      "task_id": "e0_forced_explicit_chain"
+    },
+    {
+      "mode": "required",
+      "raw_response_count": 4,
+      "raw_responses": [
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-R1\"}",
+                      "name": "inspect_alpha"
+                    },
+                    "id": "call_be6086a9a77e4c649785d989",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638032,
+          "id": "chatcmpl-9d0b250c332f4c8a852792116525694e",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 19,
+            "prompt_tokens": 220,
+            "total_tokens": 239
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-R2\"}",
+                      "name": "inspect_beta"
+                    },
+                    "id": "call_9f476dbd8b0a49478b5b3d87",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638033,
+          "id": "chatcmpl-4441b529d76741a988c472f99755a607",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 19,
+            "prompt_tokens": 294,
+            "total_tokens": 313
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-R3\"}",
+                      "name": "inspect_gamma"
+                    },
+                    "id": "call_6d0727270d6045189034b275",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638035,
+          "id": "chatcmpl-7f718dc1842a4182a33307a123c78c07",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 46,
+            "prompt_tokens": 368,
+            "total_tokens": 414
+          }
+        },
+        {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "function": {
+                      "arguments": "{\"code\":\"CANARY-R4\"}",
+                      "name": "inspect_delta"
+                    },
+                    "id": "call_d6e51d1f9dd64513aebac6f3",
+                    "type": "function"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1785638037,
+          "id": "chatcmpl-05a8178da7a540e29971bb5253c39b3c",
+          "model": "policy",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 46,
+            "prompt_tokens": 442,
+            "total_tokens": 488
+          }
+        }
+      ],
+      "records": [
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-R1"
+            },
+            "id": "call_be6086a9a77e4c649785d989",
+            "name": "inspect_alpha",
+            "raw_arguments": "{\"code\":\"CANARY-R1\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 0
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-R2"
+            },
+            "id": "call_9f476dbd8b0a49478b5b3d87",
+            "name": "inspect_beta",
+            "raw_arguments": "{\"code\":\"CANARY-R2\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 1
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-R3"
+            },
+            "id": "call_6d0727270d6045189034b275",
+            "name": "inspect_gamma",
+            "raw_arguments": "{\"code\":\"CANARY-R3\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 2
+        },
+        {
+          "call": {
+            "arguments": {
+              "code": "CANARY-R4"
+            },
+            "id": "call_d6e51d1f9dd64513aebac6f3",
+            "name": "inspect_delta",
+            "raw_arguments": "{\"code\":\"CANARY-R4\"}"
+          },
+          "exact_instruction": true,
+          "parse_reason": "VALID",
+          "parse_valid": true,
+          "turn_index": 3
+        }
+      ],
+      "task_id": "e0_required_explicit_chain"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/root/autodl-tmp/rist_e0_v1_2_511ed73",
+    "diff",
+    "--cached",
+    "--quiet",
+    "--exit-code"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": ""
+}

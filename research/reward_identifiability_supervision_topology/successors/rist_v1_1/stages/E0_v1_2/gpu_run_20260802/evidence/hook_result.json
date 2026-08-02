@@ -1,0 +1,11 @@
+{
+  "decision": "STAY_DIAGNOSTIC_FREEZE_P2_1_PROTOCOL",
+  "main_conference_route_open": false,
+  "phase": "E0_V1_2_GPU_CANARY",
+  "protocol_family": "RIST-v1.1",
+  "reason": "Both model families passed the independent infrastructure canary, but E0 contains explicit answers and no scientific reward-resolution or training interaction evidence.",
+  "required_next_gate": "Freeze P2.1 qualification without exposing its rows to serving; request separate GPU authorization only after the protocol, task manifest, cross-family gates, and stop rules pass CPU review.",
+  "schema_version": 1,
+  "source_phase_decision": "PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE",
+  "upgraded": false
+}

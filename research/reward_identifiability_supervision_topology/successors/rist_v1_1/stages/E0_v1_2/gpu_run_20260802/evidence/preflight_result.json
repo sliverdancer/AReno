@@ -1,0 +1,20 @@
+{
+  "areno_check_passed": true,
+  "canary_tasks_sha256": "c0a4f8d8fa4c15765b57702797f44fcf2bbc0e637b570141d439ad465fce6c72",
+  "captured_at_utc": "2026-08-02T02:31:16.896690+00:00",
+  "cuda_passed": true,
+  "deployed_head": "511ed73c2298fc26245dbde9fcf42021a08ffba4",
+  "deployed_head_passed": true,
+  "execution_bytes_match_required_source": true,
+  "gpu_process_list_clean": true,
+  "index_clean": true,
+  "model_manifests_verified": true,
+  "passed": true,
+  "protocol": "RIST-E0-v1.2",
+  "registered_extension_passed": true,
+  "required_source_commit": "626fd7ba96d13f56a76082b4d675ce90205494eb",
+  "schema_version": 1,
+  "serving_started": false,
+  "tracked_source_clean": true,
+  "training_performed": false
+}

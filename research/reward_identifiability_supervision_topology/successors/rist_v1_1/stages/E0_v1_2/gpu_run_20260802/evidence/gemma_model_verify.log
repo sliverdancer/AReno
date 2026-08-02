@@ -1,0 +1,9 @@
+./.gitattributes: OK
+./README.md: OK
+./chat_template.jinja: OK
+./config.json: OK
+./generation_config.json: OK
+./model.safetensors: OK
+./processor_config.json: OK
+./tokenizer.json: OK
+./tokenizer_config.json: OK

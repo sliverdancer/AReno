@@ -487,3 +487,88 @@ def test_rist_e0_v1_2_canary_and_validator_remain_fail_closed():
         "INVALID_E0_PREFLIGHT_STOP"
     )
     assert all(len(task["turns"]) == 4 for task in payload["tasks"])
+
+
+def test_rist_p2_1_freeze_is_e0_gated_and_resource_feasible():
+    import hashlib
+    import json
+
+    stage = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "P2_1"
+    e0_evidence = (
+        RESEARCH_DIR
+        / "successors"
+        / "rist_v1_1"
+        / "stages"
+        / "E0_v1_2"
+        / "gpu_run_20260802"
+        / "evidence"
+    )
+    manifest = json.loads(
+        (stage / "EXECUTION_MANIFEST.json").read_text(encoding="utf-8")
+    )
+
+    assert manifest["protocol"] == "RIST-P2.1-v1.0"
+    assert manifest["e0_prerequisite"]["decision"] == (
+        "PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE"
+    )
+    assert manifest["e0_prerequisite"]["stage_result_sha256"] == hashlib.sha256(
+        (e0_evidence / "stage_result.json").read_bytes()
+    ).hexdigest()
+    assert manifest["e0_prerequisite"]["audit_result_sha256"] == hashlib.sha256(
+        (e0_evidence / "audit_result.json").read_bytes()
+    ).hexdigest()
+    assert manifest["serve"]["attn_backend"] == "native"
+    assert manifest["serve"]["max_running_prompts"] == 1
+    assert manifest["total_requests"] == 2048
+    assert manifest["gpu_time_forecast_seconds"] < manifest["gpu_time_limit_seconds"]
+    assert manifest["gpu_time_limit_seconds"] == 5 * 60 * 60
+
+
+def test_rist_p2_1_client_preserves_data_and_no_retry_contract():
+    import json
+
+    stage = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "P2_1"
+    client = _load_module("rist_run_p2_1_client", stage / "run_p2_1_client.py")
+    manifest = json.loads(
+        (stage / "EXECUTION_MANIFEST.json").read_text(encoding="utf-8")
+    )
+    qualification = RESEARCH_DIR / "stages" / "P1" / "data" / "qualification.jsonl"
+    payload = json.loads(qualification.read_text(encoding="utf-8").splitlines()[0])
+
+    assert manifest["retry_limit"] == 0
+    assert manifest["tasks_per_model"] == 32
+    assert len(payload["turns"]) == manifest["turns_per_trajectory"] == 4
+    assert client._offered_tool_names(payload, payload["turns"][0]) == (
+        [payload["turns"][0]["expected_tool"]]
+        if payload["factors"]["tool_choice_mode"] == "forced"
+        else payload["turns"][0]["offered_tools"]
+    )
+    source = (stage / "run_p2_1_client.py").read_text(encoding="utf-8")
+    assert "heldout.jsonl" not in source
+    assert "retry_count\": 0" in source
+
+
+def test_rist_p2_1_analyzer_names_terminal_outcomes_fail_closed():
+    stage = RESEARCH_DIR / "successors" / "rist_v1_1" / "stages" / "P2_1"
+    analyzer = _load_module("rist_analyze_p2_1", stage / "analyze_p2_1.py")
+    qualification_sha = (
+        "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f"
+    )
+
+    def invalid_payload(model_cell):
+        return {
+            "protocol": "RIST-P2.1-v1.0",
+            "model_cell": model_cell,
+            "qualification_sha256": qualification_sha,
+            "expected_trajectories": 256,
+            "retry_count": 0,
+            "infrastructure_error": {"error_type": "RuntimeError"},
+            "trajectories": [],
+        }
+
+    result = analyzer.analyze_cross_family(
+        [invalid_payload("qwen3_0_6b"), invalid_payload("gemma4_e2b_it")]
+    )
+    assert result["protocol"] == "RIST-P2.1-v1.0"
+    assert result["stage_status"] == "INVALID"
+    assert result["decision"] == "INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE"

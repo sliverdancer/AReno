@@ -1,0 +1,29 @@
+{
+  "decision": "PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE",
+  "models": [
+    {
+      "exact_instruction_count": 8,
+      "infrastructure_error": null,
+      "model_cell": "gemma4_e2b_it",
+      "parse_valid_count": 8,
+      "passed": true,
+      "raw_response_count": 8,
+      "trajectory_count": 2
+    },
+    {
+      "exact_instruction_count": 8,
+      "infrastructure_error": null,
+      "model_cell": "qwen3_0_6b",
+      "parse_valid_count": 8,
+      "passed": true,
+      "raw_response_count": 8,
+      "trajectory_count": 2
+    }
+  ],
+  "protocol": "RIST-E0-v1.2",
+  "schema_version": 1,
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_ONLY",
+  "stage": "E0",
+  "stage_status": "PASS",
+  "training_performed": false
+}

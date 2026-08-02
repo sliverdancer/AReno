@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-P2.1-v1.0",
+  "status": "DRAFT_CPU_FREEZE",
+  "source_commit_required": "TO_BE_FILLED_AFTER_PROTOCOL_CODE_COMMIT",
+  "parent_terminal_protocol": "RIST-P2-v1.0",
+  "parent_terminal_decision": "INVALID_P2_INFRASTRUCTURE",
+  "e0_prerequisite": {
+    "protocol": "RIST-E0-v1.2",
+    "decision": "PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE",
+    "stage_result_sha256": "861c0e8955550d7bb832ccaee1ed5e8050ef514ecc052773b81520a966cd01ed",
+    "audit_result_sha256": "5977a7cc3e89d27f0da157e069c40f4c7ca76a7e9e587b44a3a8a3c51d36f24f"
+  },
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "heldout_sha256_forbidden": "a318c50d7036abf8f58922730b7ba9b19324679bf1ee20459842cd742756c756",
+  "models": [
+    {
+      "cell": "qwen3_0_6b",
+      "model_id": "Qwen/Qwen3-0.6B",
+      "model_hub": "modelscope",
+      "adapter": "qwen3",
+      "snapshot_file_manifest_sha256": "ffe4fab0fed7e695aff4f17b876a091e0f984674da045d96e681f835c94715f0"
+    },
+    {
+      "cell": "gemma4_e2b_it",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_hub": "huggingface",
+      "adapter": "gemma4",
+      "snapshot_file_manifest_sha256": "74c6a28bb8465bc710cef8fb88e9d921f7bc1114aec363d12acb99c5d2f65b7f"
+    }
+  ],
+  "model_order": ["qwen3_0_6b", "gemma4_e2b_it"],
+  "serve": {
+    "tp_size": 1,
+    "world_size": 1,
+    "attn_backend": "native",
+    "eager_decode": true,
+    "disable_thinking": true,
+    "max_running_prompts": 1,
+    "port": 8000
+  },
+  "rollout_seeds": [6101, 6202, 6303, 6404, 6505, 6606, 6707, 6808],
+  "tasks_per_model": 32,
+  "trajectories_per_task": 8,
+  "trajectories_per_model": 256,
+  "turns_per_trajectory": 4,
+  "requests_per_model": 1024,
+  "total_trajectories": 512,
+  "total_requests": 2048,
+  "sampling": {
+    "enable_thinking": false,
+    "max_new_tokens": 128,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "max_running_prompts": 1
+  },
+  "retry_limit": 0,
+  "gpu_time_forecast_seconds": 13118,
+  "gpu_time_limit_seconds": 18000,
+  "training_permitted": false,
+  "qualification_data_permitted_after_health": true,
+  "heldout_data_permitted": false,
+  "checkpoint_download_permitted": false
+}

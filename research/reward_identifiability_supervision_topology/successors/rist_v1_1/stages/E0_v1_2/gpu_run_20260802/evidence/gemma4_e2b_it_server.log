@@ -1,0 +1,39 @@
+loading checkpoint:   0%|          | 0/36 [00:00<?, ?stage/s]loading checkpoint:  11%|█         | 4/36 [00:00<00:01, 26.93stage/s]loading checkpoint:  19%|█▉        | 7/36 [00:00<00:01, 23.38stage/s]loading checkpoint:  28%|██▊       | 10/36 [00:00<00:01, 22.22stage/s]loading checkpoint:  36%|███▌      | 13/36 [00:00<00:01, 21.56stage/s]loading checkpoint:  44%|████▍     | 16/36 [00:00<00:00, 21.15stage/s]loading checkpoint:  53%|█████▎    | 19/36 [00:00<00:00, 19.03stage/s]loading checkpoint:  58%|█████▊    | 21/36 [00:01<00:00, 17.91stage/s]loading checkpoint:  64%|██████▍   | 23/36 [00:01<00:00, 17.32stage/s]loading checkpoint:  69%|██████▉   | 25/36 [00:01<00:00, 16.76stage/s]loading checkpoint:  75%|███████▌  | 27/36 [00:01<00:00, 16.22stage/s]loading checkpoint:  81%|████████  | 29/36 [00:01<00:00, 16.02stage/s]loading checkpoint:  86%|████████▌ | 31/36 [00:01<00:00, 15.89stage/s]loading checkpoint:  92%|█████████▏| 33/36 [00:01<00:00, 15.77stage/s]loading checkpoint:  97%|█████████▋| 35/36 [00:01<00:00, 15.61stage/s]loading checkpoint: 100%|██████████| 36/36 [00:02<00:00, 17.77stage/s]
+INFO:     Started server process [18186]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54680 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54694 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36728 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33270 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33272 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33288 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45290 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45294 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+ERROR:    Traceback (most recent call last):
+  File "/root/miniconda3/lib/python3.12/site-packages/starlette/routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/root/miniconda3/lib/python3.12/site-packages/fastapi/routing.py", line 268, in __aexit__
+    await self._router._shutdown()
+  File "/root/miniconda3/lib/python3.12/site-packages/fastapi/routing.py", line 6391, in _shutdown
+    await handler()
+  File "/root/autodl-tmp/rist_e0_v1_2_511ed73/areno/cli/serve.py", line 229, in shutdown
+    await state.engine.end_rollout_session_async()
+  File "/root/autodl-tmp/rist_e0_v1_2_511ed73/areno/engine/api.py", line 175, in end_rollout_session_async
+    await self.cluster.call_async(Op.ROLLOUT_SESSION_END)
+  File "/root/autodl-tmp/rist_e0_v1_2_511ed73/areno/engine/protocol.py", line 335, in call_async
+    return await asyncio.wait_for(future, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+RuntimeError: worker exited without reporting result during Op.ROLLOUT_SESSION_END: rank 0 pid 18391 exitcode -15
+
+ERROR:    Application shutdown failed. Exiting.
+INFO:     Finished server process [18186]
+/root/miniconda3/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 7 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
