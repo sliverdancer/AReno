@@ -1,0 +1,22 @@
+{
+  "schema_version": "rist-p4-analysis-freeze-v1",
+  "source_commit": "9898c3dd4662962540fb0a66f0774490c6d6a5c4",
+  "results_opened": false,
+  "gpu_used": false,
+  "model_accessed": false,
+  "parent_heldout_retired": true,
+  "primary_endpoint": "confirmatory_strict_task_success",
+  "token_matched_endpoint": "development_common_support_auc",
+  "statistical_unit": "paired_training_seed",
+  "minimum_confirmatory_seeds": 8,
+  "minimum_absolute_interaction": 0.1,
+  "maximum_catastrophic_or_zero_advantage_rate": 0.1,
+  "files": {
+    "P4_ANALYSIS/PROTOCOL.md": "2e27964cec437c7d362d9764cb146a8d91ad5bff9d498f87cbadad215271ca6c",
+    "P4_ANALYSIS/analyze_results.py": "883ca3401a9cb5a56f31573794957747e7de24490b8d5e06c2a566592e3e3906",
+    "P4_ANALYSIS/collect_training_evidence.py": "790c43f9fdafc901b4a90f3495fa094dd27a854505a82b25d163bd264906fe8b",
+    "P4_ANALYSIS/assemble_run_result.py": "0fd43ff38e28c85c7c738cf12d1e17c4b81f1ef9ee303a848bb79dfb9081a1d6",
+    "P5_META/PROTOCOL.md": "3c2db1bdbf2f6c8e95116886dd08e2218d0b7634e9c7a28c12f00d9a69ec69e2",
+    "P5_META/cross_setting_gate.py": "859a657bbf6f11117145e13da5152fc38d9e06d8e1d72364766c2fd51e477860"
+  }
+}
