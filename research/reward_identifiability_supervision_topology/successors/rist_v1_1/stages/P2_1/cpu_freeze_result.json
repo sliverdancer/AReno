@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-P2.1-v1.0",
+  "phase": "P2_1_CPU_FREEZE",
+  "phase_status": "PASS",
+  "decision": "PASS_P2_1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "source_commit_required": "a9817fad60ca5280913aa23622fbe6f51d7b8d41",
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "client_sha256": "d5c8909bb2957bafed233af03f940f118d7234c831ffd0d6e8d3b68ad9aa3211",
+  "analyzer_sha256": "54c3ae7566d5eaed00e861a46f8ca7ac9e30b565763aabffd857ecf5b2c1d49e",
+  "checks": {
+    "remote_cpu_tests_passed": 15,
+    "remote_cpu_tests_failed": 0,
+    "python_syntax_valid": true,
+    "json_valid": true,
+    "e0_stage_result_hash_verified": true,
+    "e0_independent_audit_hash_verified": true,
+    "qualification_hash_verified": true,
+    "heldout_access_forbidden": true,
+    "native_backend_frozen": true,
+    "retry_limit_zero": true,
+    "training_forbidden": true,
+    "gpu_processes_after_cpu_tests": 0
+  },
+  "resource_forecast": {
+    "qwen_e0_requests": 8,
+    "qwen_e0_elapsed_seconds": 20.96409609168768,
+    "gemma_e0_requests": 8,
+    "gemma_e0_elapsed_seconds": 81.5282407477498,
+    "p2_1_requests_per_model": 1024,
+    "forecast_gpu_seconds": 13118,
+    "gpu_time_limit_seconds": 18000,
+    "prior_two_hour_budget_rejected_as_infeasible": true
+  },
+  "gpu_used_for_cpu_freeze": false,
+  "model_used_for_cpu_freeze": false,
+  "training_performed": false,
+  "qualification_serving_performed": false,
+  "heldout_data_opened": false,
+  "scientific_interpretation": "NOT_YET_ESTIMATED",
+  "next_action": "Request explicit authorization for RIST-P2.1-v1.0 sequential inference with a five-GPU-hour hard ceiling and no training."
+}

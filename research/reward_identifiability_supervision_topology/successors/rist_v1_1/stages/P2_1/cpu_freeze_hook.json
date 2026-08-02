@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v1.1",
+  "phase": "P2_1_CPU_FREEZE",
+  "source_phase_decision": "PASS_P2_1_CPU_FREEZE_TO_GPU_AUTHORIZATION_REQUEST",
+  "decision": "STAY_DIAGNOSTIC_WAIT_P2_1_GPU_QUALIFICATION",
+  "upgraded": false,
+  "main_conference_route_open": false,
+  "reason": "CPU validation and E0 serving readiness do not establish mixed-reward groups, non-zero group-relative advantages, or a supervision-topology interaction.",
+  "required_next_gate": "Both frozen model families must complete P2.1 and satisfy every interface, reward-resolution, action-diversity, and cross-stratum gate before a P3 training protocol may be frozen."
+}

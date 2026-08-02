@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "protocol": "RIST-P2.1-v1.0",
-  "status": "DRAFT_CPU_FREEZE",
-  "source_commit_required": "TO_BE_FILLED_AFTER_PROTOCOL_CODE_COMMIT",
+  "status": "FROZEN_AWAITING_GPU_AUTHORIZATION",
+  "source_commit_required": "a9817fad60ca5280913aa23622fbe6f51d7b8d41",
   "parent_terminal_protocol": "RIST-P2-v1.0",
   "parent_terminal_decision": "INVALID_P2_INFRASTRUCTURE",
   "e0_prerequisite": {

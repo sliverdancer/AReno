@@ -1,6 +1,6 @@
 # RIST-v1.1 Successor Route
 
-Status: `E0_V1_2_CPU_READY_AWAITING_NEW_GPU_AUTHORIZATION`
+Status: `P2_1_CPU_READY_AWAITING_GPU_AUTHORIZATION`
 
 Parent terminal result: `../../stages/P2/stage_result.json`
 
@@ -29,10 +29,18 @@ top-level extension import named a module that the package does not register.
 The actual extension import, CUDA, exact source, `areno check`, and empty GPU
 process list passed, but no server or model request was started.
 
-`RIST-E0-v1.2` minimally corrects that symbol, retains the native backend,
-model order, canary semantics, thresholds, and 30-minute ceiling, and is now
-CPU-frozen. The next unopened action is a newly authorized v1.2 GPU canary; the
-v1.1 authorization does not carry over.
+`RIST-E0-v1.2` minimally corrected that symbol and passed both model-family
+canaries: each produced 8/8 raw responses, 8/8 parser-valid calls, and 8/8 exact
+instructed tool/code pairs. Its decision is
+`PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE`; it remains infrastructure-only
+and does not upgrade the main-conference route.
+
+`RIST-P2.1-v1.0` is now CPU-frozen. It preserves the 32 qualification tasks,
+eight rollout seeds, sequential request order, two checkpoint families, and
+all scientific gates from the unconsumed P2-v1.0 client while requiring the
+E0-proven native stack. E0 throughput forecasts about 3.65 GPU-hours for 2,048
+requests, so the old two-hour estimate is infeasible and the new hard ceiling
+is five GPU-hours. No qualification request or training has been executed.
 
 ## Evidence roots
 
@@ -44,7 +52,13 @@ v1.1 authorization does not carry over.
 - E0-v1.2 protocol and manifest: `stages/E0_v1_2/PROTOCOL.md`,
   `stages/E0_v1_2/EXECUTION_MANIFEST.json`;
 - E0-v1.2 CPU freeze: `stages/E0_v1_2/cpu_freeze_result.json`;
-- E0-v1.2 canary data: `stages/E0_v1_2/canary_tasks.json`.
+- E0-v1.2 terminal result:
+  `stages/E0_v1_2/gpu_run_20260802/evidence/stage_result.json`;
+- E0-v1.2 independent audit:
+  `stages/E0_v1_2/gpu_run_20260802/evidence/audit_result.json`;
+- P2.1 protocol and manifest: `stages/P2_1/PROTOCOL.md`,
+  `stages/P2_1/EXECUTION_MANIFEST.json`;
+- P2.1 CPU freeze: `stages/P2_1/cpu_freeze_result.json`.
 
 ## Claim language
 
