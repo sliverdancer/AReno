@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `CPU_PREP_PASS_TO_PUBLIC_API_AND_DOWNLOAD_AUTHORIZATION_BOUNDARY`
+Status: `CPU_ANALYSIS_STACK_PASS_TO_PUBLIC_API_AND_DOWNLOAD_AUTHORIZATION_BOUNDARY`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -35,6 +35,14 @@ GPU, model access, downloads, inference, and training remain closed.
 9. T0 proves that the existing argument-mask treatment is not yet an exact
    tool-name-only treatment and freezes a fail-closed real-tokenizer gate.
 10. E1 freezes per-checkpoint serving plus GSPO/GRPO one-step capacity gates.
+11. C0 freezes direct mixed-group resolution calibration and cross-family
+    whole-cell selection before training.
+12. D4 freezes independent development curves, in-memory confirmatory
+    generation after one-shot ledgers, and strict no-repair evaluation.
+13. P4/P5 freeze seed-level step interaction, token-common-support robustness,
+    prospective power, raw-file verification, and cross-setting transport gates.
+14. The parent D2 held-out is permanently retired after a broad source search
+    could scan its bytes; it is not an input to any successor result.
 
 ## Current boundary
 

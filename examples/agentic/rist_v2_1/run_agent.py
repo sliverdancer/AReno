@@ -81,7 +81,7 @@ async def run_agent(ctx, batch):
                 break
             assistant = validation["assistant_message"]
             next_contract = (
-                item.record["turns"][turn_index + 1]
+                _visible_turn(item.record["turns"][turn_index + 1])
                 if turn_index + 1 < len(item.record["turns"])
                 else None
             )
@@ -171,6 +171,22 @@ def _turn_instruction(turn: dict[str, Any]) -> str:
             for candidate in turn["candidate_records"]
         )
     )
+
+
+def _visible_turn(turn: dict[str, Any]) -> dict[str, Any]:
+    """Return only information the environment may reveal after success."""
+
+    return {
+        key: turn[key]
+        for key in (
+            "turn_index",
+            "offered_tools",
+            "target_label",
+            "candidate_records",
+            "selection_rule",
+            "depends_on_previous_observation",
+        )
+    }
 
 
 def _assistant_message(response: Any) -> dict[str, Any]:

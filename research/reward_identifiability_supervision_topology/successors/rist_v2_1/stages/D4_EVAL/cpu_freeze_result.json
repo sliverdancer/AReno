@@ -1,0 +1,17 @@
+{
+  "confirmatory_materialized": false,
+  "decision": "PASS_D4_CPU_CONTRACT_AWAITING_CHECKPOINTS",
+  "development_task_count": 16,
+  "gpu_used": false,
+  "model_accessed": false,
+  "parent_heldout_used": false,
+  "protocol": "RIST-D4-EVAL-v2.1",
+  "scientific_result_generated": false,
+  "tests": {
+    "infrastructure_failure_persisted": true,
+    "next_contract_oracle_hidden": true,
+    "one_shot_ledger": true,
+    "strict_no_repair": true
+  },
+  "training_performed": false
+}

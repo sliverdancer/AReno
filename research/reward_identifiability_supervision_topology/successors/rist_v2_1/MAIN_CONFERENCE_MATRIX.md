@@ -7,15 +7,15 @@ is not yet open.
 
 | Block | Minimum evidence | Current |
 |---|---|---|
-| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | missing |
+| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | capacity gate frozen; Qwen serving only, Gemma/24 GB rejected |
 | Exact content treatment | full call versus tool-name-only | current argument mask formally insufficient; public change pending |
-| Token robustness | step-matched plus common-token endpoint/AUC | analyzer and blocked 48-run templates frozen |
+| Token robustness | step-matched plus common-token endpoint/AUC | seed-level analyzer, raw-file audit, and blocked 48-run templates frozen |
 | Real training environment | Tau3 text airline, preferably retail replication | v1.0.1 commit pinned; download absent |
 | Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 commit pinned; download and content absent |
 | Direct baselines | reward-collapse, turn-credit, and routing/masking neighbors | planned only |
-| Confirmatory inference | seed-level CI, prospective power, one-shot held-out | missing |
+| Confirmatory inference | seed-level CI, prospective power, one-shot held-out | D4/P4 ledger and analysis contracts frozen; no outcomes |
 
 ## GO_MAIN_TRACK
 

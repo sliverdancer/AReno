@@ -9,7 +9,7 @@
   "run_matrix_rows": 48,
   "stage": "P3_DESIGN",
   "tests": {
-    "cpu_contract_tests_passed": 15,
+    "cpu_contract_tests_passed": 32,
     "runner": "direct runpy harness"
   },
   "training_performed": false

@@ -181,6 +181,52 @@ def test_v2_1_dataset_loader_rejects_non_train_and_builds_prompt(tmp_path):
         raise AssertionError("training loader must reject non-train paths")
 
 
+def test_v2_1_reward_journal_keeps_zero_and_one_outcomes(tmp_path):
+    reward_module = _load_module(
+        "rist_v2_1_reward_journal",
+        REPO_ROOT / "examples" / "agentic" / "rist_v2_1" / "reward.py",
+    )
+    train_builder = _load_module(
+        "rist_v2_1_train_builder_reward",
+        V2_1 / "stages" / "D3" / "build_train_split.py",
+    )
+    row = train_builder.build_rows()[0]
+    row["resolution_band"] = "low"
+    from types import SimpleNamespace
+    import os
+
+    journal = tmp_path / "rewards.jsonl"
+    previous = os.environ.get("RIST_REWARD_JOURNAL_PATH")
+    os.environ["RIST_REWARD_JOURNAL_PATH"] = str(journal)
+    try:
+        invalid = SimpleNamespace(
+            source_record=row,
+            metadata={"prompt_index": 0, "sample_index": 0},
+            tool_calls=[{"name": "bad", "arguments": "not-json"}],
+        )
+        exact = SimpleNamespace(
+            source_record=row,
+            metadata={"prompt_index": 0, "sample_index": 1},
+            tool_calls=[
+                {"name": action["name"], "arguments": action["arguments"]}
+                for action in row["oracle_actions"]
+            ],
+        )
+        assert reward_module.reward_fn(invalid) == 0.0
+        assert reward_module.reward_fn(exact) == 1.0
+    finally:
+        if previous is None:
+            os.environ.pop("RIST_REWARD_JOURNAL_PATH", None)
+        else:
+            os.environ["RIST_REWARD_JOURNAL_PATH"] = previous
+    events = [
+        __import__("json").loads(line) for line in journal.read_text().splitlines()
+    ]
+    assert [event["reward"] for event in events] == [0.0, 1.0]
+    assert [event["sample_index"] for event in events] == [0, 1]
+    assert all(event["resolution_band"] == "low" for event in events)
+
+
 def test_v2_1_strict_runner_accepts_exact_call_and_rejects_wrong_tool():
     runner = _load_module(
         "rist_v2_1_runner",
@@ -234,6 +280,17 @@ def test_v2_1_strict_runner_accepts_exact_call_and_rejects_wrong_tool():
     result = runner.validate_response(wrong, turn)
     assert result["valid"] is False
     assert result["reason"] == "WRONG_TOOL"
+    visible = runner._visible_turn(turn)
+    assert "expected_tool" not in visible
+    assert "oracle_actions" not in visible
+    assert set(visible) == {
+        "turn_index",
+        "offered_tools",
+        "target_label",
+        "candidate_records",
+        "selection_rule",
+        "depends_on_previous_observation",
+    }
 
 
 def test_v2_1_tokenizer_gate_distinguishes_argument_mask_from_name_only():
@@ -391,13 +448,26 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
         "rist_v2_1_execution_manifest",
         V2_1 / "stages" / "P3_DESIGN" / "build_execution_manifest.py",
     )
-    manifest = builder.build_manifest(tmp_path / "run", max_steps=7)
+    manifest = builder.build_manifest(tmp_path / "run", max_steps=100)
     assert manifest["run_count"] == 48
     assert manifest["execution_authorized"] is False
+    assert manifest["resolution_filtered_dataset_ready"] is False
+    assert manifest["train_sha256"] is None
+    assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
     assert "T0_EXACT_NAME_ONLY_TREATMENT" in manifest["blocked_by"]
     assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 24
     assert all("--max-steps" in run["command"] for run in manifest["runs"])
+    assert manifest["save_interval"] == 25
+    assert manifest["saved_checkpoint_steps"] == [25, 50, 75, 100]
+    assert all("--save-path" in run["command"] for run in manifest["runs"])
+    assert all("--save-interval" in run["command"] for run in manifest["runs"])
+    assert all(
+        set(run["required_environment"])
+        == {"RIST_RAW_JOURNAL_PATH", "RIST_REWARD_JOURNAL_PATH"}
+        for run in manifest["runs"]
+    )
     assert all("heldout" not in " ".join(run["command"]).lower() for run in manifest["runs"])
+    assert all("{FILTERED_TRAIN_JSONL}" in run["command"] for run in manifest["runs"])
 
 
 def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():
@@ -410,3 +480,635 @@ def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():
     plan = planner.sensitivity_plan()
     assert plan["statistical_unit"] == "paired_training_seed"
     assert plan["three_seed_status"] == "pilot_variance_only"
+
+
+def _mock_p4_results(manifest, *, token_reversal: bool = False):
+    endpoints = {"AF": 0.45, "LF": 0.35, "AN": 0.75, "LN": 0.45}
+    starts = {"AF": 0.30, "LF": 0.25, "AN": 0.55, "LN": 0.30}
+    token_support = {
+        "AF": (100.0, 1000.0),
+        "LF": (80.0, 700.0),
+        "AN": (90.0, 5000.0 if token_reversal else 800.0),
+        "LN": (70.0, 600.0),
+    }
+    if token_reversal:
+        starts["AN"] = 0.0
+    rows = []
+    for design in manifest["runs"]:
+        arm = design["arm"]
+        start = starts[arm]
+        endpoint = endpoints[arm]
+        low = max(0.0, endpoint - 0.05)
+        high = min(1.0, endpoint + 0.05)
+        rows.append(
+            {
+                "run_id": design["run_id"],
+                "family": design["family"],
+                "algorithm": design["algorithm"],
+                "arm": arm,
+                "seed": design["seed"],
+                "catastrophic": False,
+                "confirmatory_strict_success": endpoint,
+                "confirmatory_strict_success_by_resolution": {
+                    "low": low,
+                    "high": high,
+                },
+                "nonzero_advantage_groups": 10,
+                "raw_evidence_sha256": __import__("hashlib")
+                .sha256(design["run_id"].encode())
+                .hexdigest(),
+                "curve": [
+                    {
+                        "step": 1,
+                        "cumulative_trainable_tokens": token_support[arm][0],
+                        "strict_success": start,
+                        "strict_success_by_resolution": {
+                            "low": max(0.0, start - 0.05),
+                            "high": min(1.0, start + 0.05),
+                        },
+                    },
+                    {
+                        "step": manifest["max_steps"],
+                        "cumulative_trainable_tokens": token_support[arm][1],
+                        "strict_success": endpoint,
+                        "strict_success_by_resolution": {"low": low, "high": high},
+                    },
+                ],
+            }
+        )
+    return rows
+
+
+def test_v2_1_p4_analyzer_uses_seed_interactions_and_blocks_three_seed_pilot(
+    tmp_path,
+):
+    analyzer = _load_module(
+        "rist_v2_1_p4_analysis",
+        V2_1 / "stages" / "P4_ANALYSIS" / "analyze_results.py",
+    )
+    manifest = __import__("json").loads(
+        (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
+    )
+    rows = _mock_p4_results(manifest)
+    for row in rows:
+        relative = f"{row['run_id']}.json"
+        payload = row["run_id"].encode()
+        (tmp_path / relative).write_bytes(payload)
+        row["raw_evidence_path"] = relative
+        row["raw_evidence_sha256"] = __import__("hashlib").sha256(payload).hexdigest()
+    result = analyzer.analyze_bundle(manifest, rows, evidence_root=tmp_path)
+    assert result["run_count"] == 48
+    assert len(result["seed_rows"]) == 12
+    assert len(result["blocks"]) == 4
+    assert result["cross_block_step_sign_consistent"] is True
+    assert all(block["token_sign_consistent"] for block in result["blocks"])
+    assert all(
+        set(block["resolution_interaction"]) == {"low", "high"}
+        for block in result["blocks"]
+    )
+    assert all(
+        "mean" in block["resolution_moderation_high_minus_low"]
+        for block in result["blocks"]
+    )
+    assert result["three_seed_pilot_only"] is True
+    assert result["raw_evidence_files_verified"] is True
+    assert result["scientific_treatment_ready"] is False
+    assert result["execution_authority_recorded"] is False
+    assert result["main_track_eligible"] is False
+    assert all(block["required_paired_seeds"] >= 8 for block in result["blocks"])
+
+
+def test_v2_1_p4_analyzer_detects_token_matched_sign_failure():
+    analyzer = _load_module(
+        "rist_v2_1_p4_analysis_reversal",
+        V2_1 / "stages" / "P4_ANALYSIS" / "analyze_results.py",
+    )
+    manifest = __import__("json").loads(
+        (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
+    )
+    result = analyzer.analyze_bundle(
+        manifest, _mock_p4_results(manifest, token_reversal=True)
+    )
+    assert any(not block["token_sign_consistent"] for block in result["blocks"])
+    assert result["main_track_eligible"] is False
+
+
+def test_v2_1_p4_analyzer_rejects_missing_run():
+    analyzer = _load_module(
+        "rist_v2_1_p4_analysis_missing",
+        V2_1 / "stages" / "P4_ANALYSIS" / "analyze_results.py",
+    )
+    manifest = __import__("json").loads(
+        (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
+    )
+    rows = _mock_p4_results(manifest)[:-1]
+    try:
+        analyzer.analyze_bundle(manifest, rows)
+    except ValueError as error:
+        assert "run bundle mismatch" in str(error)
+    else:
+        raise AssertionError("missing frozen run must invalidate the bundle")
+
+
+def test_v2_1_p4_training_collector_aligns_tokens_and_mixed_groups():
+    collector = _load_module(
+        "rist_v2_1_p4_training_collector",
+        V2_1 / "stages" / "P4_ANALYSIS" / "collect_training_evidence.py",
+    )
+    series = {
+        name: [
+            {
+                "step": step,
+                "value": (
+                    10.0
+                    if name == "trainable_tokens"
+                    else 5.0
+                    if name == "masked_response_tokens"
+                    else 0.5
+                ),
+            }
+            for step in range(100)
+        ]
+        for name in collector.TAGS
+    }
+    rewards = []
+    for step in range(100):
+        for sample_index in range(8):
+            rewards.append(
+                {
+                    "sample_index": sample_index,
+                    "reward": sample_index % 2 if step < 40 else 0,
+                }
+            )
+    result = collector.summarize_training(series, rewards)
+    assert [point["cumulative_trainable_tokens"] for point in result["points"]] == [
+        250,
+        500,
+        750,
+        1000,
+    ]
+    assert result["total_nonzero_advantage_groups"] == 40
+    assert result["zero_advantage_group_count"] == 60
+
+
+def test_v2_1_p4_run_assembler_uses_dev_curve_and_confirmatory_endpoint(tmp_path):
+    assembler = _load_module(
+        "rist_v2_1_p4_run_assembler",
+        V2_1 / "stages" / "P4_ANALYSIS" / "assemble_run_result.py",
+    )
+    run_id = "qwen3-gspo-AF-7101"
+    training = {
+        "protocol": "RIST-P4-v2.1",
+        "total_nonzero_advantage_groups": 40,
+        "points": [
+            {
+                "checkpoint_step": step,
+                "cumulative_trainable_tokens": step * 10,
+                "mean_training_reward": 0.5,
+            }
+            for step in (25, 50, 75, 100)
+        ],
+    }
+    resolution_map = {
+        "passed": True,
+        "common_resolution_map": {
+            "c00": "low",
+            "c01": "low",
+            "c06": "high",
+            "c07": "high",
+        },
+    }
+
+    def evaluation(split, checkpoint_id, low_reward, high_reward):
+        trajectories = []
+        for cell in ("c00", "c01", "c06", "c07"):
+            reward = low_reward if cell in {"c00", "c01"} else high_reward
+            for index in range(2):
+                trajectories.append(
+                    {
+                        "structural_cell": cell,
+                        "strict_success": int(index / 2 < reward),
+                    }
+                )
+        return {
+            "split": split,
+            "checkpoint_id": checkpoint_id,
+            "complete": True,
+            "trajectories": trajectories,
+        }
+
+    dev = [
+        evaluation("dev_curve", f"{run_id}-dev-step-{step:03d}", 0.0, 0.5)
+        for step in (25, 50, 75, 100)
+    ]
+    confirmatory = evaluation(
+        "confirmatory", f"{run_id}-confirmatory-step-100", 0.5, 1.0
+    )
+    archive = tmp_path / "evidence.tgz"
+    archive.write_bytes(b"evidence")
+    result = assembler.assemble_run(
+        {
+            "run_id": run_id,
+            "family": "qwen3",
+            "algorithm": "gspo",
+            "arm": "AF",
+            "seed": 7101,
+        },
+        training,
+        dev,
+        confirmatory,
+        resolution_map,
+        archive,
+        "runs/qwen3/evidence.tgz",
+    )
+    assert result["curve"][-1]["strict_success"] == 0.25
+    assert result["confirmatory_strict_success"] == 0.75
+    assert result["confirmatory_strict_success_by_resolution"] == {
+        "low": 0.5,
+        "high": 1.0,
+    }
+    assert result["nonzero_advantage_groups"] == 40
+
+
+def test_v2_1_p5_cross_setting_gate_requires_real_and_sealed_transport():
+    gate = _load_module(
+        "rist_v2_1_p5_gate",
+        V2_1 / "stages" / "P5_META" / "cross_setting_gate.py",
+    )
+    summaries = {
+        setting: {
+            "completed": True,
+            "interaction_estimate": 0.15,
+            "ci95": [0.05, 0.25],
+            "families": ["qwen3", "gemma4"],
+            "algorithms": ["gspo", "grpo"],
+            "token_sign_consistent": True,
+            "catastrophic_run_rate": 0.0,
+            "raw_evidence_complete": True,
+            "powered": True,
+            "analysis_protocol_sha256": "d" * 64,
+            "environment_qualification_pass": True,
+            "sealed_once": True,
+        }
+        for setting in ("rist_synthetic", "tau3", "bfcl_sealed")
+    }
+    assert gate.evaluate_cross_setting(summaries)["main_track_eligible"] is True
+    summaries["tau3"]["completed"] = False
+    result = gate.evaluate_cross_setting(summaries)
+    assert result["main_track_eligible"] is False
+    assert result["decision"] == "DO_NOT_UPGRADE_MAIN_TRACK"
+
+
+def test_v2_1_d4_eval_splits_are_balanced_and_disjoint(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_d4_builder",
+        V2_1 / "stages" / "D4_EVAL" / "build_eval_splits.py",
+    )
+    manifest = builder.write_splits(tmp_path / "data")
+    assert manifest["splits"]["dev_curve"]["count"] == 16
+    assert manifest["splits"]["confirmatory"]["count"] == 32
+    assert manifest["splits"]["dev_curve"]["trajectory_count"] == 32
+    assert manifest["splits"]["confirmatory"]["trajectory_count"] == 128
+    assert manifest["splits"]["dev_curve"]["materialized"] is True
+    assert manifest["splits"]["confirmatory"]["materialized"] is False
+    assert (tmp_path / "data" / "dev_curve.jsonl").is_file()
+    assert not (tmp_path / "data" / "confirmatory.jsonl").exists()
+    assert manifest["parent_heldout_opened"] is False
+
+    signatures = {
+        split: set(manifest["splits"][split]["task_signatures"])
+        for split in ("dev_curve", "confirmatory")
+    }
+    train_builder = _load_module(
+        "rist_v2_1_d3_builder_for_d4", V2_1 / "stages" / "D3" / "build_train_split.py"
+    )
+    train_signatures = {row["task_signature"] for row in train_builder.build_rows()}
+    assert signatures["dev_curve"].isdisjoint(signatures["confirmatory"])
+    assert signatures["dev_curve"].isdisjoint(train_signatures)
+    assert signatures["confirmatory"].isdisjoint(train_signatures)
+
+
+def test_v2_1_d4_strict_evaluator_stops_without_repair_and_hides_oracle(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_d4_builder_runner",
+        V2_1 / "stages" / "D4_EVAL" / "build_eval_splits.py",
+    )
+    evaluator = _load_module(
+        "rist_v2_1_d4_evaluator",
+        V2_1 / "stages" / "D4_EVAL" / "evaluate_checkpoint.py",
+    )
+    task = builder.build_rows("dev_curve")[0]
+    requests = []
+
+    def exact_post(payload):
+        requests.append(payload)
+        turn = task["turns"][len(requests) - 1]
+        target = next(
+            candidate["code"]
+            for candidate in turn["candidate_records"]
+            if candidate["label"] == turn["target_label"]
+        )
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "id": f"call-{len(requests)}",
+                                "type": "function",
+                                "function": {
+                                    "name": turn["expected_tool"],
+                                    "arguments": __import__("json").dumps({"code": target}),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ]
+        }
+
+    result = evaluator.run_trajectory(
+        task,
+        8101,
+        {"temperature": 0.7, "top_p": 0.95, "max_tokens": 128},
+        exact_post,
+        tmp_path / "exact.jsonl",
+    )
+    assert result["strict_success"] == 1
+    assert result["completed_turns"] == 4
+    assert len((tmp_path / "exact.jsonl").read_text().splitlines()) == 4
+    assert "expected_tool" not in __import__("json").dumps(requests[1]["messages"])
+
+    invalid = evaluator.run_trajectory(
+        task,
+        8101,
+        {"temperature": 0.7, "top_p": 0.95, "max_tokens": 128},
+        lambda _: {"choices": [{"message": {"role": "assistant", "tool_calls": []}}]},
+        tmp_path / "invalid.jsonl",
+    )
+    assert invalid["strict_success"] == 0
+    assert invalid["completed_turns"] == 0
+    assert invalid["invalid_reason"] == "CALL_COUNT"
+    assert len((tmp_path / "invalid.jsonl").read_text().splitlines()) == 1
+
+
+def test_v2_1_d4_confirmatory_ledger_is_consumed_before_data(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_d4_builder_ledger",
+        V2_1 / "stages" / "D4_EVAL" / "build_eval_splits.py",
+    )
+    evaluator = _load_module(
+        "rist_v2_1_d4_evaluator_ledger",
+        V2_1 / "stages" / "D4_EVAL" / "evaluate_checkpoint.py",
+    )
+    data_dir = tmp_path / "data"
+    builder.write_splits(data_dir)
+    ledger = tmp_path / "confirmatory-ledger.json"
+    invalid_response = {
+        "choices": [{"message": {"role": "assistant", "tool_calls": []}}]
+    }
+    result = evaluator.collect(
+        data_dir=data_dir,
+        split="confirmatory",
+        checkpoint_id="mock-step-100",
+        output_path=tmp_path / "result.json",
+        journal_path=tmp_path / "journal.jsonl",
+        ledger_path=ledger,
+        post_json=lambda _: invalid_response,
+    )
+    assert result["trajectory_count"] == 128
+    assert result["complete"] is True
+    assert result["strict_success"] == 0.0
+    assert __import__("json").loads(ledger.read_text())["result_complete"] is True
+    try:
+        evaluator.collect(
+            data_dir=data_dir,
+            split="confirmatory",
+            checkpoint_id="mock-step-100",
+            output_path=tmp_path / "result-second.json",
+            journal_path=tmp_path / "journal-second.jsonl",
+            ledger_path=ledger,
+            post_json=lambda _: invalid_response,
+        )
+    except FileExistsError:
+        pass
+    else:
+        raise AssertionError("confirmatory ledger must be one-shot")
+
+
+def test_v2_1_d4_persists_infrastructure_failure_without_fabrication(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_d4_builder_failure",
+        V2_1 / "stages" / "D4_EVAL" / "build_eval_splits.py",
+    )
+    evaluator = _load_module(
+        "rist_v2_1_d4_evaluator_failure",
+        V2_1 / "stages" / "D4_EVAL" / "evaluate_checkpoint.py",
+    )
+    data_dir = tmp_path / "data"
+    builder.write_splits(data_dir)
+
+    def fail(_):
+        raise RuntimeError("fixture endpoint failure")
+
+    result = evaluator.collect(
+        data_dir=data_dir,
+        split="dev_curve",
+        checkpoint_id="mock-failure",
+        output_path=tmp_path / "failure-result.json",
+        journal_path=tmp_path / "failure-journal.jsonl",
+        post_json=fail,
+    )
+    assert result["complete"] is False
+    assert result["trajectory_count"] == 0
+    assert result["strict_success"] is None
+    assert result["infrastructure_error"]["error_type"] == "RuntimeError"
+    assert result["raw_journal_sha256"] is None
+    assert (tmp_path / "failure-result.json").is_file()
+
+
+def test_v2_1_d4_evaluation_manifest_covers_all_checkpoints_without_authority(
+    tmp_path,
+):
+    training_builder = _load_module(
+        "rist_v2_1_training_manifest_for_d4",
+        V2_1 / "stages" / "P3_DESIGN" / "build_execution_manifest.py",
+    )
+    evaluation_builder = _load_module(
+        "rist_v2_1_d4_eval_manifest",
+        V2_1 / "stages" / "D4_EVAL" / "build_evaluation_manifest.py",
+    )
+    training = training_builder.build_manifest(tmp_path / "run", max_steps=100)
+    evaluation = evaluation_builder.build_evaluation_manifest(
+        training, tmp_path / "run"
+    )
+    assert evaluation["job_count"] == 242
+    assert evaluation["development_job_count"] == 194
+    assert evaluation["confirmatory_job_count"] == 48
+    assert evaluation["execution_authorized"] is False
+    assert evaluation["commands_are_templates_only"] is True
+    assert all(job["execution_authorized"] is False for job in evaluation["jobs"])
+    confirmatory = [
+        job for job in evaluation["jobs"] if job["split"] == "confirmatory"
+    ]
+    assert all(job["ledger"] is not None for job in confirmatory)
+    assert all(
+        job["prerequisite"] == "ALL_TRAINING_AND_ANALYSIS_HASHES_FROZEN"
+        for job in confirmatory
+    )
+
+
+def _mock_resolution_rows(split):
+    rows = []
+    for cell_index in range(8):
+        cell = f"c{cell_index:02d}"
+        for task_index in range(4):
+            for seed_index in range(32):
+                reward = 0 if cell_index < 4 else seed_index % 2
+                rows.append(
+                    {
+                        "split": split,
+                        "structural_cell": cell,
+                        "task_id": f"{split}-{cell}-{task_index}",
+                        "rollout_seed": 10000 + seed_index,
+                        "strict_success": reward,
+                    }
+                )
+    return rows
+
+
+def test_v2_1_c0_direct_mixed_group_calibration_transports_across_families():
+    calibrator = _load_module(
+        "rist_v2_1_c0_calibrator",
+        V2_1 / "stages" / "C0_RESOLUTION" / "calibrate_resolution.py",
+    )
+    combiner = _load_module(
+        "rist_v2_1_c0_combiner",
+        V2_1 / "stages" / "C0_RESOLUTION" / "combine_family_maps.py",
+    )
+    calibration = _mock_resolution_rows("calibration")
+    qualification = _mock_resolution_rows("qualification")
+    qwen = calibrator.calibrate_checkpoint(calibration, qualification, "qwen3")
+    gemma = calibrator.calibrate_checkpoint(calibration, qualification, "gemma4")
+    assert qwen["passed"] is True
+    assert qwen["band_cell_counts"] == {"low": 4, "high": 4}
+    assert qwen["calibration"]["cells"]["c00"]["classification"] == "collapsed"
+    assert qwen["calibration"]["cells"]["c07"]["classification"] == "resolved"
+    combined = combiner.combine_maps([qwen, gemma])
+    assert combined["passed"] is True
+    assert combined["band_cell_counts"] == {"low": 4, "high": 4}
+
+
+def test_v2_1_c0_kills_nontransporting_resolution_pool():
+    calibrator = _load_module(
+        "rist_v2_1_c0_calibrator_kill",
+        V2_1 / "stages" / "C0_RESOLUTION" / "calibrate_resolution.py",
+    )
+    calibration = _mock_resolution_rows("calibration")
+    qualification = _mock_resolution_rows("qualification")
+    for row in qualification:
+        if row["structural_cell"] in {"c00", "c01", "c02"}:
+            row["strict_success"] = row["rollout_seed"] % 2
+    result = calibrator.calibrate_checkpoint(calibration, qualification, "mock")
+    assert result["passed"] is False
+    assert result["decision"] == "KILL_C0_TASK_POOL"
+
+
+def test_v2_1_c0_filter_retains_whole_cells_without_outcome_selection(tmp_path):
+    train_builder = _load_module(
+        "rist_v2_1_d3_builder_filter", V2_1 / "stages" / "D3" / "build_train_split.py"
+    )
+    filterer = _load_module(
+        "rist_v2_1_c0_filter",
+        V2_1 / "stages" / "C0_RESOLUTION" / "filter_train_pool.py",
+    )
+    source_dir = tmp_path / "source" / "data"
+    train_builder.write_train(source_dir)
+    map_result = {
+        "passed": True,
+        "common_resolution_map": {
+            "c00": "low",
+            "c01": "low",
+            "c06": "high",
+            "c07": "high",
+        },
+    }
+    result = filterer.filter_train(
+        source_dir / "train.jsonl", map_result, tmp_path / "filtered" / "data"
+    )
+    assert result["task_count"] == 16
+    assert result["band_cell_counts"] == {"low": 2, "high": 2}
+    assert result["individual_outcome_selection"] is False
+    rows = [
+        __import__("json").loads(line)
+        for line in (tmp_path / "filtered" / "data" / "train.jsonl")
+        .read_text()
+        .splitlines()
+    ]
+    assert {row["structural_cell"] for row in rows} == set(
+        map_result["common_resolution_map"]
+    )
+    assert all("resolution_band" in row for row in rows)
+
+
+def test_v2_1_c0_collection_manifest_freezes_four_unauthorized_jobs(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_c0_collection_manifest",
+        V2_1 / "stages" / "C0_RESOLUTION" / "build_collection_manifest.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "run")
+    assert manifest["job_count"] == 4
+    assert manifest["execution_authorized"] is False
+    assert manifest["commands_are_templates_only"] is True
+    assert manifest["parent_heldout_opened"] is False
+    assert manifest["group_size"] == 8
+    assert manifest["groups_per_task"] == 4
+    assert all(row["trajectory_count"] == 1024 for row in manifest["jobs"])
+    assert len(manifest["splits"]["calibration"]["rollout_seeds"]) == 32
+
+
+def test_v2_1_c0_collector_persists_complete_zero_reward_rows(tmp_path):
+    train_builder = _load_module(
+        "rist_v2_1_d3_builder_for_c0", V2_1 / "stages" / "D3" / "build_train_split.py"
+    )
+    collector = _load_module(
+        "rist_v2_1_c0_collector",
+        V2_1 / "stages" / "C0_RESOLUTION" / "collect_pretraining.py",
+    )
+    row = train_builder.build_rows()[0]
+    row["split"] = "calibration"
+    source_dir = tmp_path / "source"
+    source_dir.mkdir()
+    encoded = (__import__("json").dumps(row, sort_keys=True) + "\n").encode()
+    (source_dir / "calibration.jsonl").write_bytes(encoded)
+    manifest = {
+        "protocol": "RIST-C0-v2.1",
+        "source_data_dir": str(source_dir),
+        "models": {"qwen3": "mock"},
+        "sampling": {"temperature": 0.7, "top_p": 0.95, "max_tokens": 128},
+        "splits": {
+            "calibration": {
+                "file": "calibration.jsonl",
+                "sha256": __import__("hashlib").sha256(encoded).hexdigest(),
+                "rollout_seeds": [1, 2],
+                "trajectory_count": 2,
+            }
+        },
+    }
+    invalid_response = {
+        "choices": [{"message": {"role": "assistant", "tool_calls": []}}]
+    }
+    result = collector.collect(
+        manifest,
+        "qwen3",
+        "calibration",
+        tmp_path / "result.json",
+        tmp_path / "journal.jsonl",
+        lambda _: invalid_response,
+    )
+    assert result["complete"] is True
+    assert result["trajectory_count"] == 2
+    assert all(row["strict_success"] == 0 for row in result["trajectories"])
+    assert all(row["split"] == "calibration" for row in result["trajectories"])

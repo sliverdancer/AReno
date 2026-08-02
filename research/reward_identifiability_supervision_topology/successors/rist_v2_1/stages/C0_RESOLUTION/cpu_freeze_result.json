@@ -1,0 +1,14 @@
+{
+  "decision": "PASS_C0_CPU_CONTRACT_AWAITING_MODEL_ACCESS",
+  "gpu_used": false,
+  "model_accessed": false,
+  "parent_heldout_used": false,
+  "protocol": "RIST-C0-v2.1",
+  "scientific_result_generated": false,
+  "tests": {
+    "direct_mixed_group_pass_fixture": true,
+    "nontransport_kill_fixture": true,
+    "whole_cell_filter_fixture": true
+  },
+  "training_performed": false
+}

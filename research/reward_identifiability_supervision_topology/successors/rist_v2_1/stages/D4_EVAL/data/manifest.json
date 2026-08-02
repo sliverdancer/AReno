@@ -1,0 +1,100 @@
+{
+  "confirmatory_checkpoint_step": 100,
+  "development_checkpoint_steps": [
+    25,
+    50,
+    75,
+    100
+  ],
+  "gpu_used": false,
+  "model_accessed": false,
+  "parent_heldout_opened": false,
+  "protocol": "RIST-D4-EVAL-v2.1",
+  "sampling": {
+    "max_tokens": 128,
+    "retry_count": 0,
+    "temperature": 0.7,
+    "top_p": 0.95
+  },
+  "schema_version": 1,
+  "seed": 20260802,
+  "splits": {
+    "confirmatory": {
+      "count": 32,
+      "materialized": false,
+      "rollout_seeds": [
+        9101,
+        9202,
+        9303,
+        9404
+      ],
+      "sha256": "3faebeda64e01932b15c068992be0da574bb3d1d24d77aa2ddb57931f73e9300",
+      "task_signatures": [
+        "025766fdc94323c8ac1a654eaaadeebeba5931b06db882dab2b5e7af7dae422e",
+        "0638250e84b32b0d4304d3eb83661a29b0fa668144e1ad528a8c79d634b80d89",
+        "09c3a7154d0eb15e0fecc119d2535423e165aeb337509bd80e37dbe7bc8010bd",
+        "0d99cd9d74ca692fe9cb882df26056435268697ee8d3937b0fc51ad5b4fa46a1",
+        "234a4f707714c22c377d41f630438b94955db44fa63705dfe99ee16d1e63c559",
+        "255e8ba6216ae8c0da178c3f8e0dae9b449cb3d1dd3da1137d9d6978d9ae09a7",
+        "2d1467fdc2b78f21bff2f2bbd0d3656e78c39d3a3c321049f102bc8675e65b66",
+        "3500bbf095b749b4d4c23ed84de3c0fd93719d1de1cb3aa5279803387708043f",
+        "394fa00f02bfc4aa1d4aff215065097dedc6654963ffc09c5695544f4d03d4cd",
+        "3984a3f6ddaf790ebd9456196bc3c8245b2ad00bc8177920fb8ba31e9d10d1d7",
+        "3c24761ab2e4e5e36817d8fc564d28c2757429142623ffb513a0ee33e3d1b41c",
+        "41b9fe5db219038f79a9ab6fc6b3beb9000d24bed9c6f291ed92314e85529e3b",
+        "5b1d5a29f74ac4e92966273dd590acd12146542298b138dd626e6afdfbf9b790",
+        "608dad613a9c47dee1c99296b4ef5bbddf6827ec0f21a35caaa64cb8be184b0a",
+        "6cfb690c4ab5c929b0c942ed05e8a7a0d900ab4a101372de1fa29d57005413e4",
+        "79ac70efbf4bd8f0663373be5061a93e0b082f417cdff24859401d8b42389df9",
+        "8f71a62fb3b6ac4159c8d47c3225f3a078a0561d48ca7aabd3308b7631060363",
+        "997ce159e75e2d1299dc3a153d30de20f6c3398065c0b177f44d414006e7aeb0",
+        "9bd127a32ab2d24ce0b8919be965bd9204042c5bf1038f3cb13d9aa7508170bd",
+        "a6a5a9bf68d43418d4ba4624368091760659365e6060c2f7ff8fbe7cf34d5188",
+        "c0a70f33c41933f019ec8add31ebca4fe8df2bbe9e754fc369e8dda4203a43c6",
+        "ca7ea4f5fa7c5a1620115cb76689d61577d13b97a8bb576a8787d02a76c1dc1a",
+        "cc1c68d8ad601d3a5ce1ffc3811a243b4027137b5ea380d315ec197494dd8c26",
+        "cf7843af17fb8d81dd554e72ea9be5546065170765df9351b29045e7dd1a6afa",
+        "d218837b5f8f3d7602870cafa12af8af342034a18f0d8b280cc59423851dc9e9",
+        "dac4cb4acc6efb5604df9a9d501bb4913745ccee695c3fe2fe2dae892975a4db",
+        "dd761bf2f5ff0250d356d4d7f0ba55decabd903c8b00e7b9165b5bc8cfe61639",
+        "e316a9034ea7f515c99258046b6eb7499b7a9fb584dd212e244647c51d4c25c4",
+        "e388b26ca0409ad31b4483f31cfd0ca973c784f446d14946092e155e8eb039e6",
+        "eef5706bd7403d4a1b490a452a17c1272b1ce78febac170156b47da2938810c5",
+        "fb803e109246b96b3a2333661c86a31268e07d40cfd894c9e8aa8aba53614ef8",
+        "fcc4c2d2225a55a9fa6a8b49a3958e0342d37b1daf5cf85f71bd126aece868c9"
+      ],
+      "tasks_per_cell": 4,
+      "trajectory_count": 128
+    },
+    "dev_curve": {
+      "count": 16,
+      "materialized": true,
+      "rollout_seeds": [
+        8101,
+        8202
+      ],
+      "sha256": "f3c3e41f09a486dda5b2b41cee0195b0d0bfa3275f8c89fbc652ba0235ae543a",
+      "task_signatures": [
+        "05646e6ff4396e669e8f38f7645a4be6b875e35aa955363154f9cccb70610827",
+        "0772bfa66737699f7c77f1e3e7740f650b2f524cab28b0fe81787066753b5c3f",
+        "2028da69cb3f1e47b0d968a78fd2746d9302d531bd17b5b37e519211892a6fdf",
+        "2688956f283107c26a46715836f8d6bb20eaac485839463a7c90a2d7615eb02b",
+        "5098a5e7c73049c2773746d17c0c5ffc828c5bf74bab89e767d0db4fb40747bf",
+        "7a387c065eda742505357fe8737127b2cde76eb5f79c9384b3b5ccbd0304d4f7",
+        "896071ada884e4465b76f5dfa04a554d43ca0a2313d8eaa299116211fb8e9324",
+        "985a449a236f15291e05275dbe0f99f08f0792db10c96e93e28fb4c94703dae3",
+        "a5deb370732af9109ebdcb95594afa3c9345dd2d9dd4bc66e3f7508261f2159f",
+        "bedf7dc83c788a054c5212b59817a6fd5136b8fedfc72bbb9d35aae16d005c2c",
+        "c29ce9837af4aef0b60dd32ef809608efd39437f0a8756408083c63966e21a85",
+        "dec8e97c6430ecce6d6624fdd07f6741a6509dd271163d4c3e446aa69efd4954",
+        "e613c9c9619b3622ce918dac468fabcba69dbf69764d2826efdac8115ff203dc",
+        "e7a2fef90576d6e008a585f8a5d7d8e14fef8911f1fe690451952207e52a70a2",
+        "f4bd252717b67b328a85fca41127abf8207b7cda4646fddd8a1b8d28bb0e4612",
+        "fdab2e60a5940edbc20ab9006252862cc4a0c79e69bc92faa9ceb81175fd8c7a"
+      ],
+      "tasks_per_cell": 2,
+      "trajectory_count": 32
+    }
+  },
+  "training_performed": false
+}
