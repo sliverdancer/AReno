@@ -1,0 +1,9 @@
+{
+  "archive": "ARCA-anonymous-artifact-v0.1.tar.gz",
+  "archive_sha256": "35494962f56a31eb6d161090a59175d069ec9ed8eb8e72067c6ee3361cd1c53d",
+  "archive_size": 53496,
+  "file_count": 40,
+  "payload_sha256": "2eb2e481ccc36f493617957522b059aa0aaedb565cd81f0748228ddcd71fc9b5",
+  "protocol_id": "ARCA-P6-PAPER-v0.1",
+  "status": "PASS_ANONYMOUS_ARTIFACT_AUDIT"
+}

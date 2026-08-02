@@ -1,0 +1,20 @@
+{
+  "expected_claims": {
+    "development_case_count": "163",
+    "development_clean_fpr": "0/80",
+    "heldout_clean_fpr": "0/40",
+    "heldout_macro_recall": "macro recall 1.00",
+    "heldout_partition": "40 source-derived clean controls and 40",
+    "heldout_upper_wilson": "0.0876",
+    "p4_scientific_status": "NOT_EVALUATED",
+    "p4_status": "INVALID_P4_INFRASTRUCTURE_REWARD_IMPORT",
+    "p5_clean_fpr": "0/5",
+    "p5_exact": "all 7 cases",
+    "p5_partition": "two natural cases and five clean",
+    "p5_upper_wilson": "0.4345"
+  },
+  "missing_claims": {},
+  "protocol_id": "ARCA-P6-PAPER-v0.1",
+  "schema_version": "arca.paper-claim-audit.v1",
+  "status": "PASS_PAPER_CLAIM_AUDIT"
+}

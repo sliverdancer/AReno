@@ -58,6 +58,14 @@ wandb/
 *.pth
 *.safetensors
 
+# LaTeX and local paper-review intermediates
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+research/silent_reward_contracts/p6/review/
+
 # Editor / IDE
 .idea/
 .vscode/
