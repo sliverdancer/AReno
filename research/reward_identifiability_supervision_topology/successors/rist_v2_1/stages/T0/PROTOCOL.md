@@ -1,11 +1,12 @@
 # T0 tokenizer and treatment-identifiability gate
 
-Status: `FROZEN_FAIL_CLOSED_AWAITING_TOKENIZER_ACCESS`
+Status: `PUBLIC_TREATMENT_IMPLEMENTED_AWAITING_TOKENIZER_ACCESS`
 
 The scientific contrast is full tool call versus tool-name-only supervision.
-The current public switch, `--mask-tool-call-args`, implements argument-value
-masking. It leaves non-argument JSON syntax and wrapper tokens trainable, so it
-must not be described as tool-name-only without checkpoint-specific evidence.
+The legacy public switch, `--mask-tool-call-args`, implements argument-value
+masking. The new public `--tool-call-supervision {full,name_only}` treatment
+uses exact offset mapping and fails closed on mixed-boundary tokens. It still
+must pass checkpoint-specific fixtures before use as a scientific treatment.
 
 ## Required fixture
 
@@ -32,6 +33,5 @@ silently approximated.
 - Pass requires all cases and all four turns to satisfy the chosen treatment,
   with zero localization failures.
 
-Qwen and Gemma fixtures are evaluated independently. A failure may motivate a
-new public `--tool-call-supervision {full,name_only}` option, but public config
-and CLI changes require explicit authorization under `AGENTS.md`.
+Qwen and Gemma fixtures are evaluated independently. Any localization failure
+rejects that checkpoint/treatment pairing; the mask must not be approximated.

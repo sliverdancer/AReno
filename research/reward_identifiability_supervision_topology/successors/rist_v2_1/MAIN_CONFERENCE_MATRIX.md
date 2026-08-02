@@ -1,7 +1,8 @@
 # RIST-v2.1 main-conference evidence matrix
 
-Current state: CPU evaluator and design contracts only. Main-conference route
-is not yet open.
+Current state: the CPU evaluator, exact supervision treatment, frozen external
+sources, and Tau3 environment canary pass. Main-conference empirical evidence
+has not started.
 
 ## Required empirical blocks
 
@@ -10,10 +11,10 @@ is not yet open.
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | capacity gate frozen; Qwen serving only, Gemma/24 GB rejected |
-| Exact content treatment | full call versus tool-name-only | current argument mask formally insufficient; public change pending |
+| Exact content treatment | full call versus tool-name-only | exact public treatment implemented; checkpoint-tokenizer fixture pending |
 | Token robustness | step-matched plus common-token endpoint/AUC | seed-level analyzer, raw-file audit, and blocked 48-run templates frozen |
-| Real training environment | Tau3 text airline, preferably retail replication | v1.0.1 commit pinned; download absent |
-| Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 commit pinned; download and content absent |
+| Real training environment | Tau3 text airline, preferably retail replication | v1.0.1 isolated; deterministic airline/retail environment canary passed; no training |
+| Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 code isolated with benchmark data excluded and sealed |
 | Direct baselines | reward-collapse, turn-credit, and routing/masking neighbors | planned only |
 | Confirmatory inference | seed-level CI, prospective power, one-shot held-out | D4/P4 ledger and analysis contracts frozen; no outcomes |
 

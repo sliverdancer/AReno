@@ -1,0 +1,52 @@
+{
+  "bfcl_content_opened": false,
+  "clean_reset_replay_count": 2,
+  "environment_qualification_pass": true,
+  "episode_count": 2,
+  "episodes": [
+    {
+      "episode_id": "airline:fixture_cancel_reservation",
+      "final_state_hash": "8109b240758ff5b6755d80a1a46ec4e66c13b6147c9efac1e08bf9c8f082f085",
+      "step_count": 1,
+      "transcript_sha256": "c755de5c4896327442b5665ca92fbf3c504bb7f440f653cd9439571cf0298965"
+    },
+    {
+      "episode_id": "retail:fixture_cancel_pending_order",
+      "final_state_hash": "92291015b8255935feba41266b7db7a27a62c1fe94a943ed6c6061bd82d00b01",
+      "step_count": 1,
+      "transcript_sha256": "9805745cf0352facd484a8271d98eadb536c46ec428cf06e96b5584dfba4a410"
+    }
+  ],
+  "gpu_used": false,
+  "inference_run": false,
+  "llm_judge_used": false,
+  "model_or_tokenizer_accessed": false,
+  "outbound_connections_blocked": true,
+  "partition_disjointness_pass": true,
+  "protocol": "RIST-X2.1-TAU3-ENVIRONMENT-v1",
+  "qualification_split": "development",
+  "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+  "tau3_tag": "v1.0.1",
+  "tau3_upstream_task_test_split_opened": false,
+  "training_run": false,
+  "upstream_test_runs": [
+    {
+      "combined_sha256": "b36dd194332d116c3bae277d9aac7a7e2e3a0ba9bdb4b03e4df947639667bc3c",
+      "return_code": 0,
+      "stderr": "",
+      "stdout": "............................                                             [100%]\n=============================== warnings summary ===============================\n../rist-x1-env-tau3/lib/python3.12/site-packages/tau2/voice/utils/audio_preprocessing.py:4\n  /tmp/rist-x1-env-tau3/lib/python3.12/site-packages/tau2/voice/utils/audio_preprocessing.py:4: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13\n    import audioop\n\n../rist-x1-env-tau3/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /tmp/rist-x1-env-tau3/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_default_fixture_loop_scope\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n28 passed, 2 warnings in 0.39s\n",
+      "summary": {
+        "passed": 28
+      }
+    },
+    {
+      "combined_sha256": "f5b862589350b9f5f909aba81ee44b667010be82b92aade50267ba142ff8b6c4",
+      "return_code": 0,
+      "stderr": "",
+      "stdout": "............................                                             [100%]\n=============================== warnings summary ===============================\n../rist-x1-env-tau3/lib/python3.12/site-packages/tau2/voice/utils/audio_preprocessing.py:4\n  /tmp/rist-x1-env-tau3/lib/python3.12/site-packages/tau2/voice/utils/audio_preprocessing.py:4: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13\n    import audioop\n\n../rist-x1-env-tau3/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /tmp/rist-x1-env-tau3/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_default_fixture_loop_scope\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n28 passed, 2 warnings in 0.29s\n",
+      "summary": {
+        "passed": 28
+      }
+    }
+  ]
+}

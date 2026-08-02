@@ -1,6 +1,6 @@
 # X2.1 Tau3 upstream-aligned environment qualification
 
-Status: `FROZEN_BEFORE_EXECUTION`
+Status: `PASS_X2_1_ENVIRONMENT_QUALIFICATION`
 
 X2.0 is terminal and is not rerun. X2.1 replaces the invalid assumption that
 every reference action is independently executable with an upstream-aligned
@@ -26,3 +26,10 @@ selective repair or rerun is permitted.
 
 This stage is CPU-only environment/instrument qualification. It accesses no
 BFCL task content, model, tokenizer, inference, training, or GPU.
+
+## Terminal execution
+
+The single frozen execution passed. Both upstream runs reported 28/28 tool
+tests passed. The two clean-reset airline and retail state-mutating canaries
+were canonical-equivalent across replays. The archived result SHA-256 is
+`b4e0002fddf2eeb06fadd9542568fa7f0e971247e03bf429a299ebeaee66148d`.

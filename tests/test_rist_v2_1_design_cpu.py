@@ -1312,3 +1312,23 @@ def test_x2_1_tau3_canary_requires_state_mutation_and_stable_semantics():
     assert first == second
     assert first[1]["state_hash_before"] != first[1]["state_hash_after"]
     assert "timestamp" not in first[1]["raw_tool_result"]
+
+
+def test_x2_1_archived_qualification_passes_without_restricted_access():
+    result = __import__("json").loads(
+        (V2_1 / "stages" / "X2_1_TAU3" / "QUALIFICATION_RESULT.json").read_text()
+    )
+    assert result["environment_qualification_pass"] is True
+    assert result["clean_reset_replay_count"] == 2
+    assert result["episode_count"] == 2
+    assert [run["summary"] for run in result["upstream_test_runs"]] == [
+        {"passed": 28},
+        {"passed": 28},
+    ]
+    assert result["outbound_connections_blocked"] is True
+    assert result["tau3_upstream_task_test_split_opened"] is False
+    assert result["bfcl_content_opened"] is False
+    assert result["model_or_tokenizer_accessed"] is False
+    assert result["inference_run"] is False
+    assert result["training_run"] is False
+    assert result["gpu_used"] is False
