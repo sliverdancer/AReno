@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v2",
+  "phase": "D1_CPU_CALIBRATOR",
+  "source_phase_decision": "PASS_D1_CPU_CALIBRATOR_TO_D2_POOL_FREEZE",
+  "decision": "STAY_DIAGNOSTIC_OPEN_D2_CPU_POOL_FREEZE",
+  "main_conference_route_open": false,
+  "upgraded": false,
+  "reason": "A validated estimator is an engineering prerequisite, not empirical evidence for the moderator or treatment interaction."
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v2",
+  "phase": "D0_POSTMORTEM",
+  "source_phase_decision": "PASS_D0_MODEL_CONDITIONAL_MISCALIBRATION_TO_D1_CPU_CALIBRATOR",
+  "decision": "STAY_DIAGNOSTIC_OPEN_D1_CPU_CALIBRATION",
+  "main_conference_route_open": false,
+  "upgraded": false,
+  "reason": "D0 validates a construct-miscalibration diagnosis, not a supervision-topology effect.",
+  "next_action": "Validate model-conditional calibration and freeze a new structural candidate pool on CPU."
+}

@@ -1,0 +1,411 @@
+{
+  "decision": "PASS_D0_MODEL_CONDITIONAL_MISCALIBRATION_TO_D1_CPU_CALIBRATOR",
+  "diagnostics": {
+    "analytic_mixed_brier_score": 0.4598423878335451,
+    "mixed_factor_cells": [
+      "s0-z0-d0-a1-u",
+      "s0-z2-d0-a1-u",
+      "s0-z2-d3-a1-u",
+      "s0-z2-d3-a4-f",
+      "s0-z2-d3-a4-u",
+      "s2-z2-d3-a1-u",
+      "s2-z2-d3-a4-u"
+    ],
+    "spearman_analytic_to_empirical_mixed": -0.13837359844729322,
+    "spearman_analytic_to_empirical_success": 0.613414597799708
+  },
+  "gates": {
+    "all_1024_raw_responses_retained": true,
+    "analytic_high_not_more_mixed_than_low": true,
+    "complete_32_by_8_trajectories": true,
+    "heldout_not_opened_by_d0": true,
+    "no_training": true,
+    "task_hash_matches_qwen_result": true,
+    "zero_retry_repair_or_fabrication": true
+  },
+  "heldout_data_opened": false,
+  "input_hashes": {
+    "qwen_result_sha256": "06add903d5bab4559c6a24942d59c7971804c34e2d71390be711e2547e1deb4a",
+    "v1_qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f"
+  },
+  "protocol": "RIST-D0-v2.0",
+  "schema_version": 1,
+  "scientific_effect_estimated": false,
+  "source_use": "DEVELOPMENT_ONLY_NO_FUTURE_CONFIRMATORY_SPLICE",
+  "stage": "D0",
+  "stage_status": "PASS",
+  "strata": {
+    "high": {
+      "mean_empirical_success_rate": 1.0,
+      "mixed_group_count": 0,
+      "mixed_group_rate": 0.0,
+      "task_count": 9
+    },
+    "intermediate": {
+      "mean_empirical_success_rate": 0.9583333333333334,
+      "mixed_group_count": 1,
+      "mixed_group_rate": 0.3333333333333333,
+      "task_count": 3
+    },
+    "low": {
+      "mean_empirical_success_rate": 0.7,
+      "mixed_group_count": 6,
+      "mixed_group_rate": 0.3,
+      "task_count": 20
+    }
+  },
+  "task_records": [
+    {
+      "analytic_mixed_probability_g8": 0.03245151096739074,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.00411522633744856,
+      "empirical_mixed": false,
+      "empirical_success_rate": 0.0,
+      "empirical_successes": 0,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d0-a1-u",
+      "task_signature": "0367a9990b22d4173af63e67633bdd250349705ccfbb81cc0ac8038202a7d2f2"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.11837356497016316,
+      "analytic_stratum": "intermediate",
+      "analytic_success_probability": 0.015625,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.875,
+      "empirical_successes": 7,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d3-a4-f",
+      "task_signature": "03a9ffae4db7f0eb3ac7841ad5e1056bb413ed149983a9de27bca8441c66daa7"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.08035761727585189,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.010416666666666666,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d3-a4-f",
+      "task_signature": "079fb06ecd42b620e96e27aa7759e658b9b989c7b38fca52dbe553d286e89116"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d0-a4-f",
+      "task_signature": "1a2259f2c6d2fcbd864fd0e299718f027ef30d70337d9541457c74d995e47f7b"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0010283436346374408,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.0001286008230452675,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.75,
+      "empirical_successes": 6,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d3-a4-u",
+      "task_signature": "1a3dca44b7d84680a47222e390733895dc721caaa60d653ce650bb0983502bdb"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d3-a1-u",
+      "task_signature": "239246d01d9cd1f5ff0940909933c3a8da2dc894f7d41da6f11be20a001f3e66"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.03245151096739074,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.00411522633744856,
+      "empirical_mixed": false,
+      "empirical_success_rate": 0.0,
+      "empirical_successes": 0,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d0-a4-u",
+      "task_signature": "293abd3fed00e62cf5447ca23e434d24d08bf1fae4ea3a4ad6997a777e295bda"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d0-a4-f",
+      "task_signature": "2ea8a49f41205d2cf879c0b85ddf6279a907d423e14abb3732f5ad6da742557c"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d3-a1-u",
+      "task_signature": "38f9127e04e7485aa7025a8c1f43baec44059153258ef09630797e1b42d56619"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d0-a1-f",
+      "task_signature": "3d6c214f4df52740184ad9cc2ee410421354c569ccd4c4c8feb1cd3a0cf2382b"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.09460155367247147,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.012345679012345678,
+      "empirical_mixed": false,
+      "empirical_success_rate": 0.0,
+      "empirical_successes": 0,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d0-a4-u",
+      "task_signature": "3eba8ad371f31dcd0ffd7ec8ece7f3f29d0504e92c4eca53310db6c81f484e85"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.08035761727585189,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.010416666666666666,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d3-a4-u",
+      "task_signature": "41e02123ff278f8654e0d94bc07057a8de6ba77915a10cc014db3970276f12d7"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d3-a1-f",
+      "task_signature": "480039d398634d3e21b0b98203d970a71b692c3f1d54a3e70658b4381f0deb99"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.09460155367247147,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.012345679012345678,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.125,
+      "empirical_successes": 1,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d0-a1-u",
+      "task_signature": "5272b92b7cede5a5f0bbd6d9890213bb4849872eed8c73d29e986d42a25844df"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.08035761727585189,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.010416666666666666,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d3-a4-f",
+      "task_signature": "53e6665bf54b54fb0034d02b4cb5a046f9b9b3ec06189506d59c75703319824a"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d3-a1-f",
+      "task_signature": "5d97145cb013101c4ebca21ff0f2a250d22457d4a1e09786527c59355e1de03d"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.09460155367247147,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.012345679012345678,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.5,
+      "empirical_successes": 4,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d3-a1-u",
+      "task_signature": "5e2026c08b75ce51517d9402207a1a9c5fdcca61358d8f69d5095bd508487673"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d0-a1-f",
+      "task_signature": "87a8826304f7baba9956385ff88c1f4841553f02f542063f8ecefa3844b35157"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.11837356497016316,
+      "analytic_stratum": "intermediate",
+      "analytic_success_probability": 0.015625,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d3-a4-f",
+      "task_signature": "8855c89f07750aa786c1c0c91ffce054d4a68a0b1f973a40e496e0c1720f4741"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d3-a1-f",
+      "task_signature": "8a30b554c4201cab0ce84a915cfa9f62899bf86fb1d53bad5e768f5b1ded695e"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d0-a4-f",
+      "task_signature": "8ae911f464654ae4af481d88fab21f5b3505bc81843994b94055161dbd8b244c"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.11837356497016316,
+      "analytic_stratum": "intermediate",
+      "analytic_success_probability": 0.015625,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d3-a4-u",
+      "task_signature": "99d64e76b3f0d7072584feb38ef7e2d1e8dbadcefd0e98e3170039771471148e"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.75,
+      "empirical_successes": 6,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d0-a1-u",
+      "task_signature": "9b04f01d8dc17ec2df625ce2f2b652057b81bda113f95878c337f2d9cae6f246"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d0-a1-f",
+      "task_signature": "a32fb0c0cb8cb844a55501dab64cf18edb9267c4de25bc328cdee1581b021354"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d0-a4-u",
+      "task_signature": "a828ad10f1b46b442a3c1340226002fbdb0bbcd56692b83ddbd396c941365748"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d0-a4-u",
+      "task_signature": "b8deace339cfddf8b0885f4d9c442ce331dd88c83920b8e594e95c7da5387795"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z0-d0-a4-f",
+      "task_signature": "d93d47a63452b0292e98e93b3cfea99287ec44302a43c7c1a4f7e6f968c2f609"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.03245151096739074,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.00411522633744856,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.375,
+      "empirical_successes": 3,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z2-d3-a1-u",
+      "task_signature": "da5e26255aceb99890aefcf676b134f40c3010eeae81d4063f7f9f13ec9f4237"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 1.0,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d0-a1-f",
+      "task_signature": "e0cdd5a52eaa1e1e776d934bf2a7e61fa048631e3ab749315d72ae74e9bed53e"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.0015421683735997727,
+      "analytic_stratum": "low",
+      "analytic_success_probability": 0.00019290123456790122,
+      "empirical_mixed": true,
+      "empirical_success_rate": 0.5,
+      "empirical_successes": 4,
+      "empirical_trials": 8,
+      "factor_cell": "s0-z2-d3-a4-u",
+      "task_signature": "e2cfcc7c7a7abb90a9e347bc3c5f7e73b52f433323b02c6845be1f7d94c46372"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d0-a1-u",
+      "task_signature": "e8013ed0f5d1f55c58d5c21d59d702619dde1dd8186dba1bfe8f77672f426a18"
+    },
+    {
+      "analytic_mixed_probability_g8": 0.9608291418991006,
+      "analytic_stratum": "high",
+      "analytic_success_probability": 0.3333333333333333,
+      "empirical_mixed": false,
+      "empirical_success_rate": 1.0,
+      "empirical_successes": 8,
+      "empirical_trials": 8,
+      "factor_cell": "s2-z0-d3-a1-f",
+      "task_signature": "f1c2a392e2916783895cd368dab300246e366daf0e5cc403e5302e2dc451f5f0"
+    }
+  ]
+}

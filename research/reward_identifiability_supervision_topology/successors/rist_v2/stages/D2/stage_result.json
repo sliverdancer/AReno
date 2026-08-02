@@ -1,0 +1,27 @@
+{
+  "decision": "KILL_RIST_V2_D2_STRUCTURAL_POOL",
+  "gates": {
+    "balanced_eight_cells": true,
+    "byte_identical_regeneration": false,
+    "cpu_only_no_model_or_training": true,
+    "difficulty_dimensions_vary": true,
+    "heldout_content_not_opened_by_evaluator": true,
+    "no_model_free_resolution_labels": true,
+    "unique_cross_split_signatures": true,
+    "unique_four_turn_oracles": true
+  },
+  "gpu_used": false,
+  "heldout_data_opened": false,
+  "main_conference_route_open": false,
+  "model_accessed": false,
+  "protocol": "RIST-D2-v2.0",
+  "schema_version": 1,
+  "split_counts": {
+    "calibration": 32,
+    "heldout": 32,
+    "qualification": 32
+  },
+  "stage": "D2",
+  "stage_status": "KILL",
+  "training_performed": false
+}

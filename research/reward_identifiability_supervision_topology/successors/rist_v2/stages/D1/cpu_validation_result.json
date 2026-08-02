@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-D1-v2.0",
+  "stage": "D1",
+  "stage_status": "PASS_ENGINEERING",
+  "decision": "PASS_D1_CPU_CALIBRATOR_TO_D2_POOL_FREEZE",
+  "scientific_effect_estimated": false,
+  "gpu_used": false,
+  "heldout_data_opened": false,
+  "validation": {
+    "direct_python_test_harness_passed": 3,
+    "compileall_passed": true,
+    "pytest_available": false
+  },
+  "claim_boundary": "The tests validate estimator behavior and reproduce D0 only; they do not qualify a model, task cell, or publication claim."
+}

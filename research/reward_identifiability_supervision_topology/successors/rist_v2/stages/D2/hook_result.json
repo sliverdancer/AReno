@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "protocol_family": "RIST-v2",
+  "phase": "D2_CPU_STRUCTURAL_POOL",
+  "source_phase_decision": "KILL_RIST_V2_D2_STRUCTURAL_POOL",
+  "decision": "KILL_CURRENT_RIST_V2_REVISION",
+  "formal_stage_disposition": "KILL_PROTOCOL_STOP",
+  "main_conference_route_open": false,
+  "upgraded": false,
+  "reason": "The frozen byte-identical-regeneration gate returned false. Forensics identify tuple/list representation drift in the evaluator, but the consumed result is not repaired or rerun.",
+  "claim_boundary": "This is an engineering protocol failure, not evidence against the scientific hypotheses.",
+  "next_action": "Archive and stop. Any continuation must use a newly frozen protocol revision with a prevalidated evaluator."
+}
