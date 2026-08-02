@@ -359,6 +359,122 @@ def test_v2_1_tokenizer_capture_builds_32_local_canonical_cases():
     assert result["name_only_all"] is False
 
 
+def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
+    contract = _load_module(
+        "rist_v2_1_name_only_contract",
+        V2_1 / "stages" / "T0" / "name_only_mask_contract.py",
+    )
+
+    class CharacterTokenizer:
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+    raw = '{"name":"scan_registry","arguments":{"code":"r0"}}'
+    tokens = [ord(character) for character in raw]
+    base = [True] * len(tokens)
+    name_start = raw.index("scan_registry")
+    base[name_start + 2] = False
+    result = contract.exact_name_only_mask(CharacterTokenizer(), raw, tokens, base)
+    assert sum(result) == len("scan_registry") - 1
+    assert all(
+        enabled is (name_start <= index < name_start + len("scan_registry") and base[index])
+        for index, enabled in enumerate(result)
+    )
+
+
+def test_v2_1_exact_name_only_contract_rejects_syntax_mixed_token():
+    contract = _load_module(
+        "rist_v2_1_name_only_contract_mixed",
+        V2_1 / "stages" / "T0" / "name_only_mask_contract.py",
+    )
+    raw = '{"name":"scan_registry","arguments":{}}'
+    name_start = raw.index("scan_registry")
+
+    class MixedTokenizer:
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [1],
+                "offset_mapping": [(name_start - 1, name_start + len("scan_registry"))],
+            }
+
+    try:
+        contract.exact_name_only_mask(MixedTokenizer(), raw, [1], [True])
+    except ValueError as error:
+        assert "mixes" in str(error)
+    else:
+        raise AssertionError("syntax-mixed name token must fail closed")
+
+
+def _strict_replay(episode_id, *, reward=1.0):
+    return [
+        {
+            "type": "reset",
+            "episode_id": episode_id,
+            "state_hash": "a" * 64,
+            "observation": {"request": "change flight"},
+        },
+        {
+            "type": "step",
+            "step_index": 0,
+            "action": {"name": "change_flight", "arguments": {"id": "F1"}},
+            "state_hash_before": "a" * 64,
+            "state_hash_after": "b" * 64,
+            "reward": reward,
+            "reward_source": "db_and_communicate",
+            "raw_tool_result": {"changed": True},
+            "done": True,
+        },
+    ]
+
+
+def test_v2_1_tau3_replay_gate_requires_two_identical_clean_resets():
+    qualifier = _load_module(
+        "rist_v2_1_tau3_replay",
+        V2_1 / "stages" / "X0" / "qualify_replay.py",
+    )
+    first = {"dev-001": _strict_replay("dev-001")}
+    second = {"dev-001": _strict_replay("dev-001")}
+    partitions = {
+        "development": ["dev-001"],
+        "training": ["train-001"],
+        "confirmatory": ["confirm-001"],
+    }
+    result = qualifier.qualify_replays(first, second, partitions)
+    assert result["environment_qualification_pass"] is True
+    assert result["clean_reset_replay_count"] == 2
+    assert result["llm_judge_used"] is False
+
+    second["dev-001"] = _strict_replay("dev-001", reward=0.0)
+    try:
+        qualifier.qualify_replays(first, second, partitions)
+    except ValueError as error:
+        assert "nondeterministic" in str(error)
+    else:
+        raise AssertionError("different clean-reset replays must be rejected")
+
+
+def test_v2_1_tau3_replay_gate_rejects_split_overlap():
+    qualifier = _load_module(
+        "rist_v2_1_tau3_replay_overlap",
+        V2_1 / "stages" / "X0" / "qualify_replay.py",
+    )
+    replay = {"dev-001": _strict_replay("dev-001")}
+    partitions = {
+        "development": ["dev-001"],
+        "training": ["dev-001"],
+        "confirmatory": ["confirm-001"],
+    }
+    try:
+        qualifier.qualify_replays(replay, replay, partitions)
+    except ValueError as error:
+        assert "disjoint" in str(error)
+    else:
+        raise AssertionError("overlapping real-environment IDs must be rejected")
+
+
 def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
     validator = _load_module(
         "rist_v2_1_capacity",

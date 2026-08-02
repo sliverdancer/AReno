@@ -15,5 +15,9 @@ fail when tokenizer tokens mix tool-name characters with syntax. It must include
 Qwen3 and Gemma4 real-tokenizer fixtures plus CPU fake-tokenizer regression
 tests. Existing `--mask-tool-call-args` behavior remains backward compatible.
 
+The research-local `name_only_mask_contract.py` now provides an executable
+prototype of those semantics. It is not wired into `TrainerConfig`,
+`LossMaskPolicy`, or the CLI and therefore cannot make a scientific run ready.
+
 This proposal is intentionally unimplemented because `AGENTS.md` requires an
 explicit decision before changing public config dataclasses or CLI surfaces.

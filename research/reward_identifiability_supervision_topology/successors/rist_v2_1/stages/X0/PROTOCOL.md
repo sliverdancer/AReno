@@ -17,6 +17,9 @@ AReno runtime dependencies.
 
 Neither environment is installed locally. This stage validates only a generic
 reset/step/state-hash/raw-call transcript contract using synthetic fixtures.
+It also freezes a two-clean-reset replay gate: only development IDs may be used,
+all split IDs must be pairwise disjoint, and both canonical transcripts must be
+identical. Any mismatch is an environment qualification failure.
 It cannot claim upstream compatibility, license completeness, deterministic
 gold replay, or real-environment qualification.
 
