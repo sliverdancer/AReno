@@ -468,6 +468,10 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     )
     assert all("heldout" not in " ".join(run["command"]).lower() for run in manifest["runs"])
     assert all("{FILTERED_TRAIN_JSONL}" in run["command"] for run in manifest["runs"])
+    assert all(
+        str(REPO_ROOT) not in " ".join(run["command"])
+        for run in manifest["runs"]
+    )
 
 
 def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():
@@ -950,6 +954,10 @@ def test_v2_1_d4_evaluation_manifest_covers_all_checkpoints_without_authority(
     assert evaluation["execution_authorized"] is False
     assert evaluation["commands_are_templates_only"] is True
     assert all(job["execution_authorized"] is False for job in evaluation["jobs"])
+    assert all(
+        str(REPO_ROOT) not in " ".join(job["client_command_template"])
+        for job in evaluation["jobs"]
+    )
     confirmatory = [
         job for job in evaluation["jobs"] if job["split"] == "confirmatory"
     ]
@@ -1066,6 +1074,11 @@ def test_v2_1_c0_collection_manifest_freezes_four_unauthorized_jobs(tmp_path):
     assert manifest["group_size"] == 8
     assert manifest["groups_per_task"] == 4
     assert all(row["trajectory_count"] == 1024 for row in manifest["jobs"])
+    assert not Path(manifest["source_data_dir"]).is_absolute()
+    assert all(
+        str(REPO_ROOT) not in " ".join(row["client_command_template"])
+        for row in manifest["jobs"]
+    )
     assert len(manifest["splits"]["calibration"]["rollout_seeds"]) == 32
 
 

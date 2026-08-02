@@ -13,7 +13,14 @@ SOURCE_DATA = (
     / "research/reward_identifiability_supervision_topology/successors/rist_v2"
     / "stages/D2/data"
 )
-COLLECTOR = Path(__file__).with_name("collect_pretraining.py")
+COLLECTOR = (
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/"
+    "stages/C0_RESOLUTION/collect_pretraining.py"
+)
+SOURCE_DATA_RELATIVE = (
+    "research/reward_identifiability_supervision_topology/successors/rist_v2/"
+    "stages/D2/data"
+)
 MODELS = {
     "qwen3": "Qwen/Qwen3-0.6B",
     "gemma4": "google/gemma-4-E2B-it",
@@ -46,7 +53,7 @@ def build_manifest(output_root: Path) -> dict[str, Any]:
             )
             command = [
                 "python3",
-                str(COLLECTOR),
+                COLLECTOR,
                 "--manifest",
                 "{C0_MANIFEST}",
                 "--family",
@@ -77,7 +84,7 @@ def build_manifest(output_root: Path) -> dict[str, Any]:
     return {
         "protocol": "RIST-C0-v2.1",
         "source_protocol": source["protocol"],
-        "source_data_dir": str(SOURCE_DATA),
+        "source_data_dir": SOURCE_DATA_RELATIVE,
         "group_size": 8,
         "groups_per_task": 4,
         "splits": splits,

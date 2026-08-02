@@ -8,8 +8,14 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[6]
-EVALUATOR = Path(__file__).with_name("evaluate_checkpoint.py")
-DATA_DIR = Path(__file__).with_name("data")
+EVALUATOR = (
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/"
+    "stages/D4_EVAL/evaluate_checkpoint.py"
+)
+DATA_DIR = (
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/"
+    "stages/D4_EVAL/data"
+)
 
 
 def _job(
@@ -29,11 +35,11 @@ def _job(
     )
     client = [
         "python3",
-        str(EVALUATOR),
+        EVALUATOR,
         "--base-url",
         "http://127.0.0.1:{PORT}/v1",
         "--data-dir",
-        str(DATA_DIR),
+        DATA_DIR,
         "--split",
         split,
         "--checkpoint-id",
