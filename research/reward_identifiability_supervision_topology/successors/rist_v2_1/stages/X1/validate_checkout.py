@@ -35,6 +35,12 @@ def validate_checkout(
     head = _git(root, "rev-parse", "HEAD")
     if head != expected["commit"]:
         raise ValueError(f"commit mismatch for {source_name}")
+    tag_object = _git(root, "rev-parse", str(expected["tag"]))
+    if tag_object != expected["tag_object"]:
+        raise ValueError(f"tag object mismatch for {source_name}")
+    peeled_commit = _git(root, "rev-parse", f"{expected['tag']}^{{}}")
+    if peeled_commit != expected["commit"]:
+        raise ValueError(f"tag does not peel to frozen commit for {source_name}")
     if _git(root, "status", "--porcelain"):
         raise ValueError(f"checkout must be clean for {source_name}")
     remote = _git(root, "remote", "get-url", "origin")
@@ -62,6 +68,9 @@ def validate_checkout(
     return {
         "source": source_name,
         "commit": head,
+        "tag": expected["tag"],
+        "tag_object": tag_object,
+        "peeled_commit": peeled_commit,
         "origin": remote,
         "clean": True,
         "license": expected_license,

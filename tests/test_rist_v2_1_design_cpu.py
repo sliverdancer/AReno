@@ -550,15 +550,22 @@ def test_v2_1_external_source_validator_checks_commit_origin_and_license(tmp_pat
         capture_output=True,
         text=True,
     ).stdout.strip()
+    subprocess.run(
+        ["git", "-C", str(root), "tag", "v-test"],
+        check=True,
+    )
     lock = {
         "tau3": {
             "commit": head,
             "repository": "https://github.com/example/source",
             "expected_license": "MIT",
+            "tag": "v-test",
+            "tag_object": head,
         }
     }
     result = validator.validate_checkout(root, "tau3", lock)
     assert result["commit"] == head
+    assert result["peeled_commit"] == head
     assert result["benchmark_content_opened"] is False
 
 

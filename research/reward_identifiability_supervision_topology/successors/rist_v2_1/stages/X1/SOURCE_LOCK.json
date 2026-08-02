@@ -6,7 +6,8 @@
     "commit": "ea13468e4423454d0c213704fb87cf7cb3990433",
     "expected_license": "Apache-2.0",
     "repository": "https://github.com/ShishirPatil/gorilla.git",
-    "tag": "v1.3"
+    "tag": "v1.3",
+    "tag_object": "ea13468e4423454d0c213704fb87cf7cb3990433"
   },
   "frozen_at_utc": "2026-08-02T00:00:00Z",
   "network_lookup": "git ls-remote --tags --refs",
@@ -16,9 +17,10 @@
       "development",
       "real_environment_training"
     ],
-    "commit": "b711c1ead46f55111bf765cf44d5da8bacc2d28c",
+    "commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
     "expected_license": "MIT",
     "repository": "https://github.com/sierra-research/tau2-bench.git",
-    "tag": "v1.0.1"
+    "tag": "v1.0.1",
+    "tag_object": "b711c1ead46f55111bf765cf44d5da8bacc2d28c"
   }
 }
