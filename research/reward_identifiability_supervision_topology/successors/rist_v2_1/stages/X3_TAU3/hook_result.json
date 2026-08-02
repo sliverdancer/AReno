@@ -1,0 +1,28 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "X3_TAU3_CPU_ADAPTER",
+  "decision": "GO_AIRLINE_DEVELOPMENT_CANARY_AFTER_T0_AND_E1",
+  "main_track_upgrade": false,
+  "reason": "A strict stateful airline training path now exists, but no policy or user-simulator rollout has run and retail is confounded by NL_ASSERTION.",
+  "validated": [
+    "22 airline training tasks use only DB and COMMUNICATE reward bases",
+    "all 66 retail training tasks are blocked as one domain",
+    "policy and user simulator retries are fixed at zero",
+    "per-sample Tau3 rewards cannot overwrite another rollout",
+    "token matching requires full common support boundaries and at least 50 percent arm coverage"
+  ],
+  "still_missing": [
+    "authorized frozen user simulator",
+    "airline interaction stability canary",
+    "mixed-reward qualification",
+    "two policy model families",
+    "GSPO and GRPO outcomes",
+    "token-matched outcome robustness",
+    "powered training seeds",
+    "sealed BFCL evaluation"
+  ],
+  "model_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false
+}

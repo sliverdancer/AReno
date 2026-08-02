@@ -48,6 +48,12 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 15. X2.0 permanently killed the independently-executable gold-action replay
     assumption. The new upstream-aligned X2.1 passed two 28-test runs and two
     exact clean-reset mutating canaries without opening the Tau3 task test split.
+16. P4 token robustness now covers the entire common token interval, rejects
+    less than 50 percent support in any arm, and requires both AUC and endpoint
+    sign preservation.
+17. X3 provides a CPU-verified Tau3 airline training adapter over 22 strict
+    `DB x COMMUNICATE` tasks. All 66 retail tasks are blocked domain-wide because
+    65 invoke `NL_ASSERTION` and would add an LLM judge to the reward.
 
 ## Current boundary
 

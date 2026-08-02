@@ -1,0 +1,31 @@
+{
+  "blocked_domain": "retail",
+  "blocked_reason": "NL_ASSERTION invokes an additional LLM judge",
+  "blocked_training_task_count": 66,
+  "gpu_used": false,
+  "inference_run": false,
+  "model_accessed": false,
+  "opened_domain": "airline",
+  "opened_training_task_count": 22,
+  "outbound_connections_blocked": true,
+  "protocol": "RIST-X3-TAU3-SCOPE-v1",
+  "retired_source_file_parsed": true,
+  "retired_task_selected_or_copied": false,
+  "reward_basis_counts": {
+    "airline": {
+      "COMMUNICATE+DB": 22
+    },
+    "retail": {
+      "DB": 1,
+      "DB+NL_ASSERTION": 65
+    }
+  },
+  "task_content_emitted": false,
+  "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+  "tau3_tag": "v1.0.1",
+  "training_partition_counts": {
+    "airline": 22,
+    "retail": 66
+  },
+  "training_run": false
+}
