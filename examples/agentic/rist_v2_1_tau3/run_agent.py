@@ -211,6 +211,8 @@ async def run_agent(ctx, batch):
                     "truncated": bool(truncated),
                     "reward_info": step_info.get("reward_info"),
                 }
+                if terminated:
+                    event["simulation_run"] = simulation_payload
                 evidence.append(event)
                 _append_raw_event(item, event)
                 final_reward = float(reward)
@@ -241,6 +243,7 @@ async def run_agent(ctx, batch):
                     "phase": "cleanup_not_policy",
                     "terminated": bool(cleanup_terminated),
                     "invalid_reason": invalid_reason or "MAX_AGENT_TURNS",
+                    "simulation_run": cleanup_simulation,
                 }
                 evidence.append(cleanup_event)
                 _append_raw_event(item, cleanup_event)

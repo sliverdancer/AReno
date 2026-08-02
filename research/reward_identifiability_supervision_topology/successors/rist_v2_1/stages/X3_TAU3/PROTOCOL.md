@@ -19,7 +19,9 @@ across all policy families, algorithms, arms, and seeds:
 - temperature zero;
 - a seed derived before outcomes from policy seed, task ID, and sample index;
 - `num_retries=0`;
-- raw user-simulator request/response logs retained and hashed.
+- the terminal upstream `SimulationRun`, including user messages and provider
+  `raw_data`, retained and hashed together with policy responses. The frozen
+  task ID and source recover the corresponding user-simulator request context.
 
 Policy malformed actions are scientific failures with reward zero. Network,
 timeout, missing reward metadata, evaluator exceptions, or user-simulator
