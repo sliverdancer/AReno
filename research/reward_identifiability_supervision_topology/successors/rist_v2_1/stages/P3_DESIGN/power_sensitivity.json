@@ -1,0 +1,25 @@
+{
+  "alpha": 0.05,
+  "minimum_effect": 0.1,
+  "power": 0.8,
+  "rows": [
+    {
+      "paired_contrast_sd": 0.05,
+      "required_paired_seeds": 3
+    },
+    {
+      "paired_contrast_sd": 0.1,
+      "required_paired_seeds": 8
+    },
+    {
+      "paired_contrast_sd": 0.15,
+      "required_paired_seeds": 18
+    },
+    {
+      "paired_contrast_sd": 0.2,
+      "required_paired_seeds": 32
+    }
+  ],
+  "statistical_unit": "paired_training_seed",
+  "three_seed_status": "pilot_variance_only"
+}
