@@ -1,0 +1,20 @@
+{
+  "elapsed_seconds": 72.84476915560663,
+  "expected_trajectories": 256,
+  "fabricated_call_count": 0,
+  "infrastructure_error": {
+    "error": "HTTP 500: Internal Server Error",
+    "error_type": "RuntimeError",
+    "rollout_seed": 6101,
+    "task_index": 0
+  },
+  "model_cell": "gemma4_e2b_it",
+  "protocol": "RIST-P2.1-v1.0",
+  "qualification_data_opened": true,
+  "qualification_sha256": "8018137606e12da0f0096ac86f11312d94d631326965198783ebf9cecc94570f",
+  "retry_count": 0,
+  "schema_version": 1,
+  "training_performed": false,
+  "trajectories": [],
+  "trajectory_count": 0
+}

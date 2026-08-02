@@ -1,0 +1,119 @@
+{
+  "audit_complete": true,
+  "captured_at_utc": "2026-08-02T03:57:05.867999+00:00",
+  "checks": {
+    "checkpoint_unchanged": true,
+    "fabricated_call_count_zero": true,
+    "final_gpu_clean": true,
+    "final_relevant_processes_clean": true,
+    "formal_invalid_decision": true,
+    "gemma_http_200_partial_responses": true,
+    "gemma_http_500_one": true,
+    "gemma_oom_detected": true,
+    "gemma_partial_raw_evidence_lost": true,
+    "gemma_retained_trajectories_zero": true,
+    "heldout_not_opened": true,
+    "qwen_all_per_model_gates_pass": true,
+    "qwen_complete_256": true,
+    "qwen_cross_stratum_gate_unreachable": true,
+    "qwen_http_200_1024": true,
+    "qwen_http_5xx_zero": true,
+    "qwen_raw_1024": true,
+    "retry_count_zero": true,
+    "training_not_performed": true,
+    "within_gpu_limit": true
+  },
+  "formal_decision": "INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE",
+  "formal_stage_status": "INVALID",
+  "frozen_pass_condition_unreachable_from_complete_qwen_cell": true,
+  "gemma": {
+    "analysis": {
+      "advantage_collapse_rate": 1.0,
+      "evidence_complete": false,
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": NaN,
+      "four_turn_completion_rate": NaN,
+      "gates": {
+        "first_turn_executable": false,
+        "four_turn_complete": false,
+        "mixed_groups": false,
+        "nondegenerate_strict_success": false,
+        "nonzero_advantage_trajectories": false,
+        "raw_evidence_and_no_fabrication": false
+      },
+      "invalid_reason_counts": {},
+      "mean_empirical_reward_entropy_bits": NaN,
+      "mean_unique_action_sequences": NaN,
+      "mixed_groups": 0,
+      "model_cell": "gemma4_e2b_it",
+      "multi_action_homogeneous_groups": 0,
+      "nonzero_advantage_trajectories": 0,
+      "passed": false,
+      "raw_parsed_agreement_rate": NaN,
+      "stratum_mixed_groups": {},
+      "strict_success_rate": NaN,
+      "task_group_count": 0,
+      "trajectory_count": 0
+    },
+    "http_200_count": 3,
+    "http_5xx_count": 1,
+    "infrastructure_error": {
+      "error": "HTTP 500: Internal Server Error",
+      "error_type": "RuntimeError",
+      "rollout_seed": 6101,
+      "task_index": 0
+    },
+    "oom_detected": true,
+    "partial_response_evidence_loss": true,
+    "retained_raw_response_count": 0,
+    "trajectory_count": 0
+  },
+  "gpu_serving_elapsed_seconds": 1034.7741190772504,
+  "gpu_time_limit_seconds": 18000.0,
+  "heldout_data_opened": false,
+  "protocol": "RIST-P2.1-v1.0",
+  "qwen": {
+    "analysis": {
+      "advantage_collapse_rate": 0.78125,
+      "evidence_complete": true,
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 0.9921875,
+      "four_turn_completion_rate": 0.90234375,
+      "gates": {
+        "first_turn_executable": true,
+        "four_turn_complete": true,
+        "mixed_groups": true,
+        "nondegenerate_strict_success": true,
+        "nonzero_advantage_trajectories": true,
+        "raw_evidence_and_no_fabrication": true
+      },
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 36
+      },
+      "mean_empirical_reward_entropy_bits": 0.17700372307007572,
+      "mean_unique_action_sequences": 2.21875,
+      "mixed_groups": 7,
+      "model_cell": "qwen3_0_6b",
+      "multi_action_homogeneous_groups": 3,
+      "nonzero_advantage_trajectories": 56,
+      "passed": true,
+      "raw_parsed_agreement_rate": 0.96484375,
+      "stratum_mixed_groups": {
+        "intermediate": 1,
+        "low": 6
+      },
+      "strict_success_rate": 0.80859375,
+      "task_group_count": 32,
+      "trajectory_count": 256
+    },
+    "http_200_count": 1024,
+    "http_5xx_count": 0,
+    "raw_response_count": 1024,
+    "strata_meeting_two_mixed_group_gate": 1,
+    "trajectory_count": 256
+  },
+  "schema_version": 1,
+  "scientific_interpretation": "CROSS_FAMILY_NOT_ESTIMABLE; COMPLETE_QWEN_CELL_IS_DIAGNOSTIC_ONLY",
+  "training_performed": false,
+  "unchanged_infrastructure_rerun_has_decision_value": false
+}

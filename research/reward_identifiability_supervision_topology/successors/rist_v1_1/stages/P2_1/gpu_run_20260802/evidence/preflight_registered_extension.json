@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/root/autodl-tmp/rist_p2_1_0f1024b/venv/bin/python",
+    "-c",
+    "from pathlib import Path; import areno.accel._areno_accel as ext; import areno; root=Path('/root/autodl-tmp/rist_p2_1_0f1024b').resolve(); Path(ext.__file__).resolve().relative_to(root); Path(areno.__file__).resolve().relative_to(root); print(ext.__file__); print(areno.__file__)"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "/root/autodl-tmp/rist_p2_1_0f1024b/areno/accel/_areno_accel.cpython-312-x86_64-linux-gnu.so\n/root/autodl-tmp/rist_p2_1_0f1024b/areno/__init__.py\n"
+}

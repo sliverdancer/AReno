@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/root/autodl-tmp/rist_p2_1_0f1024b",
+    "diff",
+    "--quiet"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": ""
+}

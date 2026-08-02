@@ -1,0 +1,13 @@
+{
+  "claim_boundary": "Do not claim the research hypothesis is falsified and do not splice Qwen into a successor. The defensible conclusion is that this frozen instrument and route cannot advance.",
+  "decision": "CLOSE_CURRENT_RIST_V1_1_ROUTE_NO_UNCHANGED_RERUN_VALUE",
+  "formal_stage_disposition": "INVALID_PROTOCOL_STOP",
+  "main_conference_route_open": false,
+  "next_action": "Archive and stop training escalation. Any continuation must be a newly designed instrument with long-prompt memory canaries and incremental raw-response journaling.",
+  "phase": "P2_1_GPU_QUALIFICATION",
+  "protocol_family": "RIST-v1.1",
+  "reason": "Gemma OOM and partial-response evidence loss make cross-family evidence invalid. Separately, the complete Qwen cell already fails the frozen two-strata mixed-group condition, so repairing Gemma alone cannot make this protocol pass.",
+  "schema_version": 1,
+  "source_phase_decision": "INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE",
+  "upgraded": false
+}

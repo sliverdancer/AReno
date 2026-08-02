@@ -1,6 +1,6 @@
 # RIST-v1.1 Successor Route
 
-Status: `P2_1_CPU_READY_AWAITING_GPU_AUTHORIZATION`
+Status: `P2_1_TERMINAL_CLOSE_CURRENT_ROUTE`
 
 Parent terminal result: `../../stages/P2/stage_result.json`
 
@@ -35,12 +35,20 @@ instructed tool/code pairs. Its decision is
 `PASS_E0_INFRASTRUCTURE_TO_P2_1_PROTOCOL_FREEZE`; it remains infrastructure-only
 and does not upgrade the main-conference route.
 
-`RIST-P2.1-v1.0` is now CPU-frozen. It preserves the 32 qualification tasks,
-eight rollout seeds, sequential request order, two checkpoint families, and
-all scientific gates from the unconsumed P2-v1.0 client while requiring the
-E0-proven native stack. E0 throughput forecasts about 3.65 GPU-hours for 2,048
-requests, so the old two-hour estimate is infeasible and the new hard ceiling
-is five GPU-hours. No qualification request or training has been executed.
+`RIST-P2.1-v1.0` is terminal `INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE`.
+Qwen completed all 256 trajectories and passed every frozen per-model gate,
+but produced at least two mixed-reward groups in only one reward stratum. The
+frozen cross-family PASS condition therefore became unreachable even before
+the second model completed. Gemma then exhausted GPU memory on the first task;
+three HTTP-200 partial responses were visible in the server log but were not
+retained by the transactional client, so its evidence cell is incomplete.
+
+The route-management hook is
+`CLOSE_CURRENT_RIST_V1_1_ROUTE_NO_UNCHANGED_RERUN_VALUE`. A Gemma-only
+infrastructure repair cannot change the failed Qwen cross-stratum gate, so the
+current RIST-v1.1 instrument is closed and P3 training must not open. This is
+not a falsification of the broad research hypothesis: cross-family inference
+is not estimable from this run, and Qwen remains diagnostic evidence only.
 
 ## Evidence roots
 
@@ -58,7 +66,15 @@ is five GPU-hours. No qualification request or training has been executed.
   `stages/E0_v1_2/gpu_run_20260802/evidence/audit_result.json`;
 - P2.1 protocol and manifest: `stages/P2_1/PROTOCOL.md`,
   `stages/P2_1/EXECUTION_MANIFEST.json`;
-- P2.1 CPU freeze: `stages/P2_1/cpu_freeze_result.json`.
+- P2.1 CPU freeze: `stages/P2_1/cpu_freeze_result.json`;
+- P2.1 terminal result:
+  `stages/P2_1/gpu_run_20260802/evidence/stage_result.json`;
+- P2.1 independent audit:
+  `stages/P2_1/gpu_run_20260802/evidence/audit_result.json`;
+- P2.1 route-management hook:
+  `stages/P2_1/gpu_run_20260802/evidence/hook_result.json`;
+- P2.1 terminal report:
+  `stages/P2_1/gpu_run_20260802/evidence/TERMINAL_REPORT.md`.
 
 ## Claim language
 

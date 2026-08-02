@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/root/autodl-tmp/rist_p2_1_0f1024b/venv/bin/areno",
+    "check"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "AReno check: ready\n\nOK   Python >= 3.10\n     found 3.12.3\nOK   Supported platform\n     Linux x86_64\nOK   PyTorch import\n     2.8.0+cu128\nOK   PyTorch >= 2.6\n     2.8.0+cu128\nOK   PyTorch CUDA build\n     torch.version.cuda=12.8\nOK   torch.cuda.is_available()\n     visible_gpus=1\nOK   NVIDIA GPU visibility\n     NVIDIA GeForce RTX 4090 D\nWARN flash_attn import\n     ModuleNotFoundError: No module named 'flash_attn'\nOK   flash_linear_attention import\n     0.5.2\nOK   CUDA_HOME\n     not set (not required for runtime; areno_accel imports)\nOK   nvcc\n     not found (not required for runtime; areno_accel imports)\nOK   areno_accel import\n     imported\nOK   metrics_log_dir writable\n     /tmp/areno/tfevent\nOK   hf_cache writable\n     /root/.cache/huggingface/hub\n\nNext:\n  Install flash-attn before installing AReno.\n"
+}

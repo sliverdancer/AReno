@@ -4,7 +4,7 @@ Branch: `research/reward-identifiability-supervision-topology`
 
 Protocol family: `RIST-v1`
 
-Status: `P2_TERMINAL_INVALID_INFRASTRUCTURE`
+Status: `RIST_V1_PARENT_INVALID__V1_1_SUCCESSOR_TERMINAL`
 
 ## Owner goal
 
@@ -36,6 +36,15 @@ No trajectory or training result exists, Gemma was not served, and the research
 hypothesis remains unestimated. The main-conference hook is
 `INVALID_PROTOCOL_STOP`.
 
+The explicitly authorized `RIST-v1.1` successor is also terminal. Its P2.1
+qualification completed the Qwen cell but failed the frozen cross-stratum
+mixed-group gate; Gemma then encountered an out-of-memory infrastructure error
+with incomplete retained evidence. The formal result is
+`INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE`, and the route hook is
+`CLOSE_CURRENT_RIST_V1_1_ROUTE_NO_UNCHANGED_RERUN_VALUE`. No training or
+held-out evaluation occurred, and P3 must not open. See
+`successors/rist_v1_1/START_HERE.md` for the exact claim boundary.
+
 ## First-turn behavior
 
 1. Read this file and `RESEARCH_PLAN.md`.
@@ -63,3 +72,4 @@ support the factorial estimand.
 - terminal report and hook: `stages/P2/REPORT.md`,
   `stages/P2/hook_result.json`
 - raw evidence manifest: `stages/P2/raw/MANIFEST.json`
+- terminal successor handoff: `successors/rist_v1_1/START_HERE.md`

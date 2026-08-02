@@ -1,0 +1,76 @@
+{
+  "cross_family_gates": {
+    "action_reward_distinction_per_model": false,
+    "both_models_pass": false,
+    "two_frozen_model_families": true,
+    "two_strata_mixed_per_model": false
+  },
+  "decision": "INVALID_P2_1_PREFLIGHT_OR_INFRASTRUCTURE",
+  "models": [
+    {
+      "advantage_collapse_rate": 0.78125,
+      "evidence_complete": true,
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": 0.9921875,
+      "four_turn_completion_rate": 0.90234375,
+      "gates": {
+        "first_turn_executable": true,
+        "four_turn_complete": true,
+        "mixed_groups": true,
+        "nondegenerate_strict_success": true,
+        "nonzero_advantage_trajectories": true,
+        "raw_evidence_and_no_fabrication": true
+      },
+      "invalid_reason_counts": {
+        "MISSING_TOOL_CALL": 36
+      },
+      "mean_empirical_reward_entropy_bits": 0.17700372307007572,
+      "mean_unique_action_sequences": 2.21875,
+      "mixed_groups": 7,
+      "model_cell": "qwen3_0_6b",
+      "multi_action_homogeneous_groups": 3,
+      "nonzero_advantage_trajectories": 56,
+      "passed": true,
+      "raw_parsed_agreement_rate": 0.96484375,
+      "stratum_mixed_groups": {
+        "intermediate": 1,
+        "low": 6
+      },
+      "strict_success_rate": 0.80859375,
+      "task_group_count": 32,
+      "trajectory_count": 256
+    },
+    {
+      "advantage_collapse_rate": 1.0,
+      "evidence_complete": false,
+      "fabricated_call_count": 0,
+      "first_turn_executable_rate": NaN,
+      "four_turn_completion_rate": NaN,
+      "gates": {
+        "first_turn_executable": false,
+        "four_turn_complete": false,
+        "mixed_groups": false,
+        "nondegenerate_strict_success": false,
+        "nonzero_advantage_trajectories": false,
+        "raw_evidence_and_no_fabrication": false
+      },
+      "invalid_reason_counts": {},
+      "mean_empirical_reward_entropy_bits": NaN,
+      "mean_unique_action_sequences": NaN,
+      "mixed_groups": 0,
+      "model_cell": "gemma4_e2b_it",
+      "multi_action_homogeneous_groups": 0,
+      "nonzero_advantage_trajectories": 0,
+      "passed": false,
+      "raw_parsed_agreement_rate": NaN,
+      "stratum_mixed_groups": {},
+      "strict_success_rate": NaN,
+      "task_group_count": 0,
+      "trajectory_count": 0
+    }
+  ],
+  "protocol": "RIST-P2.1-v1.0",
+  "schema_version": 1,
+  "stage": "P2",
+  "stage_status": "INVALID"
+}
