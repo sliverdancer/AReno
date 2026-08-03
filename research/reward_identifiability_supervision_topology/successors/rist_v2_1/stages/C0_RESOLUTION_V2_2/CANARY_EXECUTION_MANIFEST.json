@@ -1,6 +1,6 @@
 {
   "protocol": "RIST-C0-v2.2-CANARY-MANIFEST",
-  "source_commit": "192d1588261558493fff7e08180cd0bc79d124c4",
+  "source_commit": "2674e1019da3872e398c50326b7344007707f5aa",
   "pool_manifest": "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/C0_RESOLUTION_V2_2/data/manifest.json",
   "pool_manifest_sha256": "ce47554a335a68d1f74a84d0d3f54eca4247f872b5fff0b8dc1057e4fa32c414",
   "capacity_canary_sha256": "3bc6c044ba44ff85d852ce05bf15224a1306e79680e4974816d8e7fe7fef51ee",
