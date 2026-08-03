@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -13,8 +14,27 @@ from typing import Any
 STAGE_ROOT = Path(__file__).resolve().parent
 BASE_BUILDER = STAGE_ROOT / "build_capacity_manifest.py"
 C0_GATE = STAGE_ROOT / "validate_c0_admission.py"
+GPU_EXECUTION_FREEZE = STAGE_ROOT.parents[1] / "GPU_EXECUTION_FREEZE.json"
 FAMILIES = ("qwen3", "gemma4")
 FAMILY_SCOPES = {"qwen3": "E1_QWEN_CAPACITY", "gemma4": "E1_GEMMA_CAPACITY"}
+REQUIRED_RUNTIME_IDENTITY_FIELDS = {
+    "protocol",
+    "family",
+    "checkpoint",
+    "model_revision",
+    "tokenizer_snapshot_sha256",
+    "model_weights_sha256",
+    "snapshot_verification_sha256",
+    "model_path",
+    "gpu_name",
+    "gpu_uuid",
+    "gpu_total_memory_gib",
+    "driver_version",
+    "cuda_version",
+    "torch_version",
+    "source_commit",
+    "extension_import_sha256",
+}
 
 
 def _sha(path: Path) -> str:
@@ -49,24 +69,45 @@ def _replace(value: Any, replacements: dict[str, str]) -> Any:
     return value
 
 
+def _is_sha256(value: Any) -> bool:
+    return isinstance(value, str) and len(value) == 64 and all(
+        character in "0123456789abcdef" for character in value
+    )
+
+
 def _validate_runtime_identity(
     family: str,
     identity: dict[str, Any],
     gate: dict[str, Any],
+    runtime_source_commit: str,
 ) -> None:
     model_path = Path(str(identity.get("model_path", "")))
     if not (
-        identity.get("family") == family
+        set(identity) >= REQUIRED_RUNTIME_IDENTITY_FIELDS
+        and identity.get("protocol") == "RIST-E1-RUNTIME-IDENTITY-v2.2"
+        and identity.get("family") == family
         and identity.get("checkpoint") == gate["models"][family]
         and identity.get("model_revision") == gate["model_revisions"][family]
         and identity.get("tokenizer_snapshot_sha256") == gate["tokenizer_snapshot_sha256"][family]
         and identity.get("gpu_uuid") == gate["collection_gpu_uuid"]
+        and identity.get("source_commit") == runtime_source_commit
         and type(identity.get("gpu_total_memory_gib")) in (int, float)
         and float(identity["gpu_total_memory_gib"]) >= 48.0
         and model_path.is_dir()
         and "{" not in str(model_path)
-        and len(str(identity.get("weights_manifest_sha256", ""))) == 64
-        and len(str(identity.get("extension_import_sha256", ""))) == 64
+        and all(
+            isinstance(identity.get(field), str) and bool(identity[field])
+            for field in ("gpu_name", "driver_version", "cuda_version", "torch_version")
+        )
+        and all(
+            _is_sha256(identity.get(field))
+            for field in (
+                "tokenizer_snapshot_sha256",
+                "model_weights_sha256",
+                "snapshot_verification_sha256",
+                "extension_import_sha256",
+            )
+        )
     ):
         raise ValueError(f"{family} runtime identity is not deployment-bound to C0")
 
@@ -96,13 +137,18 @@ def build_deployment_manifest(
     authorization_path: Path,
     runtime_identity_paths: dict[str, Path],
     run_root: Path,
+    manifest_output_path: Path,
 ) -> dict[str, Any]:
     gate_module = _load("rist_e1_v2_2_c0_gate", C0_GATE)
     gate = gate_module.validate_c0_admission(resolution_root)
     _validate_e1_authorization(authorization_path)
+    runtime_freeze = _json(GPU_EXECUTION_FREEZE)
+    runtime_source_commit = str(runtime_freeze.get("source_commit", ""))
+    if len(runtime_source_commit) != 40 or runtime_freeze.get("deployment_bound") is not False:
+        raise ValueError("unexpected frozen GPU runtime source")
     identities = {family: _json(runtime_identity_paths[family]) for family in FAMILIES}
     for family in FAMILIES:
-        _validate_runtime_identity(family, identities[family], gate)
+        _validate_runtime_identity(family, identities[family], gate, runtime_source_commit)
 
     base_module = _load("rist_e1_v2_2_base_manifest", BASE_BUILDER)
     base = base_module.build_manifest(run_root)
@@ -115,11 +161,26 @@ def build_deployment_manifest(
         "{GEMMA4_MODEL_PATH}": str(identities["gemma4"]["model_path"]),
         "{QWEN3_GPU_UUID}": str(identities["qwen3"]["gpu_uuid"]),
         "{GEMMA4_LARGER_MEMORY_GPU_UUID}": str(identities["gemma4"]["gpu_uuid"]),
+        "{E1_MANIFEST}": str(manifest_output_path),
+        "{QWEN3_RUNTIME_IDENTITY_JSON}": str(runtime_identity_paths["qwen3"]),
+        "{GEMMA4_RUNTIME_IDENTITY_JSON}": str(runtime_identity_paths["gemma4"]),
+        "{QWEN3_RELOAD_RUNTIME_IDENTITY_JSON}": "__QWEN3_RELOAD_RUNTIME_IDENTITY__",
+        "{GEMMA4_RELOAD_RUNTIME_IDENTITY_JSON}": "__GEMMA4_RELOAD_RUNTIME_IDENTITY__",
     }
     manifest = _replace(base, replacements)
+    manifest["source_commit"] = runtime_source_commit
+    for job in manifest["jobs"]:
+        sentinel = f"__{str(job['family']).upper()}_RELOAD_RUNTIME_IDENTITY__"
+        replacement = str(run_root / str(job["run_id"]) / "reload_runtime_identity.json")
+        job.update(_replace(job, {sentinel: replacement}))
     unresolved = json.dumps(manifest, sort_keys=True)
-    if any(token in unresolved for token in replacements) or "{E1_" in unresolved:
-        raise ValueError("E1 deployment manifest contains an unresolved execution token")
+    unresolved_tokens = sorted(
+        set(re.findall(r"\{[A-Z0-9_]+\}|__[A-Z0-9_]+__", unresolved))
+    )
+    if unresolved_tokens:
+        raise ValueError(
+            f"E1 deployment manifest contains unresolved execution tokens: {unresolved_tokens}"
+        )
 
     validation_path = resolution_root / "VALIDATION_RESULT.json"
     admission_path = resolution_root / "e1/E1_ADMISSION.json"
@@ -170,6 +231,7 @@ def main() -> int:
             "gemma4": args.gemma_runtime_identity,
         },
         run_root=args.run_root,
+        manifest_output_path=args.output,
     )
     if args.output.exists():
         raise FileExistsError("E1 deployment manifest output must be fresh")
