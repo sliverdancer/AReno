@@ -17,12 +17,14 @@ Qwen served for 254 seconds and Gemma for 231 seconds, totaling 485 of the
 authorized 1,800 seconds. Both servers were stopped and `nvidia-smi` reported no
 compute process afterward.
 
-The failure is localized to the common response serialization path. The lower
-level `build_chat_completion_response` adds `areno.response_tokens`, while the
-frozen `ChatCompletionResponse` Pydantic schema has no `areno` field. A CPU-only
-probe confirmed that a payload containing `areno` serializes without it. This is
-an instrumentation failure, not evidence against either model, the name-only
-mask, or the supervision-topology hypothesis.
+The failure is localized to two independent omissions in the common serving
+response path. `build_chat_completion_response` can add
+`areno.response_tokens`, but serve leaves its `include_areno_metadata` flag at
+the default `false`. Separately, the frozen `ChatCompletionResponse` Pydantic
+schema has no `areno` field, and a CPU-only probe confirmed that even an injected
+`areno` payload serializes without it. Both omissions must be fixed before a new
+runtime protocol. This is an instrumentation failure, not evidence against
+either model, the name-only mask, or the supervision-topology hypothesis.
 
 T0b v1.0 is consumed and must not be repaired or rerun. The next admissible path
 is an additive public response-metadata fix with a CPU regression test, followed

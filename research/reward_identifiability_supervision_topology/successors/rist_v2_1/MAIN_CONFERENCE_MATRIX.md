@@ -1,8 +1,9 @@
 # RIST-v2.1 main-conference evidence matrix
 
 Current state: the CPU evaluator, exact supervision treatment, frozen external
-sources, and Tau3 environment canary pass. Main-conference empirical evidence
-has not started.
+sources, and Tau3 environment canary pass. T0b v1.0 reached both frozen models
+but terminated on a common serving-metadata defect before multi-turn runtime
+qualification. Main-conference empirical evidence has not started.
 
 ## Required empirical blocks
 
@@ -10,8 +11,8 @@ has not started.
 |---|---|---|
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
-| Model-family replication | at least 3 checkpoints across 2 families | capacity gate frozen; Qwen serving only, Gemma/24 GB rejected; generic Llama code path is not checkpoint qualification |
-| Exact content treatment | full call versus tool-name-only | exact public treatment implemented; both tokenizer-only canonical preflights pass; two-family runtime fixtures pending |
+| Model-family replication | at least 3 checkpoints across 2 families | Qwen and Gemma snapshots verified and each emitted one exact short-canary call on 24 GB; no four-turn runtime or training-capacity qualification; earlier long Gemma trajectory OOM remains relevant |
+| Exact content treatment | full call versus tool-name-only | exact public treatment implemented; both tokenizer-only canonical preflights pass; T0b v1.0 terminal on common metadata plumbing; a new runtime fixture remains pending |
 | Token robustness | step-matched plus common-token endpoint/AUC | full-interval AUC, endpoint sign, and 50% support gate frozen; no outcomes |
 | Real training environment | Tau3 text airline, preferably retail replication | 22-task strict airline adapter CPU-verified; retail blocked by NL-judge confound; no rollout/training |
 | Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 code isolated with benchmark data excluded and sealed |
@@ -42,8 +43,11 @@ reversal, leakage, or a new direct substitute close the main-track route.
 
 ## Current route decision
 
-The paper route remains scientifically open, but the current 24 GB two-family
-execution route is closed. Publication viability now depends first on real
-tokenizer/runtime qualification and then either a larger-memory Gemma4 E1 pass
-or a separately frozen, checkpoint-qualified non-Qwen replacement. No current
-CPU evidence supports upgrading the project to main-conference execution.
+The paper route remains scientifically open. A 24 GB 4090D is now directly
+shown sufficient to load both checkpoints and run the short T0b request, but it
+has not passed four-turn qualification or either optimizer-step capacity gate;
+the earlier long Gemma OOM still closes Gemma training on that pairing pending
+a new E1 result. Publication viability depends first on a separately authorized
+additive serving-metadata fix and fresh T0b v1.1, then a larger-memory Gemma E1
+pass or a separately frozen non-Qwen replacement. No current evidence supports
+upgrading the project to main-conference execution.

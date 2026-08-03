@@ -41,9 +41,11 @@
   "gpu_time_limit_seconds": 1800,
   "gpu_processes_after_shutdown": 0,
   "instrument_diagnosis": {
-    "kind": "SERVE_RESPONSE_SCHEMA_DROPS_ARENO_EXTENSION",
-    "bottom_layer_contains_areno_metadata": true,
-    "serialized_response_contains_areno_metadata": false,
+    "kind": "SERVE_METADATA_DISABLED_AND_RESPONSE_SCHEMA_DROPS_EXTENSION",
+    "shared_builder_supports_areno_metadata": true,
+    "serve_enables_areno_metadata": false,
+    "response_schema_declares_areno_metadata": false,
+    "payload_with_areno_survives_response_serialization": false,
     "confirmed_by_cpu_serialization_probe": true
   },
   "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_FAILURE_ONLY",

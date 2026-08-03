@@ -64,9 +64,10 @@ closed.
 T0b v1.0 is terminal at `stages/T0B/gpu_run_20260803/FINAL_RESULT.json`.
 Both exact snapshots loaded and both models emitted the required first exact
 tool call, but neither HTTP response retained `areno.response_tokens`. A
-CPU-only serialization probe localized the fault to the additive response
-metadata being dropped by the Pydantic envelope. The result has no scientific
-interpretation and must not be repaired or rerun.
+CPU-only inspection localized two faults: serve never enables the shared
+builder's metadata flag, and the Pydantic envelope would independently drop the
+extension. The result has no scientific interpretation and must not be repaired
+or rerun.
 
 The next gate is authorization for an additive public serving-response metadata
 fix and CPU regression test, followed by a newly frozen T0b v1.1 protocol.

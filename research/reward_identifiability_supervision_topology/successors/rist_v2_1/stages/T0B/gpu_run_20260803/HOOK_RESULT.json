@@ -12,7 +12,7 @@
     "both model cells stopped after the first missing-token response without retry",
     "native eager serving completed within the 1800-second ceiling",
     "all serving processes stopped and the GPU was empty at handoff",
-    "the common Pydantic response schema deterministically drops the areno extension"
+    "serve leaves the shared builder metadata flag disabled and the Pydantic response schema independently drops an injected areno extension"
   ],
   "still_missing": [
     "two-family actual runtime response-token fixtures",

@@ -682,6 +682,44 @@ def test_v2_1_t0b_frozen_gpu_result_is_fail_closed_infrastructure_only():
     assert hook["consumed_protocol_may_be_repaired_or_rerun"] is False
 
 
+def test_v2_1_t0b_public_metadata_fix_request_covers_both_omissions():
+    stage = V2_1 / "stages" / "T0B"
+    request = (stage / "PUBLIC_SERVE_RESPONSE_METADATA_CHANGE_REQUEST.md").read_text()
+    prefreeze = (stage / "T0B_V1_1_PREFREEZE.md").read_text()
+
+    assert "include_areno_metadata=True" in request
+    assert "input_tokens=prompt" in request
+    assert "areno: ArenoResponseMetadata | None = None" in request
+    assert "For `n > 1`, the extension must remain absent" in request
+    assert "response_logprobs` must remain empty" in request
+    assert "does not authorize editing `areno/cli/serve.py`" in request
+    assert "eight fresh calibration" in prefreeze
+    assert "no v1.0 task or response" in prefreeze
+    assert "exactly 32 valid rows" in prefreeze
+    assert "main-conference route" in prefreeze
+    assert "A pass\nonly opens C0/E1" in prefreeze
+
+
+def test_v2_1_post_t0b_route_audit_preserves_the_full_objective():
+    audit = (
+        V2_1 / "stages" / "T0B" / "POST_V1_0_ROUTE_AUDIT.md"
+    ).read_text()
+
+    for requirement in (
+        "Stable interaction",
+        "Token-matched robustness",
+        "Two model families",
+        "Two algorithms",
+        "Real tool environment",
+    ):
+        assert requirement in audit
+    assert audit.count("| missing |") == 5
+    assert "48-run step-matched pilot" in audit
+    assert "third checkpoint" in audit
+    assert "Tau3 airline" in audit
+    assert "OPEN_NOT_UPGRADED" in audit
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",
