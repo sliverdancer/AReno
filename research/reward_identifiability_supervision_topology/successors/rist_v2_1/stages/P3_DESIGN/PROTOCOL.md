@@ -24,8 +24,9 @@ smaller non-Qwen family is required before execution.
 - AN: all assistant action spans, argument-masked call;
 - LN: last assistant action span, argument-masked call.
 
-AN/LN must not be called `name-only` until checkpoint-tokenizer fixtures prove
-that all argument-value tokens are masked and tool-name tokens remain enabled.
+T0b v1.2 has qualified the production full/name-only masks for both frozen
+model families. AN/LN therefore use the public `name_only` treatment; this is a
+token-eligibility claim, not a claim that generated arguments are absent.
 
 ## Matching
 
@@ -56,3 +57,14 @@ accuracy.
 
 P3 remains diagnostic at three seeds. It may estimate variance and determine
 prospective power but cannot establish a main-conference effect.
+
+## Powered expansion
+
+Before pilot outcomes, P3 freezes an ordered bank of 32 paired seeds. Expansion
+is mechanical: require clean transitive evidence, stable same-sign interactions
+in all four family/algorithm blocks, no token sign reversal, effect magnitude at
+least 0.10, and acceptable catastrophic/zero-advantage rates. The powered design
+uses `max(8, maximum prospective requirement across blocks)` seeds and the first
+N entries of that bank. A requirement above 32 or any failed pilot gate kills
+expansion; seeds or cells may not be selectively replaced. Every expanded run
+still requires separate GPU training authorization.

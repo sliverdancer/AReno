@@ -1570,6 +1570,63 @@ def test_v2_1_power_plan_treats_three_seeds_as_pilot_only():
     assert plan["three_seed_status"] == "pilot_variance_only"
 
 
+def test_v2_1_powered_expansion_uses_frozen_seed_bank_and_fail_closed_gate():
+    builder = _load_module(
+        "rist_v2_1_powered_expansion",
+        V2_1 / "stages" / "P3_DESIGN" / "build_powered_manifest.py",
+    )
+    pilot_manifest = json.loads(
+        (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
+    )
+    analysis = {
+        "protocol": "RIST-P4-v2.1",
+        "three_seed_pilot_only": True,
+        "raw_evidence_files_verified": True,
+        "scientific_treatment_ready": True,
+        "execution_authority_recorded": True,
+        "token_not_estimable": [],
+        "stable_interaction_across_seeds_and_blocks": True,
+        "failure_gates": {
+            "catastrophic_rate_pass": True,
+            "zero_advantage_rate_pass": True,
+        },
+        "blocks": [
+            {
+                "family": family,
+                "algorithm": algorithm,
+                "required_paired_seeds": 8,
+                "effect_threshold_pass": True,
+                "token_sign_consistent": True,
+            }
+            for family in ("qwen3", "gemma4")
+            for algorithm in ("gspo", "grpo")
+        ],
+    }
+    result = builder.build_powered_manifest(pilot_manifest, analysis, "a" * 64)
+    assert result["decision"] == "GO_POWERED_EXPANSION_AFTER_SEPARATE_AUTHORIZATION"
+    assert result["required_paired_seeds"] == 8
+    assert result["selected_seeds"] == list(builder.PAIRED_SEED_BANK[:8])
+    assert result["run_count"] == 128
+    assert result["additional_run_count"] == 80
+    assert all(row["execution_authorized"] is False for row in result["runs"])
+    assert {
+        (row["family"], row["algorithm"], row["arm"], row["seed"])
+        for row in result["runs"]
+    } == {
+        (family, algorithm, arm, seed)
+        for family in ("qwen3", "gemma4")
+        for algorithm in ("gspo", "grpo")
+        for arm in ("AF", "LF", "AN", "LN")
+        for seed in builder.PAIRED_SEED_BANK[:8]
+    }
+
+    analysis["blocks"][0]["token_sign_consistent"] = False
+    killed = builder.build_powered_manifest(pilot_manifest, analysis, "b" * 64)
+    assert killed["decision"] == "KILL_POWERED_EXPANSION"
+    assert killed["reasons"] == ["TOKEN_SIGN_REVERSAL"]
+    assert killed["runs"] == []
+
+
 def _mock_p4_results(manifest, *, token_reversal: bool = False):
     endpoints = {"AF": 0.45, "LF": 0.35, "AN": 0.75, "LN": 0.45}
     starts = {"AF": 0.30, "LF": 0.25, "AN": 0.55, "LN": 0.30}
