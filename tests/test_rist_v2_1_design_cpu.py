@@ -692,7 +692,8 @@ def test_v2_1_t0b_public_metadata_fix_request_covers_both_omissions():
     assert "areno: ArenoResponseMetadata | None = None" in request
     assert "For `n > 1`, the extension must remain absent" in request
     assert "response_logprobs` must remain empty" in request
-    assert "does not authorize editing `areno/cli/serve.py`" in request
+    assert "IMPLEMENTED_CPU_VERIFIED_AT_B6D7BDC" in request
+    assert "did not open inference, models, training" in request
     assert "eight fresh calibration" in prefreeze
     assert "no v1.0 task or response" in prefreeze
     assert "exactly 32 valid rows" in prefreeze
@@ -718,6 +719,138 @@ def test_v2_1_post_t0b_route_audit_preserves_the_full_objective():
     assert "third checkpoint" in audit
     assert "Tau3 airline" in audit
     assert "OPEN_NOT_UPGRADED" in audit
+
+
+def test_v2_1_t0b_v1_1_is_fresh_frozen_and_collects_balanced_rows(tmp_path):
+    stage = V2_1 / "stages" / "T0B_V1_1"
+    builder = _load_module("rist_t0b_v1_1_builder", stage / "build_protocol.py")
+    client = _load_module("rist_t0b_v1_1_client", stage / "run_client.py")
+    old_tasks = __import__("json").loads(
+        (V2_1 / "stages" / "T0B" / "calibration_tasks.json").read_text()
+    )
+    new_tasks = builder.build_tasks()
+
+    old_nonces = {task["nonce"] for task in old_tasks["tasks"]}
+    new_nonces = {task["nonce"] for task in new_tasks["tasks"]}
+    old_codes = {
+        turn["expected_code"] for task in old_tasks["tasks"] for turn in task["turns"]
+    }
+    new_codes = {
+        turn["expected_code"] for task in new_tasks["tasks"] for turn in task["turns"]
+    }
+    assert old_nonces.isdisjoint(new_nonces)
+    assert old_codes.isdisjoint(new_codes)
+    assert all(task["id"].startswith("t0b-v1-1-") for task in new_tasks["tasks"])
+
+    manifest = builder.write_protocol(tmp_path)
+    assert manifest["execution_authorized"] is False
+    assert manifest["training_permitted"] is False
+    assert manifest["heldout_data_permitted"] is False
+    assert manifest["bfcl_content_permitted"] is False
+    assert manifest["prior_protocol_inputs_permitted"] is False
+    assert manifest["actual_response_tokens_required"] is True
+    assert manifest["runtime_source_commit"] == "b6d7bdcfb0ee7be89ec1c6e16433e33ba5546db7"
+
+    calls = []
+
+    def post(_url, payload, **_kwargs):
+        function = payload["tool_choice"]["function"]["name"]
+        code = payload["tools"][0]["function"]["parameters"]["properties"]["code"]["enum"][0]
+        raw = __import__("json").dumps(
+            {"name": function, "arguments": {"code": code}}, separators=(",", ":")
+        )
+        calls.append(payload)
+        return {
+            "areno": {
+                "input_tokens": [1, 2],
+                "response_tokens": [ord(character) for character in raw],
+                "response_logprobs": [],
+            },
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "id": f"call-{len(calls)}",
+                                "type": "function",
+                                "function": {
+                                    "name": function,
+                                    "arguments": __import__("json").dumps({"code": code}),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ],
+        }
+
+    result = client.collect(
+        base_url="http://127.0.0.1:8000/v1",
+        api_key="EMPTY",
+        model_cell="qwen3_0_6b",
+        tasks_path=tmp_path / "calibration_tasks.json",
+        manifest_path=tmp_path / "EXECUTION_MANIFEST.json",
+        journal_path=tmp_path / "journal.jsonl",
+        result_path=tmp_path / "result.json",
+        timeout_seconds=1.0,
+        post_json=post,
+    )
+    rows = [
+        __import__("json").loads(line)
+        for line in (tmp_path / "journal.jsonl").read_text().splitlines()
+    ]
+    assert result["protocol"] == "RIST-T0B-RUNTIME-TOKENS-v1.1"
+    assert result["failure"] is None
+    assert result["runtime_row_count"] == 32
+    assert result["complete_task_count"] == 8
+    assert result["retry_count"] == 0
+    assert len(calls) == 32
+    assert {turn: sum(row["turn_index"] == turn for row in rows) for turn in range(4)} == {
+        turn: 8 for turn in range(4)
+    }
+
+    frozen_manifest = __import__("json").loads((stage / "EXECUTION_MANIFEST.json").read_text())
+    assert frozen_manifest == builder.write_protocol(tmp_path)
+    assert (stage / "calibration_tasks.json").read_text() == (
+        tmp_path / "calibration_tasks.json"
+    ).read_text()
+    for relative_path, expected in (
+        (REPO_ROOT / "areno" / "cli" / "serve.py", frozen_manifest["serve_source_sha256"]),
+        (stage / "run_client.py", frozen_manifest["client_wrapper_sha256"]),
+        (V2_1 / "stages" / "T0B" / "run_client.py", frozen_manifest["parent_client_sha256"]),
+        (
+            V2_1 / "stages" / "T0B" / "MODEL_ACQUISITION_LOCK.json",
+            frozen_manifest["model_acquisition_lock_sha256"],
+        ),
+    ):
+        assert __import__("hashlib").sha256(relative_path.read_bytes()).hexdigest() == expected
+
+
+def test_v2_1_t0b_v1_1_cpu_freeze_retains_authorization_boundaries():
+    result = __import__("json").loads(
+        (V2_1 / "stages" / "T0B_V1_1" / "CPU_FREEZE_RESULT.json").read_text()
+    )
+    hook = __import__("json").loads(
+        (V2_1 / "stages" / "T0B_V1_1" / "hook_result.json").read_text()
+    )
+
+    assert result["status"] == "PASS_CPU_FREEZE_AWAITING_SEPARATE_GPU_AUTHORIZATION"
+    assert result["serve_cpu_tests"]["passed"] == 12
+    assert result["design_cpu_tests"]["passed"] == 52
+    assert result["remote_stage_subset_tests"]["passed"] == 3
+    assert result["remote_isolation_probe"]["failed"] == 2
+    assert "no .git" in result["remote_isolation_probe"]["failure_scope"]
+    assert result["model_accessed"] is False
+    assert result["inference_run"] is False
+    assert result["training_run"] is False
+    assert result["gpu_used"] is False
+    assert result["heldout_opened"] is False
+    assert result["bfcl_content_opened"] is False
+    assert result["main_track_upgrade"] is False
+    assert hook["decision"] == "GO_T0B_V1_1_AFTER_SEPARATE_GPU_AUTHORIZATION"
+    assert hook["main_track_upgrade"] is False
 
 
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():

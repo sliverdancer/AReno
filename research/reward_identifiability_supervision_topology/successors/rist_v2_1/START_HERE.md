@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `T0B_V1_0_TERMINAL_INSTRUMENT_FAILURE_AWAITING_CPU_FIX_AUTHORIZATION`
+Status: `T0B_V1_1_CPU_PASS_AWAITING_SEPARATE_GPU_AUTHORIZATION`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -69,9 +69,11 @@ builder's metadata flag, and the Pydantic envelope would independently drop the
 extension. The result has no scientific interpretation and must not be repaired
 or rerun.
 
-The next gate is authorization for an additive public serving-response metadata
-fix and CPU regression test, followed by a newly frozen T0b v1.1 protocol.
-Only that new protocol may request separate GPU authorization. The 24 GB 4090D
-successfully loaded and served both short T0b cells, but the earlier long Gemma4
-trajectory OOM still means E1 capacity remains unresolved. Training, C0,
-held-out data, and sealed BFCL content remain closed.
+The additive public serving-response metadata fix passes CPU regression tests at
+commit `b6d7bdc`, and the independent `T0B_V1_1` protocol is frozen with fresh
+disjoint calibration inputs. Its manifest retains
+`execution_authorized=false`, so only a new, separate GPU authorization may
+open sequential Qwen/Gemma serving. The 24 GB 4090D successfully loaded and
+served both short v1.0 cells, but the earlier long Gemma4 trajectory OOM still
+means E1 capacity remains unresolved. Training, C0, held-out data, and sealed
+BFCL content remain closed.

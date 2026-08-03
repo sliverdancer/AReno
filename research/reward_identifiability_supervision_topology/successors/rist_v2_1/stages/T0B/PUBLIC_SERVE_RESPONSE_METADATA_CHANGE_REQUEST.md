@@ -1,6 +1,6 @@
 # Public serving response-metadata change request
 
-Status: `CPU_DESIGN_FROZEN_AWAITING_EXPLICIT_PUBLIC_API_AUTHORIZATION`
+Status: `IMPLEMENTED_CPU_VERIFIED_AT_B6D7BDC`
 
 ## Problem
 
@@ -19,7 +19,7 @@ not be repaired or rerun.
 
 ## Minimum additive public change
 
-After explicit authorization, add a typed optional response extension:
+The explicitly authorized implementation adds a typed optional response extension:
 
 ```python
 class ArenoResponseMetadata(BaseModel):
@@ -58,7 +58,7 @@ tool parser, or OpenAI-compatible field may change.
 
 ## Authorization boundary
 
-This document does not authorize editing `areno/cli/serve.py`, changing the
-public HTTP response, running inference, accessing models, training, opening
-held-out/BFCL content, or using a GPU. The next action requires explicit public
-API authorization under `AGENTS.md`.
+The user authorized the public response change and CPU tests. Commit `b6d7bdc`
+implements both required plumbing points and passes the frozen CPU suite. That
+authorization did not open inference, models, training, held-out/BFCL content,
+or GPU use. Those actions remain closed.

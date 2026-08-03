@@ -3,7 +3,8 @@
 Current state: the CPU evaluator, exact supervision treatment, frozen external
 sources, and Tau3 environment canary pass. T0b v1.0 reached both frozen models
 but terminated on a common serving-metadata defect before multi-turn runtime
-qualification. Main-conference empirical evidence has not started.
+qualification. The defect is CPU-fixed and fresh T0b v1.1 is frozen but not GPU
+authorized. Main-conference empirical evidence has not started.
 
 ## Required empirical blocks
 
@@ -12,7 +13,7 @@ qualification. Main-conference empirical evidence has not started.
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | Qwen and Gemma snapshots verified and each emitted one exact short-canary call on 24 GB; no four-turn runtime or training-capacity qualification; earlier long Gemma trajectory OOM remains relevant |
-| Exact content treatment | full call versus tool-name-only | exact public treatment implemented; both tokenizer-only canonical preflights pass; T0b v1.0 terminal on common metadata plumbing; a new runtime fixture remains pending |
+| Exact content treatment | full call versus tool-name-only | exact public treatment and tokenizer preflights pass; serving metadata CPU tests pass; fresh two-family T0b v1.1 runtime fixture awaits GPU authorization |
 | Token robustness | step-matched plus common-token endpoint/AUC | full-interval AUC, endpoint sign, and 50% support gate frozen; no outcomes |
 | Real training environment | Tau3 text airline, preferably retail replication | 22-task strict airline adapter CPU-verified; retail blocked by NL-judge confound; no rollout/training |
 | Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 code isolated with benchmark data excluded and sealed |

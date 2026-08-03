@@ -1,0 +1,31 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0B_V1_1_CPU_FREEZE",
+  "decision": "GO_T0B_V1_1_AFTER_SEPARATE_GPU_AUTHORIZATION",
+  "main_track_upgrade": false,
+  "reason": "The two-part serving metadata defect is fixed at a frozen runtime commit, all CPU response-contract tests pass, and v1.1 uses fresh disjoint calibration inputs. No runtime model evidence exists yet.",
+  "validated": [
+    "actual single-choice input and response token IDs survive HTTP response serialization",
+    "serve never fabricates response logprobs",
+    "ambiguous multi-choice metadata is omitted",
+    "tool-call null content and OpenAPI compatibility are preserved",
+    "v1.1 task nonces and codes are disjoint from terminal v1.0",
+    "the zero-retry client produces balanced 32-row fixtures under a CPU fake transport",
+    "execution_authorized remains false"
+  ],
+  "still_missing": [
+    "two-family four-turn runtime qualification",
+    "production tokenizer mask fixtures from actual response tokens",
+    "C0 mixed-reward calibration",
+    "GSPO and GRPO capacity and training outcomes",
+    "token-matched robustness outcomes",
+    "Tau3 real-environment policy outcomes",
+    "sealed BFCL evaluation"
+  ],
+  "model_accessed": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false
+}
