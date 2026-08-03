@@ -1,0 +1,17 @@
+{
+  "authorization_scope": "RIST-T0B-RUNTIME-TOKENS-v1.1",
+  "authorized_at_local_date": "2026-08-03",
+  "deployment_commit": "2cca31984ab44b1ae12c648c0a8286973efb4b34",
+  "bfcl_content_permitted": false,
+  "checkpoint_download_or_replacement_permitted": false,
+  "execution_authorized": true,
+  "heldout_data_permitted": false,
+  "maximum_total_serving_seconds": 1800,
+  "model_order": [
+    "qwen3_0_6b",
+    "gemma4_e2b_it"
+  ],
+  "prior_v1_0_tasks_or_responses_permitted": false,
+  "tasks_sha256": "5e5b2cc9f4069b436f0f031870203ede918e666d7f236f7e5e8cca8611203d58",
+  "training_permitted": false
+}

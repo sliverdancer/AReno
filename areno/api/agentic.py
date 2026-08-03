@@ -1150,6 +1150,9 @@ def _tool_call_arg_token_range(tokenizer, span_tokens: list[int]) -> tuple[int, 
 
 
 _TOOL_NAME_FIELD = re.compile(r'"name"\s*:\s*("(?:\\.|[^"\\])*")')
+_GEMMA_TOOL_NAME_FIELD = re.compile(
+    r'(?:^|<\|tool_call>\s*)call:([A-Za-z_][A-Za-z0-9_.:-]*)\{'
+)
 
 
 def _tool_call_name_only_loss_mask(
@@ -1192,16 +1195,18 @@ def _tool_call_name_only_loss_mask(
     if token_ids != [int(value) for value in span_tokens] or len(offsets) != len(span_tokens):
         raise ValueError("name_only tokenizer decode/encode is not response-token exact")
 
-    matches = list(_TOOL_NAME_FIELD.finditer(text))
     observed_names = []
     name_spans = []
-    for match in matches:
+    for match in _TOOL_NAME_FIELD.finditer(text):
         try:
             observed_names.append(json.loads(match.group(1)))
         except json.JSONDecodeError as exc:
             raise ValueError("name_only found an invalid encoded tool name") from exc
         quoted_start, quoted_end = match.span(1)
         name_spans.append((quoted_start + 1, quoted_end - 1))
+    for match in _GEMMA_TOOL_NAME_FIELD.finditer(text):
+        observed_names.append(match.group(1))
+        name_spans.append(match.span(1))
     if sorted(observed_names) != sorted(expected_names) or len(observed_names) != len(expected_names):
         raise ValueError("name_only raw response names do not match parsed tool calls")
 

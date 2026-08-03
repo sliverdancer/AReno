@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-T0B-V1.1-DEPLOYMENT-BUNDLE",
+  "status": "CPU_BUILT_NOT_EXECUTION_AUTHORIZED",
+  "deployment_commit": "2cca31984ab44b1ae12c648c0a8286973efb4b34",
+  "archive_format": "git-archive-tar",
+  "archive_prefix": "areno-t0b-v1_1-2cca319/",
+  "archive_filename": "areno-t0b-v1_1-2cca319.tar",
+  "archive_size_bytes": 38871040,
+  "archive_sha256": "dea2b36731a80b4f6aee77fc7d5cc6d7f641f895b1eeb0ac8d36324c82e2d7c4",
+  "reproduction_command": "git archive --format=tar --prefix=areno-t0b-v1_1-2cca319/ --output=areno-t0b-v1_1-2cca319.tar 2cca31984ab44b1ae12c648c0a8286973efb4b34",
+  "required_stage_manifest": "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/T0B_V1_1/EXECUTION_MANIFEST.json",
+  "forbidden_suffixes": [
+    ".safetensors",
+    ".pt",
+    ".pth",
+    ".bin"
+  ],
+  "contains_git_metadata": false,
+  "contains_model_weights": false,
+  "contains_heldout_or_bfcl_content": false,
+  "execution_authorized": false
+}

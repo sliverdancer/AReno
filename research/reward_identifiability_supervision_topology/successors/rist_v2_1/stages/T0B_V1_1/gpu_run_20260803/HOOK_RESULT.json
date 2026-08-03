@@ -1,0 +1,32 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0B_V1_1_RUNTIME_RESPONSE_TOKEN_AND_MASK_GATE",
+  "decision": "NO_MAIN_TRACK_UPGRADE_INSTRUMENT_FAILURE",
+  "main_track_upgrade": false,
+  "reason": "Gemma supplied all 32 actual response-token rows, but the frozen production name-only mask could not localize tokenizer-native call syntax; Qwen terminated before inference because the deployment preflight omitted a compiled-extension import check. The two-family gate therefore fails without scientific evidence about supervision topology.",
+  "validated": [
+    "exact commit 2cca319 archive and fresh v1.1 task hashes",
+    "both locked model weight hashes without download or replacement",
+    "Gemma completed 8 tasks and 32 balanced four-turn response-token rows",
+    "Gemma runtime journal hash and exact token IDs were preserved",
+    "both model clients used zero scientific retries",
+    "total serving was 664 of 1800 authorized seconds",
+    "all serving processes stopped and the GPU was empty at handoff",
+    "a post-freeze CPU candidate localizes all 32 Gemma native call spans but does not reinterpret v1.1"
+  ],
+  "still_missing": [
+    "fresh two-family runtime-token and production-mask qualification",
+    "C0 mixed-reward calibration",
+    "stable multi-turn interaction",
+    "token-matched robustness outcomes",
+    "multiple training seeds",
+    "GSPO and GRPO training outcomes",
+    "Tau3 real-environment outcomes",
+    "sealed BFCL external evaluation"
+  ],
+  "consumed_protocol_may_be_repaired_or_rerun": false,
+  "next_gate": "FREEZE_A_NEW_PROTOCOL_WITH_EXTENSION_IMPORT_PREFLIGHT_AND_TOKENIZER_NATIVE_MASK_TESTS",
+  "training_run": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false
+}

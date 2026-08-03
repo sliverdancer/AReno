@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.1",
+  "status": "TERMINAL_FAIL_CLOSED",
+  "decision": "KILL_T0B_V1_1_TWO_FAMILY_QUALIFICATION_FAILED",
+  "execution_date": "2026-08-03",
+  "deployment_commit": "2cca31984ab44b1ae12c648c0a8286973efb4b34",
+  "deployment_archive_sha256": "dea2b36731a80b4f6aee77fc7d5cc6d7f641f895b1eeb0ac8d36324c82e2d7c4",
+  "tasks_sha256": "5e5b2cc9f4069b436f0f031870203ede918e666d7f236f7e5e8cca8611203d58",
+  "model_snapshots_verified": true,
+  "treatment_qualification_pass": false,
+  "models": {
+    "qwen3_0_6b": {
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "runtime_row_count": 0,
+      "expected_runtime_row_count": 32,
+      "complete_task_count": 0,
+      "retry_count": 0,
+      "serve_seconds": 369,
+      "failure": "HTTP 500 on the first frozen request because the exact source deployment lacked the compiled areno_accel runtime extension",
+      "scientific_result": false
+    },
+    "gemma4_e2b_it": {
+      "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "runtime_row_count": 32,
+      "expected_runtime_row_count": 32,
+      "complete_task_count": 8,
+      "retry_count": 0,
+      "serve_seconds": 295,
+      "journal_sha256": "dc9bd4012f1523e88ccbae6d534e3f6403037ec016e8b3323e85f6c745c722ba",
+      "runtime_token_collection_pass": true,
+      "frozen_name_only_localization_pass_count": 0,
+      "frozen_name_only_localization_expected_count": 32,
+      "scientific_result": false
+    }
+  },
+  "total_serve_seconds": 664,
+  "gpu_time_limit_seconds": 1800,
+  "gpu_processes_after_shutdown": 0,
+  "instrument_diagnosis": {
+    "qwen": "DEPLOYMENT_PREFLIGHT_OMITTED_COMPILED_EXTENSION_IMPORT_CHECK",
+    "gemma": "PRODUCTION_NAME_ONLY_MASK_RECOGNIZED_JSON_NAMES_BUT_NOT_TOKENIZER_NATIVE_CALL_NAME_SYNTAX",
+    "canonical_preflight_was_sufficient": false
+  },
+  "post_freeze_cpu_candidate": {
+    "may_reinterpret_v1_1": false,
+    "gemma_runtime_case_count": 32,
+    "gemma_localization_all": true,
+    "gemma_name_only_all": true,
+    "gemma_qualification_pass": true,
+    "fixture_sha256": "637cca9f764ecdbdc494c372751503c8e5b759381a9c8ef0849977b4529d198f",
+    "result_sha256": "5233f7b81c3b58a718247c7f13725bf8a77f6ee4f78d021b4b4828872e576aa6"
+  },
+  "scientific_interpretation": "FORBIDDEN_INFRASTRUCTURE_AND_INSTRUMENT_FAILURE_ONLY",
+  "training_performed": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false,
+  "model_download_or_replacement_performed": false,
+  "scientific_request_retries": 0,
+  "next_gate": "CPU_FREEZE_EXTENSION_PREFLIGHT_AND_TOKENIZER_NATIVE_MASK_THEN_REQUIRE_NEW_TWO_FAMILY_GPU_AUTHORIZATION"
+}

@@ -29,6 +29,9 @@ _SAFE_TOKENIZER_FILES = {
 _WEIGHT_SUFFIXES = {".bin", ".gguf", ".onnx", ".pt", ".pth", ".safetensors"}
 _NAME_FIELD = re.compile(r'"name"\s*:\s*("(?:\\.|[^"\\])*")')
 _ARGUMENTS_FIELD = re.compile(r'"arguments"\s*:\s*')
+_GEMMA_CALL_FIELD = re.compile(
+    r'(?:^|<\|tool_call>\s*)call:([A-Za-z_][A-Za-z0-9_.:-]*)(\{)'
+)
 
 
 def _overlaps(offset: tuple[int, int], span: tuple[int, int]) -> bool:
@@ -82,6 +85,18 @@ def _semantic_spans(text: str) -> tuple[list[tuple[int, int]], list[tuple[int, i
         except json.JSONDecodeError:
             continue
         argument_spans.append((match.end(), match.end() + consumed))
+    for match in _GEMMA_CALL_FIELD.finditer(text):
+        name_spans.append(match.span(1))
+        argument_start = match.start(2)
+        depth = 0
+        for index in range(argument_start, len(text)):
+            if text[index] == "{":
+                depth += 1
+            elif text[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    argument_spans.append((argument_start, index + 1))
+                    break
     return name_spans, argument_spans
 
 

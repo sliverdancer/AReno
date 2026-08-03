@@ -1337,6 +1337,77 @@ def test_tool_call_supervision_name_only_keeps_exact_name_tokens():
     )
 
 
+def test_tool_call_supervision_name_only_supports_gemma_native_call_tokens():
+    raw = '<|tool_call>call:scan_registry{code:<|"|>04c3792c506f<|"|>}<tool_call|><eos>'
+
+    class CharacterOffsetTokenizer:
+        def decode(self, tokens):
+            return "".join(chr(token) for token in tokens)
+
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+    trainer = _FakeTrainer(world_size=1, tp_size=1)
+    trainer.tokenizer = CharacterOffsetTokenizer()
+    session = RolloutSession(
+        trainer,
+        sampling_params=_FakeSamplingParams(),
+        loss_mask_policy=LossMaskPolicy(tool_call_supervision="name_only"),
+    )
+    item = next(AgentBatch(records=[{}], prompts=["p"], input_tokens=[[1]], n_samples=1).iter_samples())
+    tokens = [ord(character) for character in raw]
+    spans = [
+        agentic.ResponseSpan(
+            "assistant_tool_call",
+            len(tokens),
+            raw_text=raw,
+            raw_tool_calls_json=(
+                json.dumps(
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": "scan_registry",
+                            "arguments": '{"code":"04c3792c506f"}',
+                        },
+                    }
+                ),
+            ),
+        )
+    ]
+    sample = _spanned_sample(item, tokens, spans, [True] * len(tokens))
+    session._apply_trainable_turn_mode(sample)
+    name_start = raw.index("scan_registry")
+    assert all(
+        enabled is (name_start <= index < name_start + len("scan_registry"))
+        for index, enabled in enumerate(sample.loss_mask_override)
+    )
+
+
+def test_tool_call_supervision_name_only_rejects_wrong_gemma_native_name():
+    raw = '<|tool_call>call:wrong_tool{code:<|"|>04c3792c506f<|"|>}<tool_call|><eos>'
+
+    class CharacterOffsetTokenizer:
+        def decode(self, tokens):
+            return "".join(chr(token) for token in tokens)
+
+        def __call__(self, text, **_):
+            return {
+                "input_ids": [ord(character) for character in text],
+                "offset_mapping": [(index, index + 1) for index in range(len(text))],
+            }
+
+    with pytest.raises(ValueError, match="names do not match"):
+        agentic._tool_call_name_only_loss_mask(
+            CharacterOffsetTokenizer(),
+            [ord(character) for character in raw],
+            [True] * len(raw),
+            (json.dumps({"function": {"name": "scan_registry"}}),),
+        )
+
+
 def test_tool_call_supervision_name_only_rejects_syntax_mixed_token():
     pieces = ['{"name":"search', '","arguments":{}}']
 

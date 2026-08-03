@@ -1,0 +1,45 @@
+loading checkpoint:   0%|          | 0/36 [00:00<?, ?stage/s]loading checkpoint:   8%|▊         | 3/36 [00:00<00:01, 22.71stage/s]loading checkpoint:  17%|█▋        | 6/36 [00:00<00:01, 18.03stage/s]loading checkpoint:  22%|██▏       | 8/36 [00:00<00:01, 17.29stage/s]loading checkpoint:  28%|██▊       | 10/36 [00:00<00:01, 16.83stage/s]loading checkpoint:  33%|███▎      | 12/36 [00:00<00:01, 16.51stage/s]loading checkpoint:  39%|███▉      | 14/36 [00:00<00:01, 16.39stage/s]loading checkpoint:  44%|████▍     | 16/36 [00:00<00:01, 15.96stage/s]loading checkpoint:  50%|█████     | 18/36 [00:01<00:01, 14.61stage/s]loading checkpoint:  56%|█████▌    | 20/36 [00:01<00:01, 13.79stage/s]loading checkpoint:  61%|██████    | 22/36 [00:01<00:01, 13.21stage/s]loading checkpoint:  67%|██████▋   | 24/36 [00:01<00:00, 12.92stage/s]loading checkpoint:  72%|███████▏  | 26/36 [00:01<00:00, 12.61stage/s]loading checkpoint:  78%|███████▊  | 28/36 [00:01<00:00, 12.58stage/s]loading checkpoint:  83%|████████▎ | 30/36 [00:02<00:00, 12.50stage/s]loading checkpoint:  89%|████████▉ | 32/36 [00:02<00:00, 12.34stage/s]loading checkpoint:  94%|█████████▍| 34/36 [00:02<00:00, 12.47stage/s]loading checkpoint: 100%|██████████| 36/36 [00:02<00:00, 12.47stage/s]loading checkpoint: 100%|██████████| 36/36 [00:02<00:00, 13.93stage/s]
+INFO:     Started server process [9771]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57812 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60852 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36054 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45872 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45878 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45888 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37566 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37580 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37590 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37598 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37600 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37606 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50068 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50080 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50082 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50098 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50110 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38604 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38608 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38610 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38614 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38622 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38630 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38640 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38650 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38692 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38706 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38722 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38736 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38746 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9771]
+/root/miniconda3/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

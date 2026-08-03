@@ -1,0 +1,22 @@
+{
+  "bfcl_content_opened": false,
+  "complete_task_count": 0,
+  "elapsed_seconds": 0.24479084694758058,
+  "expected_runtime_row_count": 32,
+  "failure": {
+    "error": "HTTP 500: Internal Server Error",
+    "error_type": "RuntimeError",
+    "task_id": "t0b-v1-1-calibration-00",
+    "turn_index": 0
+  },
+  "heldout_opened": false,
+  "journal_sha256": null,
+  "model_cell": "qwen3_0_6b",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.1",
+  "retry_count": 0,
+  "runtime_row_count": 0,
+  "schema_version": 1,
+  "tasks_sha256": "5e5b2cc9f4069b436f0f031870203ede918e666d7f236f7e5e8cca8611203d58",
+  "training_performed": false
+}

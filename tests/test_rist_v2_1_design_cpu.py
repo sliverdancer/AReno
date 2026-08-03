@@ -324,6 +324,19 @@ def test_v2_1_tokenizer_gate_distinguishes_argument_mask_from_name_only():
     assert result["name_only_all"] is True
 
 
+def test_v2_1_tokenizer_capture_classifies_gemma_native_call_spans():
+    capture = _load_module(
+        "rist_v2_1_gemma_native_span_capture",
+        V2_1 / "stages" / "T0" / "capture_mask_fixture.py",
+    )
+    raw = '<|tool_call>call:scan_registry{code:<|"|>04c3792c506f<|"|>}<tool_call|><eos>'
+    name_spans, argument_spans = capture._semantic_spans(raw)
+    assert [raw[start:end] for start, end in name_spans] == ["scan_registry"]
+    assert [raw[start:end] for start, end in argument_spans] == [
+        '{code:<|"|>04c3792c506f<|"|>}'
+    ]
+
+
 def test_v2_1_tokenizer_gate_allows_only_fully_masked_argument_syntax_boundary():
     evaluator = _load_module(
         "rist_v2_1_masked_boundary_eval",
@@ -851,6 +864,33 @@ def test_v2_1_t0b_v1_1_cpu_freeze_retains_authorization_boundaries():
     assert result["main_track_upgrade"] is False
     assert hook["decision"] == "GO_T0B_V1_1_AFTER_SEPARATE_GPU_AUTHORIZATION"
     assert hook["main_track_upgrade"] is False
+
+
+def test_v2_1_t0b_v1_1_gpu_result_is_terminal_and_postfreeze_stays_separate():
+    run = V2_1 / "stages" / "T0B_V1_1" / "gpu_run_20260803"
+    result = __import__("json").loads((run / "FINAL_RESULT.json").read_text())
+    hook = __import__("json").loads((run / "HOOK_RESULT.json").read_text())
+    candidate = __import__("json").loads(
+        (
+            run
+            / "t0b_v1_1_evidence_20260803"
+            / "gemma_runtime_mask_result_candidate_v1_2.json"
+        ).read_text()
+    )
+
+    assert result["status"] == "TERMINAL_FAIL_CLOSED"
+    assert result["treatment_qualification_pass"] is False
+    assert result["models"]["qwen3_0_6b"]["runtime_row_count"] == 0
+    assert result["models"]["qwen3_0_6b"]["retry_count"] == 0
+    assert result["models"]["gemma4_e2b_it"]["runtime_row_count"] == 32
+    assert result["models"]["gemma4_e2b_it"]["retry_count"] == 0
+    assert result["total_serve_seconds"] <= result["gpu_time_limit_seconds"]
+    assert result["post_freeze_cpu_candidate"]["may_reinterpret_v1_1"] is False
+    assert candidate["qualification_pass"] is True
+    assert candidate["localization_all"] is True
+    assert candidate["name_only_all"] is True
+    assert hook["main_track_upgrade"] is False
+    assert hook["consumed_protocol_may_be_repaired_or_rerun"] is False
 
 
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
