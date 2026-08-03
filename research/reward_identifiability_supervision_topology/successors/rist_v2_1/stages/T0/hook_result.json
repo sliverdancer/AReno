@@ -1,7 +1,7 @@
 {
   "protocol": "RIST-STAGE-HOOK-v2.1",
   "stage": "T0A_TOKENIZER_ONLY_PREFLIGHT",
-  "instrument_commit": null,
+  "instrument_commit": "2a3fcdc",
   "decision": "GO_T0B_RUNTIME_FIXTURE_CANARY_AFTER_SEPARATE_AUTHORIZATION",
   "main_track_upgrade": false,
   "reason": "Both immutable tokenizer snapshots pass the 32-case exact name-only canonical preflight. Runtime response-token evidence still does not exist, so T0 remains unqualified.",

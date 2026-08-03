@@ -788,6 +788,8 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert manifest["resolution_filtered_dataset_ready"] is False
     assert manifest["train_sha256"] is None
     assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
+    assert "T0B_REAL_QWEN_GEMMA_RUNTIME_TOKEN_FIXTURES" in manifest["blocked_by"]
+    assert "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES" not in manifest["blocked_by"]
     assert "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED" in manifest["blocked_by"]
     assert "T0_EXACT_NAME_ONLY_TREATMENT" not in manifest["blocked_by"]
     assert "X1_EXTERNAL_ENVIRONMENT_QUALIFICATION" not in manifest["blocked_by"]
