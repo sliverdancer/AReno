@@ -9,6 +9,10 @@
     "missing_run_rejected": true,
     "raw_file_hash_verified": true,
     "seed_instability_rejected": true,
+    "token_auc_uses_all_observed_knots": true,
+    "token_mean_only_stability_rejected": true,
+    "token_total_exposure_sliver_rejected": true,
+    "independent_token_budget_schedule_executed": false,
     "three_seed_main_upgrade_rejected": true,
     "token_sign_reversal_rejected": true,
     "two_family_t0b_measurement_qualified": true

@@ -22,16 +22,20 @@ def verify(freeze_path: Path) -> dict[str, Any]:
             path = stage_root / label
         files[label] = path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected
     boundary_pass = (
-        freeze.get("schema_version") == "rist-p4-analysis-freeze-v4"
+        freeze.get("schema_version") == "rist-p4-analysis-freeze-v5"
         and freeze.get("results_opened") is False
         and freeze.get("gpu_used") is False
         and freeze.get("model_accessed") is False
         and freeze.get("parent_heldout_retired") is True
         and freeze.get("exact_run_evidence_artifact_count") == 22
         and freeze.get("reward_journal_key") == ["training_step", "sample_index"]
+        and freeze.get("minimum_total_exposure_support_fraction_per_arm") == 0.5
+        and freeze.get("auc_integration_grid")
+        == "union_of_all_observed_token_knots"
+        and freeze.get("independent_token_budget_schedule_executed") is False
     )
     return {
-        "protocol": "RIST-P4-ANALYSIS-FREEZE-VERIFY-v4",
+        "protocol": "RIST-P4-ANALYSIS-FREEZE-VERIFY-v5",
         "file_count": len(files),
         "files": files,
         "outcome_blind_boundary_pass": boundary_pass,
