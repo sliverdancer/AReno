@@ -1,0 +1,67 @@
+{
+  "audited_files": {
+    "areno/models/__init__.py": "a2df545c4ee112ec9070c2d1b50c7d9bb4cd503d28064d5c7749c020750384c4",
+    "areno/models/qwen3/checkpoint.py": "4407839fb0739905e0a7568edaef30dc63a8139546fe4de9269f32c042665672",
+    "areno/models/qwen3/model.py": "c1d44343f606ad43e264fb0df4a94cc5a3e16cff952b4f0bb1d71c1be78120fa",
+    "pyproject.toml": "e37e0ee141757ef54887cd37faa74d286ff49cc097d023b9904a17d8b06547af",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/PROTOCOL.md": "ab5883a6e4bfe809ec21400565943b002604c3316862ba664a757c99df7e4b87",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/build_selection_freeze.py": "b2eb5d7a5572887f4ddff6c3c0bb49022fe0a315fd0a5411798a0abcd7a0490c",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/verify_selection_freeze.py": "2129bd1b2ddecfb60da0a72ac173e24372ffb1127b5ea0f5cac5ade3e5880864"
+  },
+  "authorization": {
+    "heldout_or_bfcl": false,
+    "inference": false,
+    "model_download": false,
+    "tokenizer_or_config_download": false,
+    "training": false
+  },
+  "counts_as_third_checkpoint": false,
+  "existing_checkpoints": [
+    {
+      "checkpoint": "Qwen/Qwen3-0.6B",
+      "family": "qwen3"
+    },
+    {
+      "checkpoint": "google/gemma-4-E2B-it",
+      "family": "gemma4"
+    }
+  ],
+  "main_conference_requirement": "AT_LEAST_3_CHECKPOINTS_ACROSS_2_FAMILIES",
+  "new_dependency_added": false,
+  "pre_scientific_fallback": {
+    "checkpoint": "Qwen/Qwen3-4B",
+    "family": "qwen3",
+    "forbidden_after_any_model_inference_or_scientific_outcome": true,
+    "permitted_only_for": [
+      "PRIMARY_METADATA_UNAVAILABLE",
+      "PRIMARY_LICENSE_INCOMPATIBLE",
+      "PRIMARY_REQUIRES_REMOTE_CODE_OR_NEW_DEPENDENCY"
+    ]
+  },
+  "primary_candidate": {
+    "checkpoint": "Qwen/Qwen3-1.7B",
+    "exact_revision": null,
+    "family": "qwen3",
+    "status": "PROVISIONAL_NOT_DOWNLOADED_NOT_QUALIFIED"
+  },
+  "qualification_gates": [
+    "M1_TOKENIZER_CONFIG_LICENSE",
+    "M2_WEIGHT_IDENTITY",
+    "M3_RUNTIME_TREATMENT",
+    "M4_C0_RESOLUTION_TRANSPORT",
+    "M5_GSPO_GRPO_CAPACITY",
+    "M6_POWERED_STEP_AND_TOKEN_MATCHED_REPLICATION"
+  ],
+  "schema_version": "rist-m0-third-checkpoint-selection-v1",
+  "selection_rule": [
+    "EXISTING_REGISTERED_ADAPTER_AND_CHECKPOINT_IO",
+    "NO_NEW_RUNTIME_OR_PYTHON_DEPENDENCY",
+    "PUBLIC_TEXT_ONLY_DENSE_CAUSAL_LM",
+    "PRESERVE_TWO_FAMILIES_AND_ADD_WITHIN_QWEN_SCALE_REPLICATION",
+    "SMALLEST_QWEN3_DENSE_SCALE_STRICTLY_ABOVE_0_6B",
+    "NO_MODEL_OR_TASK_OUTCOME_INPUT"
+  ],
+  "selection_uses_model_outcomes": false,
+  "selection_uses_task_outcomes": false,
+  "source_commit": "90ae61884cc80403d05c0b5cb0267dbff20056d5"
+}
