@@ -12,7 +12,7 @@
     },
     "stable_interaction": {
       "required": "seed-level interaction with at least 75 percent sign agreement, no leave-one-seed-out sign reversal, and a common nonzero sign across family-algorithm blocks",
-      "current": "analysis gate and negative regression fixture implemented; no training outcomes",
+      "current": "analysis gate, seed-instability rejection, and full execution contracts implemented; no training outcomes",
       "evidence": "stages/P4_ANALYSIS/analyze_results.py",
       "status": "INSTRUMENT_READY_OUTCOMES_MISSING"
     },
@@ -24,13 +24,13 @@
     },
     "two_families_two_algorithms": {
       "required": "Qwen3 and Gemma4 blocks complete under both GSPO and GRPO",
-      "current": "48-run three-seed matrix frozen; Qwen training unqualified and Gemma4 is rejected on the 24 GB pairing",
+      "current": "48-run matrix and four-job AF capacity canary frozen; both serving paths pass, but neither checkpoint/GPU training pairing is E1-qualified",
       "evidence": "stages/P3_DESIGN/execution_manifest.json",
-      "status": "BLOCKED_BY_T0B_C0_AND_E1_CAPACITY"
+      "status": "BLOCKED_BY_C0_AND_E1_CAPACITY"
     },
     "real_tool_environment": {
       "required": "stateful Tau3 airline policy outcomes under the same arms, families, algorithms, and seed-level analysis",
-      "current": "Tau3 v1.0.1 environment canary and 22-task airline adapter pass; no user-simulator or policy rollout",
+      "current": "Tau3 v1.0.1 environment canary, cleanup evidence fix, 22-task airline adapter, and 16-run one-seed factorial manifest pass; user-simulator revision and policy outcomes are missing",
       "evidence": "stages/X3_TAU3/CPU_FREEZE.json",
       "status": "ADAPTER_READY_OUTCOMES_MISSING"
     }
@@ -42,7 +42,7 @@
       "gpu_inference_required": true,
       "training_required": false,
       "trajectory_count": 4096,
-      "execution_authorized": false
+      "execution_authorized": true
     },
     {
       "stage": "E1_CAPACITY",
@@ -51,6 +51,15 @@
       "training_required": true,
       "qwen_24gb_qualified": false,
       "gemma_24gb_rejected": true,
+      "execution_authorized": true
+    },
+    {
+      "stage": "X3_TAU3_PILOT",
+      "purpose": "real stateful airline environment outcomes for every family-algorithm-arm cell",
+      "gpu_training_required": true,
+      "paid_or_local_user_simulator_required": true,
+      "job_count": 16,
+      "episode_count": 3200,
       "execution_authorized": false
     }
   ],

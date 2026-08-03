@@ -31,6 +31,8 @@ def reward_fn(record) -> float:
 def _append_reward_event(record, result: dict) -> None:
     journal = os.environ.get("RIST_REWARD_JOURNAL_PATH")
     if not journal:
+        if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
+            raise RuntimeError("RIST_REWARD_JOURNAL_PATH is required by the frozen Tau3 run")
         return
     payload = {
         "task_id": record.source_record["id"],

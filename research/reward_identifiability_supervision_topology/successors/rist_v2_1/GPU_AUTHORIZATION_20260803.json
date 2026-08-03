@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "source": "user_message_20260803",
+  "authorized": true,
+  "authorized_scopes": {
+    "C0_RESOLUTION": {
+      "models": ["Qwen/Qwen3-0.6B", "google/gemma-4-E2B-it"],
+      "trajectory_count": 4096,
+      "inference": true,
+      "training": false,
+      "agent_safety_ceiling_gpu_hours": 8
+    },
+    "E1_QWEN_CAPACITY": {
+      "algorithms": ["gspo", "grpo"],
+      "optimizer_steps_per_algorithm": 1,
+      "minimum_gpu_memory_gib": 24,
+      "training": true,
+      "agent_safety_ceiling_gpu_hours": 1
+    },
+    "E1_GEMMA_CAPACITY": {
+      "algorithms": ["gspo", "grpo"],
+      "optimizer_steps_per_algorithm": 1,
+      "minimum_gpu_memory_gib": 48,
+      "training": true,
+      "agent_safety_ceiling_gpu_hours": 2
+    }
+  },
+  "not_authorized": [
+    "P3_48_RUN_DIAGNOSTIC_TRAINING",
+    "TAU3_USER_SIMULATOR_OR_POLICY_EXECUTION",
+    "HELDOUT_OR_BFCL_ACCESS",
+    "MODEL_DOWNLOAD_OR_REPLACEMENT"
+  ],
+  "multi_agent_permitted": true,
+  "note": "GPU-hour values are agent-imposed protective ceilings; the user authorized the listed tasks without specifying time limits."
+}

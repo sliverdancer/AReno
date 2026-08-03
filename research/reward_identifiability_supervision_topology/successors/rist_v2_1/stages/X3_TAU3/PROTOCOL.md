@@ -38,5 +38,10 @@ create an outcome-definition confound. Retail can return only under a separately
 frozen non-LLM reward protocol and must be reported as an auxiliary state-only
 setting, not the upstream full task reward.
 
-X3 first runs a one-seed airline development pilot. No X3 rollout, model, user
-simulator, training, or GPU action is authorized by this CPU adapter stage.
+X3 first runs a 25-step, one-seed airline development pilot containing every
+Qwen/Gemma, GSPO/GRPO, and AF/LF/AN/LN cell: 16 runs and 200 fresh episodes per
+run. This is an environment viability and variance instrument, not stable
+interaction evidence. The user-simulator revision is deliberately unbound in
+the CPU manifest; it must be fixed and independently authorized before any
+episode. No X3 rollout, model, user simulator, training, or GPU action is
+authorized by this CPU adapter stage.

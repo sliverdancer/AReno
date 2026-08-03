@@ -17,19 +17,32 @@ health response is insufficient for training authorization.
 5. Destroy canary outputs after hashing only if the future execution protocol
    explicitly requires it; otherwise retain immutable evidence.
 
+The training canary is the prospectively largest supervision arm, AF
+(`all_assistant` plus `full`), at exactly one step, eight samples, and one
+frozen seed shared by GSPO and GRPO. From the C0-filtered train hash, the canary
+dataset retains all four tasks in the lexicographically first transported
+high-resolution cell; this structural rule never selects an individual task or
+rollout by outcome. The step must exercise a nonzero gradient;
+zero trainable tokens, zero/non-finite gradient norm, missing TensorBoard or
+reward journals, more than one optimizer step, any retry, or a failed
+checkpoint reload rejects the pairing. All raw, metric, checkpoint-manifest,
+reload, model, tokenizer, source, GPU UUID, driver, CUDA, and PyTorch identities
+are retained in the evidence object.
+
 `validate_capacity_evidence.py` admits a checkpoint only when all serving and
 training requirements pass. Inference success cannot substitute for an
 optimizer-step canary.
 
 ## Current evidence boundary
 
-The archived RIST-v1.1 run supports Qwen3-0.6B serving on a 24 GB 4090D. It does
-not qualify training. Gemma4 E2B returned HTTP 500/CUDA OOM on its first
-trajectory and therefore rejects that checkpoint/GPU pairing. This is an
-infrastructure result, not model-quality evidence.
+T0b v1.2 now supports Qwen3-0.6B and Gemma4 E2B serving plus production-mask
+qualification on a 24 GB 4090D. It does not qualify training. An older Gemma4
+run OOMed on that pairing; the later serving pass retires the serving-only
+rejection but provides no evidence of optimizer capacity. Both checkpoint/GPU
+training pairings therefore remain unqualified.
 
-The current two-family matrix therefore cannot execute on that 24 GB pairing.
-There are only two admissible routes:
+The current two-family matrix cannot execute until E1 passes. There are only
+two admissible routes for Gemma:
 
 1. retain Gemma4 E2B and pass a fresh E1 canary on a different, larger-memory
    GPU; the protocol does not infer a sufficient memory size from the OOM; or

@@ -132,8 +132,21 @@ def calibrate_checkpoint(
     }
 
 
-def _read_jsonl(path: Path) -> list[dict[str, Any]]:
-    return [json.loads(line) for line in path.read_text().splitlines() if line]
+def _read_collection_result(path: Path, split: str) -> list[dict[str, Any]]:
+    result = json.loads(path.read_text())
+    if not isinstance(result, dict) or result.get("protocol") != "RIST-C0-v2.1":
+        raise ValueError("calibration input must be a C0 collection result")
+    if (
+        result.get("split") != split
+        or result.get("complete") is not True
+        or result.get("infrastructure_error") is not None
+        or result.get("retry_count") != 0
+    ):
+        raise ValueError("C0 collection result is incomplete or belongs to another split")
+    rows = result.get("trajectories")
+    if not isinstance(rows, list) or len(rows) != int(result["expected_trajectory_count"]):
+        raise ValueError("C0 collection result has incomplete trajectories")
+    return rows
 
 
 def main() -> int:
@@ -144,8 +157,8 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     result = calibrate_checkpoint(
-        _read_jsonl(args.calibration),
-        _read_jsonl(args.qualification),
+        _read_collection_result(args.calibration, "calibration"),
+        _read_collection_result(args.qualification, "qualification"),
         args.checkpoint,
     )
     args.output.write_text(

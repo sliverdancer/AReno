@@ -13,6 +13,16 @@ RUNTIME_KEY = "_rist_tau3_runtime_by_sample"
 MAX_AGENT_TURNS = 20
 
 
+def _parse_simulation_payload(value: Any, context: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(value)
+    except (TypeError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Tau3 {context} produced invalid simulation evidence") from exc
+    if not isinstance(payload, dict) or not payload:
+        raise RuntimeError(f"Tau3 {context} produced no simulation evidence")
+    return payload
+
+
 def _assistant_message(response: Any) -> dict[str, Any]:
     message = response.choices[0].message
     calls = [
@@ -73,6 +83,8 @@ def store_runtime_result(item: Any, result: dict[str, Any]) -> None:
 def _append_raw_event(item: Any, payload: dict[str, Any]) -> None:
     journal = os.environ.get("RIST_RAW_JOURNAL_PATH")
     if not journal:
+        if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
+            raise RuntimeError("RIST_RAW_JOURNAL_PATH is required by the frozen Tau3 run")
         return
     row = {
         "task_id": item.record["id"],
@@ -191,17 +203,9 @@ async def run_agent(ctx, batch):
                     )
                 )
                 if terminated:
-                    simulation_run = step_info.get("simulation_run")
-                    try:
-                        simulation_payload = json.loads(simulation_run)
-                    except (TypeError, json.JSONDecodeError) as exc:
-                        raise RuntimeError(
-                            "Tau3 terminated without parseable simulation evidence"
-                        ) from exc
-                    if not simulation_payload:
-                        raise RuntimeError(
-                            "Tau3 orchestrator terminated without a simulation result"
-                        )
+                    simulation_payload = _parse_simulation_payload(
+                        step_info.get("simulation_run"), "terminated episode"
+                    )
                 event = {
                     "turn_index": turn_index,
                     "phase": "environment_step",
@@ -238,6 +242,9 @@ async def run_agent(ctx, batch):
                 _, _, cleanup_terminated, _, cleanup_info = await asyncio.wait_for(
                     asyncio.to_thread(env.step, cleanup_action), timeout=900.0
                 )
+                cleanup_simulation = _parse_simulation_payload(
+                    cleanup_info.get("simulation_run"), "cleanup"
+                )
                 cleanup_event = {
                     "turn_index": len(turns),
                     "phase": "cleanup_not_policy",
@@ -249,12 +256,6 @@ async def run_agent(ctx, batch):
                 _append_raw_event(item, cleanup_event)
                 if not cleanup_terminated:
                     raise RuntimeError("Tau3 cleanup action did not terminate the episode")
-                try:
-                    cleanup_simulation = json.loads(cleanup_info.get("simulation_run"))
-                except (TypeError, json.JSONDecodeError) as exc:
-                    raise RuntimeError("Tau3 cleanup produced invalid simulation evidence") from exc
-                if not cleanup_simulation:
-                    raise RuntimeError("Tau3 cleanup produced no simulation evidence")
                 truncated = True
                 final_reward = 0.0
             if final_reward not in {0.0, 1.0}:

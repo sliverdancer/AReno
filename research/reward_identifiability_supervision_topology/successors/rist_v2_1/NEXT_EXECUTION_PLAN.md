@@ -16,11 +16,16 @@ calibration, development curves, and confirmatory evaluation separate.
 2. **C0 group-resolution calibration.** Run the frozen four-job, 4,096-trajectory
    calibration/qualification manifest. Select only whole structural cells whose
    collapsed/resolved label transports to fresh nonces and intersects across
-   both families. A failed common map kills the current synthetic pool.
+   both families. A failed common map kills the current synthetic pool. The
+   frozen concurrent collector restores task/seed output order and a separate
+   validator checks every result/journal identity and hash. The T0b latency
+   estimate is 4.47 planned hours; request an 8-hour inference ceiling.
 3. **E1 capacity.** For each checkpoint/GPU pairing, run serving plus one
    optimizer step for GSPO and GRPO. Qwen remains unqualified on 24 GB; Gemma is
-   already rejected on 24 GB. Gemma therefore needs a fresh larger-memory
-   canary or a separately versioned and fully qualified non-Qwen replacement.
+   serving-qualified but training-unqualified on 24 GB. Gemma therefore needs
+   a fresh larger-memory canary or a separately versioned and fully qualified
+   non-Qwen replacement. The AF canary dataset structurally retains all four
+   tasks in the first transported high-resolution cell.
 4. **P3 diagnostic pilot.** Execute all AF/LF/AN/LN arms for both families,
    both algorithms, and three paired seeds: 48 step-matched runs. No partial
    family or algorithm block can stand in for the full objective.
@@ -30,9 +35,10 @@ calibration, development curves, and confirmatory evaluation separate.
    preservation, acceptable catastrophic/zero-advantage rates, and prospective
    seed power. Three seeds estimate variance only.
 6. **Tau3 airline external validity.** Freeze one user-simulator revision and
-   run the clean-reset 22-task stateful airline pilot with zero policy and user
-   retries. Only after a stable pilot may the same family/algorithm/arm design
-   scale to powered seeds. Retail remains blocked by the NL-judge confound.
+   run the clean-reset 25-step one-seed factorial airline pilot: 16 runs and
+   3,200 episodes, with zero policy and user retries. Only after a viable pilot
+   may the same family/algorithm/arm design scale to powered seeds. Retail
+   remains blocked by the NL-judge confound.
 7. **Confirmation and paper gate.** Open the one-shot confirmatory split and
    sealed BFCL only after all earlier gates pass. Main-conference upgrade also
    requires a third checkpoint across the two families, direct baselines, and a

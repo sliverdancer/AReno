@@ -137,6 +137,7 @@ def build_manifest(
                 "command": _command(row, run_root, max_steps, train_path),
                 "scientific_treatment_ready": False,
                 "required_environment": {
+                    "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
                     "RIST_RAW_JOURNAL_PATH": str(
                         run_root / "runs" / row["run_id"] / "raw_responses.jsonl"
                     ),
@@ -166,9 +167,10 @@ def build_manifest(
                 "training_qualified": False,
             },
             "gemma4_e2b_on_24gb": {
-                "serving_qualified": False,
-                "known_rejected": True,
-                "reason": "CUDA_OOM_ON_FIRST_TRAJECTORY",
+                "serving_qualified": True,
+                "training_qualified": False,
+                "prior_oom_observed": True,
+                "reason": "T0B_V1_2_SERVING_PASS_DOES_NOT_QUALIFY_TRAINING",
                 "evidence": GEMMA_24GB_REJECTION_EVIDENCE,
             },
             "two_family_execution_condition": (
@@ -178,10 +180,9 @@ def build_manifest(
             ),
         },
         "blocked_by": [
-            "T0B_REAL_QWEN_GEMMA_RUNTIME_TOKEN_FIXTURES",
             "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS",
             "E1_PER_CHECKPOINT_TRAINING_CAPACITY",
-            "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED",
+            "E1_GEMMA4_REQUIRES_AT_LEAST_48GB_CANARY",
             "EXPLICIT_GPU_TRAINING_AUTHORIZATION",
         ],
         "pilot_scope": "variance_and_power_only_three_seeds",

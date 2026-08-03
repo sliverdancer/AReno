@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import importlib.util
 import json
@@ -58,11 +59,44 @@ def collect(
     journal_path: Path,
     post_json: Callable[[dict[str, Any]], dict[str, Any]],
     ledger_path: Path | None = None,
+    runtime_identity: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if manifest.get("protocol") != "RIST-C0-v2.1":
         raise ValueError("unexpected C0 manifest")
     if family not in manifest["models"] or split not in {"calibration", "qualification"}:
         raise ValueError("unknown C0 family or split")
+    if manifest.get("runtime_identity_required") is True:
+        if not isinstance(runtime_identity, dict):
+            raise ValueError("C0 production collection requires runtime identity")
+        required_identity = {
+            "protocol": "RIST-C0-RUNTIME-IDENTITY-v1",
+            "family": family,
+            "checkpoint": manifest["models"][family],
+            "model_revision": manifest["model_revisions"][family],
+            "tokenizer_snapshot_sha256": manifest["tokenizer_snapshot_sha256"][family],
+            "source_commit": manifest["source_commit"],
+        }
+        if any(runtime_identity.get(key) != value for key, value in required_identity.items()):
+            raise ValueError("C0 runtime identity does not match the frozen manifest")
+        for field in (
+            "model_weights_sha256",
+            "snapshot_verification_sha256",
+        ):
+            value = runtime_identity.get(field)
+            if not isinstance(value, str) or len(value) != 64:
+                raise ValueError(f"C0 runtime identity requires {field}")
+        for field in (
+            "gpu_name",
+            "gpu_uuid",
+            "driver_version",
+            "cuda_version",
+            "torch_version",
+            "endpoint",
+        ):
+            if not isinstance(runtime_identity.get(field), str) or not runtime_identity[field]:
+                raise ValueError(f"C0 runtime identity requires {field}")
+        if float(runtime_identity.get("gpu_total_memory_gib", 0.0)) <= 0.0:
+            raise ValueError("C0 runtime identity requires positive GPU memory")
     if output_path.exists() or journal_path.exists():
         raise FileExistsError("C0 output and journal must be fresh paths")
     if split == "qualification":
@@ -82,26 +116,43 @@ def collect(
     evaluator = _load_evaluator()
     trajectories = []
     infrastructure_error = None
+    concurrency = int(manifest.get("collection_concurrency", {}).get(family, 1))
+    if not 1 <= concurrency <= len(split_spec["rollout_seeds"]):
+        raise ValueError("C0 collection concurrency is outside the frozen range")
     for task in tasks:
-        for rollout_seed in split_spec["rollout_seeds"]:
-            try:
-                row = evaluator.run_trajectory(
-                    task,
-                    int(rollout_seed),
-                    manifest["sampling"],
-                    post_json,
-                    journal_path,
-                )
-                row["split"] = split
-                trajectories.append(row)
-            except Exception as exc:
-                infrastructure_error = {
-                    "error_type": type(exc).__name__,
-                    "error": str(exc),
-                    "task_id": task["id"],
-                    "rollout_seed": int(rollout_seed),
-                }
-                break
+        seeds = [int(value) for value in split_spec["rollout_seeds"]]
+
+        def run_one(rollout_seed: int) -> dict[str, Any]:
+            return evaluator.run_trajectory(
+                task,
+                rollout_seed,
+                manifest["sampling"],
+                post_json,
+                journal_path,
+            )
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as pool:
+            futures = {seed: pool.submit(run_one, seed) for seed in seeds}
+            # Consume in frozen seed order so the scientific result is byte-stable
+            # even though the append-only raw journal records completion order.
+            for rollout_seed in seeds:
+                future = futures[rollout_seed]
+                if infrastructure_error is not None:
+                    future.cancel()
+                    continue
+                try:
+                    row = future.result()
+                    row["split"] = split
+                    trajectories.append(row)
+                except Exception as exc:
+                    infrastructure_error = {
+                        "error_type": type(exc).__name__,
+                        "error": str(exc),
+                        "task_id": task["id"],
+                        "rollout_seed": rollout_seed,
+                    }
+                    for pending in futures.values():
+                        pending.cancel()
         if infrastructure_error is not None:
             break
     expected_count = int(split_spec["trajectory_count"])
@@ -117,6 +168,8 @@ def collect(
         "complete": complete,
         "infrastructure_error": infrastructure_error,
         "retry_count": 0,
+        "collection_concurrency": concurrency,
+        "runtime_identity": runtime_identity,
         "raw_journal_sha256": (
             hashlib.sha256(journal_path.read_bytes()).hexdigest()
             if journal_path.is_file()
@@ -149,6 +202,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--journal", type=Path, required=True)
     parser.add_argument("--ledger", type=Path)
+    parser.add_argument("--runtime-identity", type=Path)
     args = parser.parse_args()
     evaluator = _load_evaluator()
     manifest = json.loads(args.manifest.read_text())
@@ -162,6 +216,7 @@ def main() -> int:
             args.base_url, args.api_key, args.timeout_seconds, payload
         ),
         args.ledger,
+        None if args.runtime_identity is None else json.loads(args.runtime_identity.read_text()),
     )
     print(json.dumps({key: value for key, value in result.items() if key != "trajectories"}, indent=2))
     return 0 if result["complete"] else 1

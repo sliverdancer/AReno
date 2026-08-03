@@ -1036,8 +1036,16 @@ def test_v2_1_goal_ledger_keeps_every_required_outcome_open():
     assert {gate["stage"] for gate in ledger["next_gates"]} == {
         "C0_RESOLUTION",
         "E1_CAPACITY",
+        "X3_TAU3_PILOT",
     }
-    assert all(gate["execution_authorized"] is False for gate in ledger["next_gates"])
+    authority = {
+        gate["stage"]: gate["execution_authorized"] for gate in ledger["next_gates"]
+    }
+    assert authority == {
+        "C0_RESOLUTION": True,
+        "E1_CAPACITY": True,
+        "X3_TAU3_PILOT": False,
+    }
     assert ledger["main_conference_upgrade"] is False
     for block in ledger["blocks"].values():
         assert (V2_1 / block["evidence"]).is_file()
@@ -1183,16 +1191,140 @@ def test_v2_1_tau3_partition_selection_is_structural_and_disjoint():
     assert result["selection_uses_model_outcomes"] is False
 
 
-def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
+def test_v2_1_capacity_gate_requires_bound_artifacts_and_memory_headroom(tmp_path):
     validator = _load_module(
         "rist_v2_1_capacity",
         V2_1 / "stages" / "E1" / "validate_capacity_evidence.py",
     )
-    evidence = {
-        "checkpoint": "mock/model",
-        "model_revision": "b" * 40,
-        "tokenizer_sha256": "c" * 64,
+    builder = _load_module(
+        "rist_v2_1_capacity_manifest_for_gate",
+        V2_1 / "stages" / "E1" / "build_capacity_manifest.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "runs")
+
+    def artifact(relative, content):
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        encoded = content.encode()
+        path.write_bytes(encoded)
+        return relative, __import__("hashlib").sha256(encoded).hexdigest()
+
+    model = manifest["models"]["qwen3"]
+    runtime_identity = {
+        "checkpoint": model["checkpoint"],
+        "model_revision": model["revision"],
+        "tokenizer_snapshot_sha256": model["tokenizer_snapshot_sha256"],
+        "model_weights_sha256": "d" * 64,
         "gpu_name": "Mock GPU",
+        "gpu_uuid": "GPU-mock",
+        "gpu_total_memory_gib": 80,
+        "driver_version": "1.0",
+        "cuda_version": "1.0",
+        "torch_version": "1.0",
+        "source_commit": manifest["source_commit"],
+    }
+    top_contents = {
+        "runtime_identity": __import__("json").dumps(runtime_identity),
+        "filtered_train": "filtered",
+        "capacity_train": "capacity",
+        "resolution_map": "resolution",
+        "capacity_data_manifest": "capacity-manifest",
+    }
+    top_artifacts = {}
+    top_hashes = {}
+    for name, field in validator.TOP_ARTIFACTS.items():
+        relative, digest = artifact(f"top/{name}", top_contents[name])
+        top_artifacts[name] = relative
+        top_hashes[field] = digest
+    filtered_sha = top_hashes["filtered_train_sha256"]
+    capacity_sha = top_hashes["capacity_train_sha256"]
+
+    serving_artifacts = {}
+    serving_hashes = {}
+    for name, field in validator.SERVING_ARTIFACTS.items():
+        relative, digest = artifact(f"serving/{name}.txt", name)
+        serving_artifacts[name] = relative
+        serving_hashes[field] = digest
+
+    training = []
+    for algorithm, peak in (("gspo", 60), ("grpo", 64)):
+        artifacts = {}
+        hashes = {}
+        for name, field in validator.TRAINING_ARTIFACTS.items():
+            if name == "metrics_summary":
+                content = __import__("json").dumps(
+                    {
+                        "protocol": "RIST-E1-ONE-STEP-METRICS-v1",
+                        "optimizer_step_completed": True,
+                        "optimizer_step_count": 1,
+                        "trainable_tokens": 100,
+                        "loss": 0.5,
+                        "gradient_norm": 1.0,
+                        "mixed_reward_group": True,
+                        "reward_event_count": 8,
+                    }
+                )
+            elif name == "reload_result":
+                content = __import__("json").dumps(
+                    {
+                        "protocol": "RIST-E1-RELOAD-CANARY-v1",
+                        "complete": True,
+                        "task_count": 1,
+                        "complete_four_turn_count": 1,
+                        "raw_response_count": 4,
+                        "retry_count": 0,
+                    }
+                )
+            else:
+                content = f"{algorithm}:{name}"
+            relative, digest = artifact(f"{algorithm}/{name}", content)
+            artifacts[name] = relative
+            hashes[field] = digest
+        training.append(
+            {
+                "run_id": f"qwen3-{algorithm}-AF-8101",
+                "algorithm": algorithm,
+                "optimizer_step_completed": True,
+                "optimizer_step_count": 1,
+                "max_steps": 1,
+                "seed": 8101,
+                "arm": "AF",
+                "trainable_turns": "all_assistant",
+                "tool_call_supervision": "full",
+                "filtered_train_sha256": filtered_sha,
+                "capacity_train_sha256": capacity_sha,
+                "resolution_band": "high",
+                "trainable_tokens": 100,
+                "loss": 0.5,
+                "gradient_norm": 1.0,
+                "peak_memory_gib": peak,
+                "oom": False,
+                "checkpoint_roundtrip": True,
+                "retry_count": 0,
+                "artifacts": artifacts,
+                **hashes,
+            }
+        )
+    evidence = {
+        "protocol": "RIST-E1-CAPACITY-EVIDENCE-v2.1",
+        "family": "qwen3",
+        "checkpoint": model["checkpoint"],
+        "model_revision": model["revision"],
+        "tokenizer_snapshot_sha256": model["tokenizer_snapshot_sha256"],
+        "model_weights_sha256": "d" * 64,
+        "filtered_train_sha256": filtered_sha,
+        "capacity_train_sha256": capacity_sha,
+        "resolution_map_sha256": top_hashes["resolution_map_sha256"],
+        "capacity_data_manifest_sha256": top_hashes["capacity_data_manifest_sha256"],
+        "runtime_identity_sha256": top_hashes["runtime_identity_sha256"],
+        "artifacts": top_artifacts,
+        "gpu_name": "Mock GPU",
+        "gpu_uuid": "GPU-mock",
+        "driver_version": "1.0",
+        "cuda_version": "1.0",
+        "torch_version": "1.0",
+        "source_commit": manifest["source_commit"],
+        "training_seed": 8101,
         "gpu_total_memory_gib": 80,
         "serving_canary": {
             "health_pass": True,
@@ -1202,26 +1334,115 @@ def test_v2_1_capacity_gate_requires_both_algorithms_and_memory_headroom():
             "peak_memory_gib": 20,
             "oom": False,
             "retry_count": 0,
+            "artifacts": serving_artifacts,
+            **serving_hashes,
         },
-        "training_canaries": [
-            {
-                "algorithm": algorithm,
-                "optimizer_step_completed": True,
-                "trainable_tokens": 100,
-                "loss": 0.5,
-                "gradient_norm": 1.0,
-                "peak_memory_gib": peak,
-                "oom": False,
-                "checkpoint_roundtrip": True,
-            }
-            for algorithm, peak in (("gspo", 60), ("grpo", 64))
-        ],
+        "training_canaries": training,
     }
-    assert validator.validate_capacity(evidence)["passed"] is True
+    assert validator.validate_capacity(evidence, manifest, tmp_path)["passed"] is True
     evidence["training_canaries"][1]["peak_memory_gib"] = 70
-    result = validator.validate_capacity(evidence)
+    result = validator.validate_capacity(evidence, manifest, tmp_path)
     assert result["memory_headroom_pass"] is False
     assert result["passed"] is False
+    evidence["training_canaries"][1]["peak_memory_gib"] = 64
+    evidence["checkpoint"] = "wrong/model"
+    assert validator.validate_capacity(evidence, manifest, tmp_path)["passed"] is False
+
+
+def test_v2_1_capacity_manifest_is_exactly_four_unauthorized_af_jobs(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_capacity_manifest",
+        V2_1 / "stages" / "E1" / "build_capacity_manifest.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "capacity")
+    assert manifest["job_count"] == 4
+    assert manifest["execution_authorized"] is False
+    assert manifest["gpu_training_authorized"] is False
+    assert manifest["prerequisite"] == "PASS_C0_TO_FILTERED_TRAIN"
+    assert len(manifest["source_commit"]) == 40
+    assert {(row["family"], row["algorithm"]) for row in manifest["jobs"]} == {
+        (family, algorithm)
+        for family in ("qwen3", "gemma4")
+        for algorithm in ("gspo", "grpo")
+    }
+    for row in manifest["jobs"]:
+        assert row["arm"] == "AF"
+        assert row["max_steps"] == 1
+        assert row["save_interval"] == 1
+        assert row["seed"] == 8101
+        assert row["execution_authorized"] is False
+        command = row["command_template"]
+        assert command[command.index("--max-steps") + 1] == "1"
+        assert command[command.index("--tool-call-supervision") + 1] == "full"
+        assert "{E1_HIGH_RESOLUTION_CANARY_JSONL}" in command
+
+
+def test_v2_1_capacity_dataset_selects_whole_first_high_cell(tmp_path):
+    train_builder = _load_module(
+        "rist_v2_1_capacity_train_builder",
+        V2_1 / "stages" / "D3" / "build_train_split.py",
+    )
+    filterer = _load_module(
+        "rist_v2_1_capacity_filter",
+        V2_1 / "stages" / "C0_RESOLUTION" / "filter_train_pool.py",
+    )
+    builder = _load_module(
+        "rist_v2_1_capacity_dataset",
+        V2_1 / "stages" / "E1" / "build_capacity_dataset.py",
+    )
+    source_dir = tmp_path / "source" / "data"
+    train_builder.write_train(source_dir)
+    resolution = {
+        "passed": True,
+        "common_resolution_map": {
+            "c00": "low",
+            "c01": "low",
+            "c06": "high",
+            "c07": "high",
+        },
+    }
+    filtered_dir = tmp_path / "filtered"
+    filterer.filter_train(source_dir / "train.jsonl", resolution, filtered_dir)
+    result = builder.build_capacity_dataset(
+        filtered_dir / "train.jsonl", resolution, tmp_path / "capacity.jsonl"
+    )
+    assert result["selected_cell"] == "c06"
+    assert result["task_count"] == 4
+    assert result["selection_uses_individual_outcomes"] is False
+
+
+def test_v2_1_one_step_metrics_require_mixed_group_and_checkpoint_hashes(tmp_path):
+    metrics = _load_module(
+        "rist_v2_1_e1_metrics",
+        V2_1 / "stages" / "E1" / "extract_one_step_metrics.py",
+    )
+    checkpoint = _load_module(
+        "rist_v2_1_e1_checkpoint",
+        V2_1 / "stages" / "E1" / "build_checkpoint_manifest.py",
+    )
+    series = {
+        "loss": [{"step": 0, "value": 0.5}],
+        "gradient_norm": [{"step": 0, "value": 1.0}],
+        "trainable_tokens": [{"step": 0, "value": 100.0}],
+    }
+    rewards = [
+        {"sample_index": index, "reward": float(index % 2)} for index in range(8)
+    ]
+    summary = metrics.summarize(series, rewards)
+    assert summary["optimizer_step_count"] == 1
+    assert summary["mixed_reward_group"] is True
+    with __import__("pytest").raises(ValueError, match="mixed-reward"):
+        metrics.summarize(
+            series,
+            [{"sample_index": index, "reward": 0.0} for index in range(8)],
+        )
+    saved = tmp_path / "step_000001"
+    saved.mkdir()
+    (saved / "model.safetensors").write_bytes(b"weights")
+    (saved / "config.json").write_text("{}")
+    result = checkpoint.build_manifest(saved)
+    assert result["file_count"] == 2
+    assert all(len(row["sha256"]) == 64 for row in result["files"])
 
 
 def test_v2_1_external_source_validator_checks_commit_origin_and_license(tmp_path):
@@ -1285,9 +1506,9 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert manifest["resolution_filtered_dataset_ready"] is False
     assert manifest["train_sha256"] is None
     assert "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS" in manifest["blocked_by"]
-    assert "T0B_REAL_QWEN_GEMMA_RUNTIME_TOKEN_FIXTURES" in manifest["blocked_by"]
+    assert "T0B_REAL_QWEN_GEMMA_RUNTIME_TOKEN_FIXTURES" not in manifest["blocked_by"]
     assert "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES" not in manifest["blocked_by"]
-    assert "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED" in manifest["blocked_by"]
+    assert "E1_GEMMA4_REQUIRES_AT_LEAST_48GB_CANARY" in manifest["blocked_by"]
     assert "T0_EXACT_NAME_ONLY_TREATMENT" not in manifest["blocked_by"]
     assert "X1_EXTERNAL_ENVIRONMENT_QUALIFICATION" not in manifest["blocked_by"]
     assert sum(run["scientific_treatment_ready"] for run in manifest["runs"]) == 0
@@ -1299,7 +1520,11 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     assert all("--save-interval" in run["command"] for run in manifest["runs"])
     assert all(
         set(run["required_environment"])
-        == {"RIST_RAW_JOURNAL_PATH", "RIST_REWARD_JOURNAL_PATH"}
+        == {
+            "RIST_REQUIRE_EVIDENCE_JOURNALS",
+            "RIST_RAW_JOURNAL_PATH",
+            "RIST_REWARD_JOURNAL_PATH",
+        }
         for run in manifest["runs"]
     )
     assert all("heldout" not in " ".join(run["command"]).lower() for run in manifest["runs"])
@@ -1310,7 +1535,9 @@ def test_v2_1_execution_manifest_is_blocked_and_complete(tmp_path):
     )
     capacity = manifest["capacity_constraints"]
     assert capacity["qwen3_0_6b_on_24gb"]["training_qualified"] is False
-    assert capacity["gemma4_e2b_on_24gb"]["known_rejected"] is True
+    assert capacity["gemma4_e2b_on_24gb"]["serving_qualified"] is True
+    assert capacity["gemma4_e2b_on_24gb"]["training_qualified"] is False
+    assert capacity["gemma4_e2b_on_24gb"]["prior_oom_observed"] is True
     assert not Path(capacity["gemma4_e2b_on_24gb"]["evidence"]).is_absolute()
 
 
@@ -1984,6 +2211,7 @@ def test_v2_1_c0_collection_manifest_freezes_four_unauthorized_jobs(tmp_path):
     assert manifest["job_count"] == 4
     assert manifest["execution_authorized"] is False
     assert manifest["commands_are_templates_only"] is True
+    assert len(manifest["source_commit"]) == 40
     assert manifest["parent_heldout_opened"] is False
     assert manifest["group_size"] == 8
     assert manifest["groups_per_task"] == 4
@@ -1994,6 +2222,11 @@ def test_v2_1_c0_collection_manifest_freezes_four_unauthorized_jobs(tmp_path):
         for row in manifest["jobs"]
     )
     assert len(manifest["splits"]["calibration"]["rollout_seeds"]) == 32
+    assert manifest["collection_concurrency"] == {"qwen3": 8, "gemma4": 4}
+    assert all(len(value) == 40 for value in manifest["model_revisions"].values())
+    assert all(
+        len(value) == 64 for value in manifest["tokenizer_snapshot_sha256"].values()
+    )
 
 
 def test_v2_1_c0_collector_persists_complete_zero_reward_rows(tmp_path):
@@ -2039,6 +2272,148 @@ def test_v2_1_c0_collector_persists_complete_zero_reward_rows(tmp_path):
     assert result["trajectory_count"] == 2
     assert all(row["strict_success"] == 0 for row in result["trajectories"])
     assert all(row["split"] == "calibration" for row in result["trajectories"])
+
+
+def test_v2_1_c0_concurrent_collection_validates_exact_journal_identity(tmp_path):
+    train_builder = _load_module(
+        "rist_v2_1_d3_builder_for_c0_validation",
+        V2_1 / "stages" / "D3" / "build_train_split.py",
+    )
+    collector = _load_module(
+        "rist_v2_1_c0_concurrent_collector",
+        V2_1 / "stages" / "C0_RESOLUTION" / "collect_pretraining.py",
+    )
+    validator = _load_module(
+        "rist_v2_1_c0_evidence_validator",
+        V2_1 / "stages" / "C0_RESOLUTION" / "validate_collection_evidence.py",
+    )
+    row = train_builder.build_rows()[0]
+    row["split"] = "calibration"
+    source_dir = tmp_path / "source"
+    source_dir.mkdir()
+    encoded = (__import__("json").dumps(row, sort_keys=True) + "\n").encode()
+    source_path = source_dir / "calibration.jsonl"
+    source_path.write_bytes(encoded)
+    manifest = {
+        "protocol": "RIST-C0-v2.1",
+        "source_data_dir": str(source_dir),
+        "models": {"qwen3": "mock"},
+        "collection_concurrency": {"qwen3": 2},
+        "sampling": {"temperature": 0.7, "top_p": 0.95, "max_tokens": 128},
+        "splits": {
+            "calibration": {
+                "file": "calibration.jsonl",
+                "sha256": __import__("hashlib").sha256(encoded).hexdigest(),
+                "rollout_seeds": [1, 2],
+                "trajectory_count": 2,
+            }
+        },
+    }
+    invalid_response = {
+        "choices": [{"message": {"role": "assistant", "tool_calls": []}}]
+    }
+    journal_path = tmp_path / "journal.jsonl"
+    result = collector.collect(
+        manifest,
+        "qwen3",
+        "calibration",
+        tmp_path / "result.json",
+        journal_path,
+        lambda _: invalid_response,
+    )
+    journal_rows = [
+        __import__("json").loads(line) for line in journal_path.read_text().splitlines()
+    ]
+    validation = validator.validate_collection(
+        manifest,
+        "qwen3",
+        "calibration",
+        result,
+        journal_rows,
+        [row],
+        __import__("hashlib").sha256(journal_path.read_bytes()).hexdigest(),
+    )
+    assert validation["passed"] is True
+    assert [item["rollout_seed"] for item in result["trajectories"]] == [1, 2]
+    duplicate = validator.validate_collection(
+        manifest,
+        "qwen3",
+        "calibration",
+        result,
+        journal_rows + [journal_rows[0]],
+        [row],
+        result["raw_journal_sha256"],
+    )
+    assert duplicate["passed"] is False
+    assert duplicate["contiguous_journal_pass"] is False
+
+
+def test_v2_1_c0_production_identity_and_nested_result_are_fail_closed(tmp_path):
+    collector = _load_module(
+        "rist_v2_1_c0_identity_collector",
+        V2_1 / "stages" / "C0_RESOLUTION" / "collect_pretraining.py",
+    )
+    calibrator = _load_module(
+        "rist_v2_1_c0_nested_calibrator",
+        V2_1 / "stages" / "C0_RESOLUTION" / "calibrate_resolution.py",
+    )
+    manifest = {
+        "protocol": "RIST-C0-v2.1",
+        "runtime_identity_required": True,
+        "source_commit": "a" * 40,
+        "models": {"qwen3": "mock/model"},
+        "model_revisions": {"qwen3": "b" * 40},
+        "tokenizer_snapshot_sha256": {"qwen3": "c" * 64},
+        "collection_concurrency": {"qwen3": 1},
+        "sampling": {"temperature": 0.7, "top_p": 0.95, "max_tokens": 128},
+        "source_data_dir": str(tmp_path),
+        "splits": {},
+    }
+    identity = {
+        "protocol": "RIST-C0-RUNTIME-IDENTITY-v1",
+        "family": "qwen3",
+        "checkpoint": "wrong/model",
+        "model_revision": "b" * 40,
+        "tokenizer_snapshot_sha256": "c" * 64,
+        "model_weights_sha256": "d" * 64,
+        "snapshot_verification_sha256": "e" * 64,
+        "source_commit": "a" * 40,
+        "gpu_name": "Mock GPU",
+        "gpu_uuid": "GPU-mock",
+        "gpu_total_memory_gib": 24,
+        "driver_version": "1.0",
+        "cuda_version": "1.0",
+        "torch_version": "1.0",
+        "endpoint": "http://127.0.0.1:8000/v1",
+    }
+    with __import__("pytest").raises(ValueError, match="runtime identity"):
+        collector.collect(
+            manifest,
+            "qwen3",
+            "calibration",
+            tmp_path / "result.json",
+            tmp_path / "journal.jsonl",
+            lambda _: {},
+            runtime_identity=identity,
+        )
+
+    rows = _mock_resolution_rows("calibration")
+    nested = {
+        "protocol": "RIST-C0-v2.1",
+        "split": "calibration",
+        "complete": True,
+        "infrastructure_error": None,
+        "retry_count": 0,
+        "expected_trajectory_count": len(rows),
+        "trajectories": rows,
+    }
+    nested_path = tmp_path / "nested.json"
+    nested_path.write_text(__import__("json").dumps(nested))
+    assert calibrator._read_collection_result(nested_path, "calibration") == rows
+    nested["complete"] = False
+    nested_path.write_text(__import__("json").dumps(nested))
+    with __import__("pytest").raises(ValueError, match="incomplete"):
+        calibrator._read_collection_result(nested_path, "calibration")
 
 
 def test_x2_1_tau3_canary_requires_state_mutation_and_stable_semantics():
@@ -2123,6 +2498,29 @@ def test_x3_tau3_dataset_uses_only_frozen_training_ids(tmp_path):
     assert manifest["execution_authorized"] is False
 
 
+def test_x3_tau3_pilot_manifest_covers_full_one_seed_factorial(tmp_path):
+    builder = _load_module(
+        "rist_x3_tau3_execution_manifest",
+        V2_1 / "stages" / "X3_TAU3" / "build_execution_manifest.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "tau3")
+    assert manifest["job_count"] == 16
+    assert manifest["pilot_seed"] == 7101
+    assert manifest["pilot_steps"] == 25
+    assert len(manifest["source_commit"]) == 40
+    assert manifest["user_simulator_revision"] is None
+    assert manifest["user_simulator_authorized"] is False
+    assert manifest["execution_authorized"] is False
+    assert {(row["family"], row["algorithm"], row["arm"]) for row in manifest["jobs"]} == {
+        (family, algorithm, arm)
+        for family in ("qwen3", "gemma4")
+        for algorithm in ("gspo", "grpo")
+        for arm in ("AF", "LF", "AN", "LN")
+    }
+    assert all(row["expected_episode_count"] == 200 for row in manifest["jobs"])
+    assert all(row["execution_authorized"] is False for row in manifest["jobs"])
+
+
 def test_x3_tau3_loader_and_reward_keep_samples_separate(tmp_path):
     loader = _load_module(
         "rist_x3_tau3_dataset_loader",
@@ -2180,6 +2578,13 @@ def test_x3_tau3_policy_action_and_runtime_result_are_fail_closed():
         "rist_x3_tau3_runner",
         REPO_ROOT / "examples" / "agentic" / "rist_v2_1_tau3" / "run_agent.py",
     )
+    assert runner._parse_simulation_payload('{"reward": 0}', "cleanup") == {
+        "reward": 0
+    }
+    with __import__("pytest").raises(RuntimeError, match="invalid simulation"):
+        runner._parse_simulation_payload("not-json", "cleanup")
+    with __import__("pytest").raises(RuntimeError, match="no simulation"):
+        runner._parse_simulation_payload("{}", "cleanup")
 
     class Function:
         name = "cancel_reservation"

@@ -211,6 +211,8 @@ def _assistant_message(response: Any) -> dict[str, Any]:
 def _append_raw_response(item, turn_index: int, response: Any) -> None:
     journal = os.environ.get("RIST_RAW_JOURNAL_PATH")
     if not journal:
+        if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
+            raise RuntimeError("RIST_RAW_JOURNAL_PATH is required by the frozen run")
         return
     payload = {
         "prompt_index": item.prompt_index,
