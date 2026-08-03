@@ -1051,6 +1051,17 @@ def test_v2_1_goal_ledger_keeps_every_required_outcome_open():
         assert (V2_1 / block["evidence"]).is_file()
 
 
+def test_v2_1_gpu_execution_freeze_binds_authorization_and_files():
+    verifier = _load_module(
+        "rist_v2_1_gpu_execution_freeze",
+        V2_1 / "verify_gpu_execution_freeze.py",
+    )
+    result = verifier.verify(V2_1 / "GPU_EXECUTION_FREEZE.json")
+    assert result["authorization_pass"] is True
+    assert result["file_count"] >= 19
+    assert result["passed"] is True
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",

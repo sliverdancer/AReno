@@ -1,5 +1,7 @@
 {
-  "decision": "PASS_C0_CPU_CONTRACT_AWAITING_MODEL_ACCESS",
+  "decision": "PASS_C0_CPU_CONTRACT_USER_AUTHORIZED_AWAITING_GPU_BINDING",
+  "source_commit": "a88cfca",
+  "execution_manifest_sha256": "835a462909d1a9456b3dd7f9e69233690b2ed0754c016b3df3d9fc74e22a0225",
   "gpu_used": false,
   "model_accessed": false,
   "parent_heldout_used": false,
@@ -7,7 +9,10 @@
   "scientific_result_generated": false,
   "tests": {
     "direct_mixed_group_pass_fixture": true,
+    "concurrent_collection_identity_fixture": true,
+    "nested_result_finalization_fixture": true,
     "nontransport_kill_fixture": true,
+    "runtime_model_identity_rejection_fixture": true,
     "whole_cell_filter_fixture": true
   },
   "training_performed": false

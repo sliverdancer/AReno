@@ -1,4 +1,8 @@
 {
+  "collection_concurrency": {
+    "gemma4": 4,
+    "qwen3": 8
+  },
   "commands_are_templates_only": true,
   "execution_authorized": false,
   "group_size": 8,
@@ -21,13 +25,18 @@
         "--output",
         "artifacts/rist_p3_diagnostic_v2_1/c0/qwen3-calibration/result.json",
         "--journal",
-        "artifacts/rist_p3_diagnostic_v2_1/c0/qwen3-calibration/raw_responses.jsonl"
+        "artifacts/rist_p3_diagnostic_v2_1/c0/qwen3-calibration/raw_responses.jsonl",
+        "--runtime-identity",
+        "{QWEN3_RUNTIME_IDENTITY_JSON}"
       ],
+      "collection_concurrency": 8,
       "execution_authorized": false,
       "family": "qwen3",
       "job_id": "qwen3-calibration",
       "ledger": null,
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
       "split": "calibration",
+      "tokenizer_snapshot_sha256": "c83c7f983e1204841852a4cb47cff31dfd829437c80dccc55dd52d0c8fe532b1",
       "trajectory_count": 1024
     },
     {
@@ -47,14 +56,19 @@
         "artifacts/rist_p3_diagnostic_v2_1/c0/qwen3-qualification/result.json",
         "--journal",
         "artifacts/rist_p3_diagnostic_v2_1/c0/qwen3-qualification/raw_responses.jsonl",
+        "--runtime-identity",
+        "{QWEN3_RUNTIME_IDENTITY_JSON}",
         "--ledger",
         "artifacts/rist_p3_diagnostic_v2_1/c0/qualification_ledgers/qwen3.json"
       ],
+      "collection_concurrency": 8,
       "execution_authorized": false,
       "family": "qwen3",
       "job_id": "qwen3-qualification",
       "ledger": "artifacts/rist_p3_diagnostic_v2_1/c0/qualification_ledgers/qwen3.json",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
       "split": "qualification",
+      "tokenizer_snapshot_sha256": "c83c7f983e1204841852a4cb47cff31dfd829437c80dccc55dd52d0c8fe532b1",
       "trajectory_count": 1024
     },
     {
@@ -73,13 +87,18 @@
         "--output",
         "artifacts/rist_p3_diagnostic_v2_1/c0/gemma4-calibration/result.json",
         "--journal",
-        "artifacts/rist_p3_diagnostic_v2_1/c0/gemma4-calibration/raw_responses.jsonl"
+        "artifacts/rist_p3_diagnostic_v2_1/c0/gemma4-calibration/raw_responses.jsonl",
+        "--runtime-identity",
+        "{GEMMA4_RUNTIME_IDENTITY_JSON}"
       ],
+      "collection_concurrency": 4,
       "execution_authorized": false,
       "family": "gemma4",
       "job_id": "gemma4-calibration",
       "ledger": null,
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
       "split": "calibration",
+      "tokenizer_snapshot_sha256": "7c813a44e67aa09d81001db777c261d858417b45ce0204bc6a32f0b7b96720f7",
       "trajectory_count": 1024
     },
     {
@@ -99,29 +118,40 @@
         "artifacts/rist_p3_diagnostic_v2_1/c0/gemma4-qualification/result.json",
         "--journal",
         "artifacts/rist_p3_diagnostic_v2_1/c0/gemma4-qualification/raw_responses.jsonl",
+        "--runtime-identity",
+        "{GEMMA4_RUNTIME_IDENTITY_JSON}",
         "--ledger",
         "artifacts/rist_p3_diagnostic_v2_1/c0/qualification_ledgers/gemma4.json"
       ],
+      "collection_concurrency": 4,
       "execution_authorized": false,
       "family": "gemma4",
       "job_id": "gemma4-qualification",
       "ledger": "artifacts/rist_p3_diagnostic_v2_1/c0/qualification_ledgers/gemma4.json",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
       "split": "qualification",
+      "tokenizer_snapshot_sha256": "7c813a44e67aa09d81001db777c261d858417b45ce0204bc6a32f0b7b96720f7",
       "trajectory_count": 1024
     }
   ],
+  "model_revisions": {
+    "gemma4": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "qwen3": "c1899de289a04d12100db370d81485cdf75e47ca"
+  },
   "models": {
     "gemma4": "google/gemma-4-E2B-it",
     "qwen3": "Qwen/Qwen3-0.6B"
   },
   "parent_heldout_opened": false,
   "protocol": "RIST-C0-v2.1",
+  "runtime_identity_required": true,
   "sampling": {
     "max_tokens": 128,
     "retry_count": 0,
     "temperature": 0.7,
     "top_p": 0.95
   },
+  "source_commit": "a88cfcab97ecdfa56c0364cd4ac20cab2e782e4c",
   "source_data_dir": "research/reward_identifiability_supervision_topology/successors/rist_v2/stages/D2/data",
   "source_protocol": "RIST-D2-v2.0",
   "splits": {
@@ -205,5 +235,9 @@
       "task_count": 32,
       "trajectory_count": 1024
     }
+  },
+  "tokenizer_snapshot_sha256": {
+    "gemma4": "7c813a44e67aa09d81001db777c261d858417b45ce0204bc6a32f0b7b96720f7",
+    "qwen3": "c83c7f983e1204841852a4cb47cff31dfd829437c80dccc55dd52d0c8fe532b1"
   }
 }

@@ -1,0 +1,34 @@
+{
+  "schema_version": "rist-gpu-execution-freeze-v1",
+  "source_commit": "a88cfca",
+  "authorization_sha256": "c6984c6cbbbd8428ba185431e01798132455920e3e63ba94dfbc950f2cb360ba",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "C0_RESOLUTION",
+    "E1_QWEN_CAPACITY",
+    "E1_GEMMA_CAPACITY_MINIMUM_48GB"
+  ],
+  "deployment_bound": false,
+  "gpu_endpoints_bound": false,
+  "files": {
+    "stages/C0_RESOLUTION/PROTOCOL.md": "0dd723165e592d2bf029f77e539a3f82b2309e1fc676d6a1ba17776e460aefbf",
+    "stages/C0_RESOLUTION/collection_manifest.json": "835a462909d1a9456b3dd7f9e69233690b2ed0754c016b3df3d9fc74e22a0225",
+    "stages/C0_RESOLUTION/collect_pretraining.py": "913d0d9deaacc8ce4569e761bd550b0a423d7f31e5bdb9a7177f7c15e24f6103",
+    "stages/C0_RESOLUTION/validate_collection_evidence.py": "e1964d072ad9c897fec68f09f42f2379321beaba281fecfe5be5ab66b5d51c6b",
+    "stages/C0_RESOLUTION/calibrate_resolution.py": "91350eb826cfbe25330285f000c368ca373ad5a5fd5df4f1eb1db3d906374acc",
+    "stages/C0_RESOLUTION/combine_family_maps.py": "cfe934f5e5870bd4ceb1501e8fe35f497d6199bf48c5b72064f2025eab94d7d0",
+    "stages/C0_RESOLUTION/filter_train_pool.py": "add2fa28a07745a509ca2dd7dc368edd50d35e20084de414a52c5694604798de",
+    "stages/C0_RESOLUTION/finalize_c0.py": "95d985e523c74ed93744179dc41f3fa9c6c7d7b4b419d782db9b04d59e343337",
+    "stages/C0_RESOLUTION/build_runtime_identity.py": "05aac00324bf7e5a337f1aebdf1e3b7b6fcb6f168c9e75573e73ff021d660fc3",
+    "stages/E1/PROTOCOL.md": "0f40af22d8167dfbb3aedf34a068e48e25feaea728493bb0234353762f9be289",
+    "stages/E1/EXECUTION_MANIFEST.json": "c2a3127ba51009473503503cd6392ae171be95e621ec124f21f4b05a613edb39",
+    "stages/E1/build_capacity_dataset.py": "83786aaba088927c5c9a3314af4a960b8cbcae977094e5e62fa64611ec4d8f1e",
+    "stages/E1/run_serving_canary.py": "2b2891f1789b2c4a67e2522ca6f1652f7978f8b4af5b345a10be09daae5e7289",
+    "stages/E1/monitor_gpu_command.py": "f299f3af57bcee9b3f64336b00adfc51c80ec4926de6232d80fd2a984964b46b",
+    "stages/E1/extract_one_step_metrics.py": "36ed8b42e885ce953443d6acb2500bd33494f6969064ce5ccf31a78cd1aea815",
+    "stages/E1/build_checkpoint_manifest.py": "930794f7fb758409be33b5d2fd394ee319f703db445d3719b9d34920fcc99c20",
+    "stages/E1/build_directory_manifest.py": "424bf5aa365107a27bbc1d208192fb45dd2215813266cb5dc22acd1ddadb088f",
+    "stages/E1/assemble_capacity_evidence.py": "d3864e411bc80838a05a6196c35ec9e61483fe3548edb8b04836c3fea51c04f7",
+    "stages/E1/validate_capacity_evidence.py": "070105969679fe1de4cc56ceade439328a22b991a67b197a0b1a13e20c89ab30"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "protocol": "RIST-E1-CPU-FREEZE-v1",
+  "source_commit": "a88cfca",
+  "execution_manifest_sha256": "c2a3127ba51009473503503cd6392ae171be95e621ec124f21f4b05a613edb39",
+  "status": "PASS_CPU_INSTRUMENT_USER_AUTHORIZED_AWAITING_C0_AND_GPU_BINDING",
+  "job_count": 4,
+  "algorithms": ["gspo", "grpo"],
+  "qwen_minimum_gpu_memory_gib": 24,
+  "gemma_minimum_gpu_memory_gib": 48,
+  "artifact_backed_validation_required": true,
+  "checkpoint_reload_required": true,
+  "maximum_peak_memory_fraction": 0.85,
+  "gpu_used": false,
+  "training_run": false,
+  "scientific_result_generated": false
+}
