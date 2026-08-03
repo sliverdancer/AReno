@@ -1040,17 +1040,23 @@ def test_v2_1_goal_ledger_keeps_every_required_outcome_open():
         if name != "runtime_treatment_qualification"
     )
     assert {gate["stage"] for gate in ledger["next_gates"]} == {
-        "C0_RESOLUTION",
+        "C0_RESOLUTION_V2_2",
         "E1_CAPACITY",
+        "TOKEN_BUDGET_API",
         "X3_TAU3_PILOT",
+        "X4_TAU3_POWERED",
+        "M0_THIRD_CHECKPOINT",
     }
     authority = {
         gate["stage"]: gate["execution_authorized"] for gate in ledger["next_gates"]
     }
     assert authority == {
-        "C0_RESOLUTION": True,
+        "C0_RESOLUTION_V2_2": True,
         "E1_CAPACITY": True,
+        "TOKEN_BUDGET_API": False,
         "X3_TAU3_PILOT": False,
+        "X4_TAU3_POWERED": False,
+        "M0_THIRD_CHECKPOINT": False,
     }
     assert ledger["main_conference_upgrade"] is False
     for block in ledger["blocks"].values():
