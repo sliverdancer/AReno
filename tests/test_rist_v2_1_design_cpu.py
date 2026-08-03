@@ -612,6 +612,48 @@ def test_v2_1_t0b_client_collects_exact_balanced_runtime_rows(tmp_path):
     assert result["retry_count"] == 0
 
 
+def test_v2_1_t0b_model_acquisition_is_locked_and_digest_verified(tmp_path):
+    verifier = _load_module(
+        "rist_v2_1_t0b_model_verifier",
+        V2_1 / "stages" / "T0B" / "verify_model_snapshot.py",
+    )
+    downloader = _load_module(
+        "rist_v2_1_t0b_model_downloader",
+        V2_1 / "stages" / "T0B" / "download_model_snapshot.py",
+    )
+    root = tmp_path / "snapshot"
+    root.mkdir()
+    payload = b"frozen-model"
+    (root / "model.safetensors").write_bytes(payload)
+    lock = {
+        "protocol": "test-lock",
+        "download_permitted": False,
+        "models": {
+            "mock": {
+                "repo_id": "example/model",
+                "revision": "a" * 40,
+                "files": [
+                    {
+                        "path": "model.safetensors",
+                        "size": len(payload),
+                        "digest_kind": "sha256",
+                        "digest": __import__("hashlib").sha256(payload).hexdigest(),
+                    }
+                ],
+            }
+        },
+    }
+    assert verifier.verify_snapshot(root, "mock", lock)["passed"] is True
+    try:
+        downloader.download_snapshot(
+            "mock", tmp_path / "downloaded", lock, download_file=lambda *a, **k: ""
+        )
+    except PermissionError as error:
+        assert "does not authorize" in str(error)
+    else:
+        raise AssertionError("model downloader must fail closed without authorization")
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",

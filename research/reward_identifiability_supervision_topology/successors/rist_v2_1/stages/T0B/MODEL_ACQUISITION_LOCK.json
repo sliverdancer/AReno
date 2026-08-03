@@ -1,0 +1,36 @@
+{
+  "protocol": "RIST-T0B-MODEL-ACQUISITION-v1.1",
+  "status": "FROZEN_AWAITING_EXPLICIT_WEIGHT_DOWNLOAD_AUTHORIZATION",
+  "models": {
+    "qwen3_0_6b": {
+      "repo_id": "Qwen/Qwen3-0.6B",
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "files": [
+        {"path": "config.json", "size": 726, "digest_kind": "git_blob_sha1", "digest": "f5c3703b78ae2a478ae15b247e9f855e0ce2107b"},
+        {"path": "generation_config.json", "size": 239, "digest_kind": "git_blob_sha1", "digest": "20a8a9156fc8c3f25295ca067f61fdf120d517c5"},
+        {"path": "merges.txt", "size": 1671853, "digest_kind": "git_blob_sha1", "digest": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7"},
+        {"path": "model.safetensors", "size": 1503300328, "digest_kind": "sha256", "digest": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"},
+        {"path": "tokenizer.json", "size": 11422654, "digest_kind": "sha256", "digest": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"},
+        {"path": "tokenizer_config.json", "size": 9732, "digest_kind": "git_blob_sha1", "digest": "417d038a63fa3de29cfde265caedae14d1a58d92"},
+        {"path": "vocab.json", "size": 2776833, "digest_kind": "git_blob_sha1", "digest": "4783fe10ac3adce15ac8f358ef5462739852c569"}
+      ]
+    },
+    "gemma4_e2b_it": {
+      "repo_id": "google/gemma-4-E2B-it",
+      "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "files": [
+        {"path": "chat_template.jinja", "size": 18569, "digest_kind": "git_blob_sha1", "digest": "fbe3b59b625cd1b8850ea592d4203df6ec04684b"},
+        {"path": "config.json", "size": 4954, "digest_kind": "git_blob_sha1", "digest": "923b5e9405e7d319572b0c1b1a89291512262aa3"},
+        {"path": "generation_config.json", "size": 208, "digest_kind": "git_blob_sha1", "digest": "e605bb4523b1462ea9d9a3810b9e3ecf7ab7b1f6"},
+        {"path": "model.safetensors", "size": 10246621918, "digest_kind": "sha256", "digest": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550"},
+        {"path": "processor_config.json", "size": 1689, "digest_kind": "git_blob_sha1", "digest": "5465974d23e1eca2c46c2809b26c997946ce0d90"},
+        {"path": "tokenizer.json", "size": 32169626, "digest_kind": "sha256", "digest": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"},
+        {"path": "tokenizer_config.json", "size": 3082, "digest_kind": "git_blob_sha1", "digest": "6068e357379d36f823c377e30efb101fa2c67fe4"}
+      ]
+    }
+  },
+  "total_payload_bytes": 11798002411,
+  "download_permitted": false,
+  "training_permitted": false,
+  "bfcl_content_permitted": false
+}
