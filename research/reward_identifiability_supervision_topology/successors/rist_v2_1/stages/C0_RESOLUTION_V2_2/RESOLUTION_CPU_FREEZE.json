@@ -1,6 +1,6 @@
 {
   "schema_version": "rist-c0-v2.2-resolution-cpu-freeze-v1",
-  "source_commit": "ff435cd28664f647879958eb9e0cfece96d391ca",
+  "source_commit": "41ba9e82a736e0a4f3b74cc88b8f0ca23ed97c82",
   "input_trajectory_count": 4096,
   "model_families": [
     "qwen3",
@@ -20,7 +20,7 @@
     "validate_resolution_analysis.py": "299077fb8ba27096fe9d2796f76ad94737ac0c3bdbc6fea3628169fa1ed5b0b5",
     "verify_resolution_cpu_freeze.py": "13752a8264adc4302aa940e9addb1ab1c0883c902031c5ca625f38b80b5b9fcf",
     "../../../../../../tests/test_rist_c0_v2_2_resolution_cpu.py": "dd5f587c14c9f1ac9fcbada62509a96628611185f346a1de17d7d487358f7775",
-    "../E1/validate_c0_admission.py": "6cbb8cf196d9351caf704f7d87c34fce5d079ac89f5f0be3b28dc27abf3d01c8",
+    "../E1/validate_c0_admission.py": "3a5cf0abd20be31bee1a90ec65638b087a7f2c2545b618f63e591fdba027849a",
     "../E1/C0_GATE_PROTOCOL.md": "cc2732aa2fafdd74b59a01a8f5f33cc9a78418393336033b2a1e537c1ffc6cd1",
     "../D4_EVAL/evaluate_checkpoint.py": "572295205680d65051282b5962ea7d3b4ade84708efc007288304b82e00364e5",
     "finalize_scientific_collection.py": "7bb8d5b990edbc8d08610be985f0e2ae58b4cebeaa568d1e475c8535d195838d",
