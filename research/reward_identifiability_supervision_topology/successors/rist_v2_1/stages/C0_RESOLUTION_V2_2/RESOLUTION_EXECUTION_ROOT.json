@@ -1,0 +1,23 @@
+{
+  "protocol": "RIST-C0-v2.2-RESOLUTION-EXECUTION-ROOT-v1",
+  "source_commit": "ff435cd28664f647879958eb9e0cfece96d391ca",
+  "resolution_freeze": "RESOLUTION_CPU_FREEZE.json",
+  "resolution_freeze_sha256": "8fef5c91ea2696b4fa15c7fc8601932121259174ca15c01467661cd70b1ef0c1",
+  "external_authorization": "../../GPU_AUTHORIZATION_20260803.json",
+  "external_authorization_sha256": "c6984c6cbbbd8428ba185431e01798132455920e3e63ba94dfbc950f2cb360ba",
+  "trajectory_count": 4096,
+  "outcome_analysis_authorized": true,
+  "scientific_result_generation_authorized": true,
+  "gpu_permitted": false,
+  "training_permitted": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "terminal_rerun_permitted": false,
+  "e1_training_opened_by_this_root": false,
+  "required_terminal_sequence": [
+    "OUTCOME_ACCESS_RECEIPT.json",
+    "FINAL_RESULT.json",
+    "e1/E1_ADMISSION.json",
+    "VALIDATION_RESULT.json"
+  ]
+}
