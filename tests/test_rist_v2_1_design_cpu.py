@@ -2601,6 +2601,75 @@ def test_x2_1_archived_qualification_passes_without_restricted_access():
     assert result["gpu_used"] is False
 
 
+def test_c0_v2_2_pool_is_fresh_balanced_and_canary_separate(tmp_path):
+    builder = _load_module(
+        "rist_c0_v2_2_fresh_pool",
+        V2_1 / "stages" / "C0_RESOLUTION_V2_2" / "build_fresh_pool.py",
+    )
+    rows = builder.build_rows()
+    assert set(rows) == {"calibration", "qualification", "capacity_canary"}
+    assert len(rows["calibration"]) == len(rows["qualification"]) == 32
+    assert len(rows["capacity_canary"]) == 1
+    assert rows["capacity_canary"][0]["structural_cell"] == "c07"
+    signatures = {
+        row["task_signature"] for split_rows in rows.values() for row in split_rows
+    }
+    assert len(signatures) == 65
+    assert signatures.isdisjoint(builder._prior_signatures())
+    manifest = builder.write_pool(tmp_path / "fresh")
+    assert manifest["previous_c0_task_pool_retired"] is True
+    assert manifest["prior_outcomes_used"] is False
+    assert manifest["heldout_content_opened"] is False
+    assert manifest["model_accessed"] is False
+    assert manifest["gpu_used"] is False
+    assert manifest["splits"]["capacity_canary"]["trajectory_count"] == 8
+    assert manifest["splits"]["calibration"]["trajectory_count"] == 1024
+    assert manifest["splits"]["qualification"]["trajectory_count"] == 1024
+
+
+def test_c0_v2_2_capacity_canary_is_outcome_free_and_requires_48gb(tmp_path):
+    builder = _load_module(
+        "rist_c0_v2_2_canary_pool",
+        V2_1 / "stages" / "C0_RESOLUTION_V2_2" / "build_fresh_pool.py",
+    )
+    canary = _load_module(
+        "rist_c0_v2_2_canary",
+        V2_1 / "stages" / "C0_RESOLUTION_V2_2" / "run_capacity_canary.py",
+    )
+    data_dir = tmp_path / "pool"
+    manifest = builder.write_pool(data_dir)
+    identity = {"family": "qwen3", "gpu_total_memory_gib": 48.0}
+    journal = tmp_path / "raw.jsonl"
+    result = canary.run_canary(
+        manifest,
+        data_dir,
+        "qwen3",
+        identity,
+        journal,
+        post_json=lambda payload: {
+            "id": f"response-{payload['seed']}",
+            "choices": [{"message": {"content": "not interpreted"}}],
+        },
+        memory_used_mib=lambda: 1234.0,
+    )
+    assert result["complete"] is True
+    assert result["response_count"] == 8
+    assert result["request_concurrency"] == 8
+    assert result["outcomes_inspected"] is False
+    assert result["scientific_result"] is False
+    assert len(journal.read_text().splitlines()) == 8
+    with __import__("pytest").raises(ValueError, match="at least 48 GB"):
+        canary.run_canary(
+            manifest,
+            data_dir,
+            "qwen3",
+            {"family": "qwen3", "gpu_total_memory_gib": 24.0},
+            tmp_path / "blocked.jsonl",
+            post_json=lambda payload: {},
+            memory_used_mib=lambda: 0.0,
+        )
+
+
 def test_x3_tau3_dataset_uses_only_frozen_training_ids(tmp_path):
     builder = _load_module(
         "rist_x3_tau3_data_builder",
