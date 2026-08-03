@@ -1,0 +1,41 @@
+{
+  "bfcl_content_permitted": false,
+  "cases_per_turn": 8,
+  "checkpoint_download_permitted": false,
+  "execution_authorized": true,
+  "expected_runtime_rows_per_model": 32,
+  "gpu_time_limit_seconds": 1800,
+  "heldout_data_permitted": false,
+  "model_order": [
+    "qwen3_0_6b",
+    "gemma4_e2b_it"
+  ],
+  "model_revisions": {
+    "gemma4_e2b_it": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "qwen3_0_6b": "c1899de289a04d12100db370d81485cdf75e47ca"
+  },
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.0",
+  "request_seed": 9301,
+  "retry_limit": 0,
+  "sampling": {
+    "max_new_tokens": 96,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "schema_version": 1,
+  "serve": {
+    "attn_backend": "native",
+    "disable_thinking": true,
+    "eager_decode": true,
+    "max_running_prompts": 1,
+    "port": 8000,
+    "tp_size": 1,
+    "world_size": 1
+  },
+  "status": "FROZEN_AUTHORIZED_AWAITING_REACHABLE_REMOTE",
+  "task_count": 8,
+  "tasks_sha256": "683fe8a664b29a80a44fe89809d0f1833e144f1a382e8bc98302612094b83931",
+  "tokenizer_hash_match_required_before_serving": true,
+  "training_permitted": false,
+  "turns_per_task": 4
+}

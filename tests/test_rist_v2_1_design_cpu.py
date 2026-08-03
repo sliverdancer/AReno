@@ -546,6 +546,72 @@ def test_v2_1_tokenizer_downloader_is_revision_pinned_and_allowlisted(tmp_path):
     assert all("model.safetensors" not in call for call in calls)
 
 
+def test_v2_1_t0b_client_collects_exact_balanced_runtime_rows(tmp_path):
+    builder = _load_module(
+        "rist_v2_1_t0b_builder",
+        V2_1 / "stages" / "T0B" / "build_protocol.py",
+    )
+    client = _load_module(
+        "rist_v2_1_t0b_client",
+        V2_1 / "stages" / "T0B" / "run_client.py",
+    )
+    builder.write_protocol(tmp_path)
+    calls = []
+
+    def post(_url, payload, **_kwargs):
+        function = payload["tool_choice"]["function"]["name"]
+        code = payload["tools"][0]["function"]["parameters"]["properties"]["code"]["enum"][0]
+        raw = __import__("json").dumps(
+            {"name": function, "arguments": {"code": code}}, separators=(",", ":")
+        )
+        calls.append(payload)
+        return {
+            "areno": {"response_tokens": [ord(character) for character in raw]},
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "id": f"call-{len(calls)}",
+                                "type": "function",
+                                "function": {
+                                    "name": function,
+                                    "arguments": __import__("json").dumps({"code": code}),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ],
+        }
+
+    result = client.collect(
+        base_url="http://127.0.0.1:8000/v1",
+        api_key="EMPTY",
+        model_cell="qwen3_0_6b",
+        tasks_path=tmp_path / "calibration_tasks.json",
+        manifest_path=tmp_path / "EXECUTION_MANIFEST.json",
+        journal_path=tmp_path / "journal.jsonl",
+        result_path=tmp_path / "result.json",
+        timeout_seconds=1.0,
+        post_json=post,
+    )
+    rows = [
+        __import__("json").loads(line)
+        for line in (tmp_path / "journal.jsonl").read_text().splitlines()
+    ]
+    assert result["failure"] is None
+    assert result["runtime_row_count"] == 32
+    assert result["complete_task_count"] == 8
+    assert {turn: sum(row["turn_index"] == turn for row in rows) for turn in range(4)} == {
+        turn: 8 for turn in range(4)
+    }
+    assert len(calls) == 32
+    assert result["retry_count"] == 0
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",
