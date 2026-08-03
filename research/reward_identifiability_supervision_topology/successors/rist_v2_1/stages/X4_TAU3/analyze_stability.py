@@ -25,7 +25,7 @@ def _sign(value: float) -> int:
 def _interaction(values: dict[str, float]) -> float:
     if set(values) != set(ARMS):
         raise ValueError("interaction requires AF/LF/AN/LN")
-    return values["AF"] - values["LF"] - values["AN"] + values["LN"]
+    return (values["AN"] - values["AF"]) - (values["LN"] - values["LF"])
 
 
 def _canonical_sha256(value: Any) -> str:

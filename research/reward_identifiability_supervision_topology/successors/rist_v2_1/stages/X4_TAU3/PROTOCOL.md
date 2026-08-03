@@ -25,8 +25,8 @@ for 200 episodes per run, 38,400 initially, and at most 102,400. All 22 frozen
 airline training tasks must occur in every run. Retail, Tau3 test tasks, held-out
 data, and BFCL remain inaccessible.
 
-The primary endpoint is the seed-level strict-success interaction
-`AF - LF - AN + LN`, averaged across the four family-algorithm blocks. A GO
+The primary endpoint is the P4-consistent seed-level strict-success interaction
+`(AN - AF) - (LN - LF)`, averaged across the four family-algorithm blocks. A GO
 requires an absolute mean of at least 0.05, at least 75% paired-seed sign
 agreement, no leave-one-seed-out sign reversal, the same nonzero mean sign in
 all four blocks, and an observed-SD sensitivity MDE no larger than the observed

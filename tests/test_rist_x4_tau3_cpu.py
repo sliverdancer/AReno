@@ -94,6 +94,7 @@ def test_x4_analysis_expands_kills_or_passes_only_from_actual_seed_sd():
     freezer = _load("x4_seed_for_analysis", STAGE / "freeze_seed_bank.py")
     analyzer = _load("x4_stability_analysis", STAGE / "analyze_stability.py")
     bank = freezer.build_seed_bank()
+    assert analyzer._interaction({"AF": 0.7, "LF": 0.4, "AN": 0.5, "LN": 0.3}) == pytest.approx(-0.1)
 
     small = [0.080 + (index % 3 - 1) * 0.002 for index in range(12)]
     records = _records(bank, small)
@@ -216,3 +217,12 @@ def test_x4_analysis_rejects_nonprefix_or_incomplete_seed_blocks():
     records.pop()
     with pytest.raises(ValueError, match="exact paired-seed factorial"):
         analyzer.analyze(records, bank, _validation(analyzer, records))
+
+
+def test_x4_archived_cpu_freeze_is_self_consistent():
+    verifier = _load("x4_freeze_verifier", STAGE / "verify_cpu_freeze.py")
+    result = verifier.verify(STAGE / "CPU_FREEZE.json")
+    assert result["passed"] is True
+    assert result["authorization_boundary_pass"] is True
+    assert result["count_contract_pass"] is True
+    assert all(result["files"].values())
