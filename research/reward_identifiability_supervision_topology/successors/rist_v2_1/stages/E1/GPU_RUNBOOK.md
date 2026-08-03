@@ -16,13 +16,23 @@ For each family, follow the manifest mechanically:
 2. Start the monitored native serving command and send the frozen 32-task
    serving canary. Stop serving and retain monitor, journal, result, and log.
 3. Run the monitored AF one-step command for GSPO, then its metrics and
-   checkpoint-manifest commands. No retry or altered batch is permitted.
+   checkpoint-manifest commands. The monitor must capture stdout and stderr to
+   the frozen `train.log`; no retry or altered batch is permitted.
 4. Load `step_000001`, send the one-task/four-turn reload canary, stop serving,
-   and retain its journal/result/log. Repeat steps 3-4 for GRPO.
+   and retain its journal/result/log and monitor trace. The reload runtime
+   identity must contain the parent `run_id` and SHA-256 of the manifest made
+   from that exact checkpoint directory, plus the exact checkpoint path bound
+   in the execution manifest. Repeat steps 3-4 for GRPO.
 5. Assemble artifact-backed evidence and run `validate_capacity_evidence.py`.
    Reject the pairing for any OOM, nonzero command exit, zero/non-finite
    gradient, non-mixed reward group, missing artifact, failed reload, or peak
    memory above 85% of total.
+
+The artifact binding includes the real TensorBoard directory and saved
+checkpoint directory, not only their JSON summaries. Validation rebuilds both
+directory manifests, reloads TensorBoard scalars, rereads reward/raw journals,
+and recomputes GPU peaks from every monitor sample. Editing a summary and
+rehashing it cannot produce a qualification pass.
 
 Qwen and Gemma are separate decisions. Failure of one does not authorize
 changing its model, batch, algorithm, task, seed, or GPU pairing inside the

@@ -39,12 +39,30 @@ def _query() -> list[dict]:
     return rows
 
 
-def monitor(command: list[str], gpu_uuid: str, interval: float) -> tuple[int, dict]:
+def monitor(
+    command: list[str],
+    gpu_uuid: str,
+    interval: float,
+    log_path: Path | None = None,
+) -> tuple[int, dict]:
     matches = [row for row in _query() if row["gpu_uuid"] == gpu_uuid]
     if len(matches) != 1:
         raise ValueError("requested E1 GPU UUID is not uniquely visible")
     identity = matches[0]
-    process = subprocess.Popen(command)
+    log_file = None
+    if log_path is not None:
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_file = log_path.open("xb")
+    try:
+        process = subprocess.Popen(
+            command,
+            stdout=log_file,
+            stderr=subprocess.STDOUT if log_file is not None else None,
+        )
+    except Exception:
+        if log_file is not None:
+            log_file.close()
+        raise
     samples = []
     started = time.monotonic()
     while process.poll() is None:
@@ -67,6 +85,9 @@ def monitor(command: list[str], gpu_uuid: str, interval: float) -> tuple[int, di
         }
     )
     peak = max(row["used_memory_mib"] for row in samples)
+    if log_file is not None:
+        log_file.flush()
+        log_file.close()
     return process.returncode, {
         "protocol": "RIST-E1-GPU-MONITOR-v1",
         **identity,
@@ -83,12 +104,15 @@ def main() -> int:
     parser.add_argument("--gpu-uuid", required=True)
     parser.add_argument("--interval-seconds", type=float, default=0.25)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--log", type=Path)
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     command = args.command[1:] if args.command[:1] == ["--"] else args.command
     if not command:
         raise ValueError("monitored command is required")
-    code, result = monitor(command, args.gpu_uuid, args.interval_seconds)
+    code, result = monitor(
+        command, args.gpu_uuid, args.interval_seconds, log_path=args.log
+    )
     args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     return code
 

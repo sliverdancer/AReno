@@ -19,6 +19,16 @@ def _path(root: Path, value: Any) -> Path:
     return path
 
 
+def _path_directory(root: Path, value: Any) -> Path:
+    if not isinstance(value, str) or not value or Path(value).is_absolute():
+        raise ValueError("E1 binding directory paths must be relative")
+    root = root.resolve()
+    path = (root / value).resolve()
+    if not path.is_relative_to(root) or not path.is_dir():
+        raise ValueError(f"E1 bound artifact directory is missing: {value}")
+    return path
+
+
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -39,6 +49,9 @@ def _artifact_row(root: Path, paths: dict[str, Any]) -> tuple[dict, dict]:
         "reload_journal": "reload_journal_sha256",
         "reload_result": "reload_result_sha256",
         "gpu_monitor": "gpu_monitor_sha256",
+        "train_log": "train_log_sha256",
+        "reload_gpu_monitor": "reload_gpu_monitor_sha256",
+        "reload_serve_log": "reload_serve_log_sha256",
         "serve_log": "serve_log_sha256",
         "result": "result_sha256",
         "runtime_identity": "runtime_identity_sha256",
@@ -72,6 +85,13 @@ def assemble(
     ):
         if identity.get(key) != expected:
             raise ValueError(f"E1 runtime identity mismatch: {key}")
+    gpu_pairing = model.get("gpu_pairing")
+    if (
+        not isinstance(gpu_pairing, str)
+        or "{" in gpu_pairing
+        or identity.get("gpu_uuid") != gpu_pairing
+    ):
+        raise ValueError("E1 assembly requires a concrete manifest GPU UUID")
     filtered = _path(artifact_root, binding["filtered_train"])
     capacity = _path(artifact_root, binding["capacity_train"])
     resolution = _path(artifact_root, binding["resolution_map"])
@@ -129,6 +149,9 @@ def assemble(
                 "reload_journal",
                 "reload_result",
                 "gpu_monitor",
+                "train_log",
+                "reload_gpu_monitor",
+                "reload_serve_log",
             )
         }
         artifacts, hashes = _artifact_row(artifact_root, paths)
@@ -155,6 +178,14 @@ def assemble(
                 "oom": monitor.get("command_exit_code") != 0,
                 "checkpoint_roundtrip": reload_result.get("complete") is True,
                 "retry_count": reload_result.get("retry_count"),
+                "metrics_dir": _relative(
+                    artifact_root,
+                    _path_directory(artifact_root, spec["metrics_dir"]),
+                ),
+                "checkpoint_dir": _relative(
+                    artifact_root,
+                    _path_directory(artifact_root, spec["checkpoint_dir"]),
+                ),
                 "artifacts": artifacts,
                 **hashes,
             }

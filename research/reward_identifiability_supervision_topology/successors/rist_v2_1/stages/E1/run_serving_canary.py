@@ -46,6 +46,25 @@ def run_canary(
         )
     ):
         raise ValueError("E1 runtime identity does not match manifest")
+    gpu_pairing = model.get("gpu_pairing")
+    if (
+        not isinstance(gpu_pairing, str)
+        or "{" in gpu_pairing
+        or runtime_identity.get("gpu_uuid") != gpu_pairing
+    ):
+        raise ValueError("E1 canary requires a concrete manifest GPU UUID")
+    if protocol == "RIST-E1-RELOAD-CANARY-v1" and (
+        not isinstance(runtime_identity.get("parent_run_id"), str)
+        or not isinstance(runtime_identity.get("loaded_checkpoint_path"), str)
+        or not runtime_identity["loaded_checkpoint_path"]
+        or not isinstance(runtime_identity.get("checkpoint_manifest_sha256"), str)
+        or len(runtime_identity["checkpoint_manifest_sha256"]) != 64
+        or any(
+            character not in "0123456789abcdef"
+            for character in runtime_identity["checkpoint_manifest_sha256"]
+        )
+    ):
+        raise ValueError("E1 reload identity must bind its run and checkpoint manifest")
     if journal_path.exists():
         raise FileExistsError("E1 serving journal path must be fresh")
     c0_manifest_path = Path(__file__).parents[1] / "C0_RESOLUTION" / "collection_manifest.json"

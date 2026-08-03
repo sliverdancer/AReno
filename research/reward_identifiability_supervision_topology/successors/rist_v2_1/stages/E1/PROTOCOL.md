@@ -33,6 +33,18 @@ are retained in the evidence object.
 training requirements pass. Inference success cannot substitute for an
 optimizer-step canary.
 
+Qualification is recomputed from the original TensorBoard event directory,
+the exact eight-row reward journal, the 32 raw four-turn training responses,
+the sampled GPU-monitor trace, the actual saved-checkpoint directory, and the
+checkpoint-reload journal. A submitted metrics summary, peak-memory scalar,
+`checkpoint_roundtrip` boolean, or other derived field is never authoritative.
+Its bytes are retained, but it must equal the independently recomputed value.
+The deployment manifest must replace the GPU placeholder with one concrete UUID;
+that UUID, the checkpoint name and revision, tokenizer and weight hashes, source
+commit, driver, CUDA, PyTorch, and raw monitor identity must agree everywhere.
+Qwen requires a GPU reporting at least 24 GB-class memory and Gemma at least
+48 GB-class memory; neither the manifest nor a summary may weaken these floors.
+
 ## Current evidence boundary
 
 T0b v1.2 now supports Qwen3-0.6B and Gemma4 E2B serving plus production-mask
