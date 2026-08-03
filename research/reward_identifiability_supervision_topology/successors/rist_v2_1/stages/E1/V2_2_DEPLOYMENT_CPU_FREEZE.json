@@ -1,0 +1,39 @@
+{
+  "protocol": "RIST-E1-v2.2-DEPLOYMENT-CPU-FREEZE-v1",
+  "source_commit": "52de3b1282ee9cfcc9ae8f51e92eba6040253ce6",
+  "families": [
+    "qwen3",
+    "gemma4"
+  ],
+  "algorithms": [
+    "gspo",
+    "grpo"
+  ],
+  "optimizer_steps_per_algorithm": 1,
+  "cpu_test_result": "76 passed (3 deployment, 73 RIST design)",
+  "c0_validation_required": true,
+  "actual_gpu_identity_required": true,
+  "gpu_execution_permitted_by_freeze": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "files": {
+    "build_v2_2_deployment_manifest.py": "4ec4c4c223de669834860803033d5d24f3d6367a78186cd7548f34750c7192d3",
+    "validate_c0_admission.py": "3a5cf0abd20be31bee1a90ec65638b087a7f2c2545b618f63e591fdba027849a",
+    "C0_GATE_PROTOCOL.md": "cc2732aa2fafdd74b59a01a8f5f33cc9a78418393336033b2a1e537c1ffc6cd1",
+    "build_capacity_manifest.py": "eb2ee7367c9624ca7e22229040caa98a7ce641508b6a2eaaecb0a8ea86214941",
+    "monitor_gpu_command.py": "0742cf11be1cce203dc7556a11fa626d4cf5b6048e43448c06e8beca9eabdc68",
+    "run_serving_canary.py": "067d828058699136e49ccfe194512b4b5db094e081103a46ffcb1a7c5220f5ae",
+    "extract_one_step_metrics.py": "36ed8b42e885ce953443d6acb2500bd33494f6969064ce5ccf31a78cd1aea815",
+    "build_checkpoint_manifest.py": "930794f7fb758409be33b5d2fd394ee319f703db445d3719b9d34920fcc99c20",
+    "build_directory_manifest.py": "424bf5aa365107a27bbc1d208192fb45dd2215813266cb5dc22acd1ddadb088f",
+    "assemble_capacity_evidence.py": "45a58d2da14d1157387ece3b08d90a3d20aec133037cc1a4c2e34c676113a029",
+    "validate_capacity_evidence.py": "2c142270a23a3dfad0fe947c9c0239f753d24245d24c7f4a9efb2ceb4e3528bc",
+    "../../GPU_AUTHORIZATION_20260803.json": "c6984c6cbbbd8428ba185431e01798132455920e3e63ba94dfbc950f2cb360ba",
+    "../../GPU_EXECUTION_FREEZE.json": "c556be61e25465ae8266e0cb1aab068994ea9b8bc3c022fe7fe325ceb77d2a54",
+    "../../verify_gpu_execution_freeze.py": "af067d5a09d3255d8eeb9391a619e26cae2827ffa0267199bff750d4cd13ff82",
+    "../C0_RESOLUTION_V2_2/RESOLUTION_CPU_FREEZE.json": "52b94c99c2a7b0e0ad3112a82dfc2836f708cbc3e11eb9e513d51078f95b24d8",
+    "../C0_RESOLUTION_V2_2/RESOLUTION_EXECUTION_ROOT.json": "c29688a08ac330a4e37dd9893819277117ac9d6899635fda8059af3325129d4d",
+    "../../../../../../tests/test_rist_e1_v2_2_deployment_cpu.py": "0595eb45985c0534754b6c53fbe293f145b8370652e9868d2038c0a976bbf63b",
+    "verify_v2_2_deployment_cpu_freeze.py": "aa3db5ac00948e1b127d1339c4c3d821e641effca4516b755d33169add68c3e5"
+  }
+}
