@@ -1,6 +1,6 @@
 {
-  "schema_version": "rist-p4-analysis-freeze-v3",
-  "source_commit": "a4f5152",
+  "schema_version": "rist-p4-analysis-freeze-v4",
+  "source_commit": "e6a893f",
   "results_opened": false,
   "gpu_used": false,
   "model_accessed": false,
@@ -17,12 +17,22 @@
   "minimum_seed_sign_agreement": 0.75,
   "leave_one_seed_out_sign_consistency_required": true,
   "maximum_catastrophic_or_zero_advantage_rate": 0.1,
+  "exact_run_evidence_artifact_count": 22,
+  "reward_journal_key": [
+    "training_step",
+    "sample_index"
+  ],
+  "cpu_test_result": "68 passed in 6.85s",
   "files": {
+    "repo:examples/agentic/rist_v2_1/run_agent.py": "53f438ed83c3e39a5bc52e5e692a8263805396c583dff32a8a628f88a27b9a0c",
+    "repo:examples/agentic/rist_v2_1/reward.py": "0bc35320efe2d825a91230758e66267b54d306f7deb4bd850a55a7d59c593eec",
+    "repo:areno/api/agentic.py": "a167bb2f93015e8a2682df2f6efc5a3db81de0b33f0bbce9347e9c7871ce0a67",
     "P3_DESIGN/token_matching.py": "9153d2d886dde01d8ad7f2277c04adc1b87aa0343e1056f48910a77a8684751d",
-    "P4_ANALYSIS/PROTOCOL.md": "7f113bb3f958515f0697e3e3803977de0d172b1ec02487a21db59be1419d732c",
-    "P4_ANALYSIS/analyze_results.py": "13a94d27184ae04923334cc33827c606ce337e61f282ec6cdc9db6fae46da6e8",
-    "P4_ANALYSIS/collect_training_evidence.py": "790c43f9fdafc901b4a90f3495fa094dd27a854505a82b25d163bd264906fe8b",
-    "P4_ANALYSIS/assemble_run_result.py": "0fd43ff38e28c85c7c738cf12d1e17c4b81f1ef9ee303a848bb79dfb9081a1d6",
+    "P4_ANALYSIS/PROTOCOL.md": "82cd77759c9fffe761965dd9af3c069e0457a448a2f7eedecbec9cff01e9b03b",
+    "P4_ANALYSIS/analyze_results.py": "0dda1cb7b4ad32bf5d7d30ffcc1833d49076c01dd84f9760f26d58e17fedece0",
+    "P4_ANALYSIS/collect_training_evidence.py": "2b38e03fe15940e1c451a852fe8d925f4bb60180fd3388c1680658d5c9ca25b2",
+    "P4_ANALYSIS/assemble_run_result.py": "9e0554762768daf17f3489031038f4e9cb08b6858225bb7635e3cac92ae1a96e",
+    "P4_ANALYSIS/run_evidence_manifest.py": "ed8ef888cfdf66643eccaf06e3cc6d5a801cb0ffd0f27d002840a65a8adaeab2",
     "P5_META/PROTOCOL.md": "3c2db1bdbf2f6c8e95116886dd08e2218d0b7634e9c7a28c12f00d9a69ec69e2",
     "P5_META/cross_setting_gate.py": "859a657bbf6f11117145e13da5152fc38d9e06d8e1d72364766c2fd51e477860"
   }
