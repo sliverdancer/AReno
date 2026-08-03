@@ -988,6 +988,61 @@ def test_v2_1_t0b_v1_2_is_fresh_closed_and_balanced(tmp_path):
     assert preflight["gpu_used"] is False
 
 
+def test_v2_1_t0b_v1_2_gpu_result_passes_measurement_not_main_track():
+    run = V2_1 / "stages" / "T0B_V1_2" / "gpu_run_20260803"
+    evidence = run / "t0b_v1_2_evidence_20260803"
+    result = __import__("json").loads((run / "FINAL_RESULT.json").read_text())
+    hook = __import__("json").loads((run / "HOOK_RESULT.json").read_text())
+    assert result["status"] == "PASS_TWO_FAMILY_RUNTIME_TREATMENT_QUALIFICATION"
+    assert result["treatment_qualification_pass"] is True
+    assert result["total_serve_seconds"] <= result["gpu_time_limit_seconds"]
+    assert result["scientific_request_retries"] == 0
+    assert result["training_performed"] is False
+    assert result["main_track_upgrade"] is False
+    for model in result["models"].values():
+        assert model["runtime_row_count"] == 32
+        assert model["complete_task_count"] == 8
+        assert model["retry_count"] == 0
+        assert model["mask_case_count"] == 32
+        assert model["mask_localization_all"] is True
+        assert model["mask_name_only_all"] is True
+        assert model["mask_qualification_pass"] is True
+    assert hook["main_track_upgrade"] is False
+    for line in (evidence / "SHA256SUMS").read_text().splitlines():
+        digest, relative = line.split(maxsplit=1)
+        relative = relative.lstrip("*")
+        actual = __import__("hashlib").sha256((evidence / relative).read_bytes()).hexdigest()
+        assert actual == digest
+
+
+def test_v2_1_goal_ledger_keeps_every_required_outcome_open():
+    ledger = __import__("json").loads((V2_1 / "GOAL_EXECUTION_LEDGER.json").read_text())
+    assert ledger["status"] == "ACTIVE_NOT_ACHIEVED"
+    assert set(ledger["blocks"]) == {
+        "runtime_treatment_qualification",
+        "stable_interaction",
+        "token_matched_robustness",
+        "two_families_two_algorithms",
+        "real_tool_environment",
+    }
+    assert ledger["blocks"]["runtime_treatment_qualification"]["status"] == (
+        "ACHIEVED_MEASUREMENT_ONLY"
+    )
+    assert all(
+        block["status"] != "ACHIEVED_MEASUREMENT_ONLY"
+        for name, block in ledger["blocks"].items()
+        if name != "runtime_treatment_qualification"
+    )
+    assert {gate["stage"] for gate in ledger["next_gates"]} == {
+        "C0_RESOLUTION",
+        "E1_CAPACITY",
+    }
+    assert all(gate["execution_authorized"] is False for gate in ledger["next_gates"])
+    assert ledger["main_conference_upgrade"] is False
+    for block in ledger["blocks"].values():
+        assert (V2_1 / block["evidence"]).is_file()
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",
@@ -1350,6 +1405,8 @@ def test_v2_1_p4_analyzer_uses_seed_interactions_and_blocks_three_seed_pilot(
     assert len(result["seed_rows"]) == 12
     assert len(result["blocks"]) == 4
     assert result["cross_block_step_sign_consistent"] is True
+    assert result["stable_interaction_across_seeds_and_blocks"] is True
+    assert all(block["stability_pass"] for block in result["blocks"])
     assert all(block["token_sign_consistent"] for block in result["blocks"])
     assert all(
         set(block["resolution_interaction"]) == {"low", "high"}
@@ -1379,6 +1436,42 @@ def test_v2_1_p4_analyzer_detects_token_matched_sign_failure():
         manifest, _mock_p4_results(manifest, token_reversal=True)
     )
     assert any(not block["token_sign_consistent"] for block in result["blocks"])
+    assert result["main_track_eligible"] is False
+
+
+def test_v2_1_p4_analyzer_rejects_seed_unstable_interaction():
+    analyzer = _load_module(
+        "rist_v2_1_p4_analysis_seed_instability",
+        V2_1 / "stages" / "P4_ANALYSIS" / "analyze_results.py",
+    )
+    manifest = __import__("json").loads(
+        (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
+    )
+    rows = _mock_p4_results(manifest)
+    unstable = [
+        row
+        for row in rows
+        if row["family"] == "qwen3"
+        and row["algorithm"] == "gspo"
+        and row["seed"] == 7101
+    ]
+    endpoints = {"AF": 0.80, "LF": 0.20, "AN": 0.20, "LN": 0.20}
+    for row in unstable:
+        endpoint = endpoints[row["arm"]]
+        row["confirmatory_strict_success"] = endpoint
+        row["confirmatory_strict_success_by_resolution"] = {
+            "low": endpoint,
+            "high": endpoint,
+        }
+    result = analyzer.analyze_bundle(manifest, rows)
+    block = next(
+        row
+        for row in result["blocks"]
+        if row["family"] == "qwen3" and row["algorithm"] == "gspo"
+    )
+    assert block["interaction_stability"]["seed_sign_agreement"] < 0.75
+    assert block["stability_pass"] is False
+    assert result["stable_interaction_across_seeds_and_blocks"] is False
     assert result["main_track_eligible"] is False
 
 

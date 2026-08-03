@@ -1,0 +1,17 @@
+{
+  "bfcl_content_opened": false,
+  "complete_task_count": 8,
+  "elapsed_seconds": 156.50928715709597,
+  "expected_runtime_row_count": 32,
+  "failure": null,
+  "heldout_opened": false,
+  "journal_sha256": "d16ff266683e09792b8aff0b9fb14c7c13254e1defe9ba78bb614fa5428dee8d",
+  "model_cell": "gemma4_e2b_it",
+  "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.2",
+  "retry_count": 0,
+  "runtime_row_count": 32,
+  "schema_version": 1,
+  "tasks_sha256": "3f4d3ba4e3afc45071d26022e6d743a5020d79be414076c0517f73b6f2cd80c3",
+  "training_performed": false
+}

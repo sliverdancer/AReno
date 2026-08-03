@@ -1,0 +1,33 @@
+{
+  "bfcl_content_opened": false,
+  "checks": {
+    "agentic_source_exact": true,
+    "bfcl_closed": true,
+    "capture_source_exact": true,
+    "client_wrapper_exact": true,
+    "compiled_extension_hash_exact": true,
+    "compiled_extension_importable": true,
+    "downloads_closed": true,
+    "evaluator_source_exact": true,
+    "execution_closed": true,
+    "heldout_closed": true,
+    "model_lock_exact": true,
+    "parent_client_exact": true,
+    "serve_source_exact": true,
+    "tasks_exact": true,
+    "training_closed": true,
+    "zero_retry": true
+  },
+  "extension_error": null,
+  "extension_path": "/root/autodl-tmp/rist_t0b_7795329/areno/accel/_areno_accel.cpython-312-x86_64-linux-gnu.so",
+  "extension_sha256": "42c69bc6b160b9890d17abe049df8bb88b5b58a347b873c7249369dfc0fb0a46",
+  "failed_checks": [],
+  "gpu_used": false,
+  "heldout_opened": false,
+  "inference_run": false,
+  "model_accessed": false,
+  "passed": true,
+  "protocol": "RIST-T0B-V1.2-RUNTIME-PREFLIGHT",
+  "schema_version": 1,
+  "training_run": false
+}

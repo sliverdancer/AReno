@@ -55,11 +55,13 @@ family/algorithm blocks:
 1. at least `max(8, prospective_power_requirement)` paired seeds;
 2. absolute mean step interaction at least 0.10;
 3. deterministic seed-bootstrap 95 percent interval excluding zero;
-4. the same nonzero sign across all four blocks;
-5. token-AUC and common-support-endpoint interactions with the same sign and no
+4. at least 75 percent of seed-level interactions agree with their block mean
+   sign, and every leave-one-seed-out block mean preserves that nonzero sign;
+5. the same nonzero sign across all four blocks;
+6. token-AUC and common-support-endpoint interactions with the same sign and no
    block sign reversal;
-6. catastrophic-run and zero-advantage-run rates each at most 0.10;
-7. complete raw evidence and no post-outcome exclusions.
+7. catastrophic-run and zero-advantage-run rates each at most 0.10;
+8. complete raw evidence and no post-outcome exclusions.
 
 The bootstrap interval is descriptive when seed count is small. It does not
 override the prospective power gate.

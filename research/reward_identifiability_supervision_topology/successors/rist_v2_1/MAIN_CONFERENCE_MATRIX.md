@@ -1,10 +1,12 @@
 # RIST-v2.1 main-conference evidence matrix
 
 Current state: the CPU evaluator, exact supervision treatment, frozen external
-sources, and Tau3 environment canary pass. T0b v1.0 reached both frozen models
-but terminated on a common serving-metadata defect before multi-turn runtime
-qualification. The defect is CPU-fixed and fresh T0b v1.1 is frozen but not GPU
-authorized. Main-conference empirical evidence has not started.
+sources, and Tau3 environment canary pass. T0b v1.1 preserved 32 Gemma runtime
+rows but terminated as a two-family gate after a Qwen deployment-preflight
+failure and then exposed that the frozen mask did not recognize Gemma's
+tokenizer-native call syntax. Both failures are engineering-only. T0b v1.2 then
+passed both families with 32 fresh four-turn rows and 32 exact production masks
+per model. Training-effect evidence has not started.
 
 ## Required empirical blocks
 
@@ -12,8 +14,8 @@ authorized. Main-conference empirical evidence has not started.
 |---|---|---|
 | Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0/D4/P4 contracts frozen; no model outcomes |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
-| Model-family replication | at least 3 checkpoints across 2 families | Qwen and Gemma snapshots verified and each emitted one exact short-canary call on 24 GB; no four-turn runtime or training-capacity qualification; earlier long Gemma trajectory OOM remains relevant |
-| Exact content treatment | full call versus tool-name-only | exact public treatment and tokenizer preflights pass; serving metadata CPU tests pass; fresh two-family T0b v1.1 runtime fixture awaits GPU authorization |
+| Model-family replication | at least 3 checkpoints across 2 families | Qwen and Gemma pass fresh four-turn runtime treatment qualification; neither family has optimizer-step capacity evidence, only two checkpoints exist, and earlier long Gemma trajectory OOM remains relevant |
+| Exact content treatment | full call versus tool-name-only | exact public treatment passes 32 fresh runtime-token cases independently for Qwen and Gemma |
 | Token robustness | step-matched plus common-token endpoint/AUC | full-interval AUC, endpoint sign, and 50% support gate frozen; no outcomes |
 | Real training environment | Tau3 text airline, preferably retail replication | 22-task strict airline adapter CPU-verified; retail blocked by NL-judge confound; no rollout/training |
 | Sealed external evaluation | BFCL non-live multi-turn categories | v1.3 code isolated with benchmark data excluded and sealed |
@@ -26,8 +28,9 @@ All conditions are necessary:
 
 1. model-conditional resolution transports from calibration to fresh nonces;
 2. runtime AF/LF/AN/LN masks are tokenizer-verified and distinct;
-3. primary two-sided interaction is at least 10 percentage points in magnitude
-   and its 95% interval excludes zero;
+3. primary two-sided interaction is at least 10 percentage points in magnitude,
+   its 95% interval excludes zero, at least 75% of seed signs agree, and every
+   leave-one-seed-out mean preserves direction;
 4. token-matched sensitivity has no material sign reversal;
 5. prospective power and independent training-seed count are met;
 6. at least 3 checkpoints across 2 families and both GSPO/GRPO complete;
@@ -44,11 +47,9 @@ reversal, leakage, or a new direct substitute close the main-track route.
 
 ## Current route decision
 
-The paper route remains scientifically open. A 24 GB 4090D is now directly
-shown sufficient to load both checkpoints and run the short T0b request, but it
-has not passed four-turn qualification or either optimizer-step capacity gate;
-the earlier long Gemma OOM still closes Gemma training on that pairing pending
-a new E1 result. Publication viability depends first on a separately authorized
-additive serving-metadata fix and fresh T0b v1.1, then a larger-memory Gemma E1
-pass or a separately frozen non-Qwen replacement. No current evidence supports
-upgrading the project to main-conference execution.
+The paper route remains scientifically open. T0b v1.2 passes the two-family
+runtime treatment gate, but neither optimizer-step capacity gate nor C0
+resolution calibration has run. The earlier long Gemma OOM still closes Gemma
+training on the 24 GB pairing pending a larger-memory E1 pass or a separately
+frozen non-Qwen replacement. No current evidence supports upgrading the project
+to main-conference execution.

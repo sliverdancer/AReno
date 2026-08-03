@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `T0B_V1_1_CPU_PASS_AWAITING_SEPARATE_GPU_AUTHORIZATION`
+Status: `T0B_V1_2_PASS_C0_AND_E1_AWAIT_SEPARATE_AUTHORIZATION`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -39,7 +39,14 @@ closed.
    preflight for both Qwen3-0.6B and Gemma4 E2B. T0b v1.0 then terminated after
    one exact call per model because the common HTTP response schema removed the
    required runtime token IDs. The consumed v1.0 result is an infrastructure
-   failure and does not qualify the treatment.
+   failure and does not qualify the treatment. T0b v1.1 then collected all 32
+   Gemma rows but failed the two-family gate after a missing-extension Qwen
+   deployment and exposed that the frozen mask recognized JSON calls but not
+   Gemma tokenizer-native call syntax. The consumed result remains engineering
+   evidence only. T0b v1.2 freezes fresh inputs, the corrected strict mask, and
+   a mandatory compiled-extension import/hash preflight. T0b v1.2 then passed
+   both families: 32 fresh four-turn rows and 32 exact production masks per
+   model with zero retry.
 10. E1 freezes per-checkpoint serving plus GSPO/GRPO one-step capacity gates.
 11. C0 freezes direct mixed-group resolution calibration and cross-family
     whole-cell selection before training.
@@ -70,10 +77,9 @@ extension. The result has no scientific interpretation and must not be repaired
 or rerun.
 
 The additive public serving-response metadata fix passes CPU regression tests at
-commit `b6d7bdc`, and the independent `T0B_V1_1` protocol is frozen with fresh
-disjoint calibration inputs. Its manifest retains
-`execution_authorized=false`, so only a new, separate GPU authorization may
-open sequential Qwen/Gemma serving. The 24 GB 4090D successfully loaded and
-served both short v1.0 cells, but the earlier long Gemma4 trajectory OOM still
-means E1 capacity remains unresolved. Training, C0, held-out data, and sealed
-BFCL content remain closed.
+commit `b6d7bdc`; v1.1 is terminal at commit `3de4e0c`; and T0b v1.2 passed from
+the frozen `3c28f06` deployment. The 24 GB 4090D completed short four-turn
+serving for both families, but the earlier long Gemma4 trajectory OOM still
+means E1 capacity remains unresolved. C0 inference and E1 optimizer-step
+canaries are the next independent gates. Training, C0, held-out data, and sealed
+BFCL content remain closed until separately authorized.

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "objective": "stable interaction, token-matched robustness, two model families and two algorithms, and real-tool-environment outcomes",
+  "status": "ACTIVE_NOT_ACHIEVED",
+  "current_commit_before_ledger": "3c28f06",
+  "blocks": {
+    "runtime_treatment_qualification": {
+      "required": "fresh Qwen3 and Gemma4 four-turn runtime tokens plus exact production masks",
+      "current": "Qwen and Gemma each passed 32 fresh four-turn rows and 32 exact production masks with zero retry",
+      "evidence": "stages/T0B_V1_2/gpu_run_20260803/FINAL_RESULT.json",
+      "status": "ACHIEVED_MEASUREMENT_ONLY"
+    },
+    "stable_interaction": {
+      "required": "seed-level interaction with at least 75 percent sign agreement, no leave-one-seed-out sign reversal, and a common nonzero sign across family-algorithm blocks",
+      "current": "analysis gate and negative regression fixture implemented; no training outcomes",
+      "evidence": "stages/P4_ANALYSIS/analyze_results.py",
+      "status": "INSTRUMENT_READY_OUTCOMES_MISSING"
+    },
+    "token_matched_robustness": {
+      "required": "step interaction, common-token normalized AUC, and common-support endpoint preserve direction with at least 50 percent support per arm",
+      "current": "outcome-blind matcher and analysis gate frozen; no curves",
+      "evidence": "stages/P3_DESIGN/token_matching.py",
+      "status": "INSTRUMENT_READY_OUTCOMES_MISSING"
+    },
+    "two_families_two_algorithms": {
+      "required": "Qwen3 and Gemma4 blocks complete under both GSPO and GRPO",
+      "current": "48-run three-seed matrix frozen; Qwen training unqualified and Gemma4 is rejected on the 24 GB pairing",
+      "evidence": "stages/P3_DESIGN/execution_manifest.json",
+      "status": "BLOCKED_BY_T0B_C0_AND_E1_CAPACITY"
+    },
+    "real_tool_environment": {
+      "required": "stateful Tau3 airline policy outcomes under the same arms, families, algorithms, and seed-level analysis",
+      "current": "Tau3 v1.0.1 environment canary and 22-task airline adapter pass; no user-simulator or policy rollout",
+      "evidence": "stages/X3_TAU3/CPU_FREEZE.json",
+      "status": "ADAPTER_READY_OUTCOMES_MISSING"
+    }
+  },
+  "next_gates": [
+    {
+      "stage": "C0_RESOLUTION",
+      "purpose": "transported mixed-reward group resolution across both families",
+      "gpu_inference_required": true,
+      "training_required": false,
+      "trajectory_count": 4096,
+      "execution_authorized": false
+    },
+    {
+      "stage": "E1_CAPACITY",
+      "purpose": "GSPO and GRPO one-step capacity per checkpoint/GPU pairing",
+      "gpu_required": true,
+      "training_required": true,
+      "qwen_24gb_qualified": false,
+      "gemma_24gb_rejected": true,
+      "execution_authorized": false
+    }
+  ],
+  "main_conference_upgrade": false,
+  "main_conference_additional_requirements": [
+    "prospectively powered independent training seeds",
+    "at least three checkpoints across two families",
+    "one-shot confirmatory held-out evaluation",
+    "sealed BFCL evaluation",
+    "direct baseline matrix and complete reproducibility archive"
+  ]
+}

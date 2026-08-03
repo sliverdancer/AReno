@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.2",
+  "status": "PASS_TWO_FAMILY_RUNTIME_TREATMENT_QUALIFICATION",
+  "decision": "GO_C0_AND_E1_AFTER_SEPARATE_AUTHORIZATION",
+  "execution_date": "2026-08-03",
+  "deployment_commit": "3c28f06",
+  "deployment_archive_sha256": "ea3d2390fa6556450580139d0ac6dee5db5d6cc1d922adace19614fc5fd9be79",
+  "tasks_sha256": "3f4d3ba4e3afc45071d26022e6d743a5020d79be414076c0517f73b6f2cd80c3",
+  "runtime_preflight_pass": true,
+  "model_snapshots_verified": true,
+  "treatment_qualification_pass": true,
+  "models": {
+    "qwen3_0_6b": {
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "runtime_row_count": 32,
+      "complete_task_count": 8,
+      "retry_count": 0,
+      "journal_sha256": "096b6dcad78f0c97921f3e826e21857af67d65c1c7c20f2b5d46fa40c6a8ff33",
+      "mask_case_count": 32,
+      "mask_localization_all": true,
+      "mask_name_only_all": true,
+      "mask_qualification_pass": true,
+      "mask_result_sha256": "1b48521d97bca7541d68516e98e887283a8cdacc93fea0f173133efede22709e",
+      "serve_seconds": 151
+    },
+    "gemma4_e2b_it": {
+      "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "runtime_row_count": 32,
+      "complete_task_count": 8,
+      "retry_count": 0,
+      "journal_sha256": "d16ff266683e09792b8aff0b9fb14c7c13254e1defe9ba78bb614fa5428dee8d",
+      "mask_case_count": 32,
+      "mask_localization_all": true,
+      "mask_name_only_all": true,
+      "mask_qualification_pass": true,
+      "mask_result_sha256": "65f2bb0bd5c81feb81bdc234e4ee9b4b911b97773607e5a8c0c1815f3ec505c3",
+      "serve_seconds": 280
+    }
+  },
+  "total_serve_seconds": 431,
+  "gpu_time_limit_seconds": 1800,
+  "gpu_processes_after_shutdown": 0,
+  "scientific_interpretation": "MEASUREMENT_AND_TREATMENT_QUALIFICATION_ONLY_NO_SUPERVISION_TOPOLOGY_EFFECT",
+  "training_performed": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false,
+  "model_download_or_replacement_performed": false,
+  "scientific_request_retries": 0,
+  "main_track_upgrade": false,
+  "next_gates": [
+    "C0_COMMON_TRANSPORTED_MIXED_REWARD_RESOLUTION",
+    "E1_QWEN_GSPO_GRPO_ONE_STEP_CAPACITY",
+    "E1_GEMMA_LARGER_MEMORY_GSPO_GRPO_ONE_STEP_CAPACITY"
+  ]
+}

@@ -17,6 +17,7 @@ ARMS = ("AF", "LF", "AN", "LN")
 MIN_CONFIRMATORY_SEEDS = 8
 MIN_INTERACTION = 0.10
 MAX_FAILURE_RATE = 0.10
+MIN_SEED_SIGN_AGREEMENT = 0.75
 BOOTSTRAP_REPLICATES = 10_000
 P3_ROOT = Path(__file__).resolve().parents[1] / "P3_DESIGN"
 
@@ -146,6 +147,37 @@ def _bootstrap_mean(values: list[float], key: str) -> dict[str, Any]:
 
 def _sign(value: float) -> int:
     return (value > 0.0) - (value < 0.0)
+
+
+def _interaction_stability(values: list[float]) -> dict[str, Any]:
+    """Require seed signs and leave-one-seed-out means to preserve direction."""
+
+    if len(values) < 3:
+        raise ValueError("interaction stability requires at least three paired seeds")
+    mean_sign = _sign(statistics.fmean(values))
+    seed_signs = [_sign(value) for value in values]
+    sign_agreement = sum(sign == mean_sign for sign in seed_signs) / len(seed_signs)
+    leave_one_out_means = [
+        statistics.fmean(values[:index] + values[index + 1 :])
+        for index in range(len(values))
+    ]
+    leave_one_out_sign_consistent = (
+        mean_sign != 0
+        and all(_sign(value) == mean_sign for value in leave_one_out_means)
+    )
+    return {
+        "mean_sign": mean_sign,
+        "seed_signs": seed_signs,
+        "seed_sign_agreement": sign_agreement,
+        "required_seed_sign_agreement": MIN_SEED_SIGN_AGREEMENT,
+        "leave_one_seed_out_means": leave_one_out_means,
+        "leave_one_seed_out_sign_consistent": leave_one_out_sign_consistent,
+        "stability_pass": (
+            mean_sign != 0
+            and sign_agreement >= MIN_SEED_SIGN_AGREEMENT
+            and leave_one_out_sign_consistent
+        ),
+    }
 
 
 def analyze_bundle(
@@ -298,6 +330,7 @@ def analyze_bundle(
                 if token_endpoint_summary is None
                 else _sign(float(token_endpoint_summary["mean"]))
             )
+            interaction_stability = _interaction_stability(step_values)
             block_rows.append(
                 {
                     "family": family,
@@ -317,6 +350,8 @@ def analyze_bundle(
                         and step_sign != 0
                         and step_sign == token_sign == token_endpoint_sign
                     ),
+                    "interaction_stability": interaction_stability,
+                    "stability_pass": interaction_stability["stability_pass"],
                     "power_pass": len(rows) >= required_seeds,
                 }
             )
@@ -326,6 +361,10 @@ def analyze_bundle(
     zero_advantage_runs = sum(row["nonzero_advantage_groups"] == 0 for row in results)
     signs = {_sign(float(row["step_interaction"]["mean"])) for row in block_rows}
     cross_block_sign_consistent = len(signs) == 1 and 0 not in signs
+    stable_interaction_across_seeds_and_blocks = (
+        cross_block_sign_consistent
+        and all(row["stability_pass"] for row in block_rows)
+    )
     failure_gates = {
         "catastrophic_run_rate": catastrophic_runs / total_runs,
         "zero_advantage_run_rate": zero_advantage_runs / total_runs,
@@ -344,7 +383,7 @@ def analyze_bundle(
         and raw_evidence_verified
         and treatment_ready
         and execution_authority_recorded
-        and cross_block_sign_consistent
+        and stable_interaction_across_seeds_and_blocks
         and all(
             row["effect_threshold_pass"]
             and row["step_ci_excludes_zero"]
@@ -362,6 +401,9 @@ def analyze_bundle(
         "seed_rows": seed_rows,
         "blocks": block_rows,
         "cross_block_step_sign_consistent": cross_block_sign_consistent,
+        "stable_interaction_across_seeds_and_blocks": (
+            stable_interaction_across_seeds_and_blocks
+        ),
         "token_not_estimable": token_not_estimable,
         "failure_gates": failure_gates,
         "raw_evidence_files_verified": raw_evidence_verified,

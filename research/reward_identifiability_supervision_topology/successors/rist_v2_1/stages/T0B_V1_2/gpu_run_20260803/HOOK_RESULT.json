@@ -1,0 +1,29 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0B_V1_2_TWO_FAMILY_RUNTIME_TREATMENT_GATE",
+  "decision": "GO_C0_AND_E1_AFTER_SEPARATE_AUTHORIZATION",
+  "main_track_upgrade": false,
+  "reason": "Both frozen model families completed all 32 fresh four-turn rows with zero retry and independently passed exact production name-only mask qualification. This validates measurement and treatment execution, not a training effect.",
+  "validated": [
+    "exact 3c28f06 archive and fresh v1.2 task hash",
+    "compiled extension import and binary hash before serving",
+    "all locked model files without download or replacement",
+    "Qwen 32 of 32 runtime rows and 32 of 32 exact production masks",
+    "Gemma 32 of 32 runtime rows and 32 of 32 exact production masks",
+    "zero scientific retries for both cells",
+    "431 of 1800 authorized serving seconds",
+    "all serving processes stopped and final GPU process list empty"
+  ],
+  "still_missing": [
+    "C0 transported mixed-reward resolution",
+    "GSPO and GRPO optimizer-step capacity per checkpoint and GPU pairing",
+    "stable seed-level interaction outcomes",
+    "token-matched robustness outcomes",
+    "powered two-family two-algorithm training outcomes",
+    "Tau3 real-environment outcomes",
+    "sealed BFCL evaluation"
+  ],
+  "training_run": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false
+}
