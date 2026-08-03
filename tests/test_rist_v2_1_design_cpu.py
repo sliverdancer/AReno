@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import asyncio
+import hashlib
 import importlib.util
+import json
 import subprocess
 import sys
+import threading
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -2572,6 +2576,7 @@ def test_x3_tau3_loader_and_reward_keep_samples_separate(tmp_path):
                 "1": {
                     "domain": "airline",
                     "task_id": "0",
+                    "training_step": 3,
                     "reward": 1.0,
                     "terminated": True,
                     "truncated": False,
@@ -2636,3 +2641,162 @@ def test_x3_tau3_policy_action_and_runtime_result_are_fail_closed():
         assert "duplicate" in str(error)
     else:
         raise AssertionError("a sample runtime result may not be overwritten")
+
+
+def test_x3_tau3_drain_joins_or_rejects_orchestrator():
+    runner = _load_module(
+        "rist_x3_tau3_drain_runner",
+        REPO_ROOT / "examples" / "agentic" / "rist_v2_1_tau3" / "run_agent.py",
+    )
+
+    class Agent:
+        is_agent_turn = True
+
+    class CleanEnv:
+        def __init__(self):
+            self._simulation_done = threading.Event()
+            self._agent = Agent()
+            self._orchestrator_thread = threading.Thread(
+                target=self._simulation_done.wait, daemon=True
+            )
+            self._orchestrator_thread.start()
+
+        def step(self, action):
+            assert json.loads(action) == {"name": "done", "arguments": {}}
+            self._simulation_done.set()
+
+    clean = CleanEnv()
+    asyncio.run(runner._drain_environment(clean, timeout_s=0.1))
+    assert not clean._orchestrator_thread.is_alive()
+
+    release = threading.Event()
+
+    class HungEnv:
+        _simulation_done = threading.Event()
+        _agent = type("Agent", (), {"is_agent_turn": False})()
+        _orchestrator_thread = threading.Thread(target=release.wait, daemon=True)
+
+    hung = HungEnv()
+    hung._orchestrator_thread.start()
+    with __import__("pytest").raises(RuntimeError, match="abort this process"):
+        asyncio.run(runner._drain_environment(hung, timeout_s=0.01))
+    release.set()
+    hung._orchestrator_thread.join(timeout=0.1)
+
+
+def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
+    builder = _load_module(
+        "rist_x3_tau3_evidence_manifest",
+        V2_1 / "stages" / "X3_TAU3" / "build_execution_manifest.py",
+    )
+    validator = _load_module(
+        "rist_x3_tau3_evidence_validator",
+        V2_1 / "stages" / "X3_TAU3" / "validate_pilot_evidence.py",
+    )
+    manifest = builder.build_manifest(tmp_path / "template-root")
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest))
+    dataset_path = V2_1 / "stages" / "X3_TAU3" / "data" / "train.jsonl"
+    task_ids = [json.loads(line)["id"] for line in dataset_path.read_text().splitlines()]
+    artifact_root = tmp_path / "artifacts"
+    simulator = {
+        "provider": "frozen-provider",
+        "model": "frozen-user-simulator",
+        "revision": "revision-1",
+        "runtime_value": "frozen-user-simulator@revision-1",
+        "temperature": 0.0,
+        "seed_derivation": "ctx.request_seed(task_id,prompt_index,sample_index,tau3_user)",
+        "num_retries": 0,
+    }
+    for job in manifest["jobs"]:
+        run_root = artifact_root / job["run_id"]
+        run_root.mkdir(parents=True)
+        raw_rows = []
+        reward_rows = []
+        for step in range(25):
+            for sample in range(8):
+                task_id = task_ids[(step * 8 + sample) % len(task_ids)]
+                identity = {
+                    "task_id": task_id,
+                    "training_step": step,
+                    "prompt_index": 0,
+                    "sample_index": sample,
+                }
+                events = [
+                    {
+                        "turn_index": 0,
+                        "phase": "policy_response",
+                        "raw_response": {"id": f"{step}-{sample}"},
+                    },
+                    {
+                        "turn_index": 0,
+                        "phase": "environment_step",
+                        "observation": "done",
+                        "reward": 1.0,
+                        "terminated": True,
+                        "truncated": False,
+                        "reward_info": {"reward": 1},
+                        "simulation_run": {"reward": 1},
+                    },
+                ]
+                raw_rows.extend([{**identity, **event} for event in events])
+                digest = hashlib.sha256(
+                    json.dumps(events, sort_keys=True, separators=(",", ":")).encode()
+                ).hexdigest()
+                reward_rows.append(
+                    {
+                        **identity,
+                        "domain": "airline",
+                        "reward": 1.0,
+                        "terminated": True,
+                        "truncated": False,
+                        "evaluator": "tau2.EvaluationType.ALL",
+                        "user_simulator": simulator["runtime_value"],
+                        "user_seed": step * 8 + sample,
+                        "policy_retry_count": 0,
+                        "user_retry_count": 0,
+                        "runtime_evidence_sha256": digest,
+                    }
+                )
+        raw_path = run_root / "raw_events.jsonl"
+        reward_path = run_root / "reward_events.jsonl"
+        raw_path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in raw_rows))
+        reward_path.write_text(
+            "".join(json.dumps(row, sort_keys=True) + "\n" for row in reward_rows)
+        )
+        model = {
+            "revision": f"{job['family']}-revision",
+            "tokenizer_revision": f"{job['family']}-tokenizer",
+            "weights_manifest_sha256": "a" * 64 if job["family"] == "qwen3" else "b" * 64,
+        }
+        evidence = {
+            "protocol": manifest["protocol"],
+            "run_id": job["run_id"],
+            "family": job["family"],
+            "algorithm": job["algorithm"],
+            "arm": job["arm"],
+            "seed": job["seed"],
+            "max_steps": job["max_steps"],
+            "group_size": job["group_size"],
+            "source_commit": manifest["source_commit"],
+            "tau3_commit": manifest["tau3_commit"],
+            "policy_retry_count": 0,
+            "user_retry_count": 0,
+            "completed": True,
+            "user_simulator": simulator,
+            "model": model,
+            "gpu": {"name": "test-gpu", "uuid": "GPU-test", "memory_total_bytes": 1},
+            "source_archive_sha256": "c" * 64,
+            "raw_events_sha256": validator._sha256(raw_path),
+            "reward_events_sha256": validator._sha256(reward_path),
+            "metrics_manifest_sha256": "d" * 64,
+            "checkpoint_manifest_sha256": "e" * 64,
+        }
+        (run_root / "run_evidence.json").write_text(json.dumps(evidence))
+
+    result = validator.validate_pilot(manifest_path, artifact_root, dataset_path)
+    assert result["status"] == "PASS"
+    assert result["scientific_result"] is False
+    assert result["job_count"] == 16
+    assert result["episode_count"] == 3200
+    assert result["covered_task_count"] == 22

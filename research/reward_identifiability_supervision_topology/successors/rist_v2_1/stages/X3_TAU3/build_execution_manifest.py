@@ -107,6 +107,13 @@ def build_manifest(run_root: Path) -> dict[str, Any]:
                     "RIST_RAW_JOURNAL_PATH": str(run_root / run_id / "raw_events.jsonl"),
                     "RIST_REWARD_JOURNAL_PATH": str(run_root / run_id / "reward_events.jsonl"),
                 },
+                "required_artifacts": [
+                    "raw_events.jsonl",
+                    "reward_events.jsonl",
+                    "metrics_manifest.json",
+                    "checkpoint_manifest.json",
+                    "run_evidence.json",
+                ],
                 "execution_authorized": False,
             }
         )
@@ -124,6 +131,19 @@ def build_manifest(run_root: Path) -> dict[str, Any]:
         "tau3_tag": "v1.0.1",
         "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
         "user_simulator_revision": None,
+        "user_simulator_identity_schema": {
+            "required": [
+                "provider",
+                "model",
+                "revision",
+                "runtime_value",
+                "temperature",
+                "seed_derivation",
+                "num_retries",
+            ],
+            "temperature": 0.0,
+            "num_retries": 0,
+        },
         "user_simulator_authorized": False,
         "policy_retry_count": 0,
         "user_retry_count": 0,

@@ -318,6 +318,15 @@ class RolloutSession:
 
         return self._max_running_prompts
 
+    @property
+    def global_step(self) -> int:
+        """Trainer-owned zero-based step for stable rollout evidence keys."""
+
+        context = getattr(self._trainer, "_ctx", None)
+        if context is None or int(context.global_step) < 0:
+            raise RuntimeError("rollout global_step is unavailable before session entry")
+        return int(context.global_step)
+
     async def __aenter__(self) -> RolloutSession:
         """Start the local proxy."""
 

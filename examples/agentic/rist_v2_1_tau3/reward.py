@@ -37,11 +37,17 @@ def _append_reward_event(record, result: dict) -> None:
     payload = {
         "task_id": record.source_record["id"],
         "domain": result["domain"],
+        "training_step": int(result["training_step"]),
         "prompt_index": int(record.metadata["prompt_index"]),
         "sample_index": int(record.metadata["sample_index"]),
         "reward": float(result["reward"]),
         "terminated": bool(result["terminated"]),
         "truncated": bool(result["truncated"]),
+        "evaluator": result["evaluator"],
+        "user_simulator": result["user_simulator"],
+        "user_seed": int(result["user_seed"]),
+        "policy_retry_count": int(result["policy_retry_count"]),
+        "user_retry_count": int(result["user_retry_count"]),
         "runtime_evidence_sha256": result["runtime_evidence_sha256"],
     }
     descriptor = os.open(Path(journal), os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)

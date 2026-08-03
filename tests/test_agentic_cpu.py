@@ -82,6 +82,19 @@ def test_agent_batch_expands_records_by_n_samples():
     ]
 
 
+def test_rollout_session_exposes_active_global_step():
+    trainer = SimpleNamespace(_ctx=SimpleNamespace(global_step=7))
+    session = RolloutSession(
+        trainer, sampling_params=None, loss_mask_policy=LossMaskPolicy()
+    )
+
+    assert session.global_step == 7
+
+    trainer._ctx.global_step = -1
+    with pytest.raises(RuntimeError, match="before session entry"):
+        _ = session.global_step
+
+
 def test_tool_call_json_is_trainable_by_default():
     session = RolloutSession(None, sampling_params=None, loss_mask_policy=LossMaskPolicy())
     item = next(AgentBatch(records=[{}], prompts=["p"], input_tokens=[[1]], n_samples=1).iter_samples())

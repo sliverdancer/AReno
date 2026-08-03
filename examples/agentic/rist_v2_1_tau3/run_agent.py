@@ -80,7 +80,9 @@ def store_runtime_result(item: Any, result: dict[str, Any]) -> None:
     mapping[key] = result
 
 
-def _append_raw_event(item: Any, payload: dict[str, Any]) -> None:
+def _append_raw_event(
+    item: Any, training_step: int, payload: dict[str, Any]
+) -> None:
     journal = os.environ.get("RIST_RAW_JOURNAL_PATH")
     if not journal:
         if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
@@ -88,6 +90,7 @@ def _append_raw_event(item: Any, payload: dict[str, Any]) -> None:
         return
     row = {
         "task_id": item.record["id"],
+        "training_step": int(training_step),
         "prompt_index": int(item.prompt_index),
         "sample_index": int(item.sample_index),
         **payload,
@@ -97,6 +100,36 @@ def _append_raw_event(item: Any, payload: dict[str, Any]) -> None:
         os.write(descriptor, (json.dumps(row, sort_keys=True) + "\n").encode())
     finally:
         os.close(descriptor)
+
+
+async def _drain_environment(env: Any, timeout_s: float = 30.0) -> None:
+    """Terminate and join one frozen Tau3 orchestrator or fail the process.
+
+    ``asyncio.to_thread`` cannot cancel an in-flight synchronous Tau3 call.  A
+    timed-out episode therefore must not be followed by another scientific
+    episode in the same process unless the upstream orchestrator is confirmed
+    stopped.
+    """
+
+    simulation_done = env._simulation_done
+    orchestrator = env._orchestrator_thread
+    if not simulation_done.is_set() and env._agent.is_agent_turn:
+        cleanup_action = json.dumps({"name": "done", "arguments": {}}, sort_keys=True)
+        try:
+            await asyncio.wait_for(
+                asyncio.to_thread(env.step, cleanup_action), timeout=timeout_s
+            )
+        except Exception:
+            # The event/thread checks below are authoritative.  A cleanup call
+            # may raise after the orchestrator has already entered ``finally``.
+            pass
+    completed = await asyncio.to_thread(simulation_done.wait, timeout_s)
+    if orchestrator is not None:
+        await asyncio.to_thread(orchestrator.join, timeout_s)
+    if not completed or (orchestrator is not None and orchestrator.is_alive()):
+        raise RuntimeError(
+            "Tau3 orchestrator did not stop; abort this process before another episode"
+        )
 
 
 async def run_agent(ctx, batch):
@@ -131,7 +164,9 @@ async def run_agent(ctx, batch):
     async def run_one(item):
         if item.record.get("domain") != "airline":
             raise RuntimeError("X3 permits only the strict airline reward domain")
-        episode_seed = ctx.request_seed(item.prompt_index, item.sample_index, "tau3_user")
+        episode_seed = ctx.request_seed(
+            item.record["id"], item.prompt_index, item.sample_index, "tau3_user"
+        )
         if episode_seed is None:
             raise RuntimeError("Tau3 rollout requires an explicit training seed")
         env = AgentGymEnv(
@@ -149,6 +184,7 @@ async def run_agent(ctx, batch):
         )
         turns = []
         evidence = []
+        training_step = int(ctx.global_step)
         try:
             observation, info = await asyncio.wait_for(
                 asyncio.to_thread(env.reset, seed=int(episode_seed)), timeout=900.0
@@ -191,7 +227,7 @@ async def run_agent(ctx, batch):
                     "raw_response": response.model_dump(mode="json"),
                 }
                 evidence.append(response_event)
-                _append_raw_event(item, response_event)
+                _append_raw_event(item, training_step, response_event)
                 try:
                     action, assistant = response_to_action(response)
                 except ValueError as exc:
@@ -218,7 +254,7 @@ async def run_agent(ctx, batch):
                 if terminated:
                     event["simulation_run"] = simulation_payload
                 evidence.append(event)
-                _append_raw_event(item, event)
+                _append_raw_event(item, training_step, event)
                 final_reward = float(reward)
                 if terminated or truncated:
                     break
@@ -253,7 +289,7 @@ async def run_agent(ctx, batch):
                     "simulation_run": cleanup_simulation,
                 }
                 evidence.append(cleanup_event)
-                _append_raw_event(item, cleanup_event)
+                _append_raw_event(item, training_step, cleanup_event)
                 if not cleanup_terminated:
                     raise RuntimeError("Tau3 cleanup action did not terminate the episode")
                 truncated = True
@@ -268,6 +304,7 @@ async def run_agent(ctx, batch):
                 {
                     "domain": item.record["domain"],
                     "task_id": item.record["task_id"],
+                    "training_step": training_step,
                     "reward": final_reward,
                     "terminated": bool(terminated),
                     "truncated": bool(truncated or not terminated),
@@ -282,10 +319,19 @@ async def run_agent(ctx, batch):
             )
             return turns
         finally:
-            await asyncio.to_thread(env.close)
+            try:
+                await _drain_environment(env)
+            finally:
+                await asyncio.to_thread(env.close)
 
+    tasks = [asyncio.create_task(run_one(item)) for item in items]
     try:
-        grouped = await asyncio.gather(*(run_one(item) for item in items))
+        grouped = await asyncio.gather(*tasks)
         return AgentTrajectory(turns=[turn for group in grouped for turn in group])
+    except BaseException:
+        for task in tasks:
+            task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+        raise
     finally:
         await client.close()
