@@ -1,0 +1,19 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v1",
+  "stage": "C0_RESOLUTION_v2.1",
+  "decision": "DO_NOT_UPGRADE_MAIN_TRACK",
+  "reason": "No scientific trajectory was produced; Qwen concurrency 8 exceeded 24 GB serving capacity.",
+  "main_track_claim_available": false,
+  "paper_evidence_available": false,
+  "allowed_next_work": [
+    "CPU-only successor protocol with a fresh task pool",
+    "Outcome-free serving capacity canary",
+    "Fresh GPU authorization for the successor protocol"
+  ],
+  "forbidden_interpretations": [
+    "The supervision-topology hypothesis failed",
+    "Qwen3 lacks reward resolution",
+    "C0 v2.1 may be selectively rerun at lower concurrency",
+    "The zero completed trajectories are scientific zero-success outcomes"
+  ]
+}

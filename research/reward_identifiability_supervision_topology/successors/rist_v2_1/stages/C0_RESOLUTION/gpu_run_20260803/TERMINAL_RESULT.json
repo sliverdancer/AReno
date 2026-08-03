@@ -1,0 +1,50 @@
+{
+  "protocol": "RIST-C0-v2.1",
+  "status": "TERMINAL_INFRASTRUCTURE_FAILURE",
+  "decision": "KILL_C0_V2_1_CURRENT_TASK_POOL",
+  "scientific_outcome_observed": false,
+  "source_commit": "a88cfcab97ecdfa56c0364cd4ac20cab2e782e4c",
+  "freeze_commit": "b9abe7a",
+  "family": "qwen3",
+  "split": "calibration",
+  "collection_concurrency": 8,
+  "expected_trajectory_count": 1024,
+  "trajectory_count": 0,
+  "raw_response_count": 0,
+  "retry_count": 0,
+  "failed_task_id": "calibration-000",
+  "failed_rollout_seed": 11001,
+  "surface_error": "HTTP 500: Internal Server Error",
+  "root_cause": {
+    "type": "torch.OutOfMemoryError",
+    "operation": "Qwen3 native KV-cache allocation during first concurrent rollout batch",
+    "requested_allocation_gib": 1.25,
+    "gpu_total_capacity_gib": 23.52,
+    "gpu_free_at_failure_mib": 590.5,
+    "pytorch_allocated_gib": 22.5,
+    "worker_exit_code": 0
+  },
+  "runtime_identity": {
+    "gpu_name": "NVIDIA GeForce RTX 4090 D",
+    "gpu_uuid": "GPU-7d2f5491-e6bb-55c1-f418-0182b721baed",
+    "gpu_total_memory_gib": 23.98828125,
+    "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "tokenizer_snapshot_sha256": "c83c7f983e1204841852a4cb47cff31dfd829437c80dccc55dd52d0c8fe532b1",
+    "driver_version": "595.71.05",
+    "cuda_version": "12.8",
+    "torch_version": "2.8.0+cu128"
+  },
+  "evidence": {
+    "local_backup": "/tmp/rist_c0_v2_1_terminal_failure_b9abe7a.tar.gz",
+    "backup_sha256": "3e6f931c2963ee42ecb46957e3b32edea88f6dfdc57205d4eb55283a8ac921e6",
+    "result_sha256": "5e4c5a9b9cac5a80143c955e90622cc6caf6acad2f766e74e7a394fda13c56d5",
+    "serve_log_sha256": "7e5e56c7114fc06cc1915eae2c27470ab890ff273f317f8ed3a99d1bcdd00551",
+    "runtime_identity_sha256": "2c5f9553979eb606ff9db6e2d8070cb4cc0f84e78636a063a9b9e010f20a1e83",
+    "orchestrator_events_sha256": "85f62a52d8b9c054064868a1a9e3724062b9756a5cc7c9f7b7afa5949a0383d7"
+  },
+  "rerun_same_protocol_permitted": false,
+  "qualification_ledger_consumed": false,
+  "gpu_processes_remaining": false,
+  "next_route": "Design a separately frozen C0 successor with a fresh task pool and an outcome-free concurrency capacity canary, or execute that successor on at least 48 GB GPU memory."
+}
