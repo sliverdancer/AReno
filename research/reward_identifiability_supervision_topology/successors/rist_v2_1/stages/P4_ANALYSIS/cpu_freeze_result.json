@@ -5,11 +5,13 @@
   "protocol": "RIST-P4-v2.1",
   "scientific_result_generated": false,
   "tests": {
-    "cpu_contract_tests_passed_total": 32,
+    "cpu_contract_tests_passed_total": 33,
     "missing_run_rejected": true,
     "raw_file_hash_verified": true,
+    "seed_instability_rejected": true,
     "three_seed_main_upgrade_rejected": true,
-    "token_sign_reversal_rejected": true
+    "token_sign_reversal_rejected": true,
+    "two_family_t0b_measurement_qualified": true
   },
   "training_performed": false
 }
