@@ -78,6 +78,14 @@ def _validate_identity(
             raise ValueError(f"{job['run_id']} user_simulator.{field} is not pinned")
     if simulator.get("temperature") != 0.0 or simulator.get("num_retries") != 0:
         raise ValueError(f"{job['run_id']} user simulator is not zero-temperature/zero-retry")
+    if simulator.get("model") != manifest.get("user_simulator_model") or simulator.get(
+        "revision"
+    ) != manifest.get("user_simulator_revision"):
+        raise ValueError(f"{job['run_id']} user simulator does not match the manifest")
+    if simulator.get("authorization_sha256") != manifest.get(
+        "user_simulator_authorization_sha256"
+    ):
+        raise ValueError(f"{job['run_id']} user simulator authorization is not bound")
     model = evidence.get("model")
     if not isinstance(model, dict):
         raise ValueError(f"{job['run_id']} lacks model identity")
@@ -85,6 +93,10 @@ def _validate_identity(
         if not isinstance(model.get(field), str) or not model[field]:
             raise ValueError(f"{job['run_id']} model.{field} is not pinned")
     _require_sha256(model["weights_manifest_sha256"], "model.weights_manifest_sha256")
+    if model != manifest.get("model_bindings", {}).get(job["family"]):
+        raise ValueError(f"{job['run_id']} model does not match the manifest binding")
+    if evidence.get("source_file_sha256") != manifest.get("source_file_sha256"):
+        raise ValueError(f"{job['run_id']} source file hash map mismatch")
     gpu = evidence.get("gpu")
     if not isinstance(gpu, dict) or not all(gpu.get(field) for field in ("name", "uuid")):
         raise ValueError(f"{job['run_id']} lacks GPU name/UUID identity")
@@ -107,12 +119,25 @@ def _episode_key(row: dict[str, Any]) -> tuple[int, int]:
         raise ValueError("journal row lacks integer training_step/sample_index") from exc
 
 
+def _expected_episode_id(job: dict[str, Any], row: dict[str, Any]) -> str:
+    task_id = str(row["task_id"])
+    upstream_task_id = task_id.split(":", 1)[1] if ":" in task_id else task_id
+    payload = (
+        f"{job['run_id']}\0{int(row['training_step'])}\0{upstream_task_id}"
+        f"\0{int(row['sample_index'])}"
+    ).encode()
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _validate_journals(
     raw_rows: list[dict[str, Any]],
     reward_rows: list[dict[str, Any]],
     job: dict[str, Any],
     allowed_task_ids: set[str],
     evidence_user_simulator: str,
+    simulator_revision: str,
+    simulator_authorization_sha256: str,
+    manifest_source_commit: str,
 ) -> set[str]:
     expected_keys = {
         (step, sample)
@@ -141,6 +166,14 @@ def _validate_journals(
             raise ValueError(f"{job['run_id']} contains a retried episode")
         if row.get("user_simulator") != evidence_user_simulator:
             raise ValueError(f"{job['run_id']} episode user simulator mismatch")
+        if row.get("user_simulator_revision") != simulator_revision or row.get(
+            "user_simulator_authorization_sha256"
+        ) != simulator_authorization_sha256:
+            raise ValueError(f"{job['run_id']} episode simulator binding mismatch")
+        if row.get("run_id") != job["run_id"] or row.get("source_commit") != manifest_source_commit:
+            raise ValueError(f"{job['run_id']} episode source/run identity mismatch")
+        if row.get("episode_id") != _expected_episode_id(job, row):
+            raise ValueError(f"{job['run_id']} episode ID is not frozen-identity derived")
         if type(row.get("user_seed")) is not int:
             raise ValueError(f"{job['run_id']} episode lacks a deterministic user seed")
         _require_sha256(row.get("runtime_evidence_sha256"), "runtime_evidence_sha256")
@@ -157,11 +190,22 @@ def _validate_journals(
             raise ValueError(f"{job['run_id']} raw prompt_index is not zero")
         if row.get("task_id") != reward_by_key[key]["task_id"]:
             raise ValueError(f"{job['run_id']} raw/reward task identity mismatch")
+        if row.get("run_id") != job["run_id"] or row.get("episode_id") != reward_by_key[
+            key
+        ].get("episode_id"):
+            raise ValueError(f"{job['run_id']} raw/reward episode identity mismatch")
         raw_by_key[key].append(row)
     if set(raw_by_key) != expected_keys:
         raise ValueError(f"{job['run_id']} raw journal does not cover the frozen grid")
 
-    identity_fields = {"task_id", "training_step", "prompt_index", "sample_index"}
+    identity_fields = {
+        "run_id",
+        "episode_id",
+        "task_id",
+        "training_step",
+        "prompt_index",
+        "sample_index",
+    }
     for key, rows in raw_by_key.items():
         if not any(row.get("phase") == "policy_response" for row in rows):
             raise ValueError(f"{job['run_id']} episode {key} lacks a policy response")
@@ -194,6 +238,19 @@ def validate_pilot(
         raise ValueError("X3 manifest must contain the frozen 16-cell pilot")
     if manifest.get("pilot_steps") != 25 or manifest.get("execution_authorized") is not False:
         raise ValueError("X3 manifest is not the frozen CPU-only execution template")
+    if manifest.get("user_simulator_authorized") is not True:
+        raise ValueError("X3 manifest lacks user-simulator authorization")
+    for field in (
+        "user_simulator_model",
+        "user_simulator_revision",
+        "user_simulator_authorization_sha256",
+    ):
+        if not manifest.get(field):
+            raise ValueError(f"X3 manifest has unresolved {field}")
+    _require_sha256(
+        manifest["user_simulator_authorization_sha256"],
+        "user_simulator_authorization_sha256",
+    )
     dataset = _read_jsonl(dataset_path)
     allowed_task_ids = {row.get("id") for row in dataset}
     if len(dataset) != 22 or None in allowed_task_ids:
@@ -227,7 +284,12 @@ def validate_pilot(
             job,
             allowed_task_ids,
             evidence["user_simulator"]["runtime_value"],
+            evidence["user_simulator"]["revision"],
+            evidence["user_simulator"]["authorization_sha256"],
+            manifest["source_commit"],
         )
+        if run_tasks != allowed_task_ids:
+            raise ValueError(f"{job['run_id']} does not cover all frozen airline tasks")
         covered_tasks.update(run_tasks)
         run_summaries.append(
             {

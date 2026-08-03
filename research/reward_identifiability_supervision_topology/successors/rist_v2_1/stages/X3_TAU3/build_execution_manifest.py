@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import subprocess
@@ -18,6 +19,22 @@ TRAIN_SHA256 = "1a3f762af0cff8a3920dd5c80204bf79e433e6442321699244ea24d5ba5815bf
 PILOT_SEED = 7101
 PILOT_STEPS = 25
 REPO_ROOT = Path(__file__).resolve().parents[6]
+SOURCE_FILES = (
+    "examples/agentic/rist_v2_1_tau3/dataset_loader.py",
+    "examples/agentic/rist_v2_1_tau3/reward.py",
+    "examples/agentic/rist_v2_1_tau3/run_agent.py",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/"
+    "stages/X3_TAU3/PROTOCOL.md",
+)
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _training_task_ids() -> list[str]:
+    rows = [json.loads(line) for line in (REPO_ROOT / TRAIN_PATH).read_text().splitlines()]
+    return sorted(str(row["id"]) for row in rows)
 
 
 def _load_design():
@@ -102,8 +119,13 @@ def build_manifest(run_root: Path) -> dict[str, Any]:
                 "expected_episode_count": PILOT_STEPS * 8,
                 "command_template": _command(row, run_root),
                 "required_environment": {
-                    "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
-                    "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}",
+                    "RIST_X3_RUN_ID": run_id,
+                    "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}",
+                    "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+                    "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+                    "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": (
+                        "{USER_SIMULATOR_AUTHORIZATION_SHA256}"
+                    ),
                     "RIST_RAW_JOURNAL_PATH": str(run_root / run_id / "raw_events.jsonl"),
                     "RIST_REWARD_JOURNAL_PATH": str(run_root / run_id / "reward_events.jsonl"),
                 },
@@ -127,10 +149,15 @@ def build_manifest(run_root: Path) -> dict[str, Any]:
     return {
         "protocol": "RIST-X3-TAU3-PILOT-v2.1",
         "source_commit": source_commit,
+        "source_file_sha256": {
+            path: _sha256(REPO_ROOT / path) for path in SOURCE_FILES
+        },
         "scope": "AIRLINE_ONLY_ONE_SEED_FACTORIAL_DEVELOPMENT",
         "tau3_tag": "v1.0.1",
         "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
         "user_simulator_revision": None,
+        "user_simulator_model": None,
+        "user_simulator_authorization_sha256": None,
         "user_simulator_identity_schema": {
             "required": [
                 "provider",
@@ -145,11 +172,23 @@ def build_manifest(run_root: Path) -> dict[str, Any]:
             "num_retries": 0,
         },
         "user_simulator_authorized": False,
+        "model_bindings": {
+            family: {
+                "revision": None,
+                "tokenizer_revision": None,
+                "weights_manifest_sha256": None,
+            }
+            for family in ("qwen3", "gemma4")
+        },
         "policy_retry_count": 0,
         "user_retry_count": 0,
         "pilot_seed": PILOT_SEED,
         "pilot_steps": PILOT_STEPS,
         "job_count": len(jobs),
+        "expected_episode_count": sum(
+            int(job["expected_episode_count"]) for job in jobs
+        ),
+        "required_training_task_ids": _training_task_ids(),
         "execution_authorized": False,
         "commands_are_templates_only": True,
         "heldout_permitted": False,

@@ -31,10 +31,13 @@ def reward_fn(record) -> float:
 def _append_reward_event(record, result: dict) -> None:
     journal = os.environ.get("RIST_REWARD_JOURNAL_PATH")
     if not journal:
-        if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
+        if result.get("run_id"):
             raise RuntimeError("RIST_REWARD_JOURNAL_PATH is required by the frozen Tau3 run")
         return
     payload = {
+        "run_id": result["run_id"],
+        "source_commit": result["source_commit"],
+        "episode_id": result["episode_id"],
         "task_id": record.source_record["id"],
         "domain": result["domain"],
         "training_step": int(result["training_step"]),
@@ -45,6 +48,10 @@ def _append_reward_event(record, result: dict) -> None:
         "truncated": bool(result["truncated"]),
         "evaluator": result["evaluator"],
         "user_simulator": result["user_simulator"],
+        "user_simulator_revision": result["user_simulator_revision"],
+        "user_simulator_authorization_sha256": result[
+            "user_simulator_authorization_sha256"
+        ],
         "user_seed": int(result["user_seed"]),
         "policy_retry_count": int(result["policy_retry_count"]),
         "user_retry_count": int(result["user_retry_count"]),

@@ -16,12 +16,21 @@ Tau3 user simulator is a distinct nuisance component and must be held fixed
 across all policy families, algorithms, arms, and seeds:
 
 - immutable user-simulator model revision;
+- a SHA-256-bound authorization record naming its provider, model, revision,
+  runtime value, and cost boundary;
 - temperature zero;
 - a seed derived before outcomes from policy seed, task ID, and sample index;
 - `num_retries=0`;
 - the terminal upstream `SimulationRun`, including user messages and provider
   `raw_data`, retained and hashed together with policy responses. The frozen
   task ID and source recover the corresponding user-simulator request context.
+
+The runtime refuses to start unless raw and reward journal paths, the exact run
+ID, source commit, user-simulator model/revision, and authorization-record hash
+are all present. Episode IDs bind run ID, optimizer step, task ID, and sample
+index; policy and user seeds also include optimizer step and task identity.
+After any failure, all sibling episodes are cancelled and awaited, every Tau3
+orchestrator must terminate and join, and a surviving thread aborts the process.
 
 Policy malformed actions are scientific failures with reward zero. Network,
 timeout, missing reward metadata, evaluator exceptions, or user-simulator
@@ -62,6 +71,11 @@ interaction evidence. The user-simulator revision is deliberately unbound in
 the CPU manifest; it must be fixed and independently authorized before any
 episode. No X3 rollout, model, user simulator, training, or GPU action is
 authorized by this CPU adapter stage.
+
+An artifact-backed validator must reconstruct all 3,200 episode hashes, require
+exactly 200 unique step/sample episodes in every cell, exercise all 22 airline
+training tasks in every cell, bind model and simulator identities across cells,
+and verify raw, reward, metrics, checkpoint, source, and authorization hashes.
 
 An artifact-backed PASS additionally requires, for all 16 cells, immutable
 source/model/tokenizer/GPU/user-simulator identity; raw/reward journal hashes;

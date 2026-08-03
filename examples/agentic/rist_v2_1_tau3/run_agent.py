@@ -6,11 +6,31 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
 RUNTIME_KEY = "_rist_tau3_runtime_by_sample"
 MAX_AGENT_TURNS = 20
+
+
+def _required_environment(name: str) -> str:
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"{name} is required for frozen Tau3 evidence")
+    return value
+
+
+def _required_digest_environment(name: str, length: int) -> str:
+    value = _required_environment(name)
+    if re.fullmatch(rf"[0-9a-f]{{{length}}}", value) is None:
+        raise RuntimeError(f"{name} must contain {length} lowercase hex characters")
+    return value
+
+
+def _episode_id(run_id: str, training_step: int, task_id: str, sample_index: int) -> str:
+    payload = f"{run_id}\0{training_step}\0{task_id}\0{sample_index}".encode()
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _parse_simulation_payload(value: Any, context: str) -> dict[str, Any]:
@@ -81,14 +101,16 @@ def store_runtime_result(item: Any, result: dict[str, Any]) -> None:
 
 
 def _append_raw_event(
-    item: Any, training_step: int, payload: dict[str, Any]
+    item: Any,
+    training_step: int,
+    episode_id: str,
+    run_id: str,
+    journal: str,
+    payload: dict[str, Any],
 ) -> None:
-    journal = os.environ.get("RIST_RAW_JOURNAL_PATH")
-    if not journal:
-        if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
-            raise RuntimeError("RIST_RAW_JOURNAL_PATH is required by the frozen Tau3 run")
-        return
     row = {
+        "run_id": run_id,
+        "episode_id": episode_id,
         "task_id": item.record["id"],
         "training_step": int(training_step),
         "prompt_index": int(item.prompt_index),
@@ -143,9 +165,15 @@ async def run_agent(ctx, batch):
     except ImportError as exc:
         raise RuntimeError("Tau3 rollout requires the frozen Tau3 and AReno environments") from exc
 
-    user_llm = os.environ.get("RIST_TAU3_USER_LLM")
-    if not user_llm:
-        raise RuntimeError("RIST_TAU3_USER_LLM must pin the authorized user simulator")
+    user_llm = _required_environment("RIST_TAU3_USER_LLM")
+    user_llm_revision = _required_environment("RIST_TAU3_USER_LLM_REVISION")
+    user_llm_authorization_sha256 = _required_digest_environment(
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256", 64
+    )
+    run_id = _required_environment("RIST_X3_RUN_ID")
+    source_commit = _required_digest_environment("RIST_X3_SOURCE_COMMIT", 40)
+    raw_journal = _required_environment("RIST_RAW_JOURNAL_PATH")
+    _required_environment("RIST_REWARD_JOURNAL_PATH")
     items = list(batch.iter_samples())
     http_client = httpx.AsyncClient(
         limits=httpx.Limits(
@@ -185,6 +213,9 @@ async def run_agent(ctx, batch):
         turns = []
         evidence = []
         training_step = int(ctx.global_step)
+        episode_id = _episode_id(
+            run_id, training_step, str(item.record["task_id"]), item.sample_index
+        )
         try:
             observation, info = await asyncio.wait_for(
                 asyncio.to_thread(env.reset, seed=int(episode_seed)), timeout=900.0
@@ -207,7 +238,11 @@ async def run_agent(ctx, batch):
                     "stream": False,
                 }
                 request_seed = ctx.request_seed(
-                    item.prompt_index, item.sample_index, turn_index
+                    training_step,
+                    item.record["id"],
+                    item.prompt_index,
+                    item.sample_index,
+                    turn_index,
                 )
                 if request_seed is not None:
                     request["seed"] = request_seed
@@ -222,12 +257,20 @@ async def run_agent(ctx, batch):
                     )
                 )
                 response_event = {
+                    "event_index": len(evidence),
                     "turn_index": turn_index,
                     "phase": "policy_response",
                     "raw_response": response.model_dump(mode="json"),
                 }
                 evidence.append(response_event)
-                _append_raw_event(item, training_step, response_event)
+                _append_raw_event(
+                    item,
+                    training_step,
+                    episode_id,
+                    run_id,
+                    raw_journal,
+                    response_event,
+                )
                 try:
                     action, assistant = response_to_action(response)
                 except ValueError as exc:
@@ -243,6 +286,7 @@ async def run_agent(ctx, batch):
                         step_info.get("simulation_run"), "terminated episode"
                     )
                 event = {
+                    "event_index": len(evidence),
                     "turn_index": turn_index,
                     "phase": "environment_step",
                     "observation": observation,
@@ -254,7 +298,9 @@ async def run_agent(ctx, batch):
                 if terminated:
                     event["simulation_run"] = simulation_payload
                 evidence.append(event)
-                _append_raw_event(item, training_step, event)
+                _append_raw_event(
+                    item, training_step, episode_id, run_id, raw_journal, event
+                )
                 final_reward = float(reward)
                 if terminated or truncated:
                     break
@@ -282,6 +328,7 @@ async def run_agent(ctx, batch):
                     cleanup_info.get("simulation_run"), "cleanup"
                 )
                 cleanup_event = {
+                    "event_index": len(evidence),
                     "turn_index": len(turns),
                     "phase": "cleanup_not_policy",
                     "terminated": bool(cleanup_terminated),
@@ -289,7 +336,14 @@ async def run_agent(ctx, batch):
                     "simulation_run": cleanup_simulation,
                 }
                 evidence.append(cleanup_event)
-                _append_raw_event(item, training_step, cleanup_event)
+                _append_raw_event(
+                    item,
+                    training_step,
+                    episode_id,
+                    run_id,
+                    raw_journal,
+                    cleanup_event,
+                )
                 if not cleanup_terminated:
                     raise RuntimeError("Tau3 cleanup action did not terminate the episode")
                 truncated = True
@@ -303,6 +357,9 @@ async def run_agent(ctx, batch):
                 item,
                 {
                     "domain": item.record["domain"],
+                    "run_id": run_id,
+                    "source_commit": source_commit,
+                    "episode_id": episode_id,
                     "task_id": item.record["task_id"],
                     "training_step": training_step,
                     "reward": final_reward,
@@ -312,6 +369,8 @@ async def run_agent(ctx, batch):
                     "evaluator": "tau2.EvaluationType.ALL",
                     "runtime_evidence_sha256": hashlib.sha256(evidence_bytes).hexdigest(),
                     "user_simulator": user_llm,
+                    "user_simulator_revision": user_llm_revision,
+                    "user_simulator_authorization_sha256": user_llm_authorization_sha256,
                     "user_seed": int(episode_seed),
                     "policy_retry_count": 0,
                     "user_retry_count": 0,
