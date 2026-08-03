@@ -2,6 +2,7 @@
   "bfcl_permitted": false,
   "commands_are_templates_only": true,
   "execution_authorized": false,
+  "expected_episode_count": 3200,
   "heldout_permitted": false,
   "job_count": 16,
   "jobs": [
@@ -81,9 +82,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-AF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-AF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-gspo-AF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-gspo-AF-7101",
       "seed": 7101,
@@ -168,9 +172,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-LF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-LF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-gspo-LF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-gspo-LF-7101",
       "seed": 7101,
@@ -255,9 +262,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-AN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-AN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-gspo-AN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-gspo-AN-7101",
       "seed": 7101,
@@ -342,9 +352,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-LN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-gspo-LN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-gspo-LN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-gspo-LN-7101",
       "seed": 7101,
@@ -429,9 +442,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-AF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-AF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-grpo-AF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-grpo-AF-7101",
       "seed": 7101,
@@ -516,9 +532,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-LF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-LF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-grpo-LF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-grpo-LF-7101",
       "seed": 7101,
@@ -603,9 +622,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-AN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-AN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-grpo-AN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-grpo-AN-7101",
       "seed": 7101,
@@ -690,9 +712,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-LN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-qwen3-grpo-LN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-qwen3-grpo-LN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-qwen3-grpo-LN-7101",
       "seed": 7101,
@@ -777,9 +802,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-AF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-AF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-gspo-AF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-gspo-AF-7101",
       "seed": 7101,
@@ -864,9 +892,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-LF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-LF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-gspo-LF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-gspo-LF-7101",
       "seed": 7101,
@@ -951,9 +982,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-AN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-AN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-gspo-AN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-gspo-AN-7101",
       "seed": 7101,
@@ -1038,9 +1072,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-LN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-gspo-LN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-gspo-LN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-gspo-LN-7101",
       "seed": 7101,
@@ -1125,9 +1162,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-AF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-AF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-grpo-AF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-grpo-AF-7101",
       "seed": 7101,
@@ -1212,9 +1252,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-LF-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-LF-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-grpo-LF-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-grpo-LF-7101",
       "seed": 7101,
@@ -1299,9 +1342,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-AN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-AN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-grpo-AN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-grpo-AN-7101",
       "seed": 7101,
@@ -1386,9 +1432,12 @@
       ],
       "required_environment": {
         "RIST_RAW_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-LN-7101/raw_events.jsonl",
-        "RIST_REQUIRE_EVIDENCE_JOURNALS": "1",
         "RIST_REWARD_JOURNAL_PATH": "artifacts/rist_x3_tau3_pilot_v2_1/tau3-gemma4-grpo-LN-7101/reward_events.jsonl",
-        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_REVISION}"
+        "RIST_TAU3_USER_LLM": "{FROZEN_USER_SIMULATOR_MODEL}",
+        "RIST_TAU3_USER_LLM_AUTHORIZATION_SHA256": "{USER_SIMULATOR_AUTHORIZATION_SHA256}",
+        "RIST_TAU3_USER_LLM_REVISION": "{FROZEN_USER_SIMULATOR_REVISION}",
+        "RIST_X3_RUN_ID": "tau3-gemma4-grpo-LN-7101",
+        "RIST_X3_SOURCE_COMMIT": "{FROZEN_SOURCE_COMMIT}"
       },
       "run_id": "tau3-gemma4-grpo-LN-7101",
       "seed": 7101,
@@ -1398,6 +1447,18 @@
       "trainable_turns": "last_assistant"
     }
   ],
+  "model_bindings": {
+    "gemma4": {
+      "revision": null,
+      "tokenizer_revision": null,
+      "weights_manifest_sha256": null
+    },
+    "qwen3": {
+      "revision": null,
+      "tokenizer_revision": null,
+      "weights_manifest_sha256": null
+    }
+  },
   "pilot_seed": 7101,
   "pilot_steps": 25,
   "policy_retry_count": 0,
@@ -1407,11 +1468,42 @@
     "FROZEN_AND_AUTHORIZED_USER_SIMULATOR_REVISION"
   ],
   "protocol": "RIST-X3-TAU3-PILOT-v2.1",
+  "required_training_task_ids": [
+    "airline:0",
+    "airline:10",
+    "airline:14",
+    "airline:15",
+    "airline:17",
+    "airline:20",
+    "airline:21",
+    "airline:23",
+    "airline:27",
+    "airline:28",
+    "airline:33",
+    "airline:34",
+    "airline:36",
+    "airline:38",
+    "airline:39",
+    "airline:40",
+    "airline:41",
+    "airline:42",
+    "airline:43",
+    "airline:46",
+    "airline:47",
+    "airline:49"
+  ],
   "scope": "AIRLINE_ONLY_ONE_SEED_FACTORIAL_DEVELOPMENT",
-  "source_commit": "b4e67f9b41922a15774584306ece588406dbe56a",
+  "source_commit": "2ce33964bcd5b1191b012462420e27927b72cb6f",
+  "source_file_sha256": {
+    "examples/agentic/rist_v2_1_tau3/dataset_loader.py": "6035f274d0e02f8186ebcc53e8636b36e03adfc6a342e643b03cc796193e8168",
+    "examples/agentic/rist_v2_1_tau3/reward.py": "be47b0105286f339f6c5afe1b416f40eb3ad56f889374805d5784b9431114e9b",
+    "examples/agentic/rist_v2_1_tau3/run_agent.py": "ac1776d07abd1382002f9bd7b9a19f0db2107b18453c95a5afb0529cbaac8c43",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/X3_TAU3/PROTOCOL.md": "2a4935a857a3446327e72f21447086d584890c257a182f8edbf3d9b14c2ca603"
+  },
   "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
   "tau3_tag": "v1.0.1",
   "user_retry_count": 0,
+  "user_simulator_authorization_sha256": null,
   "user_simulator_authorized": false,
   "user_simulator_identity_schema": {
     "num_retries": 0,
@@ -1426,5 +1518,6 @@
     ],
     "temperature": 0.0
   },
+  "user_simulator_model": null,
   "user_simulator_revision": null
 }

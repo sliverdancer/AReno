@@ -387,3 +387,17 @@ def test_e1_binds_gpu_uuid_and_hard_family_memory_floors(tmp_path):
     assert qwen_job["artifact_binding_contract"]["checkpoint_dir"].endswith(
         "step_000001"
     )
+
+
+def test_e1_static_manifest_is_bound_to_the_raw_evidence_freeze():
+    freeze = json.loads((E1 / "CPU_FREEZE.json").read_text())
+    manifest_path = E1 / "EXECUTION_MANIFEST.json"
+    manifest = json.loads(manifest_path.read_text())
+    assert freeze["protocol"] == "RIST-E1-CPU-FREEZE-v2"
+    assert freeze["source_commit"] == manifest["source_commit"]
+    assert freeze["execution_manifest_sha256"] == hashlib.sha256(
+        manifest_path.read_bytes()
+    ).hexdigest()
+    assert freeze["raw_tensorboard_recomputation_required"] is True
+    assert freeze["raw_gpu_sample_recomputation_required"] is True
+    assert freeze["submitted_summaries_authoritative"] is False
