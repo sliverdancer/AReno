@@ -165,6 +165,91 @@ def test_serve_response_reuses_tool_call_parser():
     assert choice.message["content"] is None
     assert choice.message["tool_calls"][0]["function"]["name"] == "choose_move"
     assert '"direction":"left"' in choice.message["tool_calls"][0]["function"]["arguments"]
+    assert response.areno is not None
+    assert response.areno.input_tokens == [10, 11]
+    assert response.areno.response_tokens == [1, 2, 3]
+    assert response.areno.response_logprobs == []
+    serialized = response.model_dump(exclude_none=True)
+    assert serialized["areno"] == {
+        "input_tokens": [10, 11],
+        "response_tokens": [1, 2, 3],
+        "response_logprobs": [],
+    }
+    assert serialized["choices"][0]["message"]["content"] is None
+
+
+def test_serve_response_omits_ambiguous_metadata_for_multiple_choices():
+    tokenizer = _TokenTokenizer({1: "left", 2: "right"})
+    request = serve_mod.ChatCompletionRequest(
+        model="areno",
+        messages=[serve_mod.ChatMessage(role="user", content="choose")],
+        n=2,
+    )
+
+    response = serve_mod._build_response_from(
+        tokenizer,
+        "model",
+        QwenToolCallParser(),
+        request,
+        [10, 11],
+        [[1], [2]],
+        ["stop", "stop"],
+    )
+
+    assert response.areno is None
+    serialized = response.model_dump(exclude_none=True)
+    assert "areno" not in serialized
+    assert serialized["choices"][0]["message"]["content"] == "left"
+
+
+def test_serve_empty_single_choice_metadata_is_not_fabricated():
+    request = serve_mod.ChatCompletionRequest(
+        model="areno",
+        messages=[serve_mod.ChatMessage(role="user", content="choose")],
+    )
+
+    response = serve_mod._build_response_from(
+        _TokenTokenizer({}),
+        "model",
+        QwenToolCallParser(),
+        request,
+        [10, 11],
+        [[]],
+        ["stop"],
+    )
+
+    assert response.areno is not None
+    assert response.areno.input_tokens == [10, 11]
+    assert response.areno.response_tokens == []
+    assert response.areno.response_logprobs == []
+
+
+def test_serve_openapi_declares_optional_areno_metadata(monkeypatch):
+    class FakeEngine:
+        config = SimpleNamespace(model=SimpleNamespace(max_position_embeddings=1024))
+
+        @classmethod
+        def from_pretrained(cls, *args, **kwargs):
+            del args, kwargs
+            return cls()
+
+    monkeypatch.setattr(serve_mod, "load_tokenizer", lambda model_path: SimpleNamespace(eos_token_id=1))
+    monkeypatch.setattr(serve_mod, "ArenoEngine", FakeEngine)
+    app = serve_mod.create_app(
+        model_path="model",
+        tp_size=1,
+        world_size=1,
+        max_running_prompts=1,
+        default_max_tokens=16,
+        decode_progress_interval_s=0.0,
+        attn_backend="native",
+    )
+
+    schema = app.openapi()["components"]["schemas"]["ChatCompletionResponse"]
+    assert "areno" in schema["properties"]
+    assert "areno" not in schema.get("required", [])
+    route = next(route for route in app.routes if getattr(route, "path", None) == "/v1/chat/completions")
+    assert route.response_model_exclude_none is True
 
 
 def test_serve_chat_template_receives_tools_and_tool_messages():

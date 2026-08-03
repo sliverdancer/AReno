@@ -82,6 +82,14 @@ class ChatCompletionUsage(BaseModel):
     total_tokens: int
 
 
+class ArenoResponseMetadata(BaseModel):
+    """Optional AReno token metadata for an unambiguous single completion."""
+
+    input_tokens: list[int]
+    response_tokens: list[int]
+    response_logprobs: list[float]
+
+
 class ChatCompletionResponse(BaseModel):
     """OpenAI-compatible chat completion response envelope."""
 
@@ -91,6 +99,7 @@ class ChatCompletionResponse(BaseModel):
     model: str
     choices: list[ChatCompletionChoice]
     usage: ChatCompletionUsage
+    areno: ArenoResponseMetadata | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -250,7 +259,11 @@ def create_app(
             ],
         }
 
-    @app.post("/v1/chat/completions", response_model=ChatCompletionResponse)
+    @app.post(
+        "/v1/chat/completions",
+        response_model=ChatCompletionResponse,
+        response_model_exclude_none=True,
+    )
     async def chat_completions(raw_request: Request, request: ChatCompletionRequest) -> ChatCompletionResponse:
         """Validate the request, encode the prompt, run rollout, and await the response."""
         if request.stream:
@@ -436,6 +449,7 @@ def _build_response_from(
 ) -> ChatCompletionResponse:
     """Decode token ids, parse optional tool calls, and assemble the OpenAI envelope."""
 
+    include_areno_metadata = int(request.n) == 1 and len(response_ids) == 1
     data = build_chat_completion_response(
         tokenizer=tokenizer,
         model=request.model or model_path,
@@ -445,6 +459,8 @@ def _build_response_from(
         tools=request.tools,
         tool_choice=request.tool_choice,
         tool_call_parser=tool_call_parser,
+        include_areno_metadata=include_areno_metadata,
+        input_tokens=prompt,
         stop_strings=_normalize_stop(request.stop),
     )
     return ChatCompletionResponse(**data)
