@@ -66,6 +66,7 @@ TRAIN_OPTION_GROUPS: tuple[tuple[str, tuple[str, ...]], ...] = (
             "smoke_train",
             "epochs",
             "max_steps",
+            "max_trainable_tokens",
             "seed",
             "world_size",
             "tp_size",
@@ -180,6 +181,7 @@ def _trainer_config_from_options(**options) -> TrainerConfig:
 
     args = SimpleNamespace(**options)
     args.max_steps = getattr(args, "max_steps", None)
+    args.max_trainable_tokens = getattr(args, "max_trainable_tokens", None)
     args.score_micro_bs = getattr(args, "score_micro_bs", 8)
     args.model_hub = getattr(args, "model_hub", "modelscope")
     args.seed = getattr(args, "seed", 42)
@@ -240,6 +242,17 @@ def _trainer_config_from_options(**options) -> TrainerConfig:
         raise click.UsageError("--epochs must be positive")
     if args.max_steps is not None and args.max_steps <= 0:
         raise click.UsageError("--max-steps must be positive")
+    if args.max_trainable_tokens is not None:
+        if args.max_trainable_tokens <= 0:
+            raise click.UsageError("--max-trainable-tokens must be positive")
+        if algorithm.name not in {"gspo", "grpo"}:
+            raise click.UsageError("--max-trainable-tokens currently supports only --algo gspo or grpo")
+        if args.gradient_accumulation_steps is not None:
+            raise click.UsageError("--max-trainable-tokens requires automatic gradient accumulation")
+        if args.save_path is None:
+            raise click.UsageError("--max-trainable-tokens requires --save-path")
+        if args.metrics_log_dir is None:
+            raise click.UsageError("--max-trainable-tokens requires --metrics-log-dir")
     if isinstance(args.seed, bool) or not isinstance(args.seed, int) or args.seed < 0:
         raise click.UsageError("--seed must be a non-negative integer")
     if args.tp_size <= 0:
@@ -361,6 +374,7 @@ def _format_training_config_summary(
             "Training",
             [
                 ("max_steps", _format_optional(config.max_steps)),
+                ("max_trainable_tokens", _format_optional(config.max_trainable_tokens)),
                 ("mini_bs", str(config.mini_bs)),
                 ("score_micro_bs", str(config.score_micro_bs)),
                 ("gradient_accumulation_steps", _format_optional(config.gradient_accumulation_steps, default="auto")),
@@ -652,6 +666,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
     # Each algorithm gets the narrowest config dataclass it needs; offline
     # trainers do not receive rollout/reward/GSPO fields by construction.
     args.max_steps = getattr(args, "max_steps", None)
+    args.max_trainable_tokens = getattr(args, "max_trainable_tokens", None)
     args.score_micro_bs = getattr(args, "score_micro_bs", 8)
     args.model_hub = getattr(args, "model_hub", "modelscope")
     algorithm = get_algorithm(args.algo)
@@ -674,6 +689,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             save_interval=args.save_interval,
             epochs=args.epochs,
             max_steps=args.max_steps,
+            max_trainable_tokens=args.max_trainable_tokens,
             tp_size=args.tp_size,
             world_size=args.world_size,
             batch_size=args.batch_size,
@@ -719,6 +735,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             save_interval=args.save_interval,
             epochs=args.epochs,
             max_steps=args.max_steps,
+            max_trainable_tokens=args.max_trainable_tokens,
             tp_size=args.tp_size,
             world_size=args.world_size,
             batch_size=args.batch_size,
@@ -765,6 +782,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
             save_interval=args.save_interval,
             epochs=args.epochs,
             max_steps=args.max_steps,
+            max_trainable_tokens=args.max_trainable_tokens,
             tp_size=args.tp_size,
             world_size=args.world_size,
             batch_size=args.batch_size,
@@ -818,6 +836,7 @@ def _trainer_config_from_args(args) -> TrainerConfig:
         save_interval=args.save_interval,
         epochs=args.epochs,
         max_steps=args.max_steps,
+        max_trainable_tokens=args.max_trainable_tokens,
         tp_size=args.tp_size,
         world_size=args.world_size,
         batch_size=args.batch_size,
@@ -1287,6 +1306,12 @@ def _dataset_builder_for_suffix(suffix: str) -> str:
 )
 @click.option("--epochs", type=int, default=10, show_default=True, help="Number of dataset epochs to train.")
 @click.option("--max-steps", type=int, default=None, help="Stop after this many trainer steps.")
+@click.option(
+    "--max-trainable-tokens",
+    type=click.IntRange(min=1),
+    default=None,
+    help="Stop after the first complete optimizer step reaching this many post-mask trainable tokens.",
+)
 @click.option(
     "--seed",
     type=click.IntRange(min=0),

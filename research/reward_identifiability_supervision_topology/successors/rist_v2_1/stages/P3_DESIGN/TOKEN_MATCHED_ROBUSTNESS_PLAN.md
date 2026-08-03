@@ -1,6 +1,6 @@
 # Token-matched robustness plan
 
-Status: `RETROSPECTIVE_SENSITIVITY_HARDENED_INDEPENDENT_SCHEDULE_BLOCKED_BY_API`
+Status: `RETROSPECTIVE_SENSITIVITY_HARDENED_INDEPENDENT_SCHEDULE_API_IMPLEMENTED_CPU_ONLY`
 
 ## Scientific ruling
 
@@ -50,10 +50,9 @@ Accordingly, the paper should present step-matched and independently
 token-budgeted estimands as complementary interventions, not treat either as a
 perfect adjustment for the other.
 
-## Minimum public API change
+## Public API implementation
 
-AReno currently exposes `--max-steps` but no token-aware stopping boundary.
-The minimum new public surface is:
+AReno now exposes the following CPU-tested public surface:
 
 - `TrainerConfig.max_trainable_tokens: int | None = None`;
 - `areno train --max-trainable-tokens INTEGER`;
@@ -63,7 +62,7 @@ The minimum new public surface is:
   post-step count, overshoot, global step, dataset cursor, and RNG identity;
 - a checkpoint saved only after the completed terminal optimizer step.
 
-The minimal implementable semantics are `stop_after_first_completed_step_at_or_above_target`.
+The implemented semantics are `stop_after_first_completed_step_at_or_above_target`.
 They necessarily allow at most one step of overshoot, which must be bounded and
 reported prospectively. Exact zero-overshoot matching would additionally need
 token-aware batch splitting or last-step loss-mask truncation; that is not a
@@ -72,4 +71,8 @@ TensorBoard from an external wrapper or restarting from segmented checkpoints
 is invalid because it cannot prove optimizer, scheduler, dataset-cursor, and
 rollout-RNG continuity.
 
-No public config or CLI is changed in this CPU-only stage.
+This implementation is frozen as engineering evidence only. No GPU, serving,
+rollout, optimizer step, or model access occurred in this stage. The
+independent token-budget schedule remains scientifically unopened until a
+separate execution manifest selects its target outcome-blind and GPU training
+is explicitly authorized.

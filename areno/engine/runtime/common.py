@@ -114,8 +114,16 @@ def merge_train_stats(results: list[dict[str, Any]]) -> TrainStats:
 
     loss = sum(float(result["loss"]) for result in results) / len(results)
     stepped = all(bool(result["stepped"]) for result in results)
+    global_steps = {int(result["global_step"]) for result in results}
+    if len(global_steps) != 1:
+        raise ValueError("data-parallel ranks disagree on optimizer global step")
     metrics = merge_metric_dicts([result.get("metrics") for result in results])
-    return TrainStats(loss=loss, stepped=stepped, metrics=metrics)
+    return TrainStats(
+        loss=loss,
+        stepped=stepped,
+        global_step=next(iter(global_steps)),
+        metrics=metrics,
+    )
 
 
 def merge_metric_dicts(metrics_list: list[dict[str, Any] | None]) -> dict[str, float] | None:

@@ -42,7 +42,7 @@ def epoch_dataset_view(dataset, *, seed: int, epoch: int):
 
     indices = list(range(len(dataset)))
     random.Random(derive_seed(seed, "dataset", epoch)).shuffle(indices)
-    return _IndexedDatasetView(dataset, indices)
+    return _IndexedDatasetView(dataset, indices, seed=derive_seed(seed, "dataset", epoch), epoch=epoch)
 
 
 def json_seed_material(seed: int, parts: Sequence[Any]) -> bytes:
@@ -55,9 +55,16 @@ def json_seed_material(seed: int, parts: Sequence[Any]) -> bytes:
 class _IndexedDatasetView:
     """Minimal dataset-like view used by all trainer loops."""
 
-    def __init__(self, dataset, indices: list[int]):
+    def __init__(self, dataset, indices: list[int], *, seed: int, epoch: int):
         self._dataset = dataset
         self._indices = indices
+        self.seed = seed
+        self.epoch = epoch
+
+    @property
+    def order_sha256(self) -> str:
+        payload = ",".join(str(index) for index in self._indices).encode()
+        return hashlib.sha256(payload).hexdigest()
 
     def __len__(self) -> int:
         return len(self._indices)

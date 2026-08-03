@@ -18,9 +18,9 @@
     },
     "token_matched_robustness": {
       "required": "step interaction, common-token normalized AUC, and common-support endpoint preserve direction with at least 50 percent support per arm",
-      "current": "retrospective exact-knot common-support matcher and seed-level robustness gate frozen; no curves; an independently executed equal-token schedule still requires a max-trainable-tokens API",
+      "current": "retrospective exact-knot common-support matcher and seed-level robustness gate frozen; the max-trainable-tokens API and strict completed-step terminal evidence are CPU-implemented but no independent schedule has run",
       "evidence": "stages/P3_DESIGN/token_matching.py",
-      "status": "RETROSPECTIVE_INSTRUMENT_READY_INDEPENDENT_SCHEDULE_API_MISSING"
+      "status": "RETROSPECTIVE_INSTRUMENT_READY_INDEPENDENT_SCHEDULE_API_CPU_IMPLEMENTED"
     },
     "two_families_two_algorithms": {
       "required": "Qwen3 and Gemma4 blocks complete under both GSPO and GRPO",
@@ -58,9 +58,12 @@
     {
       "stage": "TOKEN_BUDGET_API",
       "purpose": "independently executed equal-token robustness rather than retrospective reindexing",
-      "public_api_change_required": "TrainerConfig.max_trainable_tokens and --max-trainable-tokens",
+      "public_api_change_required": "implemented CPU-only: TrainerConfig.max_trainable_tokens and --max-trainable-tokens",
       "gpu_required": false,
-      "execution_authorized": false
+      "cpu_implementation_authorized": true,
+      "gpu_training_authorized": false,
+      "execution_authorized": false,
+      "status": "CPU_IMPLEMENTED_GPU_UNEXECUTED"
     },
     {
       "stage": "X3_TAU3_PILOT",

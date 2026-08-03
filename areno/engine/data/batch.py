@@ -22,6 +22,7 @@ class TrainStats:
     loss: float
     stepped: bool = True
     metrics: dict[str, float] | None = None
+    global_step: int | None = None
 
 
 @dataclass(slots=True)

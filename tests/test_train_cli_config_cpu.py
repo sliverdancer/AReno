@@ -67,6 +67,59 @@ def test_train_config_rejects_negative_seed():
         _trainer_config_from_options(**_options(algo="gspo", seed=-1))
 
 
+def test_train_config_propagates_max_trainable_tokens():
+    config = _trainer_config_from_options(
+        **_options(algo="grpo", max_trainable_tokens=4096, metrics_log_dir="metrics")
+    )
+    assert config.max_trainable_tokens == 4096
+
+
+@pytest.mark.parametrize("algo", ["sft", "dpo", "ppo"])
+def test_train_config_rejects_token_budget_for_unsupported_algorithms(algo):
+    with pytest.raises(UsageError, match="currently supports only"):
+        _trainer_config_from_options(
+            **_options(algo=algo, max_trainable_tokens=10, metrics_log_dir="metrics")
+        )
+
+
+def test_train_config_rejects_token_budget_with_explicit_accumulation():
+    with pytest.raises(UsageError, match="requires automatic gradient accumulation"):
+        _trainer_config_from_options(
+            **_options(
+                max_trainable_tokens=10,
+                gradient_accumulation_steps=1,
+                metrics_log_dir="metrics",
+            )
+        )
+
+
+def test_train_config_requires_token_budget_evidence_directories():
+    with pytest.raises(UsageError, match="requires --save-path"):
+        _trainer_config_from_options(
+            **_options(max_trainable_tokens=10, save_path=None, metrics_log_dir="metrics")
+        )
+    with pytest.raises(UsageError, match="requires --metrics-log-dir"):
+        _trainer_config_from_options(**_options(max_trainable_tokens=10, metrics_log_dir=None))
+
+
+@pytest.mark.parametrize("value", [True, 0, -1])
+def test_public_config_rejects_invalid_token_budget(value):
+    with pytest.raises(ValueError, match="positive integer"):
+        PolicyTrainerConfig(
+            algo="gspo",
+            ckpt="actor",
+            dataset_path="dataset",
+            max_trainable_tokens=value,
+            save_path="save",
+            metrics_log_dir="metrics",
+        )
+
+
+def test_public_config_token_budget_is_keyword_only_and_preserves_positional_shape():
+    config = PolicyTrainerConfig("gspo", "actor", "dataset")
+    assert config.max_trainable_tokens is None
+
+
 def test_train_config_propagates_exact_tool_call_supervision():
     config = _trainer_config_from_options(
         **_options(algo="gspo", tool_call_supervision="name_only")
@@ -681,6 +734,7 @@ def _options(**overrides):
         tune_max_samples=256,
         epochs=2,
         max_steps=None,
+        max_trainable_tokens=None,
         score_micro_bs=8,
         tp_size=1,
         world_size=1,

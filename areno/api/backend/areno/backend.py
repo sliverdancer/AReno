@@ -346,6 +346,8 @@ class ArenoBackend(Backend):
                 "loss": 0.0,
                 "optimizer_step_skipped": 1.0,
                 "trainable_tokens": 0.0,
+                "completed_trainable_tokens": 0.0,
+                "optimizer_steps_completed": 0.0,
             }
 
         train_start = time.perf_counter()
@@ -375,13 +377,23 @@ class ArenoBackend(Backend):
             )
         stats_list = engine.step(packs, gradient_accumulation_steps=gradient_accumulation_steps)
         train_time_s = time.perf_counter() - train_start
+        completed_trainable_tokens = 0
+        pending_trainable_tokens = 0
+        optimizer_steps_completed = 0
+        optimizer_global_step = None
         # `first_policy_metrics` keeps the per-step rollout/policy diagnostics
         # untouched (we want the value seen on the first microbatch, not the
         # average over microbatches), while everything else gets mean-averaged.
         first_policy_metrics: dict[str, float] = {}
         averaged_metric_counts: dict[str, int] = {}
-        for stats in stats_list:
+        for pack, stats in zip(packs, stats_list, strict=True):
+            pending_trainable_tokens += _packed_trainable_token_count(pack)
             losses.append(stats.loss)
+            if stats.stepped:
+                completed_trainable_tokens += pending_trainable_tokens
+                pending_trainable_tokens = 0
+                optimizer_steps_completed += 1
+                optimizer_global_step = stats.global_step
             if stats.metrics:
                 for key, value in stats.metrics.items():
                     value_float = float(value)
@@ -390,10 +402,18 @@ class ArenoBackend(Backend):
                     else:
                         metrics[key] = metrics.get(key, 0.0) + value_float
                         averaged_metric_counts[key] = averaged_metric_counts.get(key, 0) + 1
+        if pending_trainable_tokens:
+            raise RuntimeError("training returned without completing the final accumulated optimizer step")
+        if optimizer_steps_completed and optimizer_global_step is None:
+            raise RuntimeError("completed optimizer step is missing its global-step identity")
         if metrics:
             metrics = {key: value / averaged_metric_counts[key] for key, value in metrics.items()}
         metrics.update(first_policy_metrics)
         result = {"loss": sum(losses) / max(len(losses), 1)}
+        result["completed_trainable_tokens"] = float(completed_trainable_tokens)
+        result["optimizer_steps_completed"] = float(optimizer_steps_completed)
+        if optimizer_global_step is not None:
+            result["optimizer_global_step"] = float(optimizer_global_step)
         result.update(metrics)
         if self._step_e2e_start is not None:
             step_e2e_time_s = time.perf_counter() - self._step_e2e_start
@@ -535,22 +555,40 @@ def _has_trainable_tokens(seqs: list[TrainSequence]) -> bool:
     """
 
     for seq in seqs:
+        prompt_mask = seq.prompt_mask[1:]
         if seq.loss_mask:
             if len(seq.loss_mask) != len(seq.prompt_mask):
                 raise ValueError("loss_mask and prompt_mask lengths must match")
             if any(
                 enabled and not is_prompt
                 for enabled, is_prompt in zip(
-                    seq.loss_mask,
-                    seq.prompt_mask,
+                    seq.loss_mask[1:],
+                    prompt_mask,
                     strict=True,
                 )
             ):
                 return True
             continue
-        if any(not is_prompt for is_prompt in seq.prompt_mask):
+        if any(not is_prompt for is_prompt in prompt_mask):
             return True
     return False
+
+
+def _packed_trainable_token_count(pack: dict) -> int:
+    """Count next-token loss positions in one pre-DP training pack."""
+
+    prompt_mask = pack["prompt_mask"]
+    lengths = pack["lengths"]
+    loss_mask = pack.get("loss_mask")
+    total = 0
+    for row in range(int(prompt_mask.shape[0])):
+        length = int(lengths[row])
+        for index in range(1, length):
+            enabled = not bool(prompt_mask[row, index])
+            if loss_mask is not None:
+                enabled = enabled and bool(loss_mask[row, index])
+            total += int(enabled)
+    return total
 
 
 def _is_sft_loss_fn(loss_fn: Callable) -> bool:

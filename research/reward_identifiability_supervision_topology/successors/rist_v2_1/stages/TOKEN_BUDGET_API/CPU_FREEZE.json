@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-TOKEN-BUDGET-API-v1.0",
+  "parent_commit": "06c20d345552ebdb67f727cb522572f6342f078f",
+  "status": "PASS_CPU_IMPLEMENTATION_GPU_UNEXECUTED",
+  "semantics": "stop_after_first_completed_step_at_or_above_target",
+  "supported_algorithms": ["gspo", "grpo"],
+  "targeted_cpu_tests": {
+    "passed": 184,
+    "failed": 0
+  },
+  "broad_cpu_tests": {
+    "passed": 600,
+    "failed": 0,
+    "deselected_pre_existing_failures": 2,
+    "ignored_collection_file": "tests/test_serve_cli_cpu.py",
+    "ignored_collection_reason": "frozen CPU runtime lacks unrelated fastapi dependency"
+  },
+  "pre_existing_failures": [
+    "tests/test_agentic_cpu.py::test_rollout_session_exposes_active_global_step",
+    "tests/test_rist_v2_cpu.py::test_rist_v2_d2_frozen_evaluator_records_terminal_representation_failure"
+  ],
+  "file_sha256": {
+    "areno/api/token_budget.py": "44487fbabd334a5a3dfafef5b9704abad31015fc18099c66664417d792dae5c0",
+    "areno/api/backend/areno/backend.py": "d3aeaeec45006b4c5c3b05d78f98d14db5e7238a725bc66bda98ff0e762b8c38",
+    "areno/api/trainers/policy_only.py": "b5f44f8e6ed8ce32ade449d1cdca6fa5b2a0394064acea7bffe4842cb9f32c69",
+    "areno/api/trainer_config.py": "1114fe0596c05998afbf395a61179b5f73da90cdf932dce1ea4c56dda4c08e1a",
+    "areno/cli/train.py": "5cdae49d04843aadb557f83bcdfba3cea97f02e56c4a0ff594ec50fc5250814d",
+    "areno/api/seeding.py": "ae9dcf1d3e3f516e7cdf2ebd6a4ed0a804ac8111416910b068b68f627eb0f759",
+    "areno/api/metrics.py": "0d9ffa87d4966555e14c94b3b4d2ce9616a38212eabe403c6a6824065282b258",
+    "areno/engine/data/batch.py": "6f30f803d9ce35a6aafc0f6259d4e4a54e069bd5679e10743f79da89ceec68e9",
+    "areno/engine/runtime/common.py": "daa97d847172aa17fe849aedc89145b54a83d8cc7577a6f0446c5f05b49cd315",
+    "tests/test_token_budget_cpu.py": "bf33e68c19ff5e82d3072ff172c9378ee42399f1193d4930cc36a17c6da9b22d",
+    "tests/test_train_cli_config_cpu.py": "a659b502be95dc4e5a8854a17118419d46d126445dcabe2fb74afe57006cbfbb",
+    "tests/test_runtime_utils_cpu.py": "fb75dc1f73d06ada6ee24399176f4f609126b30fc9d626bd18037a0f9c524e23",
+    "docs/cli/training.rst": "53d4c8bb7fccd40603bd53c190d2c8b818ebd392706dba7395a95ad9ca4804df",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/TOKEN_BUDGET_API/PROTOCOL.md": "5941ae805aee078f74c6ea38b1c75516bcfa770d2fdcbd71b445b6e2d8116655"
+  },
+  "gpu_used": false,
+  "model_accessed": false,
+  "rollout_run": false,
+  "optimizer_step_run": false,
+  "training_run": false,
+  "scientific_result_generated": false,
+  "independent_token_target_selected": false,
+  "p3_execution_manifest_changed": false
+}

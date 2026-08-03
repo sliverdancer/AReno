@@ -79,6 +79,18 @@ Built-in algorithms: ``sft``, ``dpo``, ``gspo``, ``grpo``, ``ppo``.
    Optional global trainer step cap. Training stops after this many step
    indices have completed, even if the current epoch still has more batches.
 
+``--max-trainable-tokens INTEGER``
+   Optional GSPO/GRPO-only token budget. Counts effective post-mask next-token
+   loss positions only after their optimizer step completes, then stops after
+   the first complete step whose cumulative count reaches or exceeds the
+   target. The terminal evidence records the pre-step and post-step totals,
+   overshoot, optimizer global step, dataset cursor, and parent-process RNG
+   identities. Token-budget mode requires ``--save-path``,
+   ``--metrics-log-dir``, and automatic gradient accumulation (do not pass
+   ``--gradient-accumulation-steps``). It forces a terminal checkpoint and
+   writes ``token_budget_terminal.json``. Current checkpoints contain model
+   weights only; exact optimizer/dataset/RNG resume is not supported.
+
 ``--seed INTEGER``
    Non-negative base seed for model initialization, deterministic per-epoch
    dataset order, and deterministic per-step rollout sampling. Default: ``42``.

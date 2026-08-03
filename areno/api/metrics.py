@@ -144,7 +144,7 @@ def collect_train_batch_stats(train_batch) -> dict:
         response_len = len(response_logprobs)
         trainable_tokens = sum(
             1
-            for enabled, is_prompt in zip(loss_mask, prompt_mask, strict=True)
+            for enabled, is_prompt in zip(loss_mask[1:], prompt_mask[1:], strict=True)
             if enabled and not is_prompt
         )
         stats["rewards"].append(seq.reward)

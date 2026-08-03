@@ -90,15 +90,30 @@ class RuntimeCommonTest(unittest.TestCase):
         """Train stats from DP ranks should average numeric metrics."""
         stats = merge_train_stats(
             [
-                {"loss": 1.0, "stepped": True, "metrics": {"a": 2.0}},
-                {"loss": 3.0, "stepped": False, "metrics": {"a": 4.0, "b": 6.0}},
+                {"loss": 1.0, "stepped": True, "global_step": 9, "metrics": {"a": 2.0}},
+                {"loss": 3.0, "stepped": False, "global_step": 9, "metrics": {"a": 4.0, "b": 6.0}},
             ]
         )
 
         self.assertEqual(stats.loss, 2.0)
         self.assertFalse(stats.stepped)
+        self.assertEqual(stats.global_step, 9)
         self.assertEqual(stats.metrics, {"a": 3.0, "b": 6.0})
         self.assertIsNone(merge_metric_dicts([None, {}]))
+
+    def test_train_stats_preserves_existing_positional_metrics_argument(self):
+        stats = runtime_common.TrainStats(1.0, True, {"a": 2.0})
+        self.assertEqual(stats.metrics, {"a": 2.0})
+        self.assertIsNone(stats.global_step)
+
+    def test_merge_train_stats_rejects_rank_global_step_disagreement(self):
+        with self.assertRaisesRegex(ValueError, "disagree"):
+            merge_train_stats(
+                [
+                    {"loss": 1.0, "stepped": True, "global_step": 8},
+                    {"loss": 1.0, "stepped": True, "global_step": 9},
+                ]
+            )
 
     def test_device_long_and_token_id_guard(self):
         """Token id validation should accept valid ids and describe invalid ones."""

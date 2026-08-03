@@ -23,6 +23,16 @@ import numpy as np
 
 from areno.api.dashboard import record_dashboard_state
 from areno.api.seeding import derive_seed, epoch_dataset_view, seed_parent_process
+from areno.api.token_budget import (
+    PROTOCOL_VERSION,
+    TokenBudgetTracker,
+    assert_token_budget_outputs_available,
+    checkpoint_identity,
+    config_identity,
+    records_identity,
+    rng_state_identity,
+    write_terminal_evidence,
+)
 from areno.api.tokenizer import configure_chat_template_enable_thinking
 
 
@@ -55,6 +65,13 @@ class PolicyOnlyTrainer:
 
     def fit(self) -> None:
         seed_parent_process(getattr(self.config, "seed", 42))
+        token_target = getattr(self.config, "max_trainable_tokens", None)
+        if token_target is not None:
+            assert_token_budget_outputs_available(
+                self.config.metrics_log_dir,
+                self.config.save_path,
+                token_target,
+            )
         self.areno.init()
         try:
             self._fit_initialized()
@@ -79,29 +96,50 @@ class PolicyOnlyTrainer:
         )
 
         step = 0
+        token_target = getattr(self.config, "max_trainable_tokens", None)
+        token_tracker = TokenBudgetTracker(token_target) if token_target is not None else None
+        last_token_context = None
         for epoch in range(self.config.epochs):
             self.logger.info("epoch=%d stage=epoch_start", epoch)
             record_dashboard_state(
                 self.areno, stage="epoch_start", epoch=epoch, step=step, role=self._policy_role_name()
             )
-            for prompt_batch in self.areno.load_prompt_batches(
-                epoch_dataset_view(
-                    self.dataset,
-                    seed=base_seed,
-                    epoch=epoch,
-                ),
+            dataset_view = epoch_dataset_view(self.dataset, seed=base_seed, epoch=epoch)
+            epoch_rows_scanned = 0
+            for prompt_batch_index, prompt_batch in enumerate(self.areno.load_prompt_batches(
+                dataset_view,
                 batch_size=self.config.batch_size,
                 max_prompt_tokens=self.config.max_prompt_tokens,
-            ):
+            )):
+                rows_before_batch = epoch_rows_scanned
+                # Public PromptBatch always reports raw rows scanned. A small
+                # compatibility fallback keeps lightweight test/dry-run fakes
+                # working without weakening production cursor evidence.
+                epoch_rows_scanned += getattr(prompt_batch, "scanned", len(prompt_batch.items))
+                current_rollout_seed = derive_seed(base_seed, "rollout", step)
                 step_sampling_params = sampling_params.model_copy(
-                    update={
-                        "seed": derive_seed(
-                            base_seed,
-                            "rollout",
-                            step,
-                        )
-                    }
+                    update={"seed": current_rollout_seed}
                 )
+                rng_before_step = rng_state_identity() if token_tracker is not None else None
+                if token_tracker is not None:
+                    last_token_context = {
+                        "dataset_cursor": {
+                            "epoch": epoch,
+                            "prompt_batch_index": prompt_batch_index,
+                            "raw_rows_before_batch": rows_before_batch,
+                            "raw_rows_after_batch": epoch_rows_scanned,
+                            "accepted_items": len(prompt_batch.items),
+                            "dataset_length": len(dataset_view),
+                            "dataset_order_seed": dataset_view.seed,
+                            "dataset_order_sha256": dataset_view.order_sha256,
+                            "accepted_records_sha256": records_identity(
+                                [item.record for item in prompt_batch.items]
+                            ),
+                            "dataset_path": self.config.dataset_path,
+                        },
+                        "current_rollout_seed": current_rollout_seed,
+                        "next_rollout_seed": derive_seed(base_seed, "rollout", step + 1),
+                    }
                 role = self._policy_role_name()
                 self.logger.info("epoch=%d step=%d role=%s stage=rollout_start", epoch, step, role)
                 record_dashboard_state(self.areno, stage="rollout_start", epoch=epoch, step=step, role=role)
@@ -185,13 +223,39 @@ class PolicyOnlyTrainer:
                     self.logger.info("epoch=%d step=%d role=%s stage=train_end", epoch, step, role)
                     record_dashboard_state(self.areno, stage="train_end", epoch=epoch, step=step, role=role)
                     self.logger.info("epoch=%d step=%d train_stats=%s", epoch, step, result)
+                    if token_tracker is not None:
+                        accounting = token_tracker.consume(result)
+                        if accounting["target_reached"]:
+                            rng_after_train = rng_state_identity()
+                            self._complete_token_budget(
+                                accounting=accounting,
+                                epoch=epoch,
+                                trainer_step=step,
+                                prompt_batch_index=prompt_batch_index,
+                                rows_before_batch=rows_before_batch,
+                                rows_after_batch=epoch_rows_scanned,
+                                accepted_items=len(prompt_batch.items),
+                                accepted_records=[item.record for item in prompt_batch.items],
+                                dataset_view=dataset_view,
+                                current_rollout_seed=current_rollout_seed,
+                                next_rollout_seed=derive_seed(base_seed, "rollout", step + 1),
+                                rng_before_step=rng_before_step,
+                                rng_after_train=rng_after_train,
+                            )
+                            return
                     self._maybe_save(epoch, step)
-                elif self._turn_credit_fn is not None:
+                else:
+                    skip_reason = (
+                        "turn_credit_full_abstention"
+                        if self._turn_credit_fn is not None
+                        else "empty_train_batch"
+                    )
                     self.logger.info(
-                        "epoch=%d step=%d role=%s stage=train_skip reason=turn_credit_full_abstention",
+                        "epoch=%d step=%d role=%s stage=train_skip reason=%s",
                         epoch,
                         step,
                         role,
+                        skip_reason,
                     )
                     record_dashboard_state(
                         self.areno,
@@ -200,14 +264,34 @@ class PolicyOnlyTrainer:
                         step=step,
                         role=role,
                     )
+                    if token_tracker is not None:
+                        token_tracker.consume(
+                            {"completed_trainable_tokens": 0, "optimizer_steps_completed": 0}
+                        )
                     self.areno.finish_step()
                 step += 1
                 if self.config.max_steps is not None and step >= self.config.max_steps:
                     self.logger.info("epoch=%d step=%d stage=max_steps_reached", epoch, step)
                     record_dashboard_state(self.areno, stage="max_steps_reached", epoch=epoch, step=step, role=role)
+                    if token_tracker is not None:
+                        self._fail_token_budget(
+                            token_tracker,
+                            reason="max_steps_reached_before_token_target",
+                            epoch=epoch,
+                            trainer_step=step,
+                            context=last_token_context,
+                        )
                     return
             self.logger.info("epoch=%d stage=epoch_end", epoch)
             record_dashboard_state(self.areno, stage="epoch_end", epoch=epoch, step=step, role=self._policy_role_name())
+        if token_tracker is not None:
+            self._fail_token_budget(
+                token_tracker,
+                reason="dataset_exhausted_before_token_target",
+                epoch=self.config.epochs,
+                trainer_step=step,
+                context=last_token_context,
+            )
 
     def _policy_role_name(self) -> str:
         # GSPO/GRPO have a single trainable model called "policy"; PPO
@@ -705,3 +789,128 @@ class PolicyOnlyTrainer:
         record_dashboard_state(
             self.areno, stage="save_checkpoint_end", epoch=epoch, step=step, role=self._policy_role_name()
         )
+
+    def _complete_token_budget(
+        self,
+        *,
+        accounting,
+        epoch: int,
+        trainer_step: int,
+        prompt_batch_index: int,
+        rows_before_batch: int,
+        rows_after_batch: int,
+        accepted_items: int,
+        accepted_records,
+        dataset_view,
+        current_rollout_seed: int,
+        next_rollout_seed: int,
+        rng_before_step,
+        rng_after_train,
+    ) -> None:
+        target = accounting["target"]
+        checkpoint_path = str(
+            Path(self.config.save_path)
+            / f"token_budget_target_{target}_optimizer_step_{accounting['optimizer_global_step']:06d}"
+        )
+        self.logger.info(
+            "epoch=%d step=%d stage=token_budget_checkpoint_start path=%s",
+            epoch,
+            trainer_step,
+            checkpoint_path,
+        )
+        record_dashboard_state(
+            self.areno,
+            stage="token_budget_checkpoint_start",
+            epoch=epoch,
+            step=trainer_step,
+            role=self._policy_role_name(),
+        )
+        saved_path = self.areno.save_checkpoint(checkpoint_path)
+        self.logger.info(
+            "epoch=%d step=%d stage=token_budget_checkpoint_end path=%s",
+            epoch,
+            trainer_step,
+            saved_path,
+        )
+        record_dashboard_state(
+            self.areno,
+            stage="token_budget_checkpoint_end",
+            epoch=epoch,
+            step=trainer_step,
+            role=self._policy_role_name(),
+        )
+        evidence = {
+            "protocol_version": PROTOCOL_VERSION,
+            "status": "TARGET_REACHED",
+            "terminal_reason": "first_complete_optimizer_step_at_or_above_target",
+            **accounting,
+            "optimizer_steps_completed": 1,
+            "trainer_iteration": trainer_step + 1,
+            "trainer_step_index": trainer_step,
+            "epoch": epoch,
+            "dataset_cursor": {
+                "prompt_batch_index": prompt_batch_index,
+                "raw_rows_before_batch": rows_before_batch,
+                "raw_rows_after_batch": rows_after_batch,
+                "accepted_items": accepted_items,
+                "dataset_length": len(dataset_view),
+                "dataset_order_seed": dataset_view.seed,
+                "dataset_order_sha256": dataset_view.order_sha256,
+                "accepted_records_sha256": records_identity(accepted_records),
+                "dataset_path": self.config.dataset_path,
+            },
+            "seed_identity": {
+                "base_seed": self.config.seed,
+                "current_rollout_seed": current_rollout_seed,
+                "next_rollout_seed": next_rollout_seed,
+                "rng_before_step": rng_before_step,
+                "rng_after_train": rng_after_train,
+                "rng_at_evidence_write": rng_state_identity(),
+            },
+            "config_sha256": config_identity(self.config),
+            "checkpoint": checkpoint_identity(saved_path),
+            "resume_contract": {
+                "resume_supported": False,
+                "optimizer_state_saved": False,
+                "dataset_cursor_restorable": False,
+                "rng_state_saved": False,
+            },
+        }
+        write_terminal_evidence(self.config.metrics_log_dir, evidence)
+
+    def _fail_token_budget(
+        self,
+        tracker,
+        *,
+        reason: str,
+        epoch: int,
+        trainer_step: int,
+        context,
+    ) -> None:
+        evidence = {
+            "protocol_version": PROTOCOL_VERSION,
+            "status": "TARGET_NOT_REACHED",
+            "terminal_reason": reason,
+            "target": tracker.target,
+            "completed_trainable_tokens": tracker.completed,
+            "optimizer_step_skipped_batches": tracker.skipped_batches,
+            "last_optimizer_global_step": tracker.last_global_step,
+            "seed_identity": {
+                "base_seed": self.config.seed,
+                "current_rollout_seed": context["current_rollout_seed"] if context else None,
+                "next_rollout_seed": context["next_rollout_seed"] if context else None,
+                "rng_at_failure": rng_state_identity(),
+            },
+            "dataset_cursor": context["dataset_cursor"] if context else None,
+            "trainer_iterations_completed": trainer_step,
+            "epoch": epoch,
+            "config_sha256": config_identity(self.config),
+            "resume_contract": {
+                "resume_supported": False,
+                "optimizer_state_saved": False,
+                "dataset_cursor_restorable": False,
+                "rng_state_saved": False,
+            },
+        }
+        write_terminal_evidence(self.config.metrics_log_dir, evidence)
+        raise RuntimeError(f"token budget target not reached: {reason}")

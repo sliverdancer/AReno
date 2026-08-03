@@ -11,7 +11,7 @@ critic warmup window.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from areno.api.defaults import DEFAULT_METRICS_LOG_DIR
 
@@ -34,6 +34,7 @@ class TrainerConfig:
     save_interval: int = 100
     epochs: int = 10
     max_steps: int | None = None
+    max_trainable_tokens: int | None = field(default=None, kw_only=True)
     tp_size: int = 4
     world_size: int = 8
     batch_size: int = 32
@@ -68,6 +69,19 @@ class TrainerConfig:
     def __post_init__(self) -> None:
         if isinstance(self.seed, bool) or not isinstance(self.seed, int) or self.seed < 0:
             raise ValueError("seed must be a non-negative integer")
+        if self.max_trainable_tokens is not None:
+            if isinstance(self.max_trainable_tokens, bool) or not isinstance(self.max_trainable_tokens, int):
+                raise ValueError("max_trainable_tokens must be a positive integer")
+            if self.max_trainable_tokens <= 0:
+                raise ValueError("max_trainable_tokens must be a positive integer")
+            if self.algo not in {"gspo", "grpo"}:
+                raise ValueError("max_trainable_tokens currently supports only gspo and grpo")
+            if self.gradient_accumulation_steps is not None:
+                raise ValueError("max_trainable_tokens requires automatic gradient accumulation")
+            if self.save_path is None:
+                raise ValueError("max_trainable_tokens requires save_path")
+            if self.metrics_log_dir is None:
+                raise ValueError("max_trainable_tokens requires metrics_log_dir")
         if self.attn_backend not in {"flash", "native"}:
             raise ValueError("attn_backend must be one of: flash, native")
         if self.model_hub not in {"hf", "modelscope"}:
