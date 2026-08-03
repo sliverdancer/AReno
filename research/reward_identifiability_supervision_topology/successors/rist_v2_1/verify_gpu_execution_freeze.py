@@ -12,7 +12,7 @@ from typing import Any
 def verify(freeze_path: Path) -> dict[str, Any]:
     base = freeze_path.parent
     freeze = json.loads(freeze_path.read_text())
-    if freeze.get("schema_version") != "rist-gpu-execution-freeze-v1":
+    if freeze.get("schema_version") != "rist-gpu-execution-freeze-v2":
         raise ValueError("unexpected GPU execution freeze")
     authorization = base / "GPU_AUTHORIZATION_20260803.json"
     authorization_pass = (
@@ -25,7 +25,7 @@ def verify(freeze_path: Path) -> dict[str, Any]:
         files[relative] = path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected
     passed = authorization_pass and all(files.values())
     return {
-        "protocol": "RIST-GPU-EXECUTION-FREEZE-VERIFY-v1",
+        "protocol": "RIST-GPU-EXECUTION-FREEZE-VERIFY-v2",
         "source_commit": freeze["source_commit"],
         "authorization_pass": authorization_pass,
         "file_count": len(files),

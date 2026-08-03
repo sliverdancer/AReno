@@ -1208,7 +1208,10 @@ def test_v2_1_tau3_partition_selection_is_structural_and_disjoint():
     assert result["selection_uses_model_outcomes"] is False
 
 
-def test_v2_1_capacity_gate_requires_bound_artifacts_and_memory_headroom(tmp_path):
+def test_v2_1_capacity_gate_recomputes_raw_evidence_and_rejects_fake_summary(tmp_path):
+    import hashlib
+    import json
+
     validator = _load_module(
         "rist_v2_1_capacity",
         V2_1 / "stages" / "E1" / "validate_capacity_evidence.py",
@@ -1218,152 +1221,326 @@ def test_v2_1_capacity_gate_requires_bound_artifacts_and_memory_headroom(tmp_pat
         V2_1 / "stages" / "E1" / "build_capacity_manifest.py",
     )
     manifest = builder.build_manifest(tmp_path / "runs")
+    model = manifest["models"]["qwen3"]
+    model["gpu_pairing"] = "GPU-mock"
+    for job in manifest["jobs"]:
+        if job["family"] == "qwen3":
+            job["gpu_pairing"] = "GPU-mock"
 
-    def artifact(relative, content):
+    def write(relative, content):
         path = tmp_path / relative
         path.parent.mkdir(parents=True, exist_ok=True)
-        encoded = content.encode()
+        encoded = content if isinstance(content, bytes) else content.encode()
         path.write_bytes(encoded)
-        return relative, __import__("hashlib").sha256(encoded).hexdigest()
+        return relative, hashlib.sha256(encoded).hexdigest()
 
-    model = manifest["models"]["qwen3"]
+    def json_text(value):
+        return json.dumps(value, sort_keys=True) + "\n"
+
+    def jsonl(rows):
+        return "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows)
+
     runtime_identity = {
-        "checkpoint": model["checkpoint"],
-        "model_revision": model["revision"],
-        "tokenizer_snapshot_sha256": model["tokenizer_snapshot_sha256"],
-        "model_weights_sha256": "d" * 64,
-        "gpu_name": "Mock GPU",
-        "gpu_uuid": "GPU-mock",
-        "gpu_total_memory_gib": 80,
-        "driver_version": "1.0",
-        "cuda_version": "1.0",
-        "torch_version": "1.0",
-        "source_commit": manifest["source_commit"],
-    }
-    top_contents = {
-        "runtime_identity": __import__("json").dumps(runtime_identity),
-        "filtered_train": "filtered",
-        "capacity_train": "capacity",
-        "resolution_map": "resolution",
-        "capacity_data_manifest": "capacity-manifest",
-    }
-    top_artifacts = {}
-    top_hashes = {}
-    for name, field in validator.TOP_ARTIFACTS.items():
-        relative, digest = artifact(f"top/{name}", top_contents[name])
-        top_artifacts[name] = relative
-        top_hashes[field] = digest
-    filtered_sha = top_hashes["filtered_train_sha256"]
-    capacity_sha = top_hashes["capacity_train_sha256"]
-
-    serving_artifacts = {}
-    serving_hashes = {}
-    for name, field in validator.SERVING_ARTIFACTS.items():
-        relative, digest = artifact(f"serving/{name}.txt", name)
-        serving_artifacts[name] = relative
-        serving_hashes[field] = digest
-
-    training = []
-    for algorithm, peak in (("gspo", 60), ("grpo", 64)):
-        artifacts = {}
-        hashes = {}
-        for name, field in validator.TRAINING_ARTIFACTS.items():
-            if name == "metrics_summary":
-                content = __import__("json").dumps(
-                    {
-                        "protocol": "RIST-E1-ONE-STEP-METRICS-v1",
-                        "optimizer_step_completed": True,
-                        "optimizer_step_count": 1,
-                        "trainable_tokens": 100,
-                        "loss": 0.5,
-                        "gradient_norm": 1.0,
-                        "mixed_reward_group": True,
-                        "reward_event_count": 8,
-                    }
-                )
-            elif name == "reload_result":
-                content = __import__("json").dumps(
-                    {
-                        "protocol": "RIST-E1-RELOAD-CANARY-v1",
-                        "complete": True,
-                        "task_count": 1,
-                        "complete_four_turn_count": 1,
-                        "raw_response_count": 4,
-                        "retry_count": 0,
-                    }
-                )
-            else:
-                content = f"{algorithm}:{name}"
-            relative, digest = artifact(f"{algorithm}/{name}", content)
-            artifacts[name] = relative
-            hashes[field] = digest
-        training.append(
-            {
-                "run_id": f"qwen3-{algorithm}-AF-8101",
-                "algorithm": algorithm,
-                "optimizer_step_completed": True,
-                "optimizer_step_count": 1,
-                "max_steps": 1,
-                "seed": 8101,
-                "arm": "AF",
-                "trainable_turns": "all_assistant",
-                "tool_call_supervision": "full",
-                "filtered_train_sha256": filtered_sha,
-                "capacity_train_sha256": capacity_sha,
-                "resolution_band": "high",
-                "trainable_tokens": 100,
-                "loss": 0.5,
-                "gradient_norm": 1.0,
-                "peak_memory_gib": peak,
-                "oom": False,
-                "checkpoint_roundtrip": True,
-                "retry_count": 0,
-                "artifacts": artifacts,
-                **hashes,
-            }
-        )
-    evidence = {
-        "protocol": "RIST-E1-CAPACITY-EVIDENCE-v2.1",
         "family": "qwen3",
         "checkpoint": model["checkpoint"],
         "model_revision": model["revision"],
         "tokenizer_snapshot_sha256": model["tokenizer_snapshot_sha256"],
         "model_weights_sha256": "d" * 64,
-        "filtered_train_sha256": filtered_sha,
-        "capacity_train_sha256": capacity_sha,
-        "resolution_map_sha256": top_hashes["resolution_map_sha256"],
-        "capacity_data_manifest_sha256": top_hashes["capacity_data_manifest_sha256"],
-        "runtime_identity_sha256": top_hashes["runtime_identity_sha256"],
-        "artifacts": top_artifacts,
         "gpu_name": "Mock GPU",
         "gpu_uuid": "GPU-mock",
+        "gpu_total_memory_gib": 80.0,
         "driver_version": "1.0",
         "cuda_version": "1.0",
         "torch_version": "1.0",
         "source_commit": manifest["source_commit"],
-        "training_seed": 8101,
-        "gpu_total_memory_gib": 80,
-        "serving_canary": {
-            "health_pass": True,
-            "task_count": 32,
-            "complete_four_turn_count": 32,
-            "raw_response_count": 128,
-            "peak_memory_gib": 20,
-            "oom": False,
+    }
+    resolution = {
+        "passed": True,
+        "common_resolution_map": {"c06": "high", "c07": "high"},
+    }
+    filtered = jsonl(
+        {"id": f"filtered-{index}", "structural_cell": "c06", "resolution_band": "high"}
+        for index in range(8)
+    )
+    capacity_rows = [
+        {"id": f"capacity-{index}", "structural_cell": "c06", "resolution_band": "high"}
+        for index in range(4)
+    ]
+    capacity = jsonl(capacity_rows)
+    resolution_text = json_text(resolution)
+    capacity_data_manifest = {
+        "protocol": "RIST-E1-CAPACITY-DATA-v2.1",
+        "selection_rule": "LEXICOGRAPHIC_FIRST_TRANSPORTED_HIGH_CELL",
+        "selection_uses_individual_outcomes": False,
+        "selected_cell": "c06",
+        "task_count": 4,
+        "source_train_sha256": hashlib.sha256(filtered.encode()).hexdigest(),
+        "resolution_result_sha256": hashlib.sha256(resolution_text.encode()).hexdigest(),
+        "capacity_train_sha256": hashlib.sha256(capacity.encode()).hexdigest(),
+    }
+    top_contents = {
+        "runtime_identity": json_text(runtime_identity),
+        "filtered_train": filtered,
+        "capacity_train": capacity,
+        "resolution_map": resolution_text,
+        "capacity_data_manifest": json_text(capacity_data_manifest),
+    }
+    top_artifacts = {}
+    top_hashes = {}
+    for name, field in validator.TOP_ARTIFACTS.items():
+        relative, digest = write(f"top/{name}.json", top_contents[name])
+        top_artifacts[name] = relative
+        top_hashes[field] = digest
+
+    def monitor(peak_gib, exit_code=0):
+        peak_mib = peak_gib * 1024.0
+        return {
+            "protocol": "RIST-E1-GPU-MONITOR-v1",
+            "gpu_uuid": "GPU-mock",
+            "gpu_name": "Mock GPU",
+            "total_memory_mib": 81920.0,
+            "used_memory_mib": 0.0,
+            "driver_version": "1.0",
+            "sample_count": 2,
+            "peak_memory_mib": peak_mib,
+            "peak_memory_gib": peak_gib,
+            "command_exit_code": exit_code,
+            "samples": [
+                {"elapsed_seconds": 0.0, "used_memory_mib": 0.0},
+                {"elapsed_seconds": 1.0, "used_memory_mib": peak_mib},
+            ],
+        }
+
+    def canary_journal(task_count):
+        return [
+            {
+                "task_id": f"task-{task}",
+                "task_signature": f"sig-{task}",
+                "rollout_seed": 12101,
+                "turn_index": turn,
+                "raw_response": {"choices": []},
+            }
+            for task in range(task_count)
+            for turn in range(4)
+        ]
+
+    serving_rows = canary_journal(32)
+    serving_journal, serving_journal_sha = write(
+        "serving/raw.jsonl", jsonl(serving_rows)
+    )
+    serving_result = {
+        "protocol": "RIST-E1-SERVING-CANARY-v1",
+        "family": "qwen3",
+        "runtime_identity": runtime_identity,
+        "complete": True,
+        "infrastructure_error": None,
+        "task_count": 32,
+        "expected_task_count": 32,
+        "complete_four_turn_count": 32,
+        "raw_response_count": 128,
+        "retry_count": 0,
+        "raw_journal_sha256": serving_journal_sha,
+    }
+    serving_paths = {
+        "result": write("serving/result.json", json_text(serving_result))[0],
+        "raw_journal": serving_journal,
+        "serve_log": write("serving/serve.log", "clean shutdown\n")[0],
+        "gpu_monitor": write("serving/gpu.json", json_text(monitor(10.0)))[0],
+    }
+    serving_artifacts = {}
+    serving_hashes = {}
+    for name, field in validator.SERVING_ARTIFACTS.items():
+        path = tmp_path / serving_paths[name]
+        serving_artifacts[name] = serving_paths[name]
+        serving_hashes[field] = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    series = {
+        "loss": [{"step": 0, "value": 0.5}],
+        "gradient_norm": [{"step": 0, "value": 1.0}],
+        "trainable_tokens": [{"step": 0, "value": 100.0}],
+    }
+    metrics_module = _load_module(
+        "rist_v2_1_capacity_raw_metrics",
+        V2_1 / "stages" / "E1" / "extract_one_step_metrics.py",
+    )
+    training = []
+    for algorithm, peak in (("gspo", 60.0), ("grpo", 64.0)):
+        root = tmp_path / algorithm
+        metrics_dir = root / "metrics"
+        metrics_dir.mkdir(parents=True)
+        (metrics_dir / "events.out.tfevents.raw").write_bytes(b"original-events")
+        checkpoint_dir = root / "checkpoint"
+        checkpoint_dir.mkdir()
+        (checkpoint_dir / "model.safetensors").write_bytes(b"saved-weights")
+        rewards = [
+            {
+                "task_id": "capacity-0",
+                "training_step": 0,
+                "prompt_index": 0,
+                "sample_index": sample,
+                "resolution_band": "high",
+                "reward": float(sample % 2),
+            }
+            for sample in range(8)
+        ]
+        raw_rows = [
+            {
+                "task_id": "capacity-0",
+                "training_step": 0,
+                "prompt_index": 0,
+                "sample_index": sample,
+                "turn_index": turn,
+                "raw_response": {"sample": sample, "turn": turn},
+            }
+            for sample in range(8)
+            for turn in range(4)
+        ]
+        metrics_summary = metrics_module.summarize(series, rewards)
+        metrics_manifest = validator._build_directory_manifest(
+            metrics_dir, "RIST-DIRECTORY-MANIFEST-v1"
+        )
+        checkpoint_manifest = validator._build_directory_manifest(
+            checkpoint_dir, "RIST-E1-CHECKPOINT-MANIFEST-v1"
+        )
+        checkpoint_manifest_rel, checkpoint_manifest_sha = write(
+            f"{algorithm}/checkpoint_manifest.json", json_text(checkpoint_manifest)
+        )
+        reload_identity = {
+            **runtime_identity,
+            "parent_run_id": f"qwen3-{algorithm}-AF-8101",
+            "checkpoint_manifest_sha256": checkpoint_manifest_sha,
+            "loaded_checkpoint_path": next(
+                job["artifact_binding_contract"]["checkpoint_dir"]
+                for job in manifest["jobs"]
+                if job["run_id"] == f"qwen3-{algorithm}-AF-8101"
+            ),
+        }
+        reload_rows = canary_journal(1)
+        reload_journal_rel, reload_journal_sha = write(
+            f"{algorithm}/reload.jsonl", jsonl(reload_rows)
+        )
+        reload_result = {
+            "protocol": "RIST-E1-RELOAD-CANARY-v1",
+            "family": "qwen3",
+            "runtime_identity": reload_identity,
+            "complete": True,
+            "infrastructure_error": None,
+            "task_count": 1,
+            "expected_task_count": 1,
+            "complete_four_turn_count": 1,
+            "raw_response_count": 4,
             "retry_count": 0,
-            "artifacts": serving_artifacts,
-            **serving_hashes,
-        },
+            "raw_journal_sha256": reload_journal_sha,
+        }
+        files = {
+            "raw_journal": write(f"{algorithm}/raw.jsonl", jsonl(raw_rows))[0],
+            "reward_journal": write(f"{algorithm}/rewards.jsonl", jsonl(rewards))[0],
+            "metrics_manifest": write(
+                f"{algorithm}/metrics_manifest.json", json_text(metrics_manifest)
+            )[0],
+            "metrics_summary": write(
+                f"{algorithm}/metrics_summary.json", json_text(metrics_summary)
+            )[0],
+            "checkpoint_manifest": checkpoint_manifest_rel,
+            "reload_journal": reload_journal_rel,
+            "reload_result": write(
+                f"{algorithm}/reload_result.json", json_text(reload_result)
+            )[0],
+            "gpu_monitor": write(
+                f"{algorithm}/gpu.json", json_text(monitor(peak))
+            )[0],
+            "train_log": write(f"{algorithm}/train.log", "training complete\n")[0],
+            "reload_gpu_monitor": write(
+                f"{algorithm}/reload_gpu.json", json_text(monitor(12.0))
+            )[0],
+            "reload_serve_log": write(
+                f"{algorithm}/reload_serve.log", "reload complete\n"
+            )[0],
+        }
+        artifacts = {}
+        hashes = {}
+        for name, field in validator.TRAINING_FILE_ARTIFACTS.items():
+            path = tmp_path / files[name]
+            artifacts[name] = files[name]
+            hashes[field] = hashlib.sha256(path.read_bytes()).hexdigest()
+        training.append(
+            {
+                "run_id": f"qwen3-{algorithm}-AF-8101",
+                "algorithm": algorithm,
+                "filtered_train_sha256": top_hashes["filtered_train_sha256"],
+                "capacity_train_sha256": top_hashes["capacity_train_sha256"],
+                "metrics_dir": metrics_dir.relative_to(tmp_path).as_posix(),
+                "checkpoint_dir": checkpoint_dir.relative_to(tmp_path).as_posix(),
+                # These submitted fields are deliberately false; raw files decide.
+                "optimizer_step_completed": False,
+                "gradient_norm": 0.0,
+                "checkpoint_roundtrip": False,
+                "peak_memory_gib": 0.0,
+                "artifacts": artifacts,
+                **hashes,
+            }
+        )
+
+    evidence = {
+        "protocol": "RIST-E1-CAPACITY-EVIDENCE-v2.1",
+        **runtime_identity,
+        "training_seed": 8101,
+        "filtered_train_sha256": top_hashes["filtered_train_sha256"],
+        "capacity_train_sha256": top_hashes["capacity_train_sha256"],
+        "resolution_map_sha256": top_hashes["resolution_map_sha256"],
+        "capacity_data_manifest_sha256": top_hashes["capacity_data_manifest_sha256"],
+        "runtime_identity_sha256": top_hashes["runtime_identity_sha256"],
+        "artifacts": top_artifacts,
+        "serving_canary": {"artifacts": serving_artifacts, **serving_hashes},
         "training_canaries": training,
     }
-    assert validator.validate_capacity(evidence, manifest, tmp_path)["passed"] is True
-    evidence["training_canaries"][1]["peak_memory_gib"] = 70
-    result = validator.validate_capacity(evidence, manifest, tmp_path)
-    assert result["memory_headroom_pass"] is False
-    assert result["passed"] is False
-    evidence["training_canaries"][1]["peak_memory_gib"] = 64
-    evidence["checkpoint"] = "wrong/model"
-    assert validator.validate_capacity(evidence, manifest, tmp_path)["passed"] is False
+    loader = lambda _path: series
+    result = validator.validate_capacity(
+        evidence, manifest, tmp_path, metrics_loader=loader
+    )
+    assert result["passed"] is True
+    assert result["submitted_summary_is_authoritative"] is False
+    assert result["peak_memory_gib"] == 64.0
+
+    # Rehashing a forged summary cannot override the original event/reward evidence.
+    grpo = evidence["training_canaries"][1]
+    summary_path = tmp_path / grpo["artifacts"]["metrics_summary"]
+    forged = json.loads(summary_path.read_text())
+    forged["gradient_norm"] = 999.0
+    summary_path.write_text(json_text(forged))
+    grpo["metrics_summary_sha256"] = hashlib.sha256(summary_path.read_bytes()).hexdigest()
+    rejected = validator.validate_capacity(
+        evidence, manifest, tmp_path, metrics_loader=loader
+    )
+    assert rejected["raw_evidence_pass"]["grpo"] is False
+    assert rejected["passed"] is False
+
+    summary_path.write_text(json_text(metrics_module.summarize(series, rewards)))
+    grpo["metrics_summary_sha256"] = hashlib.sha256(summary_path.read_bytes()).hexdigest()
+    checkpoint_path = tmp_path / grpo["checkpoint_dir"] / "model.safetensors"
+    checkpoint_path.write_bytes(b"substituted-after-reload")
+    rejected = validator.validate_capacity(
+        evidence, manifest, tmp_path, metrics_loader=loader
+    )
+    assert rejected["raw_evidence_pass"]["grpo"] is False
+    assert rejected["passed"] is False
+
+    checkpoint_path.write_bytes(b"saved-weights")
+    monitor_path = tmp_path / grpo["artifacts"]["gpu_monitor"]
+    high_peak = monitor(70.0)
+    monitor_path.write_text(json_text(high_peak))
+    grpo["gpu_monitor_sha256"] = hashlib.sha256(monitor_path.read_bytes()).hexdigest()
+    rejected = validator.validate_capacity(
+        evidence, manifest, tmp_path, metrics_loader=loader
+    )
+    assert rejected["memory_headroom_pass"] is False
+    assert rejected["passed"] is False
+
+    manifest["models"]["qwen3"]["minimum_gpu_memory_gib"] = 1
+    with __import__("pytest").raises(ValueError, match="weakens"):
+        validator.validate_capacity(
+            evidence, manifest, tmp_path, metrics_loader=loader
+        )
 
 
 def test_v2_1_capacity_manifest_is_exactly_four_unauthorized_af_jobs(tmp_path):
@@ -2969,9 +3146,25 @@ def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
         "revision": "revision-1",
         "runtime_value": "frozen-user-simulator@revision-1",
         "temperature": 0.0,
-        "seed_derivation": "ctx.request_seed(task_id,prompt_index,sample_index,tau3_user)",
+        "seed_derivation": "ctx.request_seed(training_step,task_id,prompt_index,sample_index,tau3_user)",
         "num_retries": 0,
+        "authorization_sha256": "f" * 64,
     }
+    manifest["user_simulator_model"] = simulator["model"]
+    manifest["user_simulator_revision"] = simulator["revision"]
+    manifest["user_simulator_authorization_sha256"] = simulator[
+        "authorization_sha256"
+    ]
+    manifest["user_simulator_authorized"] = True
+    manifest["model_bindings"] = {
+        family: {
+            "revision": f"{family}-revision",
+            "tokenizer_revision": f"{family}-tokenizer",
+            "weights_manifest_sha256": digest,
+        }
+        for family, digest in (("qwen3", "a" * 64), ("gemma4", "b" * 64))
+    }
+    manifest_path.write_text(json.dumps(manifest))
     for job in manifest["jobs"]:
         run_root = artifact_root / job["run_id"]
         run_root.mkdir(parents=True)
@@ -2981,18 +3174,22 @@ def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
             for sample in range(8):
                 task_id = task_ids[(step * 8 + sample) % len(task_ids)]
                 identity = {
+                    "run_id": job["run_id"],
                     "task_id": task_id,
                     "training_step": step,
                     "prompt_index": 0,
                     "sample_index": sample,
                 }
+                identity["episode_id"] = validator._expected_episode_id(job, identity)
                 events = [
                     {
+                        "event_index": 0,
                         "turn_index": 0,
                         "phase": "policy_response",
                         "raw_response": {"id": f"{step}-{sample}"},
                     },
                     {
+                        "event_index": 1,
                         "turn_index": 0,
                         "phase": "environment_step",
                         "observation": "done",
@@ -3008,14 +3205,19 @@ def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
                     json.dumps(events, sort_keys=True, separators=(",", ":")).encode()
                 ).hexdigest()
                 reward_rows.append(
-                    {
-                        **identity,
+                        {
+                            **identity,
+                            "source_commit": manifest["source_commit"],
                         "domain": "airline",
                         "reward": 1.0,
                         "terminated": True,
                         "truncated": False,
                         "evaluator": "tau2.EvaluationType.ALL",
-                        "user_simulator": simulator["runtime_value"],
+                            "user_simulator": simulator["runtime_value"],
+                            "user_simulator_revision": simulator["revision"],
+                            "user_simulator_authorization_sha256": simulator[
+                                "authorization_sha256"
+                            ],
                         "user_seed": step * 8 + sample,
                         "policy_retry_count": 0,
                         "user_retry_count": 0,
@@ -3028,11 +3230,7 @@ def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
         reward_path.write_text(
             "".join(json.dumps(row, sort_keys=True) + "\n" for row in reward_rows)
         )
-        model = {
-            "revision": f"{job['family']}-revision",
-            "tokenizer_revision": f"{job['family']}-tokenizer",
-            "weights_manifest_sha256": "a" * 64 if job["family"] == "qwen3" else "b" * 64,
-        }
+        model = manifest["model_bindings"][job["family"]]
         evidence = {
             "protocol": manifest["protocol"],
             "run_id": job["run_id"],
@@ -3049,6 +3247,7 @@ def test_x3_tau3_artifact_validator_accepts_exact_3200_episode_grid(tmp_path):
             "completed": True,
             "user_simulator": simulator,
             "model": model,
+            "source_file_sha256": manifest["source_file_sha256"],
             "gpu": {"name": "test-gpu", "uuid": "GPU-test", "memory_total_bytes": 1},
             "source_archive_sha256": "c" * 64,
             "raw_events_sha256": validator._sha256(raw_path),
