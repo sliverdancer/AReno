@@ -23,13 +23,28 @@ def verify(freeze_path: Path) -> dict[str, Any]:
     for relative, expected in freeze["files"].items():
         path = base / relative
         files[relative] = path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected
-    passed = authorization_pass and all(files.values())
+    source_bound_files = (
+        "stages/C0_RESOLUTION_V2_2/CANARY_EXECUTION_MANIFEST.json",
+        "stages/C0_RESOLUTION_V2_2/CANARY_CPU_FREEZE.json",
+        "stages/E1/EXECUTION_MANIFEST.json",
+        "stages/E1/CPU_FREEZE.json",
+    )
+    stage_source_commits = {
+        relative: json.loads((base / relative).read_text()).get("source_commit")
+        for relative in source_bound_files
+    }
+    source_binding_pass = all(
+        value == freeze["source_commit"] for value in stage_source_commits.values()
+    )
+    passed = authorization_pass and all(files.values()) and source_binding_pass
     return {
         "protocol": "RIST-GPU-EXECUTION-FREEZE-VERIFY-v2",
         "source_commit": freeze["source_commit"],
         "authorization_pass": authorization_pass,
         "file_count": len(files),
         "files": files,
+        "stage_source_commits": stage_source_commits,
+        "source_binding_pass": source_binding_pass,
         "passed": passed,
     }
 

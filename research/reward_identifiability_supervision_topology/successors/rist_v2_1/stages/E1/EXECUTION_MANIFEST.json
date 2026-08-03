@@ -1141,6 +1141,6 @@
     }
   ],
   "serving_canary_count": 2,
-  "source_commit": "0ad1acb8106e31d1fefe3875157f1b4e779e7238",
+  "source_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
   "training_seed": 8101
 }

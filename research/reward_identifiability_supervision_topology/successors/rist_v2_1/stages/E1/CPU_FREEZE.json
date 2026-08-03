@@ -1,7 +1,7 @@
 {
   "protocol": "RIST-E1-CPU-FREEZE-v2",
-  "source_commit": "0ad1acb8106e31d1fefe3875157f1b4e779e7238",
-  "execution_manifest_sha256": "0443b4ca2c1477924fba1a7e7eccc7e1968e23d0135e466ca315c28545e336fb",
+  "source_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
+  "execution_manifest_sha256": "2cc830e9c491229f7c33ece2ba03057f833ad53676fd0e455c1fd1f956f1333e",
   "status": "PASS_CPU_INSTRUMENT_USER_AUTHORIZED_AWAITING_C0_AND_GPU_BINDING",
   "job_count": 4,
   "algorithms": ["gspo", "grpo"],

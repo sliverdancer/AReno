@@ -1,6 +1,6 @@
 {
   "schema_version": "rist-c0-v2.2-capacity-canary-freeze-v1",
-  "source_commit": "2674e1019da3872e398c50326b7344007707f5aa",
+  "source_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
   "retired_predecessor": "RIST-C0-v2.1",
   "minimum_gpu_memory_gib": 48.0,
   "recommended_gpu_memory_gib": 80.0,
@@ -20,7 +20,7 @@
     "PROTOCOL.md": "af56e1ea42102d5461242e854cc9854b0e1e9740f4e32bbc1d75d5d578ff78a4",
     "build_fresh_pool.py": "a58942006164600235308f6c30b0a6100c6dc9afa44a76737e2fc6cab50ade89",
     "run_capacity_canary.py": "5300e6f99c5ebcc7c20e33fa94d63947a5b06e423e345cc3d6b8e0a33e48be92",
-    "CANARY_EXECUTION_MANIFEST.json": "30d5ffa613585b4317dcded41e53856695bf55d2c8d778c3216869a4a09ed72b",
+    "CANARY_EXECUTION_MANIFEST.json": "57f78e939aa378b727857eaaf5e5b55ebf46498680893c6483a0180b7edac7f2",
     "finalize_capacity_canary.py": "5f92a4abbf60154b2a7bb641c090be25eb5c9b3d28996d610ff7e9c1b8488e59",
     "data/manifest.json": "ce47554a335a68d1f74a84d0d3f54eca4247f872b5fff0b8dc1057e4fa32c414"
   }
