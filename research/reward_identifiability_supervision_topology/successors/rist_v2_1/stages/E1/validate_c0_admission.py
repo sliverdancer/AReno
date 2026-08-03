@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +28,8 @@ def _json(path: Path) -> dict[str, Any]:
 
 
 def _load_validator():
+    if str(C0_VALIDATOR.parent) not in sys.path:
+        sys.path.insert(0, str(C0_VALIDATOR.parent))
     spec = importlib.util.spec_from_file_location("rist_e1_c0_resolution_validator", C0_VALIDATOR)
     module = importlib.util.module_from_spec(spec)
     if spec.loader is None:
