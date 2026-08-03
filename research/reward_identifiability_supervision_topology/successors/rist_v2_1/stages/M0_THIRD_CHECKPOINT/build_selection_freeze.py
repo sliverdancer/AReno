@@ -16,6 +16,9 @@ AUDITED_FILES = (
     "areno/models/qwen3/model.py",
     "areno/models/qwen3/checkpoint.py",
     "pyproject.toml",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/PROTOCOL.md",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/build_selection_freeze.py",
+    "research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/M0_THIRD_CHECKPOINT/verify_selection_freeze.py",
 )
 
 

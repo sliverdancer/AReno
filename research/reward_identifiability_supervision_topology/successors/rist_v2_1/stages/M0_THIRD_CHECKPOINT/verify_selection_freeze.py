@@ -47,7 +47,7 @@ def verify(path: Path) -> dict:
         "audited_file_count": len(file_checks),
         "audited_files": file_checks,
         "outcome_blind_boundary_pass": boundary_pass,
-        "passed": boundary_pass and len(file_checks) == 4 and all(file_checks.values()),
+        "passed": boundary_pass and len(file_checks) == 7 and all(file_checks.values()),
     }
 
 
