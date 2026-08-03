@@ -4,11 +4,22 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
 
 CHECKPOINT_STEPS = (25, 50, 75, 100)
+
+
+def _load_evidence_validator():
+    path = Path(__file__).with_name("run_evidence_manifest.py")
+    spec = importlib.util.spec_from_file_location("rist_p4_run_evidence", path)
+    module = importlib.util.module_from_spec(spec)
+    if spec.loader is None:
+        raise RuntimeError("P4 run-evidence validator is unavailable")
+    spec.loader.exec_module(module)
+    return module
 
 
 def _selected_success(
@@ -41,7 +52,8 @@ def assemble_run(
     dev_results: list[dict[str, Any]],
     confirmatory: dict[str, Any],
     resolution_map_result: dict[str, Any],
-    evidence_archive: Path,
+    evidence_manifest: Path,
+    evidence_root: Path,
     evidence_relative_path: str,
 ) -> dict[str, Any]:
     if resolution_map_result.get("passed") is not True:
@@ -95,8 +107,14 @@ def assemble_run(
     confirmatory_success, confirmatory_by_band = _selected_success(
         confirmatory, resolution_map
     )
-    if not evidence_archive.is_file():
-        raise FileNotFoundError("run evidence archive is missing")
+    if not evidence_manifest.is_file():
+        raise FileNotFoundError("run evidence manifest is missing")
+    manifest_payload = json.loads(evidence_manifest.read_text())
+    verification = _load_evidence_validator().validate_manifest(
+        manifest_payload, evidence_root, str(run_design["run_id"])
+    )
+    if verification.get("passed") is not True:
+        raise ValueError("run evidence manifest did not pass")
     return {
         "run_id": run_design["run_id"],
         "family": run_design["family"],
@@ -109,7 +127,8 @@ def assemble_run(
         "confirmatory_strict_success_by_resolution": confirmatory_by_band,
         "curve": curve,
         "raw_evidence_path": evidence_relative_path,
-        "raw_evidence_sha256": hashlib.sha256(evidence_archive.read_bytes()).hexdigest(),
+        "raw_evidence_sha256": hashlib.sha256(evidence_manifest.read_bytes()).hexdigest(),
+        "raw_evidence_artifact_count": verification["artifact_count"],
         "resolution_map_sha256": hashlib.sha256(
             (json.dumps(resolution_map_result, sort_keys=True) + "\n").encode()
         ).hexdigest(),
@@ -123,7 +142,8 @@ def main() -> int:
     parser.add_argument("--dev-result", type=Path, action="append", required=True)
     parser.add_argument("--confirmatory", type=Path, required=True)
     parser.add_argument("--resolution-map", type=Path, required=True)
-    parser.add_argument("--evidence-archive", type=Path, required=True)
+    parser.add_argument("--evidence-manifest", type=Path, required=True)
+    parser.add_argument("--evidence-root", type=Path, required=True)
     parser.add_argument("--evidence-relative-path", required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -133,7 +153,8 @@ def main() -> int:
         [json.loads(path.read_text()) for path in args.dev_result],
         json.loads(args.confirmatory.read_text()),
         json.loads(args.resolution_map.read_text()),
-        args.evidence_archive,
+        args.evidence_manifest,
+        args.evidence_root,
         args.evidence_relative_path,
     )
     args.output.write_text(

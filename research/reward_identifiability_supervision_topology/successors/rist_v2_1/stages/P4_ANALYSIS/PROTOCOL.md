@@ -19,11 +19,16 @@ Catastrophic runs remain in the intention-to-treat endpoint with strict success
 zero. A missing run, missing raw-evidence hash, or unaligned arm makes the block
 invalid rather than being omitted.
 
-Every raw-evidence hash is recomputed from an explicitly rooted relative file.
-A syntactically valid digest without the corresponding file cannot pass. The
-analyzer also refuses main-track eligibility when the manifest is still a
-template, lacks execution authorization, or contains any treatment not marked
-scientifically ready.
+Every raw-evidence hash is recomputed from an explicitly rooted relative P4
+run-evidence manifest. That manifest must itself verify the exact 22 required
+roles: source/runtime/resolution identity, training raw and reward journals,
+metrics and summary, four checkpoint manifests, four development results and
+their raw journals, plus the confirmatory result, raw journal, and one-shot
+ledger. Every referenced path is relative, unique, present, size-bound, and
+SHA256-bound. The analyzer repeats this transitive verification; a syntactically
+valid digest or arbitrary archive cannot pass. It also refuses main-track
+eligibility when the execution manifest is still a template, lacks execution
+authorization, or contains any treatment not marked scientifically ready.
 
 ## Step- and token-matched estimands
 

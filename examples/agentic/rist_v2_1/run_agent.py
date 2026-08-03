@@ -27,6 +27,9 @@ async def run_agent(ctx, batch):
         ) from exc
 
     items = list(batch.iter_samples())
+    training_step = int(ctx.global_step)
+    for item in items:
+        item.record["_rist_training_step"] = training_step
     http_client = httpx.AsyncClient(
         limits=httpx.Limits(
             max_connections=max(len(items), ctx.max_running_prompts),
@@ -66,7 +69,7 @@ async def run_agent(ctx, batch):
             if request_seed is not None:
                 request_kwargs["seed"] = request_seed
             response = await client.chat.completions.create(**request_kwargs)
-            _append_raw_response(item, turn_index, response)
+            _append_raw_response(item, training_step, turn_index, response)
             turns.append(
                 AgentTrajectoryTurn(
                     item=item,
@@ -104,7 +107,14 @@ async def run_agent(ctx, batch):
         return turns
 
     try:
-        grouped = await asyncio.gather(*(run_one(item) for item in items))
+        tasks = [asyncio.create_task(run_one(item)) for item in items]
+        try:
+            grouped = await asyncio.gather(*tasks)
+        except BaseException:
+            for task in tasks:
+                task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
+            raise
         return AgentTrajectory(turns=[turn for group in grouped for turn in group])
     finally:
         await client.close()
@@ -208,13 +218,17 @@ def _assistant_message(response: Any) -> dict[str, Any]:
     return result
 
 
-def _append_raw_response(item, turn_index: int, response: Any) -> None:
+def _append_raw_response(
+    item, training_step: int, turn_index: int, response: Any
+) -> None:
     journal = os.environ.get("RIST_RAW_JOURNAL_PATH")
     if not journal:
         if os.environ.get("RIST_REQUIRE_EVIDENCE_JOURNALS") == "1":
             raise RuntimeError("RIST_RAW_JOURNAL_PATH is required by the frozen run")
         return
     payload = {
+        "task_id": item.record.get("id"),
+        "training_step": int(training_step),
         "prompt_index": item.prompt_index,
         "sample_index": item.sample_index,
         "turn_index": turn_index,

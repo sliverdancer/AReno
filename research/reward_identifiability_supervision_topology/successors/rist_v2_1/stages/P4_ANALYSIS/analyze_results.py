@@ -20,6 +20,7 @@ MAX_FAILURE_RATE = 0.10
 MIN_SEED_SIGN_AGREEMENT = 0.75
 BOOTSTRAP_REPLICATES = 10_000
 P3_ROOT = Path(__file__).resolve().parents[1] / "P3_DESIGN"
+P4_ROOT = Path(__file__).resolve().parent
 
 
 def _load_module(name: str, path: Path):
@@ -55,6 +56,9 @@ def validate_bundle(
         extra = sorted(set(observed) - set(expected))
         raise ValueError(f"run bundle mismatch: missing={missing}, extra={extra}")
 
+    evidence_validator = _load_module(
+        "rist_v2_1_p4_run_evidence", P4_ROOT / "run_evidence_manifest.py"
+    )
     for run_id, result in observed.items():
         design = expected[run_id]
         for field in ("family", "algorithm", "arm", "seed"):
@@ -77,6 +81,13 @@ def validate_bundle(
             actual_digest = hashlib.sha256(evidence_path.read_bytes()).hexdigest()
             if actual_digest != digest:
                 raise ValueError(f"{run_id}: raw evidence hash mismatch")
+            evidence_verification = evidence_validator.validate_manifest(
+                json.loads(evidence_path.read_text()), evidence_root, run_id
+            )
+            if result.get("raw_evidence_artifact_count") != evidence_verification[
+                "artifact_count"
+            ]:
+                raise ValueError(f"{run_id}: raw evidence artifact count mismatch")
         if type(result.get("catastrophic")) is not bool:
             raise ValueError(f"{run_id}: catastrophic must be boolean")
         if not _is_probability(result.get("confirmatory_strict_success")):

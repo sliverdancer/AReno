@@ -60,11 +60,25 @@ def summarize_training(
         indexed[name] = values
     if len(reward_events) != 100 * N_SAMPLES:
         raise ValueError("reward journal must contain eight outcomes for every step")
+    rewards_by_key = {}
+    for row in reward_events:
+        try:
+            key = (int(row["training_step"]), int(row["sample_index"]))
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError(
+                "reward journal requires integer training_step and sample_index"
+            ) from exc
+        if key in rewards_by_key:
+            raise ValueError(f"duplicate reward event for step/sample {key}")
+        rewards_by_key[key] = row
+    expected_reward_keys = {
+        (step, sample) for step in range(100) for sample in range(N_SAMPLES)
+    }
+    if set(rewards_by_key) != expected_reward_keys:
+        raise ValueError("reward journal does not cover the exact 100 by 8 grid")
     mixed_by_step = []
     for step in range(100):
-        group = reward_events[step * N_SAMPLES : (step + 1) * N_SAMPLES]
-        if [int(row["sample_index"]) for row in group] != list(range(N_SAMPLES)):
-            raise ValueError(f"reward journal sample ordering invalid at step {step}")
+        group = [rewards_by_key[(step, sample)] for sample in range(N_SAMPLES)]
         if any(type(row.get("reward")) not in (int, float) or row["reward"] not in (0, 0.0, 1, 1.0) for row in group):
             raise ValueError(f"reward journal contains non-binary reward at step {step}")
         mixed_by_step.append(int(len({float(row["reward"]) for row in group}) > 1))

@@ -42,6 +42,7 @@ def _append_reward_event(record, reward: float) -> None:
         "task_signature": source.get("task_signature"),
         "structural_cell": source.get("structural_cell"),
         "resolution_band": source.get("resolution_band"),
+        "training_step": int(source["_rist_training_step"]),
         "prompt_index": int(record.metadata["prompt_index"]),
         "sample_index": int(record.metadata["sample_index"]),
         "reward": reward,

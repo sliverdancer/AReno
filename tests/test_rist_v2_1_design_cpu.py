@@ -199,6 +199,7 @@ def test_v2_1_reward_journal_keeps_zero_and_one_outcomes(tmp_path):
     )
     row = train_builder.build_rows()[0]
     row["resolution_band"] = "low"
+    row["_rist_training_step"] = 4
     from types import SimpleNamespace
     import os
 
@@ -231,6 +232,7 @@ def test_v2_1_reward_journal_keeps_zero_and_one_outcomes(tmp_path):
     ]
     assert [event["reward"] for event in events] == [0.0, 1.0]
     assert [event["sample_index"] for event in events] == [0, 1]
+    assert [event["training_step"] for event in events] == [4, 4]
     assert all(event["resolution_band"] == "low" for event in events)
 
 
@@ -1625,6 +1627,27 @@ def _mock_p4_results(manifest, *, token_reversal: bool = False):
     return rows
 
 
+def _write_mock_p4_evidence(evidence_module, root, run_id):
+    artifacts = {}
+    for role in sorted(evidence_module.REQUIRED_ROLES):
+        relative = f"artifacts/{run_id}/{role}.json"
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"run_id": run_id, "role": role}))
+        artifacts[role] = relative
+    binding = {
+        "protocol": "RIST-P4-RUN-EVIDENCE-BINDING-v1",
+        "run_id": run_id,
+        "artifacts": artifacts,
+    }
+    manifest = evidence_module.build_manifest(run_id, root, binding)
+    relative = f"manifests/{run_id}.json"
+    path = root / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(manifest, sort_keys=True))
+    return path, relative, manifest
+
+
 def test_v2_1_p4_analyzer_uses_seed_interactions_and_blocks_three_seed_pilot(
     tmp_path,
 ):
@@ -1636,12 +1659,17 @@ def test_v2_1_p4_analyzer_uses_seed_interactions_and_blocks_three_seed_pilot(
         (V2_1 / "stages" / "P3_DESIGN" / "execution_manifest.json").read_text()
     )
     rows = _mock_p4_results(manifest)
+    evidence_module = _load_module(
+        "rist_v2_1_p4_mock_evidence",
+        V2_1 / "stages" / "P4_ANALYSIS" / "run_evidence_manifest.py",
+    )
     for row in rows:
-        relative = f"{row['run_id']}.json"
-        payload = row["run_id"].encode()
-        (tmp_path / relative).write_bytes(payload)
+        path, relative, evidence = _write_mock_p4_evidence(
+            evidence_module, tmp_path, row["run_id"]
+        )
         row["raw_evidence_path"] = relative
-        row["raw_evidence_sha256"] = __import__("hashlib").sha256(payload).hexdigest()
+        row["raw_evidence_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        row["raw_evidence_artifact_count"] = evidence["artifact_count"]
     result = analyzer.analyze_bundle(manifest, rows, evidence_root=tmp_path)
     assert result["run_count"] == 48
     assert len(result["seed_rows"]) == 12
@@ -1664,6 +1692,26 @@ def test_v2_1_p4_analyzer_uses_seed_interactions_and_blocks_three_seed_pilot(
     assert result["execution_authority_recorded"] is False
     assert result["main_track_eligible"] is False
     assert all(block["required_paired_seeds"] >= 8 for block in result["blocks"])
+
+
+def test_v2_1_p4_run_evidence_manifest_rejects_transitive_tampering(tmp_path):
+    evidence_module = _load_module(
+        "rist_v2_1_p4_evidence_tamper",
+        V2_1 / "stages" / "P4_ANALYSIS" / "run_evidence_manifest.py",
+    )
+    manifest_path, _, manifest = _write_mock_p4_evidence(
+        evidence_module, tmp_path, "qwen3-gspo-AF-7101"
+    )
+    assert manifest_path.is_file()
+    assert evidence_module.validate_manifest(
+        manifest, tmp_path, "qwen3-gspo-AF-7101"
+    )["passed"] is True
+    target = tmp_path / manifest["artifacts"][0]["path"]
+    target.write_text("tampered")
+    with __import__("pytest").raises(ValueError, match="artifact changed"):
+        evidence_module.validate_manifest(
+            manifest, tmp_path, "qwen3-gspo-AF-7101"
+        )
 
 
 def test_v2_1_p4_analyzer_detects_token_matched_sign_failure():
@@ -1796,10 +1844,12 @@ def test_v2_1_p4_training_collector_aligns_tokens_and_mixed_groups():
         for sample_index in range(8):
             rewards.append(
                 {
+                    "training_step": step,
                     "sample_index": sample_index,
                     "reward": sample_index % 2 if step < 40 else 0,
                 }
             )
+    rewards.reverse()
     result = collector.summarize_training(series, rewards)
     assert [point["cumulative_trainable_tokens"] for point in result["points"]] == [
         250,
@@ -1864,8 +1914,13 @@ def test_v2_1_p4_run_assembler_uses_dev_curve_and_confirmatory_endpoint(tmp_path
     confirmatory = evaluation(
         "confirmatory", f"{run_id}-confirmatory-step-100", 0.5, 1.0
     )
-    archive = tmp_path / "evidence.tgz"
-    archive.write_bytes(b"evidence")
+    evidence_module = _load_module(
+        "rist_v2_1_p4_assembler_evidence",
+        V2_1 / "stages" / "P4_ANALYSIS" / "run_evidence_manifest.py",
+    )
+    evidence_manifest, relative, _ = _write_mock_p4_evidence(
+        evidence_module, tmp_path, run_id
+    )
     result = assembler.assemble_run(
         {
             "run_id": run_id,
@@ -1878,8 +1933,9 @@ def test_v2_1_p4_run_assembler_uses_dev_curve_and_confirmatory_endpoint(tmp_path
         dev,
         confirmatory,
         resolution_map,
-        archive,
-        "runs/qwen3/evidence.tgz",
+        evidence_manifest,
+        tmp_path,
+        relative,
     )
     assert result["curve"][-1]["strict_success"] == 0.25
     assert result["confirmatory_strict_success"] == 0.75
@@ -1888,6 +1944,7 @@ def test_v2_1_p4_run_assembler_uses_dev_curve_and_confirmatory_endpoint(tmp_path
         "high": 1.0,
     }
     assert result["nonzero_advantage_groups"] == 40
+    assert result["raw_evidence_artifact_count"] == 22
 
 
 def test_v2_1_p5_cross_setting_gate_requires_real_and_sealed_transport():
