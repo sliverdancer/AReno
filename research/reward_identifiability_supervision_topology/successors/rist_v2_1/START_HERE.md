@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `CPU_INSTRUMENT_STACK_PASS_TO_MODEL_TOKENIZER_AUTHORIZATION_BOUNDARY`
+Status: `T0B_V1_0_TERMINAL_INSTRUMENT_FAILURE_AWAITING_CPU_FIX_AUTHORIZATION`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -17,7 +17,9 @@ Only calibration may guide Arbor search. Qualification is a one-shot merge
 gate. Held-out is neither a path nor an input to the evaluator and must not be
 generated, opened, copied, or parsed.
 
-Model/tokenizer access, inference, training, and GPU remain closed.
+The separately authorized T0b model downloads and inference are complete.
+Training, held-out access, BFCL content, and any further GPU execution remain
+closed.
 
 ## Required order
 
@@ -34,9 +36,10 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 9. The public `--tool-call-supervision {full,name_only}` treatment is
    implemented with a strict offset-mapped, fail-closed mask. T0a downloaded
    immutable tokenizer-only snapshots and passed the 32-case canonical
-   preflight for both Qwen3-0.6B and Gemma4 E2B. T0b remains a separate
-   qualifying runtime fixture requiring actual response token IDs, balanced
-   eight-per-turn across four turns.
+   preflight for both Qwen3-0.6B and Gemma4 E2B. T0b v1.0 then terminated after
+   one exact call per model because the common HTTP response schema removed the
+   required runtime token IDs. The consumed v1.0 result is an infrastructure
+   failure and does not qualify the treatment.
 10. E1 freezes per-checkpoint serving plus GSPO/GRPO one-step capacity gates.
 11. C0 freezes direct mixed-group resolution calibration and cross-family
     whole-cell selection before training.
@@ -58,17 +61,16 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 
 ## Current boundary
 
-The CPU-only reconstruction and T0a tokenizer preflight are complete. The next
-independent gate is T0b model serving on fresh calibration nonces to capture
-actual response-token IDs. It requires separate model/inference/GPU
-authorization and does not authorize training, C0 calibration, held-out data,
-or sealed BFCL content. GPU capacity canaries, the 48-run pilot, and sealed BFCL
-evaluation remain separate later gates.
+T0b v1.0 is terminal at `stages/T0B/gpu_run_20260803/FINAL_RESULT.json`.
+Both exact snapshots loaded and both models emitted the required first exact
+tool call, but neither HTTP response retained `areno.response_tokens`. A
+CPU-only serialization probe localized the fault to the additive response
+metadata being dropped by the Pydantic envelope. The result has no scientific
+interpretation and must not be repaired or rerun.
 
-The previously used 24 GB 4090D is not an admissible GPU for the frozen
-two-family matrix: Gemma4 E2B already failed its first trajectory with CUDA OOM.
-T0a is complete. T0b now requires GPU serving; the known Gemma4/24 GB rejection
-means a single 24 GB instance cannot complete the frozen two-family T0b route.
-After T0b, E1 requires either a fresh Gemma4 canary on a different
-larger-memory GPU or a new versioned design for a checkpoint-qualified non-Qwen
-substitute.
+The next gate is authorization for an additive public serving-response metadata
+fix and CPU regression test, followed by a newly frozen T0b v1.1 protocol.
+Only that new protocol may request separate GPU authorization. The 24 GB 4090D
+successfully loaded and served both short T0b cells, but the earlier long Gemma4
+trajectory OOM still means E1 capacity remains unresolved. Training, C0,
+held-out data, and sealed BFCL content remain closed.

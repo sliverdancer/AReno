@@ -1,0 +1,33 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0B_RUNTIME_RESPONSE_TOKEN_GATE",
+  "decision": "NO_MAIN_TRACK_UPGRADE_INSTRUMENT_FAILURE",
+  "main_track_upgrade": false,
+  "reason": "Both frozen model cells emitted an exact first tool call, but the common frozen serving response schema removed areno.response_tokens before HTTP serialization. T0b cannot qualify the treatment and carries no scientific evidence about supervision topology.",
+  "validated": [
+    "both exact model revisions and all allowlisted files passed digest verification",
+    "both serving tokenizers matched the frozen T0a hashes",
+    "Qwen3-0.6B emitted the required first exact tool call",
+    "Gemma4 E2B emitted the required first exact tool call",
+    "both model cells stopped after the first missing-token response without retry",
+    "native eager serving completed within the 1800-second ceiling",
+    "all serving processes stopped and the GPU was empty at handoff",
+    "the common Pydantic response schema deterministically drops the areno extension"
+  ],
+  "still_missing": [
+    "two-family actual runtime response-token fixtures",
+    "T0 treatment qualification",
+    "C0 mixed-reward calibration",
+    "stable multi-turn interaction",
+    "token-matched robustness outcomes",
+    "multiple training seeds",
+    "two-algorithm training outcomes",
+    "Tau3 real-environment outcomes",
+    "sealed BFCL external evaluation"
+  ],
+  "consumed_protocol_may_be_repaired_or_rerun": false,
+  "next_gate": "AUTHORIZE_ADDITIVE_SERVE_RESPONSE_METADATA_FIX_THEN_FREEZE_T0B_V1_1",
+  "training_run": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false
+}

@@ -661,6 +661,27 @@ def test_v2_1_t0b_model_acquisition_is_locked_and_digest_verified(tmp_path):
     assert frozen_lock["bfcl_content_permitted"] is False
 
 
+def test_v2_1_t0b_frozen_gpu_result_is_fail_closed_infrastructure_only():
+    run = V2_1 / "stages" / "T0B" / "gpu_run_20260803"
+    result = __import__("json").loads((run / "FINAL_RESULT.json").read_text())
+    hook = __import__("json").loads((run / "HOOK_RESULT.json").read_text())
+
+    assert result["status"] == "TERMINAL_FAIL_CLOSED"
+    assert result["treatment_qualification_pass"] is False
+    assert result["scientific_interpretation"] == "FORBIDDEN_INFRASTRUCTURE_FAILURE_ONLY"
+    assert result["total_serve_seconds"] <= result["gpu_time_limit_seconds"]
+    assert result["gpu_processes_after_shutdown"] == 0
+    assert result["training_performed"] is False
+    assert result["heldout_opened"] is False
+    assert result["bfcl_content_opened"] is False
+    assert result["scientific_request_retries"] == 0
+    assert all(cell["first_exact_tool_call"] for cell in result["models"].values())
+    assert all(not cell["actual_response_tokens_present"] for cell in result["models"].values())
+    assert all(cell["runtime_row_count"] == 1 for cell in result["models"].values())
+    assert hook["main_track_upgrade"] is False
+    assert hook["consumed_protocol_may_be_repaired_or_rerun"] is False
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",

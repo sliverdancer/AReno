@@ -1,0 +1,22 @@
+{
+  "bfcl_content_opened": false,
+  "complete_task_count": 0,
+  "elapsed_seconds": 74.4569447604008,
+  "expected_runtime_row_count": 32,
+  "failure": {
+    "error": "response lacks exact call or actual response_tokens",
+    "error_type": "ValueError",
+    "task_id": "t0b-calibration-00",
+    "turn_index": 0
+  },
+  "heldout_opened": false,
+  "journal_sha256": "87083753e88663cdbf5208aa54c185c6b18009245a86c0afb622bb36492f4575",
+  "model_cell": "gemma4_e2b_it",
+  "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.0",
+  "retry_count": 0,
+  "runtime_row_count": 1,
+  "schema_version": 1,
+  "tasks_sha256": "683fe8a664b29a80a44fe89809d0f1833e144f1a382e8bc98302612094b83931",
+  "training_performed": false
+}
