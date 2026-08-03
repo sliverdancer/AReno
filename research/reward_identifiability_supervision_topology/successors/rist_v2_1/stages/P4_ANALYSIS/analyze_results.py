@@ -191,6 +191,63 @@ def _interaction_stability(values: list[float]) -> dict[str, Any]:
     }
 
 
+def _token_robustness(
+    step_values: list[float],
+    token_auc_values: list[float],
+    token_endpoint_values: list[float],
+) -> dict[str, Any]:
+    """Require token robustness within seeds, not only at block means."""
+
+    if not (
+        len(step_values)
+        == len(token_auc_values)
+        == len(token_endpoint_values)
+        and len(step_values) >= 3
+    ):
+        return {
+            "mean_sign_consistent": False,
+            "token_auc_stability": None,
+            "token_endpoint_stability": None,
+            "paired_estimand_signs": [],
+            "paired_estimand_sign_agreement": 0.0,
+            "required_paired_estimand_sign_agreement": MIN_SEED_SIGN_AGREEMENT,
+            "pass": False,
+        }
+    step_sign = _sign(statistics.fmean(step_values))
+    auc_sign = _sign(statistics.fmean(token_auc_values))
+    endpoint_sign = _sign(statistics.fmean(token_endpoint_values))
+    mean_sign_consistent = step_sign != 0 and step_sign == auc_sign == endpoint_sign
+    auc_stability = _interaction_stability(token_auc_values)
+    endpoint_stability = _interaction_stability(token_endpoint_values)
+    paired_signs = [
+        (_sign(step), _sign(auc), _sign(endpoint))
+        for step, auc, endpoint in zip(
+            step_values,
+            token_auc_values,
+            token_endpoint_values,
+            strict=True,
+        )
+    ]
+    paired_agreement = sum(
+        step != 0 and step == auc == endpoint for step, auc, endpoint in paired_signs
+    ) / len(paired_signs)
+    passed = (
+        mean_sign_consistent
+        and auc_stability["stability_pass"]
+        and endpoint_stability["stability_pass"]
+        and paired_agreement >= MIN_SEED_SIGN_AGREEMENT
+    )
+    return {
+        "mean_sign_consistent": mean_sign_consistent,
+        "token_auc_stability": auc_stability,
+        "token_endpoint_stability": endpoint_stability,
+        "paired_estimand_signs": paired_signs,
+        "paired_estimand_sign_agreement": paired_agreement,
+        "required_paired_estimand_sign_agreement": MIN_SEED_SIGN_AGREEMENT,
+        "pass": passed,
+    }
+
+
 def analyze_bundle(
     manifest: dict[str, Any],
     results: list[dict[str, Any]],
@@ -278,6 +335,14 @@ def analyze_bundle(
                     if token_result is None
                     else token_result["minimum_common_support_fraction"]
                 ),
+                "minimum_total_exposure_support_fraction": (
+                    None
+                    if token_result is None
+                    else token_result["minimum_total_exposure_support_fraction"]
+                ),
+                "token_integration_grid": (
+                    None if token_result is None else token_result["integration_grid"]
+                ),
             }
         )
 
@@ -334,14 +399,11 @@ def analyze_bundle(
                 MIN_CONFIRMATORY_SEEDS,
                 power.required_paired_seeds(MIN_INTERACTION, planning_sd),
             )
-            step_sign = _sign(float(step_summary["mean"]))
-            token_sign = 0 if token_summary is None else _sign(float(token_summary["mean"]))
-            token_endpoint_sign = (
-                0
-                if token_endpoint_summary is None
-                else _sign(float(token_endpoint_summary["mean"]))
-            )
             interaction_stability = _interaction_stability(step_values)
+            token_robustness = _token_robustness(
+                step_values, token_values, token_endpoint_values
+            )
+            token_robustness_pass = token_robustness["pass"]
             block_rows.append(
                 {
                     "family": family,
@@ -355,12 +417,30 @@ def analyze_bundle(
                     "required_paired_seeds": required_seeds,
                     "effect_threshold_pass": abs(float(step_summary["mean"])) >= MIN_INTERACTION,
                     "step_ci_excludes_zero": step_summary["ci95"][0] > 0.0 or step_summary["ci95"][1] < 0.0,
-                    "token_sign_consistent": (
-                        token_summary is not None
-                        and token_endpoint_summary is not None
-                        and step_sign != 0
-                        and step_sign == token_sign == token_endpoint_sign
+                    "token_mean_sign_consistent": token_robustness[
+                        "mean_sign_consistent"
+                    ],
+                    # Kept as the powered-expansion compatibility key, now with
+                    # the stronger seed-level meaning rather than mean signs only.
+                    "token_sign_consistent": token_robustness_pass,
+                    "token_auc_stability": token_robustness[
+                        "token_auc_stability"
+                    ],
+                    "token_endpoint_stability": token_robustness[
+                        "token_endpoint_stability"
+                    ],
+                    "paired_estimand_signs": token_robustness[
+                        "paired_estimand_signs"
+                    ],
+                    "paired_estimand_sign_agreement": (
+                        token_robustness["paired_estimand_sign_agreement"]
                     ),
+                    "required_paired_estimand_sign_agreement": (
+                        token_robustness[
+                            "required_paired_estimand_sign_agreement"
+                        ]
+                    ),
+                    "token_robustness_pass": token_robustness_pass,
                     "interaction_stability": interaction_stability,
                     "stability_pass": interaction_stability["stability_pass"],
                     "power_pass": len(rows) >= required_seeds,
@@ -398,7 +478,7 @@ def analyze_bundle(
         and all(
             row["effect_threshold_pass"]
             and row["step_ci_excludes_zero"]
-            and row["token_sign_consistent"]
+            and row["token_robustness_pass"]
             and row["power_pass"]
             for row in block_rows
         )

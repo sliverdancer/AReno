@@ -40,10 +40,23 @@ success. Report token-indexed endpoints and normalized AUC. This is a
 sensitivity analysis, not an independently stopped token-budget training
 schedule.
 
+The five-point grid is a reporting grid. AUC is integrated on the union of all
+observed arm-specific token knots inside common support, so a learning-curve
+bend between quartiles is not discarded. Common support must cover at least 50
+percent of both each arm's observed evaluation window and its total cumulative
+exposure from token zero. Because no outcome is measured before the first
+development checkpoint, that left-truncated interval is not imputed into AUC.
+The estimand remains retrospective and does not control optimizer-step path,
+trajectory count, or token identity.
+
 An independent token-budget schedule would require a separately authorized
 public `--max-trainable-tokens` API plus optimizer/RNG/cursor-safe stopping and
 tests; segmented checkpoint restarts are forbidden because current checkpoints
 do not preserve full trainer state.
+
+The exact scientific boundary and minimum future API are frozen in
+`TOKEN_MATCHED_ROBUSTNESS_PLAN.md`; this CPU stage does not change public CLI or
+Trainer configuration.
 
 ## Statistical unit and outcomes
 

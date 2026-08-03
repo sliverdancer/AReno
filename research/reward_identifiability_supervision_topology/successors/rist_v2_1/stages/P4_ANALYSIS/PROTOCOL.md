@@ -40,13 +40,28 @@ reports normalized AUC and its same paired interaction. A token curve with fewer
 than two valid observations or no common support is not estimable and blocks
 the main route.
 
-The common grid includes both boundaries and the 25/50/75 percent interior
-points. The common interval must cover at least 50 percent of every arm's
-observed token range; an arbitrarily narrow overlap is not robustness evidence.
-Both normalized-AUC and common-support-endpoint interactions must preserve the
-step-matched interaction sign. Catastrophic arms contribute strict success zero
-throughout their available token curve rather than their observed development
-scores.
+The reporting grid includes both boundaries and the 25/50/75 percent interior
+points. AUC itself uses every observed arm-specific knot within the common
+interval, not a five-point numerical approximation. The interval must cover at
+least 50 percent of every arm's observed token range and total cumulative token
+exposure; an arbitrarily narrow or heavily left-truncated overlap is not
+robustness evidence. Both normalized-AUC and common-support-endpoint
+interactions must preserve the step-matched interaction sign. Catastrophic arms
+contribute strict success zero throughout their available token curve rather
+than their observed development scores.
+
+Token robustness is required within training seeds, not only after averaging.
+Token-AUC and token-endpoint interactions each independently satisfy the same
+75 percent seed-sign and leave-one-seed-out stability gates, and at least 75
+percent of paired seeds have the same nonzero step/AUC/endpoint sign. A stable
+block-mean sign with unstable seed-level token contrasts is a failed robustness
+gate.
+
+This remains a retrospective sensitivity estimand. It cannot be described as
+an independently executed equal-token intervention because optimizer steps,
+policy states, sampled trajectories, and token identities are not held fixed.
+The stronger claim requires the separately frozen token-budget API and schedule
+in `P3_DESIGN/TOKEN_MATCHED_ROBUSTNESS_PLAN.md`.
 
 Resolution-band endpoints are reported separately for mechanism diagnosis.
 Their direction may be learned in the three-seed pilot, but any confirmatory
@@ -63,8 +78,9 @@ family/algorithm blocks:
 4. at least 75 percent of seed-level interactions agree with their block mean
    sign, and every leave-one-seed-out block mean preserves that nonzero sign;
 5. the same nonzero sign across all four blocks;
-6. token-AUC and common-support-endpoint interactions with the same sign and no
-   block sign reversal;
+6. token-AUC and common-support-endpoint interactions with the same mean sign,
+   their own seed-level stability, at least 75 percent paired step/AUC/endpoint
+   sign agreement, and no block sign reversal;
 7. catastrophic-run and zero-advantage-run rates each at most 0.10;
 8. complete raw evidence and no post-outcome exclusions.
 
