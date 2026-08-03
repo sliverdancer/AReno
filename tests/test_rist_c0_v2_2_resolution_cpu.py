@@ -334,6 +334,7 @@ def test_full_resolution_run_is_one_shot_and_independently_reproducible(tmp_path
         d3_train_path=STAGE.parent / "D3/data/train.jsonl",
         d3_manifest_path=STAGE.parent / "D3/data/manifest.json",
         authorization_path=STAGE.parents[1] / "GPU_AUTHORIZATION_20260803.json",
+        execution_root_path=STAGE / "RESOLUTION_EXECUTION_ROOT.json",
         output_dir=output,
     )
     monkeypatch.setattr(gate, "_load_validator", lambda: validator)
@@ -355,6 +356,7 @@ def test_full_resolution_run_is_one_shot_and_independently_reproducible(tmp_path
             d3_train_path=STAGE.parent / "D3/data/train.jsonl",
             d3_manifest_path=STAGE.parent / "D3/data/manifest.json",
             authorization_path=STAGE.parents[1] / "GPU_AUTHORIZATION_20260803.json",
+            execution_root_path=STAGE / "RESOLUTION_EXECUTION_ROOT.json",
             output_dir=output,
         )
 
@@ -404,6 +406,7 @@ def test_validator_rejects_coordinated_admission_identity_tamper(tmp_path, monke
         d3_train_path=STAGE.parent / "D3/data/train.jsonl",
         d3_manifest_path=STAGE.parent / "D3/data/manifest.json",
         authorization_path=STAGE.parents[1] / "GPU_AUTHORIZATION_20260803.json",
+        execution_root_path=STAGE / "RESOLUTION_EXECUTION_ROOT.json",
         output_dir=output,
     )
     admission_path = output / "e1/E1_ADMISSION.json"

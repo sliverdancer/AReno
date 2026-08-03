@@ -135,6 +135,7 @@ def validate(output_dir: Path, *, write_receipt: bool = True) -> dict[str, Any]:
         "evaluator",
         "analysis_freeze",
         "external_authorization",
+        "execution_root",
         "c0_source:calibration",
         "c0_source:qualification",
     } | {
@@ -191,6 +192,19 @@ def validate(output_dir: Path, *, write_receipt: bool = True) -> dict[str, Any]:
         and "HELDOUT_OR_BFCL_ACCESS" in authorization.get("not_authorized", [])
     ):
         raise PermissionError("external C0 authorization does not reproduce")
+    execution_root = json.loads(bound_bytes["execution_root"])
+    if not (
+        execution_root.get("protocol") == "RIST-C0-v2.2-RESOLUTION-EXECUTION-ROOT-v1"
+        and execution_root.get("source_commit") == json.loads(bound_bytes["analysis_freeze"])["source_commit"]
+        and execution_root.get("resolution_freeze_sha256") == bindings["analysis_freeze"]["sha256"]
+        and execution_root.get("external_authorization_sha256") == bindings["external_authorization"]["sha256"]
+        and execution_root.get("outcome_analysis_authorized") is True
+        and execution_root.get("gpu_permitted") is False
+        and execution_root.get("training_permitted") is False
+        and execution_root.get("heldout_permitted") is False
+        and execution_root.get("bfcl_permitted") is False
+    ):
+        raise PermissionError("pre-access execution root does not reproduce")
 
     d3_rows = _jsonl_bytes(bound_bytes["d3_train"], Path(bindings["d3_train"]["path"]))
     _validate_d3(d3_rows, bindings["d3_train"]["sha256"], json.loads(bound_bytes["d3_manifest"]))
@@ -306,6 +320,7 @@ def validate(output_dir: Path, *, write_receipt: bool = True) -> dict[str, Any]:
         "outcome_access_receipt_sha256": _sha(receipt_path),
         "analysis_freeze_sha256": bindings["analysis_freeze"]["sha256"],
         "external_authorization_sha256": bindings["external_authorization"]["sha256"],
+        "execution_root_sha256": bindings["execution_root"]["sha256"],
         "resolution_final_sha256": _sha(final_path),
         "models": manifest["models"],
         "model_revisions": manifest["model_revisions"],
@@ -327,6 +342,7 @@ def validate(output_dir: Path, *, write_receipt: bool = True) -> dict[str, Any]:
         "capacity_train_sha256": _sha(e1_path),
         "analysis_freeze_sha256": bindings["analysis_freeze"]["sha256"],
         "external_authorization_sha256": bindings["external_authorization"]["sha256"],
+        "execution_root_sha256": bindings["execution_root"]["sha256"],
         "trajectory_count": 4096,
         "selected_cell": selected_cell,
         "e1_training_permitted": True,

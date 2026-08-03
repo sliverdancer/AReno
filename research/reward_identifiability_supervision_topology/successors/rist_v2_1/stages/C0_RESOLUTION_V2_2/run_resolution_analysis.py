@@ -142,6 +142,26 @@ def _validate_authorization(path: Path, manifest: dict[str, Any]) -> dict[str, A
     return authorization
 
 
+def _validate_execution_root(path: Path, authorization_path: Path) -> dict[str, Any]:
+    root = _read_json(path)
+    freeze = _read_json(ANALYSIS_FREEZE_PATH)
+    if not (
+        root.get("protocol") == "RIST-C0-v2.2-RESOLUTION-EXECUTION-ROOT-v1"
+        and root.get("source_commit") == freeze.get("source_commit")
+        and root.get("resolution_freeze_sha256") == _sha256(ANALYSIS_FREEZE_PATH)
+        and root.get("external_authorization_sha256") == _sha256(authorization_path)
+        and root.get("trajectory_count") == 4096
+        and root.get("outcome_analysis_authorized") is True
+        and root.get("gpu_permitted") is False
+        and root.get("training_permitted") is False
+        and root.get("heldout_permitted") is False
+        and root.get("bfcl_permitted") is False
+        and root.get("terminal_rerun_permitted") is False
+    ):
+        raise PermissionError("C0 outcome analysis lacks a valid pre-access execution root")
+    return root
+
+
 def _factor_map(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     by_cell: dict[str, set[str]] = {}
     for row in rows:
@@ -162,6 +182,7 @@ def run_analysis(
     d3_train_path: Path,
     d3_manifest_path: Path,
     authorization_path: Path,
+    execution_root_path: Path,
     output_dir: Path,
 ) -> dict[str, Any]:
     """Run once in a fresh directory; any post-access failure is terminal."""
@@ -173,6 +194,7 @@ def run_analysis(
     freeze_validation = _load_freeze_verifier().verify(ANALYSIS_FREEZE_PATH)
     if set(freeze_files) != EXPECTED_ANALYSIS_FILES or freeze_validation.get("passed") is not True:
         raise ValueError("resolution analysis source freeze does not verify")
+    _validate_execution_root(execution_root_path, authorization_path)
     manifest = _read_json(collection_manifest_path)
     _validate_authorization(authorization_path, manifest)
     recorded_final = _read_json(collection_final_path)
@@ -234,6 +256,7 @@ def run_analysis(
         "evaluator": {"path": str(STAGE_ROOT.parent / "D4_EVAL/evaluate_checkpoint.py"), "sha256": _sha256(STAGE_ROOT.parent / "D4_EVAL/evaluate_checkpoint.py")},
         "analysis_freeze": {"path": str(ANALYSIS_FREEZE_PATH), "sha256": _sha256(ANALYSIS_FREEZE_PATH)},
         "external_authorization": {"path": str(authorization_path), "sha256": _sha256(authorization_path)},
+        "execution_root": {"path": str(execution_root_path), "sha256": _sha256(execution_root_path)},
     }
     for split, (path, payload, _) in split_sources.items():
         bindings[f"c0_source:{split}"] = {
@@ -370,6 +393,7 @@ def run_analysis(
             "outcome_access_receipt_sha256": _sha256(output_dir / "OUTCOME_ACCESS_RECEIPT.json"),
             "analysis_freeze_sha256": bindings["analysis_freeze"]["sha256"],
             "external_authorization_sha256": bindings["external_authorization"]["sha256"],
+            "execution_root_sha256": bindings["execution_root"]["sha256"],
             "resolution_final_sha256": _sha256(output_dir / "FINAL_RESULT.json"),
             "models": manifest["models"],
             "model_revisions": manifest["model_revisions"],
@@ -406,6 +430,7 @@ def main() -> int:
     parser.add_argument("--d3-train", type=Path, required=True)
     parser.add_argument("--d3-manifest", type=Path, required=True)
     parser.add_argument("--authorization", type=Path, required=True)
+    parser.add_argument("--execution-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     result = run_analysis(
@@ -414,6 +439,7 @@ def main() -> int:
         d3_train_path=args.d3_train,
         d3_manifest_path=args.d3_manifest,
         authorization_path=args.authorization,
+        execution_root_path=args.execution_root,
         output_dir=args.output_dir,
     )
     print(json.dumps(result, indent=2, sort_keys=True))
