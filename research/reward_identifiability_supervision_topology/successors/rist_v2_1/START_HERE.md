@@ -32,10 +32,11 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 8. X1 acquired and isolated Tau3 `v1.0.1` and BFCL `v1.3` at exact commits;
    BFCL benchmark data was excluded and remains sealed.
 9. The public `--tool-call-supervision {full,name_only}` treatment is
-   implemented with a strict offset-mapped, fail-closed mask. T0 now freezes a
-   tokenizer-only canonical preflight and a separate qualifying runtime fixture
-   requiring actual response token IDs, balanced eight-per-turn across four
-   turns. Neither has accessed a tokenizer yet.
+   implemented with a strict offset-mapped, fail-closed mask. T0a downloaded
+   immutable tokenizer-only snapshots and passed the 32-case canonical
+   preflight for both Qwen3-0.6B and Gemma4 E2B. T0b remains a separate
+   qualifying runtime fixture requiring actual response token IDs, balanced
+   eight-per-turn across four turns.
 10. E1 freezes per-checkpoint serving plus GSPO/GRPO one-step capacity gates.
 11. C0 freezes direct mixed-group resolution calibration and cross-family
     whole-cell selection before training.
@@ -57,15 +58,17 @@ Model/tokenizer access, inference, training, and GPU remain closed.
 
 ## Current boundary
 
-The CPU-only reconstruction requested so far is complete. The next independent
-gate is T0a tokenizer-only access: resolve immutable revisions and download only
-allowlisted tokenizer/config files for Qwen3 and Gemma4. It does not authorize
-model weights, serving, inference, training, GPU use, C0 calibration, or sealed
-BFCL content. T0b runtime fixtures, GPU capacity canaries, the 48-run pilot, and
-sealed BFCL evaluation remain separate later gates.
+The CPU-only reconstruction and T0a tokenizer preflight are complete. The next
+independent gate is T0b model serving on fresh calibration nonces to capture
+actual response-token IDs. It requires separate model/inference/GPU
+authorization and does not authorize training, C0 calibration, held-out data,
+or sealed BFCL content. GPU capacity canaries, the 48-run pilot, and sealed BFCL
+evaluation remain separate later gates.
 
 The previously used 24 GB 4090D is not an admissible GPU for the frozen
 two-family matrix: Gemma4 E2B already failed its first trajectory with CUDA OOM.
-The next authorization needed is still tokenizer-only, not GPU. After T0a/T0b,
-E1 requires either a fresh Gemma4 canary on a different larger-memory GPU or a
-new versioned design for a checkpoint-qualified non-Qwen substitute.
+T0a is complete. T0b now requires GPU serving; the known Gemma4/24 GB rejection
+means a single 24 GB instance cannot complete the frozen two-family T0b route.
+After T0b, E1 requires either a fresh Gemma4 canary on a different
+larger-memory GPU or a new versioned design for a checkpoint-qualified non-Qwen
+substitute.

@@ -324,6 +324,31 @@ def test_v2_1_tokenizer_gate_distinguishes_argument_mask_from_name_only():
     assert result["name_only_all"] is True
 
 
+def test_v2_1_tokenizer_gate_allows_only_fully_masked_argument_syntax_boundary():
+    evaluator = _load_module(
+        "rist_v2_1_masked_boundary_eval",
+        V2_1 / "stages" / "T0" / "evaluate_mask_fixture.py",
+    )
+    case = {
+        "case_id": "masked-boundary",
+        "token_ids": [10, 11, 12, 13],
+        "loss_mask": [False, True, False, False],
+        "name_indices": [1],
+        "argument_indices": [2],
+        "other_indices": [0],
+        "shared_indices": [],
+        "masked_boundary_indices": [3],
+        "localization_pass": True,
+    }
+    assert evaluator.evaluate_case(case)["name_only_exact"] is True
+    case["loss_mask"][3] = True
+    assert evaluator.evaluate_case(case)["name_only_exact"] is False
+    case["loss_mask"][3] = False
+    case["shared_indices"] = [3]
+    case["masked_boundary_indices"] = []
+    assert evaluator.evaluate_case(case)["name_only_exact"] is False
+
+
 def test_v2_1_tokenizer_capture_builds_32_local_canonical_cases():
     capture = _load_module(
         "rist_v2_1_mask_capture",
@@ -474,6 +499,51 @@ def test_v2_1_tokenizer_snapshot_rejects_weight_without_reading_it(tmp_path):
         assert "model weights" in str(error)
     else:
         raise AssertionError("tokenizer-only capture must reject model weights")
+
+
+def test_v2_1_tokenizer_downloader_is_revision_pinned_and_allowlisted(tmp_path):
+    downloader = _load_module(
+        "rist_v2_1_tokenizer_downloader",
+        V2_1 / "stages" / "T0" / "download_tokenizer_snapshot.py",
+    )
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    for filename in ("config.json", "tokenizer.json", "tokenizer_config.json"):
+        (cache / filename).write_text(filename, encoding="utf-8")
+    calls = []
+
+    def list_files(repo_id, *, revision):
+        calls.append(("list", repo_id, revision))
+        return [
+            "config.json",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "model.safetensors",
+            "nested/tokenizer.json",
+        ]
+
+    def download(repo_id, *, filename, revision):
+        calls.append(("download", repo_id, revision, filename))
+        return str(cache / filename)
+
+    revision = "a" * 40
+    output = tmp_path / "isolated"
+    result = downloader.download_snapshot(
+        "example/model",
+        revision,
+        output,
+        list_repo_files=list_files,
+        download_file=download,
+    )
+    assert result["selected_files"] == [
+        "config.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+    ]
+    assert result["model_weights_downloaded"] is False
+    assert sorted(path.name for path in output.iterdir()) == result["selected_files"]
+    assert all(call[2] == revision for call in calls)
+    assert all("model.safetensors" not in call for call in calls)
 
 
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():

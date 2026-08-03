@@ -7,7 +7,13 @@ import json
 from pathlib import Path
 from typing import Any
 
-ROLES = ("name_indices", "argument_indices", "other_indices", "shared_indices")
+ROLES = (
+    "name_indices",
+    "argument_indices",
+    "other_indices",
+    "shared_indices",
+    "masked_boundary_indices",
+)
 
 
 def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
@@ -42,17 +48,23 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     arguments = role_sets["argument_indices"]
     other = role_sets["other_indices"]
     shared = role_sets["shared_indices"]
+    masked_boundary = role_sets["masked_boundary_indices"]
     return {
         "case_id": str(case["case_id"]),
         "localization_pass": case.get("localization_pass") is True,
         "full_call_exact": enabled == universe,
-        "argument_mask_exact": not shared and name <= enabled and not (arguments & enabled),
-        "name_only_exact": not shared and enabled == name and not ((arguments | other) & enabled),
+        "argument_mask_exact": not shared and name <= enabled and not (
+            (arguments | masked_boundary) & enabled
+        ),
+        "name_only_exact": not shared and enabled == name and not (
+            (arguments | other | masked_boundary) & enabled
+        ),
         "enabled_indices": sorted(enabled),
         "name_indices": sorted(name),
         "argument_indices": sorted(arguments),
         "other_indices": sorted(other),
         "shared_indices": sorted(shared),
+        "masked_boundary_indices": sorted(masked_boundary),
     }
 
 

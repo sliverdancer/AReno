@@ -95,6 +95,7 @@ def _classify_offsets(
         "argument_indices": [],
         "other_indices": [],
         "shared_indices": [],
+        "masked_boundary_indices": [],
     }
     for token_index, offset in enumerate(offsets):
         touches_name = any(_overlaps(offset, span) for span in name_spans)
@@ -105,8 +106,10 @@ def _classify_offsets(
             roles["name_indices"].append(token_index)
         elif touches_argument and inside_argument and not touches_name:
             roles["argument_indices"].append(token_index)
-        elif touches_name or touches_argument:
+        elif touches_name:
             roles["shared_indices"].append(token_index)
+        elif touches_argument:
+            roles["masked_boundary_indices"].append(token_index)
         else:
             roles["other_indices"].append(token_index)
     return roles

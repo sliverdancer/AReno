@@ -1,0 +1,27 @@
+{
+  "protocol": "RIST-T0A-CANONICAL-v1.0",
+  "status": "SUPERSEDED_OVERCONSTRAINED_DEVELOPMENT_EVALUATOR",
+  "observation": "Both tokenizers localized the exact tool-name tokens, but the evaluator rejected tokens crossing only the argument-syntax boundary even though both regions are excluded by name_only supervision.",
+  "qwen3_0_6b": {
+    "case_count": 32,
+    "localization_all": true,
+    "name_only_all_under_v1_0": false,
+    "masked_boundary_case_count_misclassified_as_shared": 32,
+    "fixture_sha256": "3fe20b1133ee7be222f3555324b6ecc5fc51ae53e4c893f8b4c2496a406d1bd7",
+    "result_sha256": "c4fe61c9b395b2c41499291745f9d37088b031e03d80078b201d67fbdedc5d2f"
+  },
+  "gemma4_e2b_it": {
+    "case_count": 32,
+    "localization_all": true,
+    "name_only_all_under_v1_0": false,
+    "masked_boundary_case_count_misclassified_as_shared": 32,
+    "fixture_sha256": "8e5fcce3f48bebf2646c1be8851e884fcb494d1ee155e632dc853bcb2bc7e5d0",
+    "result_sha256": "969e0e60608cf640833eb46b573ce25e0380630cab956abcfa3752451fe56fa2"
+  },
+  "runtime_response_tokens_used": false,
+  "qualification_data_used": false,
+  "inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "bfcl_content_opened": false
+}

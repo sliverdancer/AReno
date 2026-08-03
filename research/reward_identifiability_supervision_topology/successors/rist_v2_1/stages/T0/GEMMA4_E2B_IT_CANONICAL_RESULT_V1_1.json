@@ -1,0 +1,1394 @@
+{
+  "argument_mask_all": true,
+  "balanced_four_turns": false,
+  "canonical_case_count": true,
+  "case_count": 32,
+  "cases": [
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-00",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-01",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-02",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-03",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-04",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-05",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-06",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-07",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-08",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-09",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-10",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-11",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-12",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-13",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-14",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-15",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-16",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-17",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-18",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-19",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-20",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-21",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-22",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-23",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-24",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-25",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-26",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-27",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-28",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        20
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-29",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        21
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-30",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    },
+    {
+      "argument_indices": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "argument_mask_exact": true,
+      "case_id": "canonical-31",
+      "enabled_indices": [
+        3,
+        4,
+        5
+      ],
+      "full_call_exact": false,
+      "localization_pass": true,
+      "masked_boundary_indices": [
+        8,
+        22
+      ],
+      "name_indices": [
+        3,
+        4,
+        5
+      ],
+      "name_only_exact": true,
+      "other_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "shared_indices": []
+    }
+  ],
+  "checkpoint": "google/gemma-4-E2B-it",
+  "full_call_all": false,
+  "localization_all": true,
+  "name_only_all": true,
+  "production_mask": true,
+  "qualification_pass": false,
+  "runtime_capture": false,
+  "tokenizer_only": true,
+  "tokenizer_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+  "tokenizer_sha256": "9befde1c116dbab4decc88e858f259a8770f101f2fb02efe57feb4bb285d5cb2"
+}

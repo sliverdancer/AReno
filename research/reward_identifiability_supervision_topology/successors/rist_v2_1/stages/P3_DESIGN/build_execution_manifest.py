@@ -178,7 +178,7 @@ def build_manifest(
             ),
         },
         "blocked_by": [
-            "T0_REAL_QWEN_GEMMA_TOKENIZER_FIXTURES",
+            "T0B_REAL_QWEN_GEMMA_RUNTIME_TOKEN_FIXTURES",
             "C0_COMMON_TRANSPORTED_RESOLUTION_BANDS",
             "E1_PER_CHECKPOINT_TRAINING_CAPACITY",
             "E1_GEMMA4_E2B_24GB_PAIRING_REJECTED",

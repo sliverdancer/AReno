@@ -20,11 +20,19 @@ response-token indices into:
 - `name_indices`: tokens attributable only to the tool name;
 - `argument_indices`: tokens touching the argument value;
 - `other_indices`: syntax, keys, whitespace, wrappers, or special tokens.
-- `shared_indices`: tokenizer tokens spanning a semantic boundary.
+- `shared_indices`: tokenizer tokens spanning the tool-name boundary into an
+  excluded region;
+- `masked_boundary_indices`: tokens spanning only argument and syntax regions,
+  both of which are excluded by the name-only treatment.
 
 It also records the actual loss mask emitted by the AReno training path. Any
 non-empty `shared_indices` fails the tool-name-only gate rather than being
-silently approximated.
+silently approximated. A `masked_boundary_indices` token is admissible only
+when it remains masked: mixing two excluded semantic regions does not make the
+tool name inexact. T0a v1.0 classified both boundary types together; the first
+real-tokenizer development preflight exposed that overconstraint before any
+runtime qualification data existed. T0a v1.1 separates them without relaxing
+the tool-name boundary.
 
 ## Gates
 
