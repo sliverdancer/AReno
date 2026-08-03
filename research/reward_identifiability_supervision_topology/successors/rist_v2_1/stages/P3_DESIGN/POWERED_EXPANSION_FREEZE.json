@@ -1,0 +1,18 @@
+{
+  "schema_version": "rist-p3-powered-expansion-freeze-v1",
+  "source_commit": "d87e604",
+  "pilot_results_opened": false,
+  "execution_authorized": false,
+  "minimum_paired_seeds": 8,
+  "maximum_paired_seeds": 32,
+  "minimum_absolute_interaction": 0.1,
+  "seed_bank_sha256": "fac3f621159d2840b418c5c865aed01fff491630e8141dc3aa12076d9b872ad4",
+  "cpu_test_result": "69 passed in 9.64s",
+  "files": {
+    "P3_DESIGN/PROTOCOL.md": "388bfd3df0eeee9f540ff794ceced8c93e13920c6230093e94fd62d43570cda6",
+    "P3_DESIGN/build_powered_manifest.py": "634e7ae193e13bb031d6ebfcd93f7ade4597dc59279366be77078099d79d8ded",
+    "P3_DESIGN/power_plan.py": "83112a91c6d1b90b478c428bddc1ace92f5ac48d07243e8a84f0ae6fdbb07b48",
+    "P4_ANALYSIS/analyze_results.py": "0dda1cb7b4ad32bf5d7d30ffcc1833d49076c01dd84f9760f26d58e17fedece0",
+    "P4_ANALYSIS/ANALYSIS_FREEZE.json": "d1be439aa6ff3f45636815636e8d73121c94eb0a94a082202b1d0c1f01ccc9ad"
+  }
+}
