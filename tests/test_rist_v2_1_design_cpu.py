@@ -2670,6 +2670,87 @@ def test_c0_v2_2_capacity_canary_is_outcome_free_and_requires_48gb(tmp_path):
         )
 
 
+def test_c0_v2_2_capacity_canary_finalizer_binds_identity_and_no_outcomes(tmp_path):
+    finalizer = _load_module(
+        "rist_c0_v2_2_canary_finalizer",
+        V2_1 / "stages" / "C0_RESOLUTION_V2_2" / "finalize_capacity_canary.py",
+    )
+    manifest = __import__("json").loads(
+        (
+            V2_1
+            / "stages"
+            / "C0_RESOLUTION_V2_2"
+            / "CANARY_EXECUTION_MANIFEST.json"
+        ).read_text()
+    )
+
+    def make_binding(family):
+        journal = tmp_path / f"{family}.jsonl"
+        journal.write_text('{"opaque":"response"}\n')
+        identity = {
+            "family": family,
+            "checkpoint": manifest["models"][family],
+            "model_revision": manifest["model_revisions"][family],
+            "tokenizer_snapshot_sha256": manifest["tokenizer_snapshot_sha256"][family],
+            "source_commit": manifest["source_commit"],
+            "gpu_name": "NVIDIA H100 80GB HBM3",
+            "gpu_uuid": "GPU-frozen",
+            "gpu_total_memory_gib": 79.1,
+            "driver_version": "test",
+            "cuda_version": "test",
+            "torch_version": "test",
+        }
+        result = {
+            "protocol": "RIST-C0-v2.2-CAPACITY-CANARY",
+            "family": family,
+            "runtime_identity": identity,
+            "request_concurrency": 8,
+            "expected_response_count": 8,
+            "response_count": 8,
+            "retry_count": 0,
+            "infrastructure_error": None,
+            "complete": True,
+            "outcomes_inspected": False,
+            "scientific_result": False,
+            "raw_journal_sha256": __import__("hashlib").sha256(
+                journal.read_bytes()
+            ).hexdigest(),
+            "peak_memory_mib": 32000.0,
+        }
+        return result, journal
+
+    bindings = {family: make_binding(family) for family in ("qwen3", "gemma4")}
+    passed = finalizer.finalize(manifest, bindings)
+    assert passed["passed"] is True
+    assert passed["decision"] == "PASS_CANARY_TO_SEPARATE_C0_AUTHORIZATION"
+    assert passed["outcomes_inspected"] is False
+    assert passed["scientific_result"] is False
+
+    bindings["gemma4"][0]["runtime_identity"]["gpu_uuid"] = "GPU-other"
+    assert finalizer.finalize(manifest, bindings)["passed"] is False
+    bindings["gemma4"][0]["runtime_identity"]["gpu_uuid"] = "GPU-frozen"
+    bindings["qwen3"][0]["outcomes_inspected"] = True
+    assert finalizer.finalize(manifest, bindings)["passed"] is False
+
+
+def test_c0_v2_2_capacity_canary_manifest_cannot_authorize_science(tmp_path):
+    finalizer = _load_module(
+        "rist_c0_v2_2_canary_manifest_guard",
+        V2_1 / "stages" / "C0_RESOLUTION_V2_2" / "finalize_capacity_canary.py",
+    )
+    manifest = __import__("json").loads(
+        (
+            V2_1
+            / "stages"
+            / "C0_RESOLUTION_V2_2"
+            / "CANARY_EXECUTION_MANIFEST.json"
+        ).read_text()
+    )
+    manifest["calibration_permitted"] = True
+    with __import__("pytest").raises(ValueError, match="outcome-free"):
+        finalizer.finalize(manifest, {})
+
+
 def test_x3_tau3_dataset_uses_only_frozen_training_ids(tmp_path):
     builder = _load_module(
         "rist_x3_tau3_data_builder",
