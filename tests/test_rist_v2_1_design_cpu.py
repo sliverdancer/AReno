@@ -893,6 +893,101 @@ def test_v2_1_t0b_v1_1_gpu_result_is_terminal_and_postfreeze_stays_separate():
     assert hook["consumed_protocol_may_be_repaired_or_rerun"] is False
 
 
+def test_v2_1_t0b_v1_2_is_fresh_closed_and_balanced(tmp_path):
+    stage = V2_1 / "stages" / "T0B_V1_2"
+    builder = _load_module("rist_t0b_v1_2_builder", stage / "build_protocol.py")
+    client = _load_module("rist_t0b_v1_2_client", stage / "run_client.py")
+    prior_payloads = [
+        __import__("json").loads(
+            (V2_1 / "stages" / prior / "calibration_tasks.json").read_text()
+        )
+        for prior in ("T0B", "T0B_V1_1")
+    ]
+    fresh = builder.build_tasks()
+    fresh_nonces = {task["nonce"] for task in fresh["tasks"]}
+    fresh_codes = {
+        turn["expected_code"] for task in fresh["tasks"] for turn in task["turns"]
+    }
+    for prior in prior_payloads:
+        assert fresh_nonces.isdisjoint({task["nonce"] for task in prior["tasks"]})
+        assert fresh_codes.isdisjoint(
+            {
+                turn["expected_code"]
+                for task in prior["tasks"]
+                for turn in task["turns"]
+            }
+        )
+
+    manifest = builder.write_protocol(tmp_path)
+    assert manifest["execution_authorized"] is False
+    assert manifest["compiled_extension_import_required_before_serving"] is True
+    assert manifest["runtime_mask_qualification_required_per_model"] is True
+    assert manifest["prior_protocol_inputs_permitted"] is False
+    assert manifest["runtime_source_commit"] == "3de4e0c4210ae217c81bde5d3eb920d08441bcef"
+
+    calls = []
+
+    def post(_url, payload, **_kwargs):
+        function = payload["tool_choice"]["function"]["name"]
+        code = payload["tools"][0]["function"]["parameters"]["properties"]["code"]["enum"][0]
+        raw = __import__("json").dumps(
+            {"name": function, "arguments": {"code": code}}, separators=(",", ":")
+        )
+        calls.append(payload)
+        return {
+            "areno": {
+                "input_tokens": [1],
+                "response_tokens": [ord(character) for character in raw],
+                "response_logprobs": [],
+            },
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "id": f"call-{len(calls)}",
+                                "type": "function",
+                                "function": {
+                                    "name": function,
+                                    "arguments": __import__("json").dumps({"code": code}),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ],
+        }
+
+    result = client.collect(
+        base_url="http://127.0.0.1:8000/v1",
+        api_key="EMPTY",
+        model_cell="qwen3_0_6b",
+        tasks_path=tmp_path / "calibration_tasks.json",
+        manifest_path=tmp_path / "EXECUTION_MANIFEST.json",
+        journal_path=tmp_path / "journal.jsonl",
+        result_path=tmp_path / "result.json",
+        timeout_seconds=1.0,
+        post_json=post,
+    )
+    assert result["protocol"] == "RIST-T0B-RUNTIME-TOKENS-v1.2"
+    assert result["failure"] is None
+    assert result["runtime_row_count"] == 32
+    assert result["complete_task_count"] == 8
+    assert result["retry_count"] == 0
+    assert len(calls) == 32
+
+    preflight = __import__("json").loads(
+        (stage / "RUNTIME_PREFLIGHT_CPU_RESULT.json").read_text()
+    )
+    assert preflight["passed"] is True
+    assert preflight["checks"]["compiled_extension_importable"] is True
+    assert preflight["checks"]["compiled_extension_hash_exact"] is True
+    assert preflight["inference_run"] is False
+    assert preflight["gpu_used"] is False
+
+
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(
         "rist_v2_1_name_only_contract",

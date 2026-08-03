@@ -1,0 +1,57 @@
+{
+  "actual_response_tokens_required": true,
+  "agentic_source_sha256": "6ce0488dccc821521aa7b28c503d9262856a33f6c71bdd726d67991310b7a3ea",
+  "bfcl_content_permitted": false,
+  "capture_source_sha256": "1c4d61b77f69ee2109a15c71953f24da531a5ebd5c638962940473c20694539d",
+  "cases_per_turn": 8,
+  "checkpoint_download_permitted": false,
+  "client_wrapper_sha256": "afe5560e48aba094ff33b81146d85b3240b15daa51013ce70e82fecd0c46ae40",
+  "compiled_extension_import_required_before_serving": true,
+  "evaluator_source_sha256": "febb807feb081373c38909f10d65e73f5296b08a7c2953184e43ffa13e6cde8a",
+  "execution_authorized": false,
+  "expected_runtime_rows_per_model": 32,
+  "heldout_data_permitted": false,
+  "maximum_requested_gpu_seconds": 1800,
+  "model_acquisition_lock_sha256": "ff98d15528a9719e538ed47fc3be5c3413f0c8610f0bbc5bd79120dc71cb7f2a",
+  "model_order": [
+    "qwen3_0_6b",
+    "gemma4_e2b_it"
+  ],
+  "model_revisions": {
+    "gemma4_e2b_it": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "qwen3_0_6b": "c1899de289a04d12100db370d81485cdf75e47ca"
+  },
+  "parent_client_sha256": "effd096d4e8e0876dd70f0bd43fb615b349e7c9574fc296466fbcbe99b36e9b6",
+  "prior_protocol_inputs_permitted": false,
+  "prior_tasks_sha256": [
+    "683fe8a664b29a80a44fe89809d0f1833e144f1a382e8bc98302612094b83931",
+    "5e5b2cc9f4069b436f0f031870203ede918e666d7f236f7e5e8cca8611203d58"
+  ],
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.2",
+  "request_seed": 11302,
+  "retry_limit": 0,
+  "runtime_mask_qualification_required_per_model": true,
+  "runtime_source_commit": "3de4e0c4210ae217c81bde5d3eb920d08441bcef",
+  "sampling": {
+    "max_new_tokens": 96,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "schema_version": 1,
+  "serve": {
+    "attn_backend": "native",
+    "disable_thinking": true,
+    "eager_decode": true,
+    "max_running_prompts": 1,
+    "port": 8000,
+    "tp_size": 1,
+    "world_size": 1
+  },
+  "serve_source_sha256": "ad84b6af12ba0fef73c7b6374031fd447dc44c140b9f59de456063684c81bf00",
+  "status": "FROZEN_CPU_READY_AWAITING_SEPARATE_GPU_AUTHORIZATION",
+  "task_count": 8,
+  "tasks_sha256": "3f4d3ba4e3afc45071d26022e6d743a5020d79be414076c0517f73b6f2cd80c3",
+  "tokenizer_hash_match_required_before_serving": true,
+  "training_permitted": false,
+  "turns_per_task": 4
+}

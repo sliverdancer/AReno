@@ -1,0 +1,222 @@
+{
+  "protocol": "RIST-T0B-RUNTIME-TOKENS-v1.2",
+  "seed": 2026080312,
+  "tasks": [
+    {
+      "id": "t0b-v1-2-calibration-00",
+      "nonce": "2c5876c46c294457",
+      "sample_index": 0,
+      "turns": [
+        {
+          "expected_code": "17860aaf6802",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "de0b3b46668a",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "0e93edf2300f",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "6861db085092",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-01",
+      "nonce": "bccff76d63b2e738",
+      "sample_index": 1,
+      "turns": [
+        {
+          "expected_code": "13d5447c6778",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "e8910eaf578e",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "ac2249c27074",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "6472ea873758",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-02",
+      "nonce": "c8573fcc1df2edf4",
+      "sample_index": 2,
+      "turns": [
+        {
+          "expected_code": "9c6a548c394c",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "bf7e9ef8a6c6",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "7761bd87e1d4",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "c9a9bc0edcbe",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-03",
+      "nonce": "4be2b1ebc2be7e5b",
+      "sample_index": 3,
+      "turns": [
+        {
+          "expected_code": "9190ba84b778",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "c15c291312a4",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "7aca6e4af4c1",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "3c33b30a8ea2",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-04",
+      "nonce": "4dd2aac073dca8ab",
+      "sample_index": 4,
+      "turns": [
+        {
+          "expected_code": "d6af145cc3a6",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "dc4763e8620e",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "85a61a929483",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "c58130c9d2a2",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-05",
+      "nonce": "01cba95473d5dcd5",
+      "sample_index": 5,
+      "turns": [
+        {
+          "expected_code": "b9a45a75f875",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "6723b10a4ebe",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "3619ece9a1ae",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "6d1ba2b8434b",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-06",
+      "nonce": "2c28cc9cc11072f1",
+      "sample_index": 6,
+      "turns": [
+        {
+          "expected_code": "71844be7ee25",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "748622146169",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "a1d77682590a",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "f91d86fa8691",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    },
+    {
+      "id": "t0b-v1-2-calibration-07",
+      "nonce": "e77cfb351a2afb64",
+      "sample_index": 7,
+      "turns": [
+        {
+          "expected_code": "0af52e4b445a",
+          "expected_tool": "scan_registry",
+          "turn_index": 0
+        },
+        {
+          "expected_code": "1bf4e73f8f9c",
+          "expected_tool": "inspect_candidate",
+          "turn_index": 1
+        },
+        {
+          "expected_code": "89a9653307c6",
+          "expected_tool": "verify_route",
+          "turn_index": 2
+        },
+        {
+          "expected_code": "eb11b2b70579",
+          "expected_tool": "submit_route",
+          "turn_index": 3
+        }
+      ]
+    }
+  ]
+}

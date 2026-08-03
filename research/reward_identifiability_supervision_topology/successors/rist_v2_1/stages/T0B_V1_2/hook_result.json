@@ -1,0 +1,29 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "T0B_V1_2_CPU_FREEZE",
+  "decision": "GO_T0B_V1_2_AFTER_SEPARATE_GPU_AUTHORIZATION",
+  "main_track_upgrade": false,
+  "reason": "The successor instrument now recognizes strict tokenizer-native Gemma call names, passes all 32 preserved engineering rows, and requires a compiled-extension import check before any scientific request. No fresh two-family runtime evidence exists yet.",
+  "validated": [
+    "fresh v1.2 nonces and codes are disjoint from v1.0 and v1.1",
+    "zero-retry 32-row client contract",
+    "strict JSON and Gemma-native name matching with wrong-name rejection",
+    "32 of 32 preserved Gemma engineering rows pass production name-only masking",
+    "compiled extension import and binary hash are mandatory pre-serving gates",
+    "execution_authorized remains false"
+  ],
+  "still_missing": [
+    "fresh Qwen and Gemma runtime-token qualification",
+    "per-model production-mask qualification",
+    "C0 mixed-reward calibration",
+    "stable multi-turn interaction",
+    "token-matched robustness outcomes",
+    "multiple training seeds",
+    "GSPO and GRPO outcomes",
+    "Tau3 real-environment outcomes",
+    "sealed BFCL evaluation"
+  ],
+  "training_run": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false
+}

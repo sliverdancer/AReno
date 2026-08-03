@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-T0B-V1.2-CPU-FREEZE",
+  "status": "PASS_CPU_FREEZE_AWAITING_SEPARATE_GPU_AUTHORIZATION",
+  "runtime_source_commit": "3de4e0c4210ae217c81bde5d3eb920d08441bcef",
+  "tasks_sha256": "3f4d3ba4e3afc45071d26022e6d743a5020d79be414076c0517f73b6f2cd80c3",
+  "compiled_extension_sha256": "42c69bc6b160b9890d17abe049df8bb88b5b58a347b873c7249369dfc0fb0a46",
+  "native_mask_cpu_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "related_cpu_suite": {
+    "passed": 122,
+    "failed": 0,
+    "deselected": 2,
+    "deselection_scope": "two unrelated manifest tests require git metadata absent from the deployment archive"
+  },
+  "preserved_gemma_engineering_replay": {
+    "scientific_reinterpretation_permitted": false,
+    "case_count": 32,
+    "balanced_four_turns": true,
+    "localization_all": true,
+    "name_only_all": true,
+    "qualification_pass": true,
+    "source_journal_sha256": "dc9bd4012f1523e88ccbae6d534e3f6403037ec016e8b3323e85f6c745c722ba",
+    "result_sha256": "5233f7b81c3b58a718247c7f13725bf8a77f6ee4f78d021b4b4828872e576aa6"
+  },
+  "fresh_tasks_disjoint_from_v1_0_and_v1_1": true,
+  "execution_authorized": false,
+  "model_weights_accessed": false,
+  "new_inference_run": false,
+  "training_run": false,
+  "gpu_used": false,
+  "heldout_opened": false,
+  "bfcl_content_opened": false,
+  "main_track_upgrade": false,
+  "next_gate": "SEPARATE_T0B_V1_2_GPU_SERVING_AUTHORIZATION"
+}
