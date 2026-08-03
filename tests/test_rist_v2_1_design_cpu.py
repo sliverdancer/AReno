@@ -653,6 +653,13 @@ def test_v2_1_t0b_model_acquisition_is_locked_and_digest_verified(tmp_path):
     else:
         raise AssertionError("model downloader must fail closed without authorization")
 
+    frozen_lock = __import__("json").loads(
+        (V2_1 / "stages" / "T0B" / "MODEL_ACQUISITION_LOCK.json").read_text()
+    )
+    assert frozen_lock["download_permitted"] is True
+    assert frozen_lock["training_permitted"] is False
+    assert frozen_lock["bfcl_content_permitted"] is False
+
 
 def test_v2_1_exact_name_only_contract_is_offset_exact_and_compositional():
     contract = _load_module(

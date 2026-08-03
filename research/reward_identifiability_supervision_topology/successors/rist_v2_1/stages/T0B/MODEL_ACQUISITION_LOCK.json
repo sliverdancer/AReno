@@ -1,6 +1,6 @@
 {
   "protocol": "RIST-T0B-MODEL-ACQUISITION-v1.1",
-  "status": "FROZEN_AWAITING_EXPLICIT_WEIGHT_DOWNLOAD_AUTHORIZATION",
+  "status": "FROZEN_EXPLICITLY_AUTHORIZED_2026_08_03",
   "models": {
     "qwen3_0_6b": {
       "repo_id": "Qwen/Qwen3-0.6B",
@@ -30,7 +30,7 @@
     }
   },
   "total_payload_bytes": 11798002411,
-  "download_permitted": false,
+  "download_permitted": true,
   "training_permitted": false,
   "bfcl_content_permitted": false
 }

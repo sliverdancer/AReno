@@ -1,6 +1,6 @@
 # T0b v1.1 new-instance acquisition boundary
 
-Status: `FROZEN_AWAITING_EXPLICIT_WEIGHT_DOWNLOAD_AUTHORIZATION`
+Status: `FROZEN_EXPLICITLY_AUTHORIZED_2026_08_03`
 
 The newly rented instance is reachable and provides one idle RTX 4090D, a
 30 GB system disk, and a 200 GB mounted data disk. It contains neither frozen
@@ -14,7 +14,8 @@ Git-blob SHA-1 or LFS SHA-256. The downloader refuses to run while
 unlisted files, materializes no symlinks, and admits a snapshot only after the
 complete file set and digests pass.
 
-Changing `download_permitted` requires explicit user authorization and a new
-commit before remote execution. It does not authorize training, held-out data,
-BFCL content, model substitution, or any revision other than the two locked
-commits.
+The user explicitly authorized the locked 11.8 GB download and required
+dependencies on the new RTX 4090D instance on 2026-08-03. The authorization
+also opens sequential T0b serving for at most 1,800 GPU-seconds. It does not
+authorize training, held-out data, BFCL content, model substitution, or any
+revision other than the two locked commits.
