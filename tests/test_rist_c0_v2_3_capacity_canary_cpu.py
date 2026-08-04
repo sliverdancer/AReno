@@ -30,12 +30,42 @@ def _manifest() -> dict:
 
 
 def _identity(family: str = "qwen3") -> dict:
+    receipt = json.loads(_receipt_bytes(family))
     return {
         "family": family,
-        "gpu_uuid": "GPU-test",
-        "gpu_total_memory_gib": 79.25,
-        "model_revision": "frozen-revision",
+        **receipt["bindings"],
+        "gpu_total_memory_mib": 81920,
     }
+
+
+def _manifest_bytes() -> bytes:
+    return (STAGE / "data/manifest.json").read_bytes()
+
+
+def _binding_bytes() -> bytes:
+    return (STAGE / "gpu_bind_20260804_a800/POST_RENT_BINDING.json").read_bytes()
+
+
+def _receipt_bytes(family: str) -> bytes:
+    return (STAGE / f"gpu_bind_20260804_a800/{family}_receipt.json").read_bytes()
+
+
+def _run(module, tmp_path, family="qwen3", **overrides):
+    values = {
+        "pool_manifest_bytes": _manifest_bytes(),
+        "data_dir": STAGE / "data",
+        "family": family,
+        "runtime_identity": _identity(family),
+        "binding_bytes": _binding_bytes(),
+        "receipt_bytes": _receipt_bytes(family),
+        "journal_path": tmp_path / "journal.jsonl",
+        "post_json": lambda _payload: {"choices": [{"message": {}}]},
+        "live_gpu_uuid": lambda: "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+        "live_gpu_total_memory_mib": lambda: 81920,
+        "memory_used_mib": lambda: 321.0,
+    }
+    values.update(overrides)
+    return module.run_canary(**values)
 
 
 def test_v2_3_capacity_canary_sends_exact_fresh_seeds_without_outcome_use(tmp_path):
@@ -43,14 +73,11 @@ def test_v2_3_capacity_canary_sends_exact_fresh_seeds_without_outcome_use(tmp_pa
     requests = []
     journal = tmp_path / "journal.jsonl"
 
-    result = module.run_canary(
-        _manifest(),
-        STAGE / "data",
-        "qwen3",
-        _identity(),
-        journal,
-        lambda payload: requests.append(payload) or {"choices": [{"message": {}}]},
-        lambda: 321.0,
+    result = _run(
+        module,
+        tmp_path,
+        journal_path=journal,
+        post_json=lambda payload: requests.append(payload) or {"choices": [{"message": {}}]},
     )
 
     expected = list(range(18001, 18009))
@@ -67,21 +94,26 @@ def test_v2_3_capacity_canary_sends_exact_fresh_seeds_without_outcome_use(tmp_pa
     assert [row["request_seed"] for row in rows] == expected
 
 
-def test_v2_3_capacity_canary_rejects_retired_protocol_before_requests(tmp_path):
+def test_v2_3_capacity_canary_rejects_retired_protocol_before_requests(tmp_path, monkeypatch):
     module = _load()
     manifest = _manifest()
     manifest["protocol"] = "RIST-C0-v2.2-FRESH-POOL"
+    manifest_bytes = (json.dumps(manifest, sort_keys=True) + "\n").encode()
+    binding = json.loads(_binding_bytes())
+    receipt = json.loads(_receipt_bytes("qwen3"))
+    monkeypatch.setattr(
+        module,
+        "_validate_receipt",
+        lambda *_args: (manifest, binding, receipt),
+    )
     calls = []
 
     with pytest.raises(ValueError, match="unexpected C0 v2.3"):
-        module.run_canary(
-            manifest,
-            STAGE / "data",
-            "qwen3",
-            _identity(),
-            tmp_path / "journal.jsonl",
-            calls.append,
-            lambda: 0.0,
+        _run(
+            module,
+            tmp_path,
+            pool_manifest_bytes=manifest_bytes,
+            post_json=calls.append,
         )
 
     assert calls == []
@@ -94,14 +126,12 @@ def test_v2_3_capacity_canary_rejects_existing_journal_before_requests(tmp_path)
     calls = []
 
     with pytest.raises(FileExistsError, match="must be fresh"):
-        module.run_canary(
-            _manifest(),
-            STAGE / "data",
-            "gemma4",
-            _identity("gemma4"),
-            journal,
-            calls.append,
-            lambda: 0.0,
+        _run(
+            module,
+            tmp_path,
+            family="gemma4",
+            journal_path=journal,
+            post_json=calls.append,
         )
 
     assert calls == []
@@ -109,31 +139,71 @@ def test_v2_3_capacity_canary_rejects_existing_journal_before_requests(tmp_path)
 
 def test_v2_3_capacity_canary_rejects_hash_or_gpu_identity_before_requests(tmp_path):
     module = _load()
-    manifest = _manifest()
-    manifest["splits"]["capacity_canary"]["sha256"] = "0" * 64
     calls = []
-    with pytest.raises(ValueError, match="source hash mismatch"):
-        module.run_canary(
-            manifest,
-            STAGE / "data",
-            "qwen3",
-            _identity(),
-            tmp_path / "hash-journal.jsonl",
-            calls.append,
-            lambda: 0.0,
+    with pytest.raises(ValueError, match="pool manifest SHA mismatch"):
+        _run(
+            module,
+            tmp_path,
+            pool_manifest_bytes=_manifest_bytes() + b" ",
+            post_json=calls.append,
         )
     assert calls == []
 
     identity = _identity()
-    identity["gpu_total_memory_gib"] = 24.0
-    with pytest.raises(ValueError, match="at least 48 GB"):
-        module.run_canary(
-            _manifest(),
-            STAGE / "data",
-            "qwen3",
-            identity,
-            tmp_path / "gpu-journal.jsonl",
-            calls.append,
-            lambda: 0.0,
+    identity["gpu_uuid"] = "GPU-forged"
+    with pytest.raises(ValueError, match="runtime identity mismatch: gpu_uuid"):
+        _run(
+            module,
+            tmp_path,
+            runtime_identity=identity,
+            journal_path=tmp_path / "gpu-journal.jsonl",
+            post_json=calls.append,
         )
     assert calls == []
+
+
+def test_v2_3_capacity_canary_requires_exact_seed_bank_even_if_hash_constant_is_rebound(
+    tmp_path, monkeypatch
+):
+    module = _load()
+    manifest = _manifest()
+    manifest["splits"]["capacity_canary"]["rollout_seeds"] = list(range(28001, 28009))
+    manifest_bytes = (json.dumps(manifest, sort_keys=True) + "\n").encode()
+    binding = json.loads(_binding_bytes())
+    receipt = json.loads(_receipt_bytes("qwen3"))
+    monkeypatch.setattr(
+        module,
+        "_validate_receipt",
+        lambda *_args: (manifest, binding, receipt),
+    )
+    with pytest.raises(ValueError, match="exact eight frozen request seeds"):
+        _run(module, tmp_path, pool_manifest_bytes=manifest_bytes)
+
+
+def test_v2_3_capacity_canary_atomically_reserves_journal(tmp_path, monkeypatch):
+    module = _load()
+    flags = []
+    real_open = module.os.open
+
+    def recording_open(path, value, mode=0o777):
+        flags.append(value)
+        return real_open(path, value, mode)
+
+    monkeypatch.setattr(module.os, "open", recording_open)
+    _run(module, tmp_path)
+    assert flags[0] & module.os.O_EXCL
+
+
+def test_v2_3_capacity_canary_rejects_receipt_or_live_gpu_mismatch(tmp_path):
+    module = _load()
+    tampered = json.loads(_receipt_bytes("qwen3"))
+    tampered["bindings"]["gpu_uuid"] = "GPU-forged"
+    tampered_bytes = (json.dumps(tampered, sort_keys=True, separators=(",", ":")) + "\n").encode()
+    with pytest.raises(ValueError, match="receipt artifact SHA mismatch"):
+        _run(module, tmp_path, receipt_bytes=tampered_bytes)
+
+    with pytest.raises(ValueError, match="live GPU UUID mismatch"):
+        _run(module, tmp_path, live_gpu_uuid=lambda: "GPU-other")
+
+    with pytest.raises(ValueError, match="live GPU memory mismatch"):
+        _run(module, tmp_path, live_gpu_total_memory_mib=lambda: 49152)
