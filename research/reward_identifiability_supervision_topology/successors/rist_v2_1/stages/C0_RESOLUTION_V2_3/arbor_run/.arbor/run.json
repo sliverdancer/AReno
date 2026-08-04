@@ -7,9 +7,9 @@
   "branching": 3,
   "max_depth": 2,
   "budget_cycles": 6,
-  "cycles_used": 1,
-  "best_node": null,
-  "best_test_score": null,
-  "best_branch_ref": null,
+  "cycles_used": 2,
+  "best_node": "n4",
+  "best_test_score": 0.0,
+  "best_branch_ref": "219ce4b",
   "created_at": 1785813790
 }

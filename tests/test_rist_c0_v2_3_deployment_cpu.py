@@ -132,3 +132,59 @@ def test_dev_replay_success_launches_exactly_once_and_appends_ledger(tmp_path):
     assert [event["event"] for event in events] == [
         "prior", "deployment_intent", "prelaunch_decision", "launch_attempt"
     ]
+
+
+def test_merge_gate_wrong_worktrees_cannot_self_authorize_a_receipt(tmp_path):
+    module, inputs, probes, _receipt, values, _live, manifest, _extension = _setup(tmp_path)
+    wrong_control = tmp_path / "wrong-control"
+    wrong_runtime = tmp_path / "wrong-runtime"
+    wrong_control.mkdir()
+    wrong_runtime.mkdir()
+    wrong_manifest = wrong_control / "manifest.json"
+    wrong_manifest.write_bytes(manifest.read_bytes())
+    values[wrong_control.resolve()] = "d" * 40
+    values[wrong_runtime.resolve()] = "e" * 40
+    wrong_inputs = module.LiveInputs(
+        wrong_control, wrong_runtime, inputs.model_path, inputs.extension_path
+    )
+    receipt = module.build_receipt(
+        inputs=wrong_inputs,
+        manifest_path=wrong_manifest,
+        launcher_command=("fake", "serve"),
+        probes=probes,
+    )
+    calls = []
+
+    result = module.launch_receipt(
+        receipt,
+        inputs=wrong_inputs,
+        ledger_path=tmp_path / "ledger.jsonl",
+        probes=probes,
+        launcher=lambda command: calls.append(tuple(command)) or 0,
+    )
+
+    assert result == 2
+    assert calls == []
+
+
+def test_merge_gate_recomputed_self_hash_is_not_deployment_authority(tmp_path):
+    module, inputs, probes, receipt, values, _live, _manifest, _extension = _setup(tmp_path)
+    values[inputs.runtime_root.resolve()] = "e" * 40
+    receipt["bindings"]["runtime_commit"] = "e" * 40
+    body = {
+        key: receipt[key]
+        for key in ("protocol", "bindings", "manifest_base64", "launcher_command")
+    }
+    receipt["receipt_sha256"] = module._bytes_sha256(module._canonical(body))
+    calls = []
+
+    result = module.launch_receipt(
+        receipt,
+        inputs=inputs,
+        ledger_path=tmp_path / "ledger.jsonl",
+        probes=probes,
+        launcher=lambda command: calls.append(tuple(command)) or 0,
+    )
+
+    assert result == 2
+    assert calls == []

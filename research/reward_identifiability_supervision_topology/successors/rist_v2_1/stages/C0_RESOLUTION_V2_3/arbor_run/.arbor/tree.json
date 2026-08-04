@@ -1,5 +1,5 @@
 {
-  "_counter": 4,
+  "_counter": 5,
   "root": "n0",
   "nodes": {
     "n0": {
@@ -70,17 +70,33 @@
       "id": "n4",
       "parent": "n3",
       "depth": 2,
-      "status": "executed",
+      "status": "merged",
       "hypothesis": "Combining the append-only decision ledger with an embedded control-generated manifest receipt and live probes in one entrypoint removes runtime manifest-path ambiguity while preserving independently auditable zero-launch rejection.",
-      "insight": "A self-contained control receipt plus live identity probes removes runtime manifest resolution; launch_attempt after one complete comparison makes fail-before-request testable.",
+      "insight": "A self-contained control receipt plus live identity probes removes runtime manifest resolution; launch_attempt after one complete comparison makes fail-before-request testable.\n[from n5] Deployment provenance requires two ordered trust roots: a pre-rent authority hash and a post-binding exact receipt hash, with live six-field remeasurement at launch.",
       "metadata": {
         "dev_score": 9.0,
-        "test_score": null,
+        "test_score": 0.0,
         "result": "Nine dev replay tests passed for the integrated receipt, live six-field probes, append-only ledger, and one launch boundary.",
         "branch_ref": "4ab5b6a72e48f4cddbc41b3baf57ab85ab8c1c6f"
       },
       "created_at": 1785814468,
-      "updated_at": 1785814879
+      "updated_at": 1785815473
+    },
+    "n5": {
+      "id": "n5",
+      "parent": "n4",
+      "depth": 3,
+      "status": "executed",
+      "hypothesis": "Adding an immutable pre-rent authority template for control commit, runtime commit, manifest SHA, and allowed model revisions, plus an externally supplied exact receipt SHA at launch, prevents wrong worktrees or a recomputed self-hash from authorizing themselves while still freezing GPU UUID and extension SHA after rental.",
+      "insight": "Self-authenticating artifacts cannot establish provenance; an earlier independently frozen authority hash and a later externally frozen exact receipt hash are required.",
+      "metadata": {
+        "dev_score": 11.0,
+        "test_score": null,
+        "result": "Eleven dev replays passed: trusted pre-rent authority blocks wrong receipt minting; external exact receipt hash plus six live probes blocks launch.",
+        "branch_ref": "3f82b80532578cf5488000a463a4175e1435524b"
+      },
+      "created_at": 1785815187,
+      "updated_at": 1785815468
     }
   }
 }
