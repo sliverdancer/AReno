@@ -1,6 +1,6 @@
 {
   "protocol": "RIST-C0-v2.3-CAPACITY-CANARY-CPU-FREEZE-v1",
-  "source_commit": "2c08d966380ce655386a30d069bed27d3959f497",
+  "source_commit": "7b2bffd61c1a96ed73ed45137cf2c204015e51ed",
   "binding_commit": "2a31e76b546dfbf9b5c801bc0efad3066254ec9f",
   "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
   "families": [
@@ -24,19 +24,19 @@
   "outcomes_inspected": false,
   "scientific_result": false,
   "qwen_previous_startup_valid_as_capacity_evidence": false,
-  "cpu_test_result": "25 passed across capacity, deployment, and pool tests",
+  "cpu_test_result": "26 passed across capacity, deployment, and pool tests",
   "gpu_execution_permitted_by_freeze": false,
   "training_permitted": false,
   "heldout_permitted": false,
   "bfcl_permitted": false,
   "files": {
-    "run_capacity_canary.py": "e0b6e54edd08b531dbea0c7819819f4ab63f9ac2ac62406a597aeac619845ab6",
+    "run_capacity_canary.py": "6fe8a51866aa9489960f38a8aa6ddc94b80a844ab6c2a1c072b4f9a6c201800a",
     "verify_capacity_canary_cpu_freeze.py": "0a671de75a12542445f1fc2fdddd4f28c55e224a97e7a8afbe3eb6d866166be0",
     "data/capacity_canary.jsonl": "4220775b278743d188857d02cf388dcaee18497e7630f8dae09cb17c782fec52",
     "data/manifest.json": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
     "gpu_bind_20260804_a800/POST_RENT_BINDING.json": "aec17014d8cff07fd8f150130e57d9bcf69742dabb46c1e8196178ac54dbdc6f",
     "gpu_bind_20260804_a800/qwen3_receipt.json": "055269d1ab2ef7d5b02a416c27afaab6b039470a89889286cf8d91b820de5c90",
     "gpu_bind_20260804_a800/gemma4_receipt.json": "da49af33c36f26ff0c7030c7e929ef1ec0d358dc5dc51d3fbad41bafe21e83a6",
-    "../../../../../../tests/test_rist_c0_v2_3_capacity_canary_cpu.py": "3c35a2938dff7931b5defb0e27018520ce394979783951fb7357a4cdeff323fc"
+    "../../../../../../tests/test_rist_c0_v2_3_capacity_canary_cpu.py": "b11044b5eed6f4b2e72bab45c82f0fe9fe2f0f5c33bee27d399e66abdc446f82"
   }
 }
