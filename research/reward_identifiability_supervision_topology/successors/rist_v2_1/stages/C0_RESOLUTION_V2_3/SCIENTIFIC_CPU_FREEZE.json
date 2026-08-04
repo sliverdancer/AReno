@@ -1,0 +1,29 @@
+{
+  "protocol": "RIST-C0-v2.3-SCIENTIFIC-CPU-FREEZE-v1",
+  "status": "PASS_CPU_FREEZE_GPU_UNEXECUTED",
+  "calibration_trajectory_count": 2048,
+  "qualification_trajectory_count": 2048,
+  "request_concurrency": 8,
+  "retry_count": 0,
+  "qualification_requires_calibration_go": true,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "training_permitted": false,
+  "files": {
+    "PROTOCOL.md": "49629913d964956681bef8bdae51dbb48d6995082feb0b82ea5acec52da642c3",
+    "SCIENTIFIC_COLLECTION_PROTOCOL.md": "9e9bd4db79b9f2cce637cc2f7d4e13ab5d1ac6bca89c22fcb1f2dff746287a1e",
+    "RESOLUTION_ANALYSIS_PROTOCOL.md": "42699e7d550066572a933ae2e76e79cb4d008c8f2a50b3ec233eebb8a516eaab",
+    "build_scientific_collection_manifest.py": "b13a424acaad5a24fc11d8ce2bad9b43bcd63a9440c377a58c77953fd935a210",
+    "run_scientific_job.py": "b9a1c3d779e75f85068d9bd028ee3d3e8d60e323bf6f30a0837a5ff60cafdfaa",
+    "collect_scientific_job.py": "0bdc2eeb81f70c60be871c59b574e411a8d1e535d3f2575d54b9c47c5500df01",
+    "validate_scientific_job.py": "8d462cdac198b0ca1427c1329d5e90aad5651842372f429a168b1d4c9a742430",
+    "finalize_scientific_collection.py": "0d3ba56ebdd77236e05d6c1e56c0b8938d798ebae7bca842cfcf7c15dc68c0a6",
+    "replay_resolution_outcomes.py": "7c8a41d5c5a328e70251ac8007c92a20ca26ca6e2529e3e1903e7775447b1b52",
+    "resolution_analysis.py": "ae30df1492228700a0efd084696c2d0926b3fdc97683726676f5cdf0d6dade9c",
+    "analyze_calibration.py": "639b2e5cb40f4ca971512955bf9c6bfd9d557286d5260a391adc93f727b23edd",
+    "analyze_qualification.py": "498bcc40567617b252a426fd5f8c6ad0f9732ef7eb629c060ee07619ddc4e183"
+  },
+  "gpu_used": false,
+  "model_accessed": false,
+  "scientific_outcomes_accessed": false
+}

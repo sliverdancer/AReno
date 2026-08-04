@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `T0B_V1_2_PASS_C0_AND_E1_AWAIT_SEPARATE_AUTHORIZATION`
+Status: `C0_V2_3_P0_CPU_FREEZE_PASS_GPU_OFFLINE`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -18,8 +18,9 @@ gate. Held-out is neither a path nor an input to the evaluator and must not be
 generated, opened, copied, or parsed.
 
 The separately authorized T0b model downloads and inference are complete.
-Training, held-out access, BFCL content, and any further GPU execution remain
-closed.
+The user has authorized the ordered GPU inference/training route through P5.
+Execution remains mechanically gated: failure closes downstream stages, and
+held-out/BFCL remain sealed until their preregistered one-shot gates.
 
 ## Required order
 
@@ -80,6 +81,12 @@ The additive public serving-response metadata fix passes CPU regression tests at
 commit `b6d7bdc`; v1.1 is terminal at commit `3de4e0c`; and T0b v1.2 passed from
 the frozen `3c28f06` deployment. The 24 GB 4090D completed short four-turn
 serving for both families, but the earlier long Gemma4 trajectory OOM still
-means E1 capacity remains unresolved. C0 inference and E1 optimizer-step
-canaries are the next independent gates. Training, C0, held-out data, and sealed
-BFCL content remain closed until separately authorized.
+means E1 capacity remains unresolved. The fresh C0 v2.3 pool, exact deployment
+gate, A800 capacity canary, and clean-shutdown canary passed without scientific
+access. Its scientific protocol now separates 2,048 calibration trajectories
+from 2,048 qualification trajectories; qualification cannot be constructed
+until calibration freezes at least two common low and two common high whole
+cells. The CPU freeze passes and no scientific outcome has been opened. The
+last A800 endpoint is offline, so calibration awaits a live 80 GB GPU, fresh
+UUID binding, and outcome-free clean-shutdown admission. E1 and training remain
+unopened by the C0 gate despite their standing authorization.

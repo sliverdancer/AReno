@@ -1,6 +1,6 @@
 # RIST C0 v2.3 CPU reconstruction protocol
 
-Status: `CPU_RECONSTRUCTION_NOT_GPU_AUTHORIZED`
+Status: `P0_SCIENTIFIC_PROTOCOL_IMPLEMENTED_CPU_VALIDATION_PENDING`
 
 C0 v2.2 is terminal and may not be repaired or rerun. C0 v2.3 uses a new
 capacity-canary task, new calibration and qualification tasks, and new rollout
@@ -21,5 +21,28 @@ exit nonzero before the fake launcher records a call. The held-out merge gate
 is separate from development cases. No CPU replay may import a model, start a
 server, access a scientific outcome, train, or use a GPU.
 
-Only after the new pool, single entrypoint, replay evaluator, source freeze,
-and independent audit all pass may a separate GPU authorization be requested.
+The capacity and clean-shutdown gates passed on the A800 without scientific
+access. Scientific execution is split into two irreversible stages. Calibration
+collects exactly 2,048 trajectories across both families and cannot read the
+qualification task file. Its outcome analysis freezes a common whole-cell map.
+Only an exact `PASS_CALIBRATION_TO_QUALIFICATION` admission can construct the
+separate 2,048-trajectory qualification manifest. Qualification may confirm or
+reject the frozen cells but cannot add a cell that calibration did not select.
+
+Both stages use concurrency eight and zero retry. Infrastructure failure,
+identity mismatch, evidence tampering, or a post-access exception consumes the
+stage and produces a terminal KILL; repair, selective rerun, and result-driven
+threshold changes are forbidden. Held-out, BFCL, and training remain closed.
+
+The frozen resolution rule sorts the 32 seeds and divides them into four groups
+of eight per task. A group is mixed when it contains both strict rewards. Each
+four-task cell has 16 groups. A cell is collapsed when its 95% Wilson upper
+bound is at most 0.25, resolved when its lower bound is at least 0.50, and
+transition otherwise. A collapsed or resolved cell also requires at least three
+of four tasks to agree; otherwise it is heterogeneous. Calibration and
+qualification each require at least two common low and two common high cells.
+
+Only after the source freeze, CPU regressions, deployment replay, access-boundary
+tests, and independent audit pass may the already granted GPU authorization be
+used. A GPU UUID change invalidates the prior clean-shutdown receipt and requires
+a fresh outcome-free binding/canary before calibration.
