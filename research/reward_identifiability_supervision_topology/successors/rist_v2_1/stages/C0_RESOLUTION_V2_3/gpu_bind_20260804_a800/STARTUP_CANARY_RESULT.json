@@ -1,0 +1,40 @@
+{
+  "protocol": "RIST-C0-v2.3-NONSCIENTIFIC-STARTUP-CANARY-v1",
+  "binding_commit": "2a31e76b546dfbf9b5c801bc0efad3066254ec9f",
+  "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+  "models": {
+    "qwen3": {
+      "receipt_sha256": "055269d1ab2ef7d5b02a416c27afaab6b039470a89889286cf8d91b820de5c90",
+      "identity_gate": "PASS",
+      "server_startup": "PASS",
+      "startup_log_sha256": "d471c0f30be2ae9e10c3af20bfc9784c3fdbe8b71c0047f71f79bb28bd322b71",
+      "ledger_sha256": "4a98c71b4d38f4f3d05f2370dea6ed69def361b9da65f3977f50fac1671f3a28",
+      "capacity_canary_status": "INVALID_CONCURRENT_EXTERNAL_GPU_PROCESS",
+      "observed_external_process": "/root/autodl-tmp/arca_p8_142ed9d/venv-system/bin/python",
+      "shutdown": "COMPLETED_WITH_APPLICATION_SHUTDOWN_ERROR_AFTER_WORKER_SIGTERM"
+    },
+    "gemma4": {
+      "receipt_sha256": "da49af33c36f26ff0c7030c7e929ef1ec0d358dc5dc51d3fbad41bafe21e83a6",
+      "identity_gate": "PASS",
+      "server_startup": "PASS",
+      "startup_log_sha256": "1367c6d494c1856d9737fb85b1a175dd39440fd3293f80d9ed89b75e1865902f",
+      "ledger_sha256": "4a98c71b4d38f4f3d05f2370dea6ed69def361b9da65f3977f50fac1671f3a28",
+      "peak_observed_memory_mib": 21282,
+      "capacity_canary_status": "NOT_RUN_NO_MODEL_REQUESTS_AUTHORIZED",
+      "shutdown": "CLEAN"
+    }
+  },
+  "final_gpu_memory_mib": 0,
+  "model_requests_sent": 0,
+  "scientific_pool_accessed": false,
+  "training_performed": false,
+  "heldout_accessed": false,
+  "bfcl_accessed": false,
+  "scientific_result": false,
+  "stage_status": "PARTIAL_INFRASTRUCTURE_PASS_BLOCKED_BEFORE_CAPACITY_CANARY",
+  "blockers": [
+    "Qwen startup overlapped an external ARCA GPU process and is invalid as capacity evidence",
+    "A v2.3-native capacity/scientific collection harness is not yet commit-frozen"
+  ],
+  "next_action": "Return to CPU-only instrumentation; freeze v2.3-native canary and collection harness before any model request"
+}

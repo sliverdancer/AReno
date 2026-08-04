@@ -1,6 +1,6 @@
 {
   "protocol": "RIST-C0-v2.3-POST-RENT-BINDING-v1",
-  "status": "BOUND_AWAITING_EXACT_RECEIPT_COMMIT",
+  "status": "BOUND_BY_COMMIT_2a31e76b546dfbf9b5c801bc0efad3066254ec9f",
   "ssh_endpoint": "connect.nma1.seetacloud.com:12663",
   "gpu": {
     "name": "NVIDIA A800 80GB PCIe",

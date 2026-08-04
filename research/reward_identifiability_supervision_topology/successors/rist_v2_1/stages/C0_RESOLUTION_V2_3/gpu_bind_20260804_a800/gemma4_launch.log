@@ -1,0 +1,11 @@
+loading checkpoint:   0%|          | 0/36 [00:00<?, ?stage/s]loading checkpoint:  11%|█         | 4/36 [00:00<00:01, 29.81stage/s]loading checkpoint:  19%|█▉        | 7/36 [00:00<00:01, 25.95stage/s]loading checkpoint:  28%|██▊       | 10/36 [00:00<00:01, 24.82stage/s]loading checkpoint:  36%|███▌      | 13/36 [00:00<00:00, 23.87stage/s]loading checkpoint:  44%|████▍     | 16/36 [00:00<00:00, 23.41stage/s]loading checkpoint:  53%|█████▎    | 19/36 [00:00<00:00, 21.17stage/s]loading checkpoint:  61%|██████    | 22/36 [00:01<00:00, 19.65stage/s]loading checkpoint:  69%|██████▉   | 25/36 [00:01<00:00, 19.24stage/s]loading checkpoint:  75%|███████▌  | 27/36 [00:01<00:00, 18.92stage/s]loading checkpoint:  81%|████████  | 29/36 [00:01<00:00, 18.91stage/s]loading checkpoint:  86%|████████▌ | 31/36 [00:01<00:00, 18.74stage/s]loading checkpoint:  92%|█████████▏| 33/36 [00:01<00:00, 18.75stage/s]loading checkpoint:  97%|█████████▋| 35/36 [00:01<00:00, 18.75stage/s]loading checkpoint: 100%|██████████| 36/36 [00:01<00:00, 20.41stage/s]
+INFO:     Started server process [14924]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14924]
+/root/miniconda3/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

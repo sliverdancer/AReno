@@ -1,0 +1,30 @@
+loading checkpoint:   0%|          | 0/29 [00:00<?, ?stage/s]loading checkpoint:  38%|███▊      | 11/29 [00:00<00:00, 103.33stage/s]loading checkpoint:  76%|███████▌  | 22/29 [00:00<00:00, 98.21stage/s] loading checkpoint: 100%|██████████| 29/29 [00:00<00:00, 97.69stage/s]
+INFO:     Started server process [12044]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+ERROR:    Traceback (most recent call last):
+  File "/root/autodl-tmp/rist_v2_3/venv/lib/python3.12/site-packages/starlette/routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/root/autodl-tmp/rist_v2_3/venv/lib/python3.12/site-packages/fastapi/routing.py", line 268, in __aexit__
+    await self._router._shutdown()
+  File "/root/autodl-tmp/rist_v2_3/venv/lib/python3.12/site-packages/fastapi/routing.py", line 6391, in _shutdown
+    await handler()
+  File "/root/autodl-tmp/rist_v2_3/runtime/areno/cli/serve.py", line 238, in shutdown
+    await state.engine.end_rollout_session_async()
+  File "/root/autodl-tmp/rist_v2_3/runtime/areno/engine/api.py", line 175, in end_rollout_session_async
+    await self.cluster.call_async(Op.ROLLOUT_SESSION_END)
+  File "/root/autodl-tmp/rist_v2_3/runtime/areno/engine/protocol.py", line 335, in call_async
+    return await asyncio.wait_for(future, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+RuntimeError: worker exited without reporting result during Op.ROLLOUT_SESSION_END: rank 0 pid 12326 exitcode -15
+
+ERROR:    Application shutdown failed. Exiting.
+INFO:     Finished server process [12044]
+/root/miniconda3/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 7 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
