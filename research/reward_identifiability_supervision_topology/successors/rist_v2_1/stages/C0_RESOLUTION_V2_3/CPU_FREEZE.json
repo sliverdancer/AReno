@@ -1,0 +1,29 @@
+{
+  "protocol": "RIST-C0-v2.3-CPU-FREEZE-v1",
+  "source_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+  "authority_canonical_sha256": "8790a2f3092b936a176b93ae4882e2e6568b66a215e8b76f4db9f4d843caf19f",
+  "fresh_pool_protocol": "RIST-C0-v2.3-FRESH-POOL",
+  "cpu_test_result": "89 passed before freeze; deployment merge gate 2 passed",
+  "runtime_manifest_lookup_permitted": false,
+  "external_receipt_sha_required": true,
+  "receipt_binding_status": "NOT_BOUND_PRE_RENT",
+  "gpu_execution_permitted": false,
+  "model_access_permitted": false,
+  "training_permitted": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "independent_audit_required_before_gpu_rental": true,
+  "files": {
+    "PROTOCOL.md": "64f51f577eb6ca80696dba73c75631f500e1d213bdee9ab20567d95d990b697f",
+    "DEPLOYMENT_PROTOCOL.md": "77bdbbaf356df3ebfbc3999992e16f4881b7c9af0079fee92b0356dfe29770e0",
+    "build_fresh_pool.py": "627a58518e66392a788c03f56f4b45e846b91ba05e02722d54ee18dcdb71f218",
+    "deployment_entrypoint.py": "e6c3717da4fd5ca3562fd1d27914996dd0ddfdc22e2a4873e5f21dbdc1fdeb7a",
+    "verify_cpu_freeze.py": "13867ded375b05635b381983ab3f06b4d9bd97f188c3801e89d882b34bb10a6e",
+    "data/capacity_canary.jsonl": "4220775b278743d188857d02cf388dcaee18497e7630f8dae09cb17c782fec52",
+    "data/calibration.jsonl": "7dcf3fa3c42a4ac224b87eed6d080b27381e11f15c397ec4ff78b38c96d54eb3",
+    "data/manifest.json": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
+    "data/qualification.jsonl": "c8aef4d29fba0f802386bce60b9ac433021ff8ed989731bc1707c15fa6275be7",
+    "../../../../../../tests/test_rist_c0_v2_3_deployment_cpu.py": "49d2361cf2c837dc9aa82566978fd322a75588798351deebb3b490a0e1d85ee9",
+    "../../../../../../tests/test_rist_c0_v2_3_pool_cpu.py": "af922f6778f0d6212287575adfdc591a8b942e4dd5e1e30de6b44a8c8fb3b737"
+  }
+}

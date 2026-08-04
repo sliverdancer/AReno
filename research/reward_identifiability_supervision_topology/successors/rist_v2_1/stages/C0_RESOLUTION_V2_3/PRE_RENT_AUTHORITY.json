@@ -1,0 +1,10 @@
+{
+  "control_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+  "manifest_sha256": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
+  "model_revisions": [
+    "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "c1899de289a04d12100db370d81485cdf75e47ca"
+  ],
+  "protocol": "RIST-C0-v2.3-PRE-RENT-AUTHORITY-v1",
+  "runtime_commit": "f00b688dff3e4ad35229d059536c975d4c56594f"
+}
