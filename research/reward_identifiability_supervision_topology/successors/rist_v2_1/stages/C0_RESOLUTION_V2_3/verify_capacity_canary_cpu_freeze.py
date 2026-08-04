@@ -31,6 +31,15 @@ RECEIPT_SHA256 = {
     "qwen3": "055269d1ab2ef7d5b02a416c27afaab6b039470a89889286cf8d91b820de5c90",
     "gemma4": "da49af33c36f26ff0c7030c7e929ef1ec0d358dc5dc51d3fbad41bafe21e83a6",
 }
+RECEIPT_PROTOCOL = "RIST-C0-v2.3-DEPLOYMENT-RECEIPT-v1"
+IDENTITY_FIELDS = {
+    "control_commit",
+    "runtime_commit",
+    "manifest_sha256",
+    "model_revision",
+    "gpu_uuid",
+    "extension_sha256",
+}
 
 
 def _sha256(payload: bytes) -> str:
@@ -50,6 +59,7 @@ def _binding_semantics(freeze: dict[str, Any]) -> bool:
         if not (
             freeze.get("binding_commit") == BINDING_COMMIT
             and freeze.get("gpu_uuid") == GPU_UUID
+            and binding.get("protocol") == "RIST-C0-v2.3-POST-RENT-BINDING-v1"
             and binding.get("status")
             == "BOUND_BY_COMMIT_2a31e76b546dfbf9b5c801bc0efad3066254ec9f"
             and binding.get("gpu", {}).get("uuid") == GPU_UUID
@@ -65,6 +75,10 @@ def _binding_semantics(freeze: dict[str, Any]) -> bool:
             if not (
                 _sha256(receipt_bytes) == RECEIPT_SHA256[family]
                 and spec["artifact_sha256"] == RECEIPT_SHA256[family]
+                and receipt.get("protocol") == RECEIPT_PROTOCOL
+                and set(receipt.get("bindings", {})) == IDENTITY_FIELDS
+                and receipt.get("authority_sha256")
+                == binding.get("authority_canonical_sha256")
                 and receipt["bindings"]["gpu_uuid"] == GPU_UUID
                 and receipt["bindings"]["model_revision"] == spec["model_revision"]
                 and receipt["bindings"]["manifest_sha256"] == _sha256(manifest_bytes)

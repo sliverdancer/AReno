@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -18,6 +19,16 @@ STAGE = ROOT / (
 def _load():
     path = STAGE / "run_capacity_canary.py"
     spec = importlib.util.spec_from_file_location("rist_c0_v23_capacity", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_verifier():
+    path = STAGE / "verify_capacity_canary_cpu_freeze.py"
+    spec = importlib.util.spec_from_file_location("rist_c0_v23_capacity_verify", path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     sys.modules[spec.name] = module
@@ -62,6 +73,9 @@ def _run(module, tmp_path, family="qwen3", **overrides):
         "post_json": lambda _payload: {"choices": [{"message": {}}]},
         "live_gpu_uuid": lambda: "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
         "live_gpu_total_memory_mib": lambda: 81920,
+        "live_compute_process_names": lambda: [
+            "/root/autodl-tmp/rist_v2_3/venv/bin/python"
+        ],
         "memory_used_mib": lambda: 321.0,
     }
     values.update(overrides)
@@ -207,3 +221,71 @@ def test_v2_3_capacity_canary_rejects_receipt_or_live_gpu_mismatch(tmp_path):
 
     with pytest.raises(ValueError, match="live GPU memory mismatch"):
         _run(module, tmp_path, live_gpu_total_memory_mib=lambda: 49152)
+
+
+def test_v2_3_capacity_canary_rejects_external_compute_process_before_requests(tmp_path):
+    module = _load()
+    calls = []
+    with pytest.raises(ValueError, match="exclusive bound server process"):
+        _run(
+            module,
+            tmp_path,
+            live_compute_process_names=lambda: [
+                "/root/autodl-tmp/rist_v2_3/venv/bin/python",
+                "/root/autodl-tmp/arca_p8/venv/bin/python",
+            ],
+            post_json=calls.append,
+        )
+    assert calls == []
+
+
+def test_v2_3_capacity_freeze_verifier_rejects_binding_semantic_tampering(
+    tmp_path, monkeypatch
+):
+    verifier = _load_verifier()
+    stage = tmp_path / "stage"
+    (stage / "data").mkdir(parents=True)
+    shutil.copy2(STAGE / "data/manifest.json", stage / "data/manifest.json")
+    shutil.copytree(
+        STAGE / "gpu_bind_20260804_a800",
+        stage / "gpu_bind_20260804_a800",
+    )
+    monkeypatch.setattr(verifier, "STAGE_ROOT", stage)
+    freeze = {
+        "binding_commit": verifier.BINDING_COMMIT,
+        "gpu_uuid": verifier.GPU_UUID,
+    }
+    assert verifier._binding_semantics(freeze) is True
+
+    binding_path = stage / "gpu_bind_20260804_a800/POST_RENT_BINDING.json"
+    original_binding = json.loads(binding_path.read_text(encoding="utf-8"))
+    tampered_binding = dict(original_binding)
+    tampered_binding["protocol"] = "RIST-C0-v2.2-POST-RENT-BINDING-v1"
+    binding_path.write_text(json.dumps(tampered_binding), encoding="utf-8")
+    assert verifier._binding_semantics(freeze) is False
+
+    binding_path.write_text(json.dumps(original_binding), encoding="utf-8")
+    receipt_path = stage / "gpu_bind_20260804_a800/qwen3_receipt.json"
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    receipt["protocol"] = "RIST-C0-v2.2-DEPLOYMENT-RECEIPT-v1"
+    receipt_bytes = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
+    receipt_path.write_bytes(receipt_bytes)
+    receipt_sha = verifier._sha256(receipt_bytes)
+    monkeypatch.setitem(verifier.RECEIPT_SHA256, "qwen3", receipt_sha)
+    rebound_binding = dict(original_binding)
+    rebound_binding["receipts"] = dict(original_binding["receipts"])
+    rebound_binding["receipts"]["qwen3"] = dict(
+        original_binding["receipts"]["qwen3"], artifact_sha256=receipt_sha
+    )
+    binding_path.write_text(json.dumps(rebound_binding), encoding="utf-8")
+    assert verifier._binding_semantics(freeze) is False
+
+    receipt = json.loads((STAGE / "gpu_bind_20260804_a800/qwen3_receipt.json").read_text())
+    receipt["bindings"]["unexpected_identity"] = "forged"
+    receipt_bytes = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
+    receipt_path.write_bytes(receipt_bytes)
+    receipt_sha = verifier._sha256(receipt_bytes)
+    monkeypatch.setitem(verifier.RECEIPT_SHA256, "qwen3", receipt_sha)
+    rebound_binding["receipts"]["qwen3"]["artifact_sha256"] = receipt_sha
+    binding_path.write_text(json.dumps(rebound_binding), encoding="utf-8")
+    assert verifier._binding_semantics(freeze) is False

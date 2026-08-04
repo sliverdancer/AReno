@@ -167,6 +167,17 @@ def _request(task: dict[str, Any], seed: int) -> dict[str, Any]:
     }
 
 
+def _expected_server_python(receipt: dict[str, Any]) -> str:
+    candidates = [
+        part
+        for part in receipt.get("launcher_command", [])
+        if isinstance(part, str) and part.endswith("/bin/python")
+    ]
+    if len(candidates) != 1:
+        raise ValueError("capacity canary receipt must bind exactly one server Python")
+    return candidates[0]
+
+
 def run_canary(
     pool_manifest_bytes: bytes,
     data_dir: Path,
@@ -178,6 +189,7 @@ def run_canary(
     post_json: Callable[[dict[str, Any]], dict[str, Any]],
     live_gpu_uuid: Callable[[], str],
     live_gpu_total_memory_mib: Callable[[], int],
+    live_compute_process_names: Callable[[], list[str]],
     memory_used_mib: Callable[[], float],
 ) -> dict[str, Any]:
     if family not in RECEIPT_SHA256:
@@ -214,6 +226,13 @@ def run_canary(
     seeds = [int(seed) for seed in split["rollout_seeds"]]
     if len(tasks) != 1 or tuple(seeds) != CANARY_SEEDS:
         raise ValueError("capacity canary requires the exact eight frozen request seeds")
+
+    expected_server_python = _expected_server_python(receipt)
+    compute_processes = live_compute_process_names()
+    if not compute_processes or any(
+        process != expected_server_python for process in compute_processes
+    ):
+        raise ValueError("capacity canary requires an exclusive bound server process")
 
     descriptor = _reserve_journal(journal_path)
     start = time.monotonic()
@@ -313,6 +332,19 @@ def main() -> int:
         )
         return sum(float(line) for line in output.splitlines() if line.strip())
 
+    def compute_process_names() -> list[str]:
+        import subprocess
+
+        output = subprocess.check_output(
+            [
+                "nvidia-smi",
+                "--query-compute-apps=process_name",
+                "--format=csv,noheader",
+            ],
+            text=True,
+        )
+        return [line.strip() for line in output.splitlines() if line.strip()]
+
     result = run_canary(
         args.pool_manifest.read_bytes(),
         args.data_dir,
@@ -326,6 +358,7 @@ def main() -> int:
         ),
         lambda: gpu_query("uuid"),
         lambda: int(gpu_query("memory.total")),
+        compute_process_names,
         memory_used_mib,
     )
     args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
