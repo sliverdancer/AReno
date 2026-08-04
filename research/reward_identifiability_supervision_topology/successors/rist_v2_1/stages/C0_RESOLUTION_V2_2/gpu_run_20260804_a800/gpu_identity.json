@@ -1,0 +1,8 @@
+{
+  "cuda_version": "12.8",
+  "driver_version": "580.105.08",
+  "gpu_name": "NVIDIA A800 80GB PCIe",
+  "gpu_total_memory_gib": 79.250732421875,
+  "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+  "torch_version": "2.8.0+cu128"
+}

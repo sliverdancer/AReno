@@ -1,6 +1,6 @@
 # RIST-v2.1 outcome execution plan
 
-Status: `C0_V2_2_E1_CPU_FROZEN_AWAITING_80GB_GPU_BINDING`
+Status: `C0_V2_2_TERMINAL_PROTOCOL_FAILURE_STOPPED`
 
 The objective is not satisfied by a passing tokenizer fixture or a short
 serving check. It requires observed training-seed outcomes for the synthetic
@@ -13,7 +13,7 @@ calibration, development curves, and confirmatory evaluation separate.
    Gemma4 E2B snapshots, import and hash the compiled extension before serving,
    then collect exactly 32 fresh four-turn rows per model with zero retry. Build
    and evaluate the production masks separately per model. Both must pass.
-2. **C0 v2.2 group-resolution calibration — authorized, unexecuted.** C0 v2.1
+2. **C0 v2.2 group-resolution calibration — terminal before scientific access.** C0 v2.1
    and its tasks are terminal after the 24 GB concurrency failure. On a newly
    bound GPU with at least 48 GB, first run the outcome-free two-family capacity
    canary at concurrency eight. Only an exact raw-evidence PASS opens the fresh,
@@ -22,7 +22,11 @@ calibration, development curves, and confirmatory evaluation separate.
    common-map failure kills v2.2 without repair or selective rerun. The
    post-collection resolution replay, cross-family transport, filtered D3
    output, independent validation receipt, and pre-access root are now frozen
-   by `RESOLUTION_CPU_FREEZE.json` and `RESOLUTION_EXECUTION_ROOT.json`.
+   by `RESOLUTION_CPU_FREEZE.json` and `RESOLUTION_EXECUTION_ROOT.json`. On the
+   A800 execution, the Qwen outcome-free requests completed, but their
+   pre-request identity bound superseded source commit `2674e101` instead of
+   required runtime commit `f00b688d`. Fail-closed zero-retry rules consume and
+   kill v2.2; Gemma and all scientific splits remained unopened.
 3. **E1 capacity — authorized, unexecuted.** On the deployment-bound GPU, run
    serving plus exactly one optimizer step for GSPO and GRPO per checkpoint.
    Qwen and Gemma remain training-unqualified; Gemma requires at least 48 GB and
@@ -62,13 +66,11 @@ calibration, development curves, and confirmatory evaluation separate.
 
 ## Current authorization boundary
 
-Step 1 passed with 32 runtime rows and 32 exact masks per model. The C0 v2.2
-analysis source, strict evaluator, collection finalizer, E1 admission gate, and
-deployment-manifest builder are commit-backed and CPU-verified. C0 v2.2 and E1
-are explicitly GPU-authorized, but no current endpoint/GPU UUID is bound.
-Therefore no GPU command is executable yet. The next external action is to rent
-one 80 GB GPU and provide its SSH endpoint; the two exact locked model snapshots
-must already exist there or be transferred under the existing no-replacement
-constraint. Tau3 user-simulator calls, P3 training, held-out/BFCL access, and
-every M1-M6 third-checkpoint model access remain unauthorized and require
-separate gates.
+Step 1 passed with 32 runtime rows and 32 exact masks per model. The A800 was
+correctly bound and both locked model snapshots passed their historical file
+locks, but C0 v2.2 is terminal because the first Qwen canary used a superseded
+control manifest to build its runtime identity. Post-hoc correction and rerun
+are prohibited. No Gemma canary, scientific split, E1 training, held-out/BFCL,
+Tau3 policy, P3, or M1-M6 access occurred. The current automatic route stops at
+this KILL; any fresh successor requires a new protocol, new task pool, and a
+separate authorization rather than repair of v2.2.

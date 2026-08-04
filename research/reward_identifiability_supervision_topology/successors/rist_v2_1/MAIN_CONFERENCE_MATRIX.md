@@ -5,15 +5,17 @@ sources, and Tau3 environment canary pass. T0b v1.2 passed both families with 32
 fresh four-turn rows and 32 exact production masks per model. C0 v2.1 is retired
 after its 24 GB capacity failure; the signature-disjoint C0 v2.2 pool, outcome-
 free capacity canary, and 4,096-trajectory evidence chain are frozen and GPU-
-authorized but have not run. E1 one-step GSPO/GRPO capacity is also authorized
-but unexecuted. The prior 24 GB instance is released and no replacement GPU is
-deployment-bound. Training-effect evidence has not started.
+authorized. On the bound A800, the Qwen outcome-free requests completed but the
+pre-request runtime identity named a superseded source commit. The fail-closed
+zero-retry rule makes C0 v2.2 terminal before Gemma or scientific access. E1
+one-step GSPO/GRPO capacity remains unexecuted. Training-effect evidence has not
+started.
 
 ## Required empirical blocks
 
 | Block | Minimum evidence | Current |
 |---|---|---|
-| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0 v2.1 retired; fresh C0 v2.2 capacity-canary and 4,096-trajectory contracts frozen and authorized, but no GPU endpoint or model outcomes |
+| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0 v2.1 retired; C0 v2.2 terminal on a source-identity binding mismatch after eight outcome-free Qwen requests and before Gemma or scientific access |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | Qwen3-0.6B and Gemma4 E2B pass runtime treatment qualification but E1 is unexecuted; M0 outcome-blindly preregisters Qwen3-1.7B as the provisional third checkpoint, which does not count until metadata, weights, runtime treatment, C0 transport, both algorithms, and powered replication pass |
 | Exact content treatment | full call versus tool-name-only | exact public treatment passes 32 fresh runtime-token cases independently for Qwen and Gemma |
@@ -48,11 +50,12 @@ reversal, leakage, or a new direct substitute close the main-track route.
 
 ## Current route decision
 
-The paper route remains scientifically open. T0b v1.2 passes the two-family
-runtime treatment gate, but neither E1 optimizer-step capacity nor C0 v2.2
-resolution calibration has run. Both are authorized, while deployment remains
-blocked on a newly bound GPU of at least 48 GB and an outcome-free C0 capacity
-canary PASS. The released 24 GB pairing is not reusable for Gemma training.
+The research question remains scientifically open, but this execution route is
+closed. T0b v1.2 passes the two-family runtime treatment gate; C0 v2.2 is now
+terminal on a protocol identity mismatch and E1 never opened. This is not
+evidence for or against the hypothesis. Main-conference execution cannot be
+upgraded from this route; a successor must use a new frozen control/runtime
+boundary and fresh task pool rather than rerunning or repairing v2.2.
 
 The third-checkpoint gap is now preregistered rather than filled: the frozen
 outcome-blind rule selects Qwen3-1.7B provisionally because it reuses the existing

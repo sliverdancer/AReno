@@ -1,0 +1,17 @@
+{
+  "checkpoint": "google/gemma-4-E2B-it",
+  "cuda_version": "12.8",
+  "driver_version": "580.105.08",
+  "endpoint": "http://127.0.0.1:8000/v1",
+  "family": "gemma4",
+  "gpu_name": "NVIDIA A800 80GB PCIe",
+  "gpu_total_memory_gib": 79.250732421875,
+  "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+  "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+  "model_weights_sha256": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550",
+  "protocol": "RIST-C0-RUNTIME-IDENTITY-v1",
+  "snapshot_verification_sha256": "7a6adba313af69ab6627383514fd1af7bea636db5622fe5e86bd871e03d7bdc4",
+  "source_commit": "2674e1019da3872e398c50326b7344007707f5aa",
+  "tokenizer_snapshot_sha256": "7c813a44e67aa09d81001db777c261d858417b45ce0204bc6a32f0b7b96720f7",
+  "torch_version": "2.8.0+cu128"
+}

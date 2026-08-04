@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "objective": "stable interaction, token-matched robustness, two model families and two algorithms, and real-tool-environment outcomes",
-  "status": "ACTIVE_NOT_ACHIEVED",
+  "status": "TERMINAL_CURRENT_PROTOCOL_NOT_ACHIEVED",
   "current_commit_before_ledger": "98baa51",
   "blocks": {
     "runtime_treatment_qualification": {
@@ -24,9 +24,9 @@
     },
     "two_families_two_algorithms": {
       "required": "Qwen3 and Gemma4 blocks complete under both GSPO and GRPO",
-      "current": "48-run Qwen/Gemma by GSPO/GRPO matrix is frozen; C0 v2.2 and raw-evidence E1 are authorized but unexecuted; third checkpoint Qwen3-1.7B is outcome-blind preregistered but not authorized or qualified",
-      "evidence": "stages/P3_DESIGN/execution_manifest.json",
-      "status": "BLOCKED_BY_C0_AND_E1_CAPACITY"
+      "current": "48-run Qwen/Gemma by GSPO/GRPO matrix is frozen; C0 v2.2 is terminal on a source-identity binding mismatch before scientific access; E1 and the third checkpoint never opened",
+      "evidence": "stages/C0_RESOLUTION_V2_2/gpu_run_20260804_a800/TERMINAL_RESULT.json",
+      "status": "TERMINAL_CURRENT_PROTOCOL_BEFORE_E1"
     },
     "real_tool_environment": {
       "required": "stateful Tau3 airline policy outcomes under the same arms, families, algorithms, and seed-level analysis",
@@ -42,7 +42,8 @@
       "gpu_inference_required": true,
       "training_required": false,
       "trajectory_count": 4096,
-      "execution_authorized": true
+      "execution_authorized": true,
+      "status": "TERMINAL_PROTOCOL_FAILURE_NO_RERUN"
     },
     {
       "stage": "E1_CAPACITY",
@@ -53,7 +54,8 @@
       "gemma_24gb_rejected": true,
       "minimum_new_gpu_memory_gib": 48,
       "recommended_new_gpu_memory_gib": 80,
-      "execution_authorized": true
+      "execution_authorized": true,
+      "status": "NOT_OPENED_C0_GATE_FAILED"
     },
     {
       "stage": "TOKEN_BUDGET_API",

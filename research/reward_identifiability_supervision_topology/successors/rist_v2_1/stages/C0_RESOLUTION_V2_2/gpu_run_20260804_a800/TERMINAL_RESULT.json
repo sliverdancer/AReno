@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "protocol": "RIST-C0-v2.2-A800-TERMINAL-v1",
+  "status": "TERMINAL_PROTOCOL_FAILURE",
+  "decision": "KILL_C0_V2_2_NO_RERUN",
+  "stage_consumed": true,
+  "scientific_result": false,
+  "main_track_upgrade": false,
+  "gpu_identity": {
+    "gpu_name": "NVIDIA A800 80GB PCIe",
+    "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+    "gpu_total_memory_gib": 79.250732421875,
+    "driver_version": "580.105.08",
+    "cuda_version": "12.8",
+    "torch_version": "2.8.0+cu128"
+  },
+  "qwen_canary": {
+    "requests_completed": 8,
+    "requests_expected": 8,
+    "retry_count": 0,
+    "outcomes_inspected": false,
+    "peak_memory_mib": 75810.0,
+    "result_sha256": "cac8bc6c58980feb46d00427423bc05c3f628e572c1a560fe1d9602a375c43a7",
+    "raw_journal_sha256": "25eca45ba965d0fb0320e3c5532533808dc9d71fdeb9809bc28339f1ca9a0e88"
+  },
+  "failure": {
+    "type": "SOURCE_IDENTITY_BINDING_MISMATCH",
+    "required_source_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
+    "recorded_source_commit": "2674e1019da3872e398c50326b7344007707f5aa",
+    "actual_serving_source_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
+    "required_manifest_sha256": "57f78e939aa378b727857eaaf5e5b55ebf46498680893c6483a0180b7edac7f2",
+    "manifest_used_to_build_identity_sha256": "30d5ffa613585b4317dcded41e53856695bf55d2c8d778c3216869a4a09ed72b",
+    "reason": "The canary harness and runtime identity were invoked from the detached serving-runtime worktree instead of the current frozen control worktree. The raw requests completed, but the pre-request identity bound the superseded source commit. Post-hoc metadata repair or rerun is prohibited by the zero-retry fail-closed protocol."
+  },
+  "not_executed": [
+    "gemma4 capacity canary",
+    "C0 v2.2 calibration collection",
+    "C0 v2.2 qualification collection",
+    "C0 v2.2 resolution analysis",
+    "E1 GSPO or GRPO training"
+  ],
+  "safety": {
+    "heldout_opened": false,
+    "bfcl_opened": false,
+    "training_run": false,
+    "scientific_split_opened": false,
+    "gpu_processes_stopped": true,
+    "final_gpu_memory_used_mib": 0
+  },
+  "evidence_archive": {
+    "path": "c0_v2_2_terminal_evidence_20260804.tgz",
+    "sha256": "48487f1f580fcbcff836343344028f5dcb9aec1a114073d384320d55968d55c4"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "protocol": "RIST-STAGE-HOOK-v2.1",
+  "stage": "C0_RESOLUTION_V2_2_A800",
+  "decision": "KILL_CURRENT_PROTOCOL_NO_RERUN",
+  "main_track_upgrade": false,
+  "reason": "The Qwen outcome-free requests completed, but the pre-request runtime identity bound superseded source commit 2674e101 instead of the required f00b688d. Fail-closed zero-retry rules prohibit post-hoc repair or rerun.",
+  "scientific_result": false,
+  "validated": [
+    "A800 GPU UUID and 79.25 GiB runtime memory",
+    "Qwen and Gemma historical model file locks",
+    "f00b688d serving runtime checkout",
+    "eight complete zero-retry Qwen canary responses",
+    "outcomes not inspected",
+    "server stopped and final GPU memory zero"
+  ],
+  "not_run": [
+    "Gemma capacity canary",
+    "C0 scientific collection",
+    "resolution analysis",
+    "E1 training",
+    "held-out or BFCL"
+  ]
+}
