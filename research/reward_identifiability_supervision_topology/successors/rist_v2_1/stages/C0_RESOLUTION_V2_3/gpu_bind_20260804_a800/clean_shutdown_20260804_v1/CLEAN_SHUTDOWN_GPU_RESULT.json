@@ -1,0 +1,49 @@
+{
+  "protocol": "RIST-C0-v2.3-CLEAN-SHUTDOWN-GPU-RESULT-v1",
+  "status": "PASS_CLEAN_SHUTDOWN_WITH_RESOURCE_TRACKER_WARNING",
+  "controller_commit": "f474d2fe042e5e24de94e6400ba245b5f03aba50",
+  "receipt_artifact_sha256": "6e5a4dd7e21a3dc98450f376fd3607516c75cc7a22a694f0e4ff86d34de65eaf",
+  "gpu_uuid": "GPU-27843744-f647-2fd1-8eb6-1fdb4b3ae7a9",
+  "serving_start_epoch": 1785855497,
+  "termination_signal_epoch": 1785855533,
+  "final_check_epoch": 1785855576,
+  "total_serving_wall_seconds": 79,
+  "authorized_serving_limit_seconds": 600,
+  "termination_target": {
+    "pid": 1971,
+    "role": "graceful_deployment_supervisor",
+    "signal": "SIGTERM",
+    "process_group_signaled": false,
+    "worker_signaled_directly": false
+  },
+  "checks": {
+    "deployment_receipt_accepted": true,
+    "application_startup_complete": true,
+    "model_http_request_count": 0,
+    "application_shutdown_complete": true,
+    "rollout_session_end_error_count": 0,
+    "supervisor_server_and_worker_exited": true,
+    "final_gpu_memory_used_mib": 0,
+    "final_compute_process_count": 0
+  },
+  "artifacts": {
+    "launch_log_sha256": "39ac9dfbc699088c206bad039d9da2fef5497ffde88d9b3c417a378f8f5f428c",
+    "ledger_sha256": "4a98c71b4d38f4f3d05f2370dea6ed69def361b9da65f3977f50fac1671f3a28",
+    "binding_sha256": "2be5bfc45270cd0fbf4816316c10572ce57e5a710e60511e2fec08aa70ac8967"
+  },
+  "residual_warning": {
+    "present": true,
+    "type": "multiprocessing.resource_tracker",
+    "reported_leaked_semaphore_objects": 6,
+    "blocks_clean_shutdown_gate": false,
+    "reason": "Application shutdown completed, all processes exited, and GPU state returned to zero; retain as an operational warning for repeated-serving monitoring."
+  },
+  "model_requests_performed": false,
+  "calibration_accessed": false,
+  "qualification_accessed": false,
+  "heldout_accessed": false,
+  "bfcl_accessed": false,
+  "training_performed": false,
+  "scientific_result": false,
+  "next_gate": "CALIBRATION_REQUIRES_SEPARATE_AUTHORIZATION"
+}
