@@ -1,0 +1,35 @@
+{
+  "protocol": "RIST-C0-v2.3-POST-RENT-BINDING-v1",
+  "status": "BOUND_AWAITING_EXACT_RECEIPT_COMMIT",
+  "ssh_endpoint": "connect.nma1.seetacloud.com:12663",
+  "gpu": {
+    "name": "NVIDIA A800 80GB PCIe",
+    "uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+    "memory_total_mib": 81920,
+    "driver_version": "580.105.08"
+  },
+  "control_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+  "runtime_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
+  "manifest_sha256": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
+  "extension_sha256": "156dcdc80169e797ac799d0b40f687eecb50ba22b3c0fb6251e21684b9962cb6",
+  "authority_canonical_sha256": "8790a2f3092b936a176b93ae4882e2e6568b66a215e8b76f4db9f4d843caf19f",
+  "receipts": {
+    "qwen3": {
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "file": "qwen3_receipt.json",
+      "artifact_sha256": "055269d1ab2ef7d5b02a416c27afaab6b039470a89889286cf8d91b820de5c90"
+    },
+    "gemma4": {
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "file": "gemma4_receipt.json",
+      "artifact_sha256": "da49af33c36f26ff0c7030c7e929ef1ec0d358dc5dc51d3fbad41bafe21e83a6"
+    }
+  },
+  "next_scope": "NON_SCIENTIFIC_SERVER_STARTUP_CANARY_ONLY",
+  "maximum_total_serving_seconds": 1800,
+  "scientific_pool_access_permitted": false,
+  "training_permitted": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "model_requests_permitted": false
+}
