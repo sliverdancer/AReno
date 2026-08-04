@@ -36,7 +36,10 @@ calibration, development curves, and confirmatory evaluation separate.
    concurrency eight and zero retry. A GPU UUID change requires fresh binding
    and outcome-free clean-shutdown admission. The prior A800 endpoint is
    currently unreachable; no scientific outcome has been opened.
-4. **E1 capacity — authorized, unexecuted.** On the deployment-bound GPU, run
+4. **E1 capacity — admission CPU-frozen, authorized, unexecuted.** The v2.3
+   admission builder accepts only `PASS_C0_V2_3_TO_E1_CAPACITY`, retains whole
+   D3 cells, and selects exactly four tasks from the lexicographically first
+   transported high cell. On the deployment-bound GPU, run
    serving plus exactly one optimizer step for GSPO and GRPO per checkpoint.
    Qwen and Gemma remain training-unqualified; Gemma requires at least 48 GB and
    15% measured headroom. The released 24 GB instance is no longer available

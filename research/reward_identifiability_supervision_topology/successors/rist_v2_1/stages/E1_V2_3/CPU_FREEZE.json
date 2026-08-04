@@ -1,0 +1,18 @@
+{
+  "protocol": "RIST-E1-v2.3-ADMISSION-CPU-FREEZE-v1",
+  "status": "PASS_CPU_ADMISSION_FREEZE_C0_OUTCOME_BLOCKED",
+  "files": {
+    "PROTOCOL.md": "fa17cbf08d1ad76ca34b548aabd6064961564467c5146ecdc5a520f2ba65fe40",
+    "build_admission.py": "f7c95bf19df9e78bd1c93c12e0af4c46367426a0d5ad8abd3d63ad2bbc9240f3"
+  },
+  "required_c0_decision": "PASS_C0_V2_3_TO_E1_CAPACITY",
+  "capacity_task_count": 4,
+  "selection_rule": "LEXICOGRAPHIC_FIRST_TRANSPORTED_HIGH_CELL",
+  "execution_authorized": false,
+  "gpu_used": false,
+  "model_accessed": false,
+  "scientific_outcomes_accessed": false,
+  "training_performed": false,
+  "heldout_accessed": false,
+  "bfcl_accessed": false
+}

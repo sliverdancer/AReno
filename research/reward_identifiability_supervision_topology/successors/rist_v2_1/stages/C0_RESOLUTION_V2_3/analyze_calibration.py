@@ -81,6 +81,7 @@ def analyze(manifest_path: Path, output_dir: Path) -> dict[str, Any]:
             (json.dumps(collection_final, indent=2, sort_keys=True) + "\n").encode()
         ).hexdigest(),
         "pool_manifest_sha256": _sha256(pool_path),
+        "gpu_uuid": manifest["canary_gate"]["gpu_identity"]["gpu_uuid"],
         "calibration_source_sha256": _sha256(source_path),
         "qualification_accessed": False,
         "heldout_accessed": False,
@@ -124,6 +125,7 @@ def analyze(manifest_path: Path, output_dir: Path) -> dict[str, Any]:
         "decision": "PASS_CALIBRATION_TO_QUALIFICATION" if passed else "KILL_C0_V2_3_CALIBRATION",
         "collection_manifest_sha256": _sha256(manifest_path),
         "pool_manifest_sha256": _sha256(pool_path),
+        "gpu_uuid": manifest["canary_gate"]["gpu_identity"]["gpu_uuid"],
         "families": families,
         "common_candidate_map": common,
         "common_candidate_counts": counts,

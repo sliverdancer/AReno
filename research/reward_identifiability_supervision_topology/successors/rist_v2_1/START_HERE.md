@@ -89,4 +89,6 @@ until calibration freezes at least two common low and two common high whole
 cells. The CPU freeze passes and no scientific outcome has been opened. The
 last A800 endpoint is offline, so calibration awaits a live 80 GB GPU, fresh
 UUID binding, and outcome-free clean-shutdown admission. E1 and training remain
-unopened by the C0 gate despite their standing authorization.
+unopened by the C0 gate despite their standing authorization. The E1 v2.3
+admission builder is CPU-frozen and will accept only a two-family qualification
+transport PASS; it cannot consume calibration-only or partial-family evidence.
