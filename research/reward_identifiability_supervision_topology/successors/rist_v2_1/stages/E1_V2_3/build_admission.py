@@ -127,8 +127,26 @@ def build_admission(
     capacity_bytes = "".join(json.dumps(row, sort_keys=True) + "\n" for row in capacity).encode()
     filtered_path = output_root / "data/filtered_train.jsonl"
     capacity_path = output_root / "data/capacity_train.jsonl"
+    resolution_path = output_root / "data/c0_transport_result.json"
+    capacity_manifest_path = output_root / "data/capacity_train.manifest.json"
     _write_exclusive(filtered_path, filtered_bytes)
     _write_exclusive(capacity_path, capacity_bytes)
+    resolution_bytes = (json.dumps(transport, sort_keys=True) + "\n").encode()
+    _write_exclusive(resolution_path, resolution_bytes)
+    capacity_manifest = {
+        "protocol": "RIST-E1-CAPACITY-DATA-v2.1",
+        "selection_rule": "LEXICOGRAPHIC_FIRST_TRANSPORTED_HIGH_CELL",
+        "selection_uses_individual_outcomes": False,
+        "selected_cell": selected_cell,
+        "task_count": len(capacity),
+        "source_train_sha256": hashlib.sha256(filtered_bytes).hexdigest(),
+        "resolution_result_sha256": hashlib.sha256(resolution_bytes).hexdigest(),
+        "capacity_train_sha256": hashlib.sha256(capacity_bytes).hexdigest(),
+    }
+    capacity_manifest_bytes = (
+        json.dumps(capacity_manifest, indent=2, sort_keys=True) + "\n"
+    ).encode()
+    _write_exclusive(capacity_manifest_path, capacity_manifest_bytes)
     admission = {
         "protocol": "RIST-E1-v2.3-C0-ADMISSION-v1",
         "passed": True,
@@ -145,6 +163,12 @@ def build_admission(
         "capacity_train_path": str(capacity_path),
         "capacity_train_sha256": hashlib.sha256(capacity_bytes).hexdigest(),
         "capacity_task_count": len(capacity),
+        "resolution_result_path": str(resolution_path),
+        "resolution_result_sha256": hashlib.sha256(resolution_bytes).hexdigest(),
+        "capacity_data_manifest_path": str(capacity_manifest_path),
+        "capacity_data_manifest_sha256": hashlib.sha256(
+            capacity_manifest_bytes
+        ).hexdigest(),
         "capacity_selection_rule": "LEXICOGRAPHIC_FIRST_TRANSPORTED_HIGH_CELL",
         "selected_capacity_cell": selected_cell,
         "selection_uses_individual_outcomes": False,

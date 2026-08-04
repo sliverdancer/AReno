@@ -28,7 +28,13 @@ def verify() -> dict:
         value.get("training_performed") is False,
         value.get("heldout_accessed") is False,
         value.get("bfcl_accessed") is False,
-        set(value.get("files", {})) == {"PROTOCOL.md", "build_admission.py"},
+        set(value.get("files", {}))
+        == {
+            "PROTOCOL.md",
+            "STANDING_GPU_AUTHORIZATION_20260804.json",
+            "build_admission.py",
+            "build_deployment_manifest.py",
+        },
     ]
     for relative, expected in value.get("files", {}).items():
         path = ROOT / relative

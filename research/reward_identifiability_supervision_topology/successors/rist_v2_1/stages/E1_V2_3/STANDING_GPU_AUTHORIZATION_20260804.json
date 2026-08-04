@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "source": "User standing authorization in the RIST execution thread on 2026-08-04",
+  "authorized": true,
+  "authorized_route": [
+    "C0_V2_3_CALIBRATION",
+    "C0_V2_3_QUALIFICATION",
+    "E1_V2_3_CAPACITY",
+    "P3_DIAGNOSTIC",
+    "P4_POWERED",
+    "P5_EXTERNAL_VALIDITY"
+  ],
+  "e1": {
+    "families": [
+      "qwen3",
+      "gemma4"
+    ],
+    "algorithms": [
+      "gspo",
+      "grpo"
+    ],
+    "optimizer_steps_per_algorithm": 1,
+    "training": true
+  },
+  "gate_policy": "ORDERED_GO_KILL_NO_REPAIR_NO_SELECTIVE_RERUN",
+  "heldout_and_bfcl": "SEALED_UNTIL_PREREGISTERED_ONE_SHOT_STAGE",
+  "authorization_bypasses_scientific_gates": false
+}
