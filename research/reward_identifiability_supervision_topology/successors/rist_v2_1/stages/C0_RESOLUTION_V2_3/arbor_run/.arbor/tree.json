@@ -86,17 +86,17 @@
       "id": "n5",
       "parent": "n4",
       "depth": 3,
-      "status": "executed",
+      "status": "merged",
       "hypothesis": "Adding an immutable pre-rent authority template for control commit, runtime commit, manifest SHA, and allowed model revisions, plus an externally supplied exact receipt SHA at launch, prevents wrong worktrees or a recomputed self-hash from authorizing themselves while still freezing GPU UUID and extension SHA after rental.",
       "insight": "Self-authenticating artifacts cannot establish provenance; an earlier independently frozen authority hash and a later externally frozen exact receipt hash are required.",
       "metadata": {
         "dev_score": 11.0,
-        "test_score": null,
+        "test_score": 2.0,
         "result": "Eleven dev replays passed: trusted pre-rent authority blocks wrong receipt minting; external exact receipt hash plus six live probes blocks launch.",
         "branch_ref": "3f82b80532578cf5488000a463a4175e1435524b"
       },
       "created_at": 1785815187,
-      "updated_at": 1785815468
+      "updated_at": 1785815772
     }
   }
 }

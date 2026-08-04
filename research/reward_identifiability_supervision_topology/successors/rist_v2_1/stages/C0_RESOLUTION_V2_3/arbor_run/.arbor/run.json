@@ -8,8 +8,8 @@
   "max_depth": 2,
   "budget_cycles": 6,
   "cycles_used": 2,
-  "best_node": "n4",
-  "best_test_score": 0.0,
-  "best_branch_ref": "219ce4b",
+  "best_node": "n5",
+  "best_test_score": 2.0,
+  "best_branch_ref": "59cfb44",
   "created_at": 1785813790
 }
