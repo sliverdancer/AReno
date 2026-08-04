@@ -1,6 +1,6 @@
 # RIST C0 v2.3 CPU reconstruction protocol
 
-Status: `P0_SCIENTIFIC_PROTOCOL_IMPLEMENTED_CPU_VALIDATION_PENDING`
+Status: `P0_CPU_FREEZE_PASS_GPU_OFFLINE`
 
 C0 v2.2 is terminal and may not be repaired or rerun. C0 v2.3 uses a new
 capacity-canary task, new calibration and qualification tasks, and new rollout

@@ -10,7 +10,7 @@
   "bfcl_permitted": false,
   "training_permitted": false,
   "files": {
-    "PROTOCOL.md": "49629913d964956681bef8bdae51dbb48d6995082feb0b82ea5acec52da642c3",
+    "PROTOCOL.md": "733b215437fdf61e576dfba7163596183fd43db39f41e344e0c4f4d923a90970",
     "SCIENTIFIC_COLLECTION_PROTOCOL.md": "9e9bd4db79b9f2cce637cc2f7d4e13ab5d1ac6bca89c22fcb1f2dff746287a1e",
     "RESOLUTION_ANALYSIS_PROTOCOL.md": "42699e7d550066572a933ae2e76e79cb4d008c8f2a50b3ec233eebb8a516eaab",
     "build_scientific_collection_manifest.py": "b13a424acaad5a24fc11d8ce2bad9b43bcd63a9440c377a58c77953fd935a210",
