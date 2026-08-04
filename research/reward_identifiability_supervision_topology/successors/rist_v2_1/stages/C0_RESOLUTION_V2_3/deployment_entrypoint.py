@@ -20,6 +20,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 
 PROTOCOL = "RIST-C0-v2.3-DEPLOYMENT-RECEIPT-v1"
+AUTHORITY_PROTOCOL = "RIST-C0-v2.3-PRE-RENT-AUTHORITY-v1"
 FIELDS = (
     "control_commit",
     "runtime_commit",
@@ -56,6 +57,11 @@ def _canonical(value: Any) -> bytes:
 
 def _bytes_sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def receipt_artifact_bytes(receipt: Mapping[str, Any]) -> bytes:
+    """Return the one authorized on-disk representation of a receipt."""
+    return _canonical(receipt) + b"\n"
 
 
 def _file_sha256(path: Path) -> str:
@@ -118,6 +124,8 @@ def build_receipt(
     inputs: LiveInputs,
     manifest_path: Path,
     launcher_command: Sequence[str],
+    authority: Mapping[str, Any],
+    authorized_authority_sha256: str,
     probes: Probes = DEFAULT_PROBES,
 ) -> dict[str, Any]:
     """Create the sole control artifact; manifest bytes never need reopening."""
@@ -131,9 +139,30 @@ def build_receipt(
     json.loads(manifest_bytes)
     if not launcher_command or not all(isinstance(part, str) and part for part in launcher_command):
         raise ValueError("launcher command must be non-empty strings")
+    authority_sha256 = _bytes_sha256(_canonical(authority))
+    if authority_sha256 != authorized_authority_sha256:
+        raise DeploymentRefused("pre-rent authority SHA mismatch")
+    if set(authority) != {
+        "protocol", "control_commit", "runtime_commit", "manifest_sha256", "model_revisions"
+    } or authority.get("protocol") != AUTHORITY_PROTOCOL:
+        raise DeploymentRefused("invalid pre-rent authority schema or protocol")
+    observed = _observed(inputs, manifest_bytes, probes)
+    creation_mismatches = [
+        field
+        for field in ("control_commit", "runtime_commit", "manifest_sha256")
+        if observed[field] != authority[field]
+    ]
+    revisions = authority["model_revisions"]
+    if not isinstance(revisions, list) or observed["model_revision"] not in revisions:
+        creation_mismatches.append("model_revision")
+    if creation_mismatches:
+        raise DeploymentRefused(
+            "pre-rent authority mismatch: " + ", ".join(creation_mismatches)
+        )
     body = {
         "protocol": PROTOCOL,
-        "bindings": _observed(inputs, manifest_bytes, probes),
+        "authority_sha256": authority_sha256,
+        "bindings": observed,
         "manifest_base64": base64.b64encode(manifest_bytes).decode("ascii"),
         "launcher_command": list(launcher_command),
     }
@@ -142,11 +171,11 @@ def build_receipt(
 
 def _unpack_receipt(receipt: Mapping[str, Any]) -> tuple[dict[str, str], bytes, list[str]]:
     if set(receipt) != {
-        "protocol", "bindings", "manifest_base64", "launcher_command", "receipt_sha256"
+        "protocol", "authority_sha256", "bindings", "manifest_base64", "launcher_command", "receipt_sha256"
     } or receipt.get("protocol") != PROTOCOL:
         raise DeploymentRefused("invalid receipt schema or protocol")
     body = {key: receipt[key] for key in (
-        "protocol", "bindings", "manifest_base64", "launcher_command"
+        "protocol", "authority_sha256", "bindings", "manifest_base64", "launcher_command"
     )}
     if receipt["receipt_sha256"] != _bytes_sha256(_canonical(body)):
         raise DeploymentRefused("receipt SHA mismatch")
@@ -173,12 +202,19 @@ def launch_receipt(
     *,
     inputs: LiveInputs,
     ledger_path: Path,
+    authorized_receipt_sha256: str,
+    receipt_bytes: bytes | None = None,
     launcher: Callable[[Sequence[str]], int],
     probes: Probes = DEFAULT_PROBES,
 ) -> int:
     """Invoke ``launcher`` exactly once only after all six live checks match."""
     _append_event(ledger_path, {"event": "deployment_intent", "protocol": PROTOCOL})
     try:
+        artifact = receipt_bytes if receipt_bytes is not None else receipt_artifact_bytes(receipt)
+        if receipt_bytes is not None and receipt_bytes != receipt_artifact_bytes(receipt):
+            raise DeploymentRefused("receipt artifact is not canonical")
+        if _bytes_sha256(artifact) != authorized_receipt_sha256:
+            raise DeploymentRefused("external authorized receipt SHA mismatch")
         expected, manifest_bytes, command = _unpack_receipt(receipt)
         observed = _observed(inputs, manifest_bytes, probes)
         mismatches = [field for field in FIELDS if observed[field] != expected[field]]
@@ -204,12 +240,15 @@ def _parser() -> argparse.ArgumentParser:
     create.add_argument("--control-root", type=Path, required=True)
     create.add_argument("--runtime-root", type=Path, required=True)
     create.add_argument("--manifest", type=Path, required=True)
+    create.add_argument("--authority", type=Path, required=True)
+    create.add_argument("--authority-sha256", required=True)
     create.add_argument("--model-path", type=Path, required=True)
     create.add_argument("--extension", type=Path, required=True)
     create.add_argument("--output", type=Path, required=True)
     create.add_argument("launcher", nargs=argparse.REMAINDER)
     launch = sub.add_parser("launch")
     launch.add_argument("--receipt", type=Path, required=True)
+    launch.add_argument("--authorized-receipt-sha256", required=True)
     launch.add_argument("--control-root", type=Path, required=True)
     launch.add_argument("--runtime-root", type=Path, required=True)
     launch.add_argument("--model-path", type=Path, required=True)
@@ -223,11 +262,26 @@ def main(argv: Sequence[str] | None = None) -> int:
     inputs = LiveInputs(args.control_root, args.runtime_root, args.model_path, args.extension)
     if args.action == "create-receipt":
         command = args.launcher[1:] if args.launcher[:1] == ["--"] else args.launcher
-        receipt = build_receipt(inputs=inputs, manifest_path=args.manifest, launcher_command=command)
-        args.output.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        authority = json.loads(args.authority.read_text(encoding="utf-8"))
+        receipt = build_receipt(
+            inputs=inputs,
+            manifest_path=args.manifest,
+            launcher_command=command,
+            authority=authority,
+            authorized_authority_sha256=args.authority_sha256,
+        )
+        args.output.write_bytes(receipt_artifact_bytes(receipt))
         return 0
-    receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
-    return launch_receipt(receipt, inputs=inputs, ledger_path=args.ledger, launcher=_run)
+    receipt_bytes = args.receipt.read_bytes()
+    receipt = json.loads(receipt_bytes)
+    return launch_receipt(
+        receipt,
+        inputs=inputs,
+        ledger_path=args.ledger,
+        authorized_receipt_sha256=args.authorized_receipt_sha256,
+        receipt_bytes=receipt_bytes,
+        launcher=_run,
+    )
 
 
 if __name__ == "__main__":
