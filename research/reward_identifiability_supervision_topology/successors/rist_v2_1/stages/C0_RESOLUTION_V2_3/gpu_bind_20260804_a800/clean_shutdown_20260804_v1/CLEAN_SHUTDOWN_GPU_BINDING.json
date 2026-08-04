@@ -1,0 +1,28 @@
+{
+  "protocol": "RIST-C0-v2.3-CLEAN-SHUTDOWN-GPU-BINDING-v1",
+  "status": "BOUND_NOT_AUTHORIZED_TO_SERVE",
+  "controller_commit": "f474d2fe042e5e24de94e6400ba245b5f03aba50",
+  "clean_shutdown_cpu_freeze_sha256": "6c0f59faa50ee5effa431a4e313eabbffd3bb29d8ce5eff71517c6622a03eeaf",
+  "authority_sha256": "8790a2f3092b936a176b93ae4882e2e6568b66a215e8b76f4db9f4d843caf19f",
+  "receipt_artifact_sha256": "6e5a4dd7e21a3dc98450f376fd3607516c75cc7a22a694f0e4ff86d34de65eaf",
+  "receipt_internal_sha256": "77684074b34c74844c55296a583dc6e429a7e24390f2f779fe143779c76cd806",
+  "bindings": {
+    "control_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+    "runtime_commit": "f00b688dff3e4ad35229d059536c975d4c56594f",
+    "manifest_sha256": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
+    "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "gpu_uuid": "GPU-27843744-f647-2fd1-8eb6-1fdb4b3ae7a9",
+    "extension_sha256": "156dcdc80169e797ac799d0b40f687eecb50ba22b3c0fb6251e21684b9962cb6"
+  },
+  "gpu_memory_total_mib": 81920,
+  "previous_gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+  "gpu_uuid_changed": true,
+  "model_requests_permitted": false,
+  "calibration_permitted": false,
+  "qualification_permitted": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "training_permitted": false,
+  "serving_permitted_before_explicit_receipt_authorization": false,
+  "required_authorization": "Explicitly authorize receipt artifact SHA-256 6e5a4dd7e21a3dc98450f376fd3607516c75cc7a22a694f0e4ff86d34de65eaf for the outcome-free Qwen clean-shutdown GPU canary."
+}
