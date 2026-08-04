@@ -1,0 +1,30 @@
+{
+  "protocol": "RIST-C0-v2.3-DEPLOYMENT-REPLAY-RESULT-v1",
+  "audited_freeze_commit": "5a9a62c6dceffd80a35916137b0f68c390b3bcd4",
+  "source_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+  "dev_replay": {
+    "passed": 11,
+    "failed": 0
+  },
+  "heldout_merge_gate": {
+    "passed": 2,
+    "failed": 0
+  },
+  "v2_3_cpu_total": {
+    "passed": 16,
+    "failed": 0
+  },
+  "broad_relevant_cpu_suite": {
+    "collected": 109,
+    "exit_code": 0
+  },
+  "wrong_worktree_launcher_calls": 0,
+  "recomputed_self_hash_launcher_calls": 0,
+  "runtime_manifest_lookup_observed": false,
+  "model_accessed": false,
+  "gpu_used": false,
+  "training_performed": false,
+  "heldout_accessed": false,
+  "bfcl_accessed": false,
+  "status": "PASS_CPU_ONLY_AWAITING_POST_RENT_RECEIPT_BINDING"
+}
