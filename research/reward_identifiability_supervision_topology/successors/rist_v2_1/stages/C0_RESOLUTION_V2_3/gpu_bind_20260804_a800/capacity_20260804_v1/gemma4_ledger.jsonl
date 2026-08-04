@@ -1,0 +1,3 @@
+{"event":"deployment_intent","protocol":"RIST-C0-v2.3-DEPLOYMENT-RECEIPT-v1"}
+{"decision":"ACCEPT","event":"prelaunch_decision","mismatches":[]}
+{"event":"launch_attempt"}

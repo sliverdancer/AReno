@@ -1,0 +1,35 @@
+{
+  "complete": true,
+  "elapsed_seconds": 78.93890863098204,
+  "expected_response_count": 8,
+  "family": "gemma4",
+  "infrastructure_error": null,
+  "outcomes_inspected": false,
+  "peak_memory_mib": 40216.0,
+  "protocol": "RIST-C0-v2.3-CAPACITY-CANARY-v1",
+  "raw_journal_sha256": "c8ba8195453d6f18845daed1f1aed4eac5df977dc15039adc6c5ca0e5687f14d",
+  "request_concurrency": 8,
+  "request_seeds": [
+    18001,
+    18002,
+    18003,
+    18004,
+    18005,
+    18006,
+    18007,
+    18008
+  ],
+  "response_count": 8,
+  "retry_count": 0,
+  "runtime_identity": {
+    "control_commit": "defce3614fbea3763a690cb40c34931059b4e54b",
+    "extension_sha256": "156dcdc80169e797ac799d0b40f687eecb50ba22b3c0fb6251e21684b9962cb6",
+    "family": "gemma4",
+    "gpu_total_memory_mib": 81920,
+    "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+    "manifest_sha256": "de183d3d4e3f4d375f14555ef69888dd909a7efb44580438bbceb59bbe8776fa",
+    "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "runtime_commit": "f00b688dff3e4ad35229d059536c975d4c56594f"
+  },
+  "scientific_result": false
+}

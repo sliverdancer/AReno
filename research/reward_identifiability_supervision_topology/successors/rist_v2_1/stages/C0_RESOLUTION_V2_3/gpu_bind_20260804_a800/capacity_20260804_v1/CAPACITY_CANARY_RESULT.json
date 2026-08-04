@@ -1,0 +1,59 @@
+{
+  "protocol": "RIST-C0-v2.3-CAPACITY-CANARY-RESULT-v1",
+  "status": "PASS_RESPONSE_CAPACITY_WITH_POST_COLLECTION_SHUTDOWN_ANOMALY",
+  "controller_commit": "1b83201d397f7723b5c7f2a051388e8b8a779007",
+  "frozen_source_commit": "7b2bffd61c1a96ed73ed45137cf2c204015e51ed",
+  "gpu_uuid": "GPU-10daada5-2347-5f45-92ae-cb5c3ddb646c",
+  "serving_start_epoch": 1785849113,
+  "final_gpu_check_epoch": 1785849477,
+  "total_serving_wall_seconds": 364,
+  "authorized_serving_limit_seconds": 1800,
+  "final_gpu_memory_used_mib": 0,
+  "final_compute_process_count": 0,
+  "models": {
+    "qwen3": {
+      "complete": true,
+      "response_count": 8,
+      "expected_response_count": 8,
+      "request_concurrency": 8,
+      "retry_count": 0,
+      "infrastructure_error": null,
+      "elapsed_seconds": 19.215240811929107,
+      "peak_memory_mib": 39266.0,
+      "raw_journal_sha256": "77d99b1c4d3b97e756e38c5cd70b96c245ccdb8822418d7e9ceaccc42de3845f",
+      "result_sha256": "6510f9c6d08722f0cf39c17e52f04f9f490d1975f9cb2d85fc2551f82d1407f1",
+      "deployment_accepted": true,
+      "exclusive_bound_process_before_requests": true,
+      "post_collection_shutdown_clean": false
+    },
+    "gemma4": {
+      "complete": true,
+      "response_count": 8,
+      "expected_response_count": 8,
+      "request_concurrency": 8,
+      "retry_count": 0,
+      "infrastructure_error": null,
+      "elapsed_seconds": 78.93890863098204,
+      "peak_memory_mib": 40216.0,
+      "raw_journal_sha256": "c8ba8195453d6f18845daed1f1aed4eac5df977dc15039adc6c5ca0e5687f14d",
+      "result_sha256": "4534474ec027b2f1f31380a2f75108d2315a984b83219605f24825807f142376",
+      "deployment_accepted": true,
+      "exclusive_bound_process_before_requests": true,
+      "post_collection_shutdown_clean": false
+    }
+  },
+  "shutdown_anomaly": {
+    "scope": "after_complete_result_and_journal_write",
+    "description": "SIGTERM of the verified process group caused the rollout worker to exit before Op.ROLLOUT_SESSION_END reported, while the server finished and GPU memory returned to zero.",
+    "invalidates_capacity_responses": false,
+    "must_be_fixed_before_longer_scientific_collection": true
+  },
+  "outcomes_inspected": false,
+  "scientific_result": false,
+  "calibration_accessed": false,
+  "qualification_accessed": false,
+  "heldout_accessed": false,
+  "bfcl_accessed": false,
+  "training_performed": false,
+  "next_gate": "FIX_CLEAN_SHUTDOWN_THEN_AUTHORIZE_CALIBRATION_SEPARATELY"
+}
