@@ -229,9 +229,7 @@ def run_canary(
 
     expected_server_python = _expected_server_python(receipt)
     compute_processes = live_compute_process_names()
-    if not compute_processes or any(
-        process != expected_server_python for process in compute_processes
-    ):
+    if compute_processes != [expected_server_python]:
         raise ValueError("capacity canary requires an exclusive bound server process")
 
     descriptor = _reserve_journal(journal_path)

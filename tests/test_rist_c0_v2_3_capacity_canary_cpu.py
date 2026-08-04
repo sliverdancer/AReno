@@ -239,6 +239,20 @@ def test_v2_3_capacity_canary_rejects_external_compute_process_before_requests(t
     assert calls == []
 
 
+def test_v2_3_capacity_canary_rejects_duplicate_bound_process_before_requests(tmp_path):
+    module = _load()
+    calls = []
+    expected = "/root/autodl-tmp/rist_v2_3/venv/bin/python"
+    with pytest.raises(ValueError, match="exclusive bound server process"):
+        _run(
+            module,
+            tmp_path,
+            live_compute_process_names=lambda: [expected, expected],
+            post_json=calls.append,
+        )
+    assert calls == []
+
+
 def test_v2_3_capacity_freeze_verifier_rejects_binding_semantic_tampering(
     tmp_path, monkeypatch
 ):
