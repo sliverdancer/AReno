@@ -1,0 +1,28 @@
+{
+  "protocol": "RIST-C0-v2.3-CLEAN-SHUTDOWN-CPU-FREEZE-v1",
+  "source_commit": "3dd6af7e0c6d17acaeb41bde459e217fe3837c40",
+  "cpu_test_result": "29 passed across clean-shutdown, deployment, capacity, and pool tests",
+  "signal_targets": [
+    "direct_server_child"
+  ],
+  "process_group_signaling_permitted": false,
+  "capacity_result_reinterpreted": false,
+  "gpu_validated": false,
+  "gpu_execution_permitted_by_freeze": false,
+  "model_requests_permitted": false,
+  "calibration_permitted": false,
+  "qualification_permitted": false,
+  "heldout_permitted": false,
+  "bfcl_permitted": false,
+  "training_permitted": false,
+  "next_gate": "SEPARATELY_AUTHORIZED_OUTCOME_FREE_GPU_SHUTDOWN_CANARY",
+  "files": {
+    "CLEAN_SHUTDOWN_PROTOCOL.md": "3aaa46a62497f4ee22ec03a341d75430990e9ef169127317d6dc6f5ce36c6429",
+    "deployment_entrypoint.py": "e6c3717da4fd5ca3562fd1d27914996dd0ddfdc22e2a4873e5f21dbdc1fdeb7a",
+    "graceful_deployment_entrypoint.py": "139f4063a53d02d941264eb1bcf7d17103a7e26f4a953bc04fda453b1cad0487",
+    "verify_clean_shutdown_cpu_freeze.py": "ba4a9a5d3d147da492dcbfecb5aeace16f3564f245bd07b258bcaff8f18405db",
+    "gpu_bind_20260804_a800/capacity_20260804_v1/CAPACITY_CANARY_RESULT.json": "cb32b2f6773ba61a08e7b1d926086980429c9f84a7bc890f52a2fd60d79c1e27",
+    "../../../../../../tests/test_rist_c0_v2_3_clean_shutdown_cpu.py": "4bb9389ad116250185daf998be63e8b82b9204ba949abf9074d3e4e5249b5821",
+    "../../../../../../tests/test_rist_c0_v2_3_deployment_cpu.py": "49d2361cf2c837dc9aa82566978fd322a75588798351deebb3b490a0e1d85ee9"
+  }
+}
