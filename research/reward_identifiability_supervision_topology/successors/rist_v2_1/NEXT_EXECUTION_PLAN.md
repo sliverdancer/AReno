@@ -1,6 +1,6 @@
 # RIST-v2.1 outcome execution plan
 
-Status: `C0_V2_3_P0_CPU_FREEZE_PASS_GPU_OFFLINE`
+Status: `TERMINAL_C0_V2_3_CALIBRATION_NO_RERUN`
 
 The objective is not satisfied by a passing tokenizer fixture or a short
 serving check. It requires observed training-seed outcomes for the synthetic
@@ -27,15 +27,17 @@ calibration, development curves, and confirmatory evaluation separate.
    pre-request identity bound superseded source commit `2674e101` instead of
    required runtime commit `f00b688d`. Fail-closed zero-retry rules consume and
    kill v2.2; Gemma and all scientific splits remained unopened.
-3. **C0 v2.3 split calibration/qualification — CPU-frozen, GPU unexecuted.**
+3. **C0 v2.3 split calibration/qualification — terminal before server launch.**
    A fresh disjoint pool and a single fail-closed deployment entrypoint passed
    two-family capacity and clean-shutdown canaries. Scientific execution now
    collects Qwen and Gemma calibration only (2,048 trajectories), freezes a
    common whole-cell map, and constructs the separate 2,048-trajectory
    qualification manifest only after calibration GO. Both stages use
-   concurrency eight and zero retry. A GPU UUID change requires fresh binding
-   and outcome-free clean-shutdown admission. The prior A800 endpoint is
-   currently unreachable; no scientific outcome has been opened.
+   concurrency eight and zero retry. On the single-worktree `fe499f3`
+   deployment, Qwen failed before ledger creation because the runner invoked
+   an unavailable `python3`. No server or outcome was opened. Infrastructure
+   failure consumes the frozen stage, so Gemma and qualification did not run
+   and v2.3 may not be repaired or rerun.
 4. **E1 capacity — admission CPU-frozen, authorized, unexecuted.** The v2.3
    admission builder accepts only `PASS_C0_V2_3_TO_E1_CAPACITY`, retains whole
    D3 cells, and selects exactly four tasks from the lexicographically first
@@ -84,7 +86,8 @@ locks, but C0 v2.2 is terminal because the first Qwen canary used a superseded
 control manifest to build its runtime identity. Post-hoc correction and rerun
 are prohibited. The fresh v2.3 successor used new tasks and passed the
 non-scientific A800 capacity and clean-shutdown gates. Its split scientific
-protocol and CPU freeze now pass, but the last A800 SSH endpoint is offline. No
-calibration/qualification outcome, E1 training, held-out/BFCL, Tau3 policy, P3,
-or M1-M6 access has occurred. Standing GPU authorization does not bypass the
-ordered GO/KILL gates.
+protocol and CPU freeze passed. Its first Qwen calibration job then failed
+before server launch on the missing `python3` executable. No calibration or
+qualification outcome, E1 training, held-out/BFCL, Tau3 policy, P3, or M1-M6
+access occurred. C0 v2.3 is terminal and standing GPU authorization does not
+bypass this ordered KILL gate.

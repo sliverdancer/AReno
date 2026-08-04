@@ -2,7 +2,7 @@
 
 Branch: `research/rist-v2-instrument-reconstruction`
 
-Status: `C0_V2_3_P0_CPU_FREEZE_PASS_GPU_OFFLINE`
+Status: `C0_V2_3_CALIBRATION_TERMINAL_PRELAUNCH_INFRASTRUCTURE_FAILURE`
 
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
@@ -86,9 +86,11 @@ gate, A800 capacity canary, and clean-shutdown canary passed without scientific
 access. Its scientific protocol now separates 2,048 calibration trajectories
 from 2,048 qualification trajectories; qualification cannot be constructed
 until calibration freezes at least two common low and two common high whole
-cells. The CPU freeze passes and no scientific outcome has been opened. The
-last A800 endpoint is offline, so calibration awaits a live 80 GB GPU, fresh
-UUID binding, and outcome-free clean-shutdown admission. E1 and training remain
+cells. The CPU freeze passes and no scientific outcome has been opened. On the
+single-worktree `fe499f3` deployment, the first Qwen calibration job failed
+before deployment-ledger creation because the runner invoked an unavailable
+`python3` executable. No server or request started, but the frozen zero-retry
+rule makes v2.3 terminal without repair or rerun. E1 and training remain
 unopened by the C0 gate despite their standing authorization. The E1 v2.3
 admission builder is CPU-frozen and will accept only a two-family qualification
 transport PASS; it cannot consume calibration-only or partial-family evidence.

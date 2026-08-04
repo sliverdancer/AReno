@@ -11,14 +11,16 @@ zero-retry rule makes C0 v2.2 terminal before Gemma or scientific access. E1
 one-step GSPO/GRPO capacity remains unexecuted. The fresh, disjoint C0 v2.3
 successor passed two-family A800 response capacity and a separate clean-shutdown
 canary without scientific access. Its 2,048-calibration then 2,048-qualification
-protocol and CPU freeze pass, but the GPU endpoint is offline. Training-effect
-evidence has not started.
+protocol and CPU freeze passed. Its first Qwen calibration job failed before
+deployment-ledger creation because the frozen runner could not resolve
+`python3`; no server, request, trajectory, or outcome access occurred. The
+zero-retry rule makes v2.3 terminal. Training-effect evidence has not started.
 
 ## Required empirical blocks
 
 | Block | Minimum evidence | Current |
 |---|---|---|
-| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0 v2.1 retired; C0 v2.2 terminal; C0 v2.3 capacity and clean shutdown pass, split scientific CPU freeze passes, outcomes unopened |
+| Synthetic causal anchor | resolution bands x AF/LF/AN/LN, powered seeds | C0 v2.1 retired; C0 v2.2 terminal; C0 v2.3 terminal on a prelaunch infrastructure failure with outcomes unopened |
 | Algorithm replication | GSPO and GRPO | design frozen; no runs |
 | Model-family replication | at least 3 checkpoints across 2 families | Qwen3-0.6B and Gemma4 E2B pass runtime treatment qualification but E1 is unexecuted; M0 outcome-blindly preregisters Qwen3-1.7B as the provisional third checkpoint, which does not count until metadata, weights, runtime treatment, C0 transport, both algorithms, and powered replication pass |
 | Exact content treatment | full call versus tool-name-only | exact public treatment passes 32 fresh runtime-token cases independently for Qwen and Gemma |
@@ -53,13 +55,13 @@ reversal, leakage, or a new direct substitute close the main-track route.
 
 ## Current route decision
 
-The research question and the v2.3 execution route remain open. T0b v1.2 passes
+The research question remains scientifically unresolved, but the v2.3 execution route is terminal. T0b v1.2 passes
 the two-family runtime treatment gate; C0 v2.2 remains terminal and contributes
 no scientific evidence. C0 v2.3 satisfies the required new control/runtime
 boundary, task-pool disjointness, response capacity, clean shutdown, and split
-CPU freeze. It does not yet justify a main-conference upgrade because no
-calibration, qualification, or training outcome exists. The next upgrade hook
-is calibration-to-qualification transport, not engineering readiness.
+CPU freeze, then failed before its first server launch. It does not justify a
+main-conference upgrade because no calibration, qualification, or training
+outcome exists. There is no next v2.3 upgrade hook.
 
 The third-checkpoint gap is now preregistered rather than filled: the frozen
 outcome-blind rule selects Qwen3-1.7B provisionally because it reuses the existing
