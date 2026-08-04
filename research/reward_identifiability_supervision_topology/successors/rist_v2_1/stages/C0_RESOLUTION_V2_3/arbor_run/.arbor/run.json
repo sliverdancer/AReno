@@ -1,0 +1,15 @@
+{
+  "objective": "Maximize fail-before-request deployment integrity for RIST C0 v2.3 while preserving fresh-pool isolation and one executable entrypoint",
+  "metric_direction": "max",
+  "dev_eval": "python3 -m pytest -q tests/test_rist_c0_v2_3_deployment_cpu.py -k dev_replay",
+  "test_eval": "python3 -m pytest -q tests/test_rist_c0_v2_3_deployment_cpu.py -k merge_gate && python3 research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/C0_RESOLUTION_V2_3/verify_cpu_freeze.py --freeze research/reward_identifiability_supervision_topology/successors/rist_v2_1/stages/C0_RESOLUTION_V2_3/CPU_FREEZE.json",
+  "material": "/tmp/areno-rist-v2",
+  "branching": 3,
+  "max_depth": 2,
+  "budget_cycles": 6,
+  "cycles_used": 1,
+  "best_node": null,
+  "best_test_score": null,
+  "best_branch_ref": null,
+  "created_at": 1785813790
+}

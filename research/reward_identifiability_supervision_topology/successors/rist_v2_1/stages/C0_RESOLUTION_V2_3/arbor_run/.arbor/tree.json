@@ -1,0 +1,86 @@
+{
+  "_counter": 4,
+  "root": "n0",
+  "nodes": {
+    "n0": {
+      "id": "n0",
+      "parent": null,
+      "depth": 0,
+      "status": "root",
+      "hypothesis": "Maximize fail-before-request deployment integrity for RIST C0 v2.3 while preserving fresh-pool isolation and one executable entrypoint",
+      "insight": "[from n1] A single measured-identity gate can prevent the v2.2 class of pre-request worktree confusion when launcher invocation is structurally downstream of all checks.\n[from n2] The runtime should consume a closed control artifact, never a manifest path that can resolve inside the runtime worktree.\n[from n3] An append-only intent/decision ledger provides independent evidence that a failed identity gate never crossed the subprocess boundary.",
+      "metadata": {
+        "dev_score": null,
+        "test_score": null,
+        "result": "",
+        "branch_ref": null
+      },
+      "created_at": 1785813790,
+      "updated_at": 1785814459
+    },
+    "n1": {
+      "id": "n1",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "A single immutable launch envelope that validates every identity field and only then invokes a supplied launcher can make all mismatches fail before any request-capable process starts.",
+      "insight": "Identity measurement and request-capable launch must share one fail-closed entrypoint; complete equality validation must precede launcher invocation.",
+      "metadata": {
+        "dev_score": 8.0,
+        "test_score": null,
+        "result": "Immutable six-field entrypoint passed eight CPU dev replays; every mismatch and wrong runtime worktree produced zero launcher calls.",
+        "branch_ref": "302fbce16764e65ca232bf1368aec8e845fd71c3"
+      },
+      "created_at": 1785813795,
+      "updated_at": 1785814242
+    },
+    "n2": {
+      "id": "n2",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "A control-generated deployment receipt consumed by a minimal runtime wrapper can prevent worktree confusion while preserving separate control and runtime commits.",
+      "insight": "Embedding manifest bytes in a control-side receipt removes runtime manifest-path discovery; a whole-receipt hash binds the six required identities.",
+      "metadata": {
+        "dev_score": 4.0,
+        "test_score": null,
+        "result": "SHA-256-bound control receipt embedded exact manifest bytes and rejected every tested mismatch before launcher invocation.",
+        "branch_ref": "50338c5134d86d42fa66c1e9a387cf6600662a4b"
+      },
+      "created_at": 1785813799,
+      "updated_at": 1785814264
+    },
+    "n3": {
+      "id": "n3",
+      "parent": "n0",
+      "depth": 1,
+      "status": "executed",
+      "hypothesis": "An append-only launch-intent ledger plus subprocess replay can prove zero request-capable launch attempts under wrong-worktree and combined identity mismatches.",
+      "insight": "An append-only launch-intent and decision ledger independently proves that mismatch rejection did not cross the subprocess boundary.\n[from n4] The robust deployment primitive is one control-generated self-contained receipt, live six-field measurement, and a durable decision boundary before any launcher invocation.",
+      "metadata": {
+        "dev_score": 9.0,
+        "test_score": null,
+        "result": "Nine replay tests passed: six individual mismatches and combined wrong-worktree rejection produce no launch_attempt and zero fake-launcher calls.",
+        "branch_ref": "c7b374e232916db1f70793645f2ad268d52c3059"
+      },
+      "created_at": 1785813803,
+      "updated_at": 1785814884
+    },
+    "n4": {
+      "id": "n4",
+      "parent": "n3",
+      "depth": 2,
+      "status": "executed",
+      "hypothesis": "Combining the append-only decision ledger with an embedded control-generated manifest receipt and live probes in one entrypoint removes runtime manifest-path ambiguity while preserving independently auditable zero-launch rejection.",
+      "insight": "A self-contained control receipt plus live identity probes removes runtime manifest resolution; launch_attempt after one complete comparison makes fail-before-request testable.",
+      "metadata": {
+        "dev_score": 9.0,
+        "test_score": null,
+        "result": "Nine dev replay tests passed for the integrated receipt, live six-field probes, append-only ledger, and one launch boundary.",
+        "branch_ref": "4ab5b6a72e48f4cddbc41b3baf57ab85ab8c1c6f"
+      },
+      "created_at": 1785814468,
+      "updated_at": 1785814879
+    }
+  }
+}

@@ -1021,9 +1021,9 @@ def test_v2_1_t0b_v1_2_gpu_result_passes_measurement_not_main_track():
         assert actual == digest
 
 
-def test_v2_1_goal_ledger_keeps_every_required_outcome_open():
+def test_v2_1_goal_ledger_closes_failed_protocol_but_keeps_objective_open():
     ledger = __import__("json").loads((V2_1 / "GOAL_EXECUTION_LEDGER.json").read_text())
-    assert ledger["status"] == "ACTIVE_NOT_ACHIEVED"
+    assert ledger["status"] == "TERMINAL_CURRENT_PROTOCOL_NOT_ACHIEVED"
     assert set(ledger["blocks"]) == {
         "runtime_treatment_qualification",
         "stable_interaction",
