@@ -1,0 +1,63 @@
+{
+  "protocol": "RIST-R0-REFRESH-v2.0",
+  "searched_at": "2026-08-05",
+  "scope": "incremental 2026-08-01 through 2026-08-05 plus targeted backward recheck",
+  "sources": [
+    {
+      "source": "arXiv API",
+      "query": "submittedDate:[202608010000 TO 202608052359] AND (tool AND (reinforcement learning OR credit assignment OR supervision))",
+      "returned": 26,
+      "raw_sha256": "7def01ffb796b99d663c8afb71cc70d0f771fa266f5a96870320c96bfe0cf92f"
+    },
+    {
+      "source": "arXiv API",
+      "query": "submittedDate:[202608010000 TO 202608052359] AND (tool calling OR function calling OR tool-integrated OR tool-use agent)",
+      "returned": 33,
+      "raw_sha256": "a0c9eabfc1e9fb1f744ef554423d759e87f4cfac23ab351880d902a49bf4c9e5"
+    },
+    {
+      "source": "arXiv API",
+      "query": "lastUpdatedDate:[202608010000 TO 202608052359] with the same broad concepts",
+      "returned": 33,
+      "raw_sha256": "261907aaa5b0d0451c6b276006e536c099dbc90c188d4791229d022617044679"
+    },
+    {
+      "source": "OpenAlex API",
+      "query": "tool calling GRPO action token mask supervision",
+      "returned": 207,
+      "retrieved_page_size": 100,
+      "raw_sha256": "76ec8906701d3461c7f81d4a7990446ccc0698bfbbd575010fb7ecb01bdc37b1"
+    },
+    {
+      "source": "Semantic Scholar API",
+      "query": "multi-turn tool reinforcement learning credit assignment supervision",
+      "status": "HTTP_429",
+      "interpretation": "retrieval limitation, not negative evidence"
+    },
+    {
+      "source": "ACL Anthology and primary paper pages",
+      "query": "targeted multi-turn tool RL, credit assignment, and supervision checks",
+      "status": "COMPLETED_TARGETED"
+    }
+  ],
+  "incremental_arxiv_candidates": [
+    "2608.04007",
+    "2608.03468",
+    "2608.03403",
+    "2608.03071",
+    "2608.02391",
+    "2608.02276",
+    "2608.02217",
+    "2608.02110",
+    "2608.00485"
+  ],
+  "backward_recheck_candidates": [
+    "2606.30251",
+    "2606.26027",
+    "2606.16215",
+    "2606.14179",
+    "2606.12634",
+    "2605.08013"
+  ],
+  "raw_artifact_note": "Hashes bind the temporary raw responses used for this adjudication; the durable report records all promoted candidates and primary URLs."
+}

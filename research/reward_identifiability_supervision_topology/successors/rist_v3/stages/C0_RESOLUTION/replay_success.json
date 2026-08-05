@@ -1,0 +1,12 @@
+{
+  "decision": "ACCEPT",
+  "gpu_used": false,
+  "launch_attempt_count": 1,
+  "marker_created": true,
+  "mode": "success",
+  "model_accessed": false,
+  "protocol": "RIST-C0-v3.0-EXACT-DEPLOYMENT-REPLAY-v1",
+  "request_sent": false,
+  "returncode": 0,
+  "training_performed": false
+}

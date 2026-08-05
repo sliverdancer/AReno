@@ -1,0 +1,12 @@
+{
+  "decision": "REJECT",
+  "gpu_used": false,
+  "launch_attempt_count": 0,
+  "marker_created": false,
+  "mode": "wrong_interpreter",
+  "model_accessed": false,
+  "protocol": "RIST-C0-v3.0-EXACT-DEPLOYMENT-REPLAY-v1",
+  "request_sent": false,
+  "returncode": 2,
+  "training_performed": false
+}

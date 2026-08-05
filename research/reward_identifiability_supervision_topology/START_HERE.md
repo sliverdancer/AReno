@@ -4,7 +4,7 @@ Branch: `research/reward-identifiability-supervision-topology`
 
 Protocol family: `RIST-v1`
 
-Status: `RIST_V1_PARENT_INVALID__V1_1_SUCCESSOR_TERMINAL`
+Status: `RIST_V3_CPU_PROTOCOL_FOUNDATION_PASS_GPU_CLOSED`
 
 ## Owner goal
 
@@ -45,6 +45,16 @@ with incomplete retained evidence. The formal result is
 held-out evaluation occurred, and P3 must not open. See
 `successors/rist_v1_1/START_HERE.md` for the exact claim boundary.
 
+Later v2 lineages are also terminal. Most recently, C0 v2.3 failed before any
+server launch or scientific request because its frozen runner invoked an absent
+interpreter name. A 2026-08-05 incremental full-text novelty audit found no
+single direct substitute under the unchanged five-criterion KILL rule and
+opened `successors/rist_v3/` as a strictly independent lineage. Its new task
+pool, seeds, access gate, and interpreter-bound deployment replay pass CPU
+checks, but the v3 collector/finalizer and separate independent audit are not
+yet frozen. GPU and model access remain closed. Start new work from
+`successors/rist_v3/START_HERE.md`.
+
 ## First-turn behavior
 
 1. Read this file and `RESEARCH_PLAN.md`.
@@ -73,3 +83,6 @@ support the factorial estimand.
   `stages/P2/hook_result.json`
 - raw evidence manifest: `stages/P2/raw/MANIFEST.json`
 - terminal successor handoff: `successors/rist_v1_1/START_HERE.md`
+- latest novelty refresh:
+  `successors/rist_v2_1/stages/R0_NOVELTY_REFRESH_20260805/`
+- current independent successor: `successors/rist_v3/START_HERE.md`

@@ -1,0 +1,94 @@
+{
+  "protocol": "RIST-R0-REFRESH-v2.0",
+  "criteria": {
+    "c1": "multi-turn tool-agent learning",
+    "c2": "reward resolution or variation is a designed or measured moderator",
+    "c3": "supervision breadth or call-content eligibility is experimentally varied",
+    "c4": "moderator-by-supervision interaction is estimated or central",
+    "c5": "strict success, stability, or sample-efficiency evidence"
+  },
+  "works": [
+    {
+      "id": "arxiv:2608.04007",
+      "title": "TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning",
+      "full_text": "https://arxiv.org/html/2608.04007v1",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Turn-level execution-conditioned hindsight is normalized across sibling rollouts and modulates GRPO advantages.",
+      "non_overlap": "No pre-treatment strict-reward-resolution moderator and no AF/LF/AN/LN eligibility experiment."
+    },
+    {
+      "id": "arxiv:2608.00485v2",
+      "title": "SERL-SQL: Selective Hindsight Distillation for Text-to-SQL Reinforcement Agentic Learning",
+      "full_text": "https://arxiv.org/abs/2608.00485",
+      "flags": {"c1": true, "c2": false, "c3": true, "c4": false, "c5": true},
+      "closest_threat": "Ablates a selective mask that applies hindsight reweighting only to executable SQL and tool-action spans.",
+      "non_overlap": "Domain-specific action versus non-action weighting; no all/last or name/full crossing and no reward-resolution moderation."
+    },
+    {
+      "id": "arxiv:2606.30251",
+      "title": "TACO: Tool-Augmented Credit Optimization for Agentic Tool Use",
+      "full_text": "https://arxiv.org/html/2606.30251v1",
+      "flags": {"c1": true, "c2": false, "c3": true, "c4": false, "c5": true},
+      "closest_threat": "Outcome-gated routing masks outcome advantage to responsible action segments and adds call-level contribution credit.",
+      "non_overlap": "Call contribution is an endogenous credit signal, not a pre-training group-reward-resolution moderator; no four-cell eligibility factorial."
+    },
+    {
+      "id": "arxiv:2606.16215",
+      "title": "PACT: Privileged Trace Co-Training for Multi-Turn Tool-Use Agents",
+      "full_text": "https://arxiv.org/html/2606.16215v1",
+      "flags": {"c1": true, "c2": false, "c3": true, "c4": false, "c5": true},
+      "closest_threat": "Component-aware SFT supervises selected reasoning prefixes and complete tool-call spans and ablates tool-call supervision.",
+      "non_overlap": "Changes expert-trace SFT/RL composition and annealing; it neither measures conditional reward resolution nor tests all/last and name/full policy-gradient eligibility."
+    },
+    {
+      "id": "arxiv:2606.26027",
+      "title": "Why Multi-Step Tool-Use Reinforcement Learning Collapses and How Supervisory Signals Fix It",
+      "full_text": "https://arxiv.org/html/2606.26027v1",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Compares multiple SFT/RL supervisory regimes and directly studies catastrophic tool-format collapse and generalization.",
+      "non_overlap": "Supervision source and schedule are varied, not action-span eligibility; reward resolution is not a moderator."
+    },
+    {
+      "id": "arxiv:2605.08013",
+      "title": "Learning CLI Agents with Structured Action Credit under Selective Observation",
+      "full_text": "https://arxiv.org/html/2605.08013v1",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Constructs turn-level action advantages from episode-relative feedback and structured CLI subchains.",
+      "non_overlap": "Changes the credit estimator and observation policy rather than experimentally crossing fixed action-span masks with reward resolution."
+    },
+    {
+      "id": "arxiv:2606.12634v3",
+      "title": "Keep Policy Gradient in Charge: Sibling-Guided Credit Distillation for Long-Horizon Tool-Use Agents",
+      "full_text": "https://arxiv.org/html/2606.12634v3",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Uses mixed successful/failed sibling rollouts to reshape token advantages and reports AppWorld and tau3 outcomes.",
+      "non_overlap": "Sibling contrast creates a credit signal; it does not condition a supervision-topology treatment effect on independently measured reward resolution."
+    },
+    {
+      "id": "arxiv:2606.14179",
+      "title": "CacheRL: Multi-Turn Tool-Calling Agents via Cached Rollouts and Hybrid Reward",
+      "full_text": "https://arxiv.org/html/2606.14179v1",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Uses token masking, hybrid reward, and iterative SFT plus GRPO in multi-step tool calling.",
+      "non_overlap": "Masking protects cached-environment fidelity and is not the causal all/last by name/full treatment."
+    },
+    {
+      "id": "arxiv:2608.03071",
+      "title": "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
+      "full_text": "https://arxiv.org/abs/2608.03071",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Directly isolates tool-parameter correctness and provides difficulty-graded evaluation.",
+      "non_overlap": "Probe filtering/reranking targets parameter correctness without group-relative reward resolution or supervision-topology training arms."
+    },
+    {
+      "id": "arxiv:2608.03468",
+      "title": "ToolLIFT: Lifting Tool-Specific Trajectories into Function-Level Graphs for Generalizable Tool Planning",
+      "full_text": "https://arxiv.org/abs/2608.03468",
+      "flags": {"c1": true, "c2": false, "c3": false, "c4": false, "c5": true},
+      "closest_threat": "Uses source-gated and skill-specific rewards for multi-call workflow learning.",
+      "non_overlap": "Optimizes workflow abstraction and reward design, not static action-span eligibility under a resolution moderator."
+    }
+  ],
+  "direct_substitutes": [],
+  "decision": "PASS_NOVELTY_OPEN_STRICT_V3"
+}

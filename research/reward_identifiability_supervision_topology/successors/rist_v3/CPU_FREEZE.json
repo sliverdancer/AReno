@@ -1,0 +1,57 @@
+{
+  "protocol": "RIST-v3.0-CPU-PROTOCOL-FOUNDATION-v1",
+  "status": "PASS_CPU_PROTOCOL_FOUNDATION_GPU_CLOSED",
+  "novelty_gate": "RIST-R0-REFRESH-v2.0:PASS_NOVELTY_OPEN_STRICT_V3",
+  "pool": {
+    "protocol": "RIST-C0-v3.0-FRESH-POOL-v1",
+    "manifest_sha256": "e1967fa330268ff4e3317d56e75a608635a5b4fbafc63a11191df34633e22cfe",
+    "calibration_sha256": "148966b05d2f119da1f6347c37d7852bfd5b2a957e84ad6fc0aa773b3035bf14",
+    "qualification_sha256": "220122ffdacbe9176da397e1a40fede904bbc0d0a24b14b316e77bffc633e63c",
+    "capacity_canary_sha256": "31cc3ff80467325b4236c0e5faa66bd5357cbb4240f3f94aa36ce54fd0c45715",
+    "task_count": 65,
+    "task_signatures_internally_unique": true,
+    "task_signatures_disjoint_from_prior_lineages": true,
+    "all_seed_count": 74,
+    "seeds_internally_unique": true,
+    "seeds_disjoint_from_prior_lineages": true,
+    "deterministic_rebuild_match": true
+  },
+  "deployment_replay": {
+    "success": "ACCEPT_ONE_CHILD_LAUNCH",
+    "wrong_worktree": "REJECT_ZERO_CHILD_LAUNCH",
+    "wrong_interpreter": "REJECT_ZERO_CHILD_LAUNCH",
+    "model_accessed": false,
+    "request_sent": false,
+    "gpu_used": false
+  },
+  "access_boundary": {
+    "calibration_reads_qualification": false,
+    "qualification_requires_exact_admission": true,
+    "heldout_permitted": false,
+    "bfcl_permitted": false,
+    "training_permitted": false
+  },
+  "cpu_tests": {
+    "command": "python3 -m pytest tests/test_rist_v3_cpu.py -q",
+    "passed": 8,
+    "failed": 0
+  },
+  "combined_regression": {
+    "command": "python3 -m pytest tests/test_rist_v3_cpu.py tests/test_rist_c0_v2_3_deployment_cpu.py tests/test_rist_c0_v2_3_scientific_cpu.py -q",
+    "passed": 30,
+    "failed": 0
+  },
+  "source_commit_binding": "REQUIRED_WHEN_A_CLEAN_DEPLOYMENT_MANIFEST_IS_CREATED",
+  "remaining_gpu_blockers": [
+    "freeze v3 scientific request collector and terminal finalizer",
+    "bind a clean source commit and immutable deployment manifest",
+    "perform a separate independent audit of the complete v3 runtime",
+    "obtain a new explicit GPU authorization"
+  ],
+  "gpu_authorized": false,
+  "model_access_authorized": false,
+  "qualification_authorized": false,
+  "training_authorized": false,
+  "heldout_authorized": false,
+  "bfcl_authorized": false
+}

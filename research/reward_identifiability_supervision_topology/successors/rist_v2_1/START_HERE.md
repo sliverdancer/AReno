@@ -4,6 +4,10 @@ Branch: `research/rist-v2-instrument-reconstruction`
 
 Status: `C0_V2_3_CALIBRATION_TERMINAL_PRELAUNCH_INFRASTRUCTURE_FAILURE`
 
+Successor note: the 2026-08-05 novelty refresh passed the unchanged direct-
+substitute gate and opened `../rist_v3/`. v2.3 remains terminal and is not a
+runtime dependency or outcome source for v3.
+
 Parent terminal result: `../rist_v2/stages/D2/stage_result.json`
 
 ## Scope

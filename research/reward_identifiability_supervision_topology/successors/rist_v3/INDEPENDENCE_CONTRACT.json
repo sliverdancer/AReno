@@ -1,0 +1,33 @@
+{
+  "protocol": "RIST-v3-INDEPENDENCE-v1",
+  "opened_by": "RIST-R0-REFRESH-v2.0:PASS_NOVELTY_OPEN_STRICT_V3",
+  "parent_protocols_terminal": ["RIST-C0-v2.1", "RIST-C0-v2.2", "RIST-C0-v2.3"],
+  "forbidden_reuse": [
+    "task signatures",
+    "canary seeds",
+    "calibration seeds",
+    "qualification seeds",
+    "deployment receipts",
+    "GPU identities",
+    "runtime ledgers",
+    "trajectory bytes",
+    "outcomes",
+    "cell selections",
+    "admission decisions",
+    "result directories"
+  ],
+  "allowed_code_heritage": [
+    "public task grammar",
+    "Wilson interval formula",
+    "generic canonical JSON and SHA-256 helpers"
+  ],
+  "single_worktree_required": true,
+  "interpreter_identity_required": true,
+  "exact_nested_launch_replay_required": true,
+  "qualification_sealed_until_calibration_go": true,
+  "gpu_authorized": false,
+  "model_access_authorized": false,
+  "training_authorized": false,
+  "heldout_authorized": false,
+  "bfcl_authorized": false
+}

@@ -1,0 +1,12 @@
+{
+  "protocol": "RIST-R0-REFRESH-v2.0",
+  "completed_at": "2026-08-05",
+  "decision": "PASS_NOVELTY_OPEN_STRICT_V3",
+  "direct_substitute_count": 0,
+  "blocked_full_text_count": 0,
+  "highest_threats": ["PACT", "TurnSight", "SERL-SQL", "TACO", "Why Multi-Step Tool-Use Reinforcement Learning Collapses and How Supervisory Signals Fix It"],
+  "v3_authority": "CPU_ONLY_INDEPENDENT_CONSTRUCTION",
+  "gpu_authorized": false,
+  "model_access_authorized": false,
+  "sealed_eval_access_authorized": false
+}
