@@ -1,6 +1,7 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import subprocess
 import sys
@@ -171,3 +172,170 @@ def test_v3_qualification_requires_exact_admission(tmp_path):
     assert manifest["qualification_permitted"] is True
     assert manifest["calibration_permitted"] is False
     assert manifest["training_permitted"] is False
+
+def _small_collection_fixture(tmp_path: Path) -> tuple[dict, dict, dict]:
+    source_rows = [
+        json.loads(line)
+        for line in (STAGE / "data/calibration.jsonl").read_text(encoding="utf-8").splitlines()[:2]
+    ]
+    task_file = tmp_path / "calibration.small.jsonl"
+    task_file.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in source_rows),
+        encoding="utf-8",
+    )
+    pool = {
+        "protocol": "RIST-C0-v3.0-FRESH-POOL-v1",
+        "splits": {
+            "calibration": {
+                "file": task_file.name,
+                "rollout_seeds": [32001, 32002],
+                "sha256": hashlib.sha256(task_file.read_bytes()).hexdigest(),
+                "task_count": len(source_rows),
+            }
+        },
+    }
+    pool_path = tmp_path / "manifest.json"
+    pool_path.write_text(json.dumps(pool, sort_keys=True) + "\n", encoding="utf-8")
+    identity = {
+        "family": "qwen3",
+        "source_commit": "a" * 40,
+        "model_revision": "c" * 40,
+        "gpu_uuid": "GPU-test",
+        "deployment_receipt_sha256": "d" * 64,
+        "interpreter_realpath": str(Path(sys.executable).resolve()),
+        "interpreter_sha256": "e" * 64,
+        "interpreter_version": "Python test",
+    }
+    manifest = {
+        "protocol": "RIST-C0-v3.0-STAGE-MANIFEST-v1",
+        "split": "calibration",
+        "source_commit": "a" * 40,
+        "pool_manifest": str(pool_path),
+        "pool_manifest_sha256": hashlib.sha256(pool_path.read_bytes()).hexdigest(),
+        "request_concurrency": 2,
+        "sampling": {
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "max_tokens": 256,
+            "retry_count": 0,
+        },
+        "job_count": 2,
+        "trajectory_count": 8,
+        "calibration_permitted": True,
+        "qualification_permitted": False,
+        "heldout_permitted": False,
+        "bfcl_permitted": False,
+        "training_permitted": False,
+        "retry_permitted": False,
+        "prior_lineage_outcomes_permitted": False,
+        "jobs": [
+            {
+                "job_id": f"{family}-calibration",
+                "family": family,
+                "split": "calibration",
+                "task_file": str(task_file),
+                "task_file_sha256": pool["splits"]["calibration"]["sha256"],
+                "rollout_seeds": [32001, 32002],
+                "trajectory_count": 4,
+                "concurrency": 2,
+                "max_retries": 0,
+                "result_root": str(tmp_path / "results" / "calibration" / family),
+                "runtime_identity": {**identity, "family": family},
+            }
+            for family in ("qwen3", "gemma4")
+        ],
+    }
+    manifest_path = tmp_path / "collection_manifest.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return manifest, pool, identity
+
+
+def _fake_tool_response(payload: dict) -> dict:
+    last = payload["messages"][-1]["content"]
+    target = last.split("target_label=", 1)[1].split(";", 1)[0]
+    candidates = last.split("candidates=", 1)[1].rstrip(".")
+    code = None
+    for item in candidates.split(", "):
+        label, candidate_code = item.split(":")
+        if label == target:
+            code = candidate_code
+            break
+    assert code is not None
+    name = payload["tools"][0]["function"]["name"]
+    return {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": None,
+                    "tool_calls": [
+                        {
+                            "id": "call-test",
+                            "type": "function",
+                            "function": {
+                                "name": name,
+                                "arguments": json.dumps({"code": code}),
+                            },
+                        }
+                    ],
+                }
+            }
+        ]
+    }
+
+
+def test_v3_collector_and_finalizer_use_self_owned_contract(tmp_path):
+    collector = _load("rist_v3_collector", STAGE / "collect_scientific_job.py")
+    finalizer = _load("rist_v3_finalizer", STAGE / "finalize_scientific_collection.py")
+    manifest, pool, identity = _small_collection_fixture(tmp_path)
+    manifest_path = tmp_path / "collection_manifest.json"
+    manifest_sha = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    for family in ("qwen3", "gemma4"):
+        job_id = f"{family}-calibration"
+        root = tmp_path / "results" / "calibration" / family
+        result = collector.collect_job(
+            manifest=manifest,
+            manifest_sha256=manifest_sha,
+            job_id=job_id,
+            runtime_identity={**identity, "family": family},
+            pool_manifest=pool,
+            result_path=root / "result.json",
+            trajectory_path=root / "trajectories.jsonl",
+            journal_path=root / "raw_journal.jsonl",
+            post_json=_fake_tool_response,
+        )
+        assert result["complete"] is True
+        assert result["trajectory_count"] == 4
+        assert result["outcomes_inspected_by_evidence_chain"] is False
+    final = finalizer.finalize(manifest_path)
+    assert final["passed"] is True
+    assert final["trajectory_count"] == 8
+    assert final["outcomes_inspected"] is False
+    assert final["decision"] == "PASS_CALIBRATION_COLLECTION_TO_SEPARATE_ANALYSIS"
+
+
+def test_v3_finalizer_rejects_duplicate_task_seed_without_using_outcomes(tmp_path):
+    collector = _load("rist_v3_collector_dup", STAGE / "collect_scientific_job.py")
+    finalizer = _load("rist_v3_finalizer_dup", STAGE / "finalize_scientific_collection.py")
+    manifest, pool, identity = _small_collection_fixture(tmp_path)
+    manifest_path = tmp_path / "collection_manifest.json"
+    manifest_sha = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    for family in ("qwen3", "gemma4"):
+        root = tmp_path / "results" / "calibration" / family
+        collector.collect_job(
+            manifest=manifest,
+            manifest_sha256=manifest_sha,
+            job_id=f"{family}-calibration",
+            runtime_identity={**identity, "family": family},
+            pool_manifest=pool,
+            result_path=root / "result.json",
+            trajectory_path=root / "trajectories.jsonl",
+            journal_path=root / "raw_journal.jsonl",
+            post_json=_fake_tool_response,
+        )
+    qwen_traj = tmp_path / "results" / "calibration" / "qwen3" / "trajectories.jsonl"
+    rows = qwen_traj.read_text(encoding="utf-8").splitlines()
+    rows[1] = rows[0]
+    qwen_traj.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError):
+        finalizer.finalize(manifest_path)

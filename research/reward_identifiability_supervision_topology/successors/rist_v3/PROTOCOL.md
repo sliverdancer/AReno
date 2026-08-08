@@ -2,7 +2,7 @@
 
 Protocol: `RIST-v3.0`
 
-Status: `CPU_PROTOCOL_FOUNDATION_PASS_GPU_CLOSED`
+Status: `CPU_COLLECTOR_FINALIZER_FREEZE_PASS_GPU_CLOSED`
 
 ## Scientific question
 
@@ -71,6 +71,7 @@ claim.
 
 ## Current authorization
 
-CPU-only pool construction, access-boundary tests, exact deployment replay, and
-independent audit are open. GPU use, model access, serving, inference, training,
+CPU-only pool construction, access-boundary tests, exact deployment replay,
+v3 scientific collector/finalizer freeze, and independent replay audit are
+complete. GPU use, model access, serving, inference, training,
 qualification, held-out evaluation, and BFCL content remain closed.

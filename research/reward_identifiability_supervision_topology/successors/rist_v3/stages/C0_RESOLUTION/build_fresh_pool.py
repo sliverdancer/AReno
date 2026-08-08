@@ -1,4 +1,4 @@
-"""Build the outcome-unopened, task- and seed-disjoint RIST v3 C0 pool."""
+﻿"""Build the outcome-unopened, task- and seed-disjoint RIST v3 C0 pool."""
 
 from __future__ import annotations
 
@@ -119,10 +119,7 @@ def write_pool(output_dir: Path) -> dict[str, Any]:
     splits: dict[str, Any] = {}
     for split, rows in rows_by_split.items():
         path = output_dir / f"{split}.jsonl"
-        path.write_text(
-            "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
-            encoding="utf-8",
-        )
+        path.write_bytes("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows).encode("utf-8"))
         splits[split] = {
             "file": path.name,
             "task_count": len(rows),
@@ -146,9 +143,7 @@ def write_pool(output_dir: Path) -> dict[str, Any]:
         "training_performed": False,
         "splits": splits,
     }
-    (output_dir / "manifest.json").write_text(
-        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
+    (output_dir / "manifest.json").write_bytes((json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     return manifest
 
 

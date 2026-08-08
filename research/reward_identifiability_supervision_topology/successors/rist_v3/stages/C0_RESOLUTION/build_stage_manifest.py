@@ -1,4 +1,4 @@
-"""Build one split-scoped v3 C0 manifest without crossing its access boundary."""
+﻿"""Build one split-scoped v3 C0 manifest without crossing its access boundary."""
 
 from __future__ import annotations
 
@@ -108,6 +108,13 @@ def build_manifest(
         "source_commit": source_commit,
         "pool_manifest": str(pool_path),
         "pool_manifest_sha256": pool_sha,
+        "request_concurrency": 8,
+        "sampling": {
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "max_tokens": 256,
+            "retry_count": 0,
+        },
         "job_count": 2,
         "trajectory_count": 2048,
         "jobs": jobs,

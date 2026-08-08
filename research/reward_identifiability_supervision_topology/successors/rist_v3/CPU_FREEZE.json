@@ -1,57 +1,81 @@
 {
-  "protocol": "RIST-v3.0-CPU-PROTOCOL-FOUNDATION-v1",
-  "status": "PASS_CPU_PROTOCOL_FOUNDATION_GPU_CLOSED",
-  "novelty_gate": "RIST-R0-REFRESH-v2.0:PASS_NOVELTY_OPEN_STRICT_V3",
-  "pool": {
-    "protocol": "RIST-C0-v3.0-FRESH-POOL-v1",
-    "manifest_sha256": "e1967fa330268ff4e3317d56e75a608635a5b4fbafc63a11191df34633e22cfe",
-    "calibration_sha256": "148966b05d2f119da1f6347c37d7852bfd5b2a957e84ad6fc0aa773b3035bf14",
-    "qualification_sha256": "220122ffdacbe9176da397e1a40fede904bbc0d0a24b14b316e77bffc633e63c",
-    "capacity_canary_sha256": "31cc3ff80467325b4236c0e5faa66bd5357cbb4240f3f94aa36ce54fd0c45715",
-    "task_count": 65,
-    "task_signatures_internally_unique": true,
-    "task_signatures_disjoint_from_prior_lineages": true,
-    "all_seed_count": 74,
-    "seeds_internally_unique": true,
-    "seeds_disjoint_from_prior_lineages": true,
-    "deterministic_rebuild_match": true
-  },
-  "deployment_replay": {
-    "success": "ACCEPT_ONE_CHILD_LAUNCH",
-    "wrong_worktree": "REJECT_ZERO_CHILD_LAUNCH",
-    "wrong_interpreter": "REJECT_ZERO_CHILD_LAUNCH",
-    "model_accessed": false,
-    "request_sent": false,
-    "gpu_used": false
-  },
   "access_boundary": {
-    "calibration_reads_qualification": false,
-    "qualification_requires_exact_admission": true,
-    "heldout_permitted": false,
     "bfcl_permitted": false,
+    "calibration_reads_qualification": false,
+    "heldout_permitted": false,
+    "qualification_requires_exact_admission": true,
     "training_permitted": false
   },
+  "bfcl_authorized": false,
   "cpu_tests": {
-    "command": "python3 -m pytest tests/test_rist_v3_cpu.py -q",
-    "passed": 8,
-    "failed": 0
+    "adjacent_v2_3_failed": 3,
+    "adjacent_v2_3_failure_scope": "temporary v2.3 test receipt canonical-byte fixture mismatch; no v3 source or scientific input affected",
+    "adjacent_v2_3_passed": 19,
+    "adjacent_v2_3_regression_command": "python -m pytest tests/test_rist_c0_v2_3_deployment_cpu.py tests/test_rist_c0_v2_3_scientific_cpu.py -q",
+    "py_compile": "PASS",
+    "v3_command": "python -m pytest tests/test_rist_v3_cpu.py -q",
+    "v3_failed": 0,
+    "v3_passed": 10
   },
-  "combined_regression": {
-    "command": "python3 -m pytest tests/test_rist_v3_cpu.py tests/test_rist_c0_v2_3_deployment_cpu.py tests/test_rist_c0_v2_3_scientific_cpu.py -q",
-    "passed": 30,
-    "failed": 0
+  "date": "2026-08-09",
+  "deployment_replay": {
+    "gpu_used": false,
+    "model_accessed": false,
+    "request_sent": false,
+    "success": "ACCEPT_ONE_CHILD_LAUNCH",
+    "wrong_interpreter": "REJECT_ZERO_CHILD_LAUNCH",
+    "wrong_worktree": "REJECT_ZERO_CHILD_LAUNCH"
   },
-  "source_commit_binding": "REQUIRED_WHEN_A_CLEAN_DEPLOYMENT_MANIFEST_IS_CREATED",
-  "remaining_gpu_blockers": [
-    "freeze v3 scientific request collector and terminal finalizer",
-    "bind a clean source commit and immutable deployment manifest",
-    "perform a separate independent audit of the complete v3 runtime",
-    "obtain a new explicit GPU authorization"
-  ],
+  "frozen_components": {
+    "collector": {
+      "locked_raw_journal": true,
+      "path": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/collect_scientific_job.py",
+      "protocol": "RIST-C0-v3.0-SCIENTIFIC-JOB-EVIDENCE-v1",
+      "self_owned_v3_namespace": true,
+      "sha256": "b9b0ef1f8a899f639b2f30725ac4294abf22e8b56dad5b49bfa6345ba054b6f6",
+      "zero_retry": true
+    },
+    "finalizer": {
+      "does_not_select_cells_or_inspect_reward_resolution": true,
+      "path": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/finalize_scientific_collection.py",
+      "protocol": "RIST-C0-v3.0-SCIENTIFIC-COLLECTION-FINAL-v1",
+      "requires_all_job_validations_pass": true,
+      "sha256": "5c1eebfe4f54750ccfd36f439a122de0693fe519ad745bb923de12de0ce59fe7"
+    },
+    "validator": {
+      "path": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/validate_scientific_job.py",
+      "protocol": "RIST-C0-v3.0-SCIENTIFIC-JOB-VALIDATION-v1",
+      "rejects_duplicate_task_seed": true,
+      "rejects_missing_or_noncontiguous_journal": true,
+      "sha256": "300c1bba8df76c79473caf09f22f96f5bd6910fc9363817b4f0c8ac90f973361"
+    }
+  },
   "gpu_authorized": false,
-  "model_access_authorized": false,
-  "qualification_authorized": false,
-  "training_authorized": false,
   "heldout_authorized": false,
-  "bfcl_authorized": false
+  "independent_review": "INDEPENDENT_REVIEW_20260809.md:PASS_CPU_ONLY_REPLAY_REVIEW_GPU_CLOSED",
+  "model_access_authorized": false,
+  "novelty_gate": "RIST-R0-REFRESH-v2.0:PASS_NOVELTY_OPEN_STRICT_V3",
+  "pool": {
+    "all_seed_count": 74,
+    "calibration_sha256": "148966b05d2f119da1f6347c37d7852bfd5b2a957e84ad6fc0aa773b3035bf14",
+    "capacity_canary_sha256": "31cc3ff80467325b4236c0e5faa66bd5357cbb4240f3f94aa36ce54fd0c45715",
+    "deterministic_rebuild_match": true,
+    "manifest_sha256": "e1967fa330268ff4e3317d56e75a608635a5b4fbafc63a11191df34633e22cfe",
+    "protocol": "RIST-C0-v3.0-FRESH-POOL-v1",
+    "qualification_sha256": "220122ffdacbe9176da397e1a40fede904bbc0d0a24b14b316e77bffc633e63c",
+    "seeds_disjoint_from_prior_lineages": true,
+    "seeds_internally_unique": true,
+    "task_count": 65,
+    "task_signatures_disjoint_from_prior_lineages": true,
+    "task_signatures_internally_unique": true
+  },
+  "protocol": "RIST-v3.0-CPU-COLLECTOR-FINALIZER-FREEZE-v1",
+  "qualification_authorized": false,
+  "remaining_gpu_blockers": [
+    "bind a clean source commit and immutable deployment manifest/receipt after this freeze commit",
+    "obtain a new explicit GPU authorization for calibration"
+  ],
+  "source_commit_binding": "REQUIRED_WHEN_A_CLEAN_DEPLOYMENT_MANIFEST_IS_CREATED",
+  "status": "PASS_CPU_COLLECTOR_FINALIZER_FREEZE_GPU_CLOSED",
+  "training_authorized": false
 }
