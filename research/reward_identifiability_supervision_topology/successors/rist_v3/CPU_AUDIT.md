@@ -1,6 +1,6 @@
 # RIST v3 CPU collector/finalizer freeze audit
 
-Decision: `PASS_CPU_COLLECTOR_FINALIZER_FREEZE_GPU_CLOSED`
+Decision: `PASS_CPU_CALIBRATION_PREFLIGHT_READY_GPU_CLOSED`
 
 ## What passed
 
@@ -34,7 +34,10 @@ Decision: `PASS_CPU_COLLECTOR_FINALIZER_FREEZE_GPU_CLOSED`
   task/seed rows, missing journal rows, non-contiguous raw responses, forbidden
   access-boundary flags, or runtime identity mismatches before writing final
   collection evidence.
-- `python -m pytest tests/test_rist_v3_cpu.py -q` passed: 10 passed, 0 failed.
+- The calibration stage manifest for clean commit `83f9831a5752cb0588111d0d115f015b57fbfac2` is frozen at `stages/C0_RESOLUTION/frozen/calibration_stage_manifest_83f9831.json` with SHA-256 `aead88c11b7f3ba301f6ed1761a227629524a7e93fb7f28db0c92dc5465cbbe7`.
+- `prepare_deployment_receipt.py` is available for the target GPU host. It probes the real source commit, model revision, GPU UUID, extension SHA, interpreter real path, interpreter SHA, and interpreter version, then writes canonical authority/receipt artifacts without starting serving or sending model requests.
+- The CPU test suite now includes a preflight negative control proving that commit drift is rejected by `deployment_entrypoint.py` before any launcher call.
+- `python -m pytest tests/test_rist_v3_cpu.py -q` passed: 12 passed, 0 failed.
 - `python -m py_compile` passed for the v3 C0 builder, manifest builder,
   collector, validator, finalizer, and v3 CPU test file.
 
@@ -66,6 +69,7 @@ is internally executable and rejects key contamination or corruption modes.
 
 - v3 lineage, C0 protocol foundation, collector, validator, and finalizer:
   `GO`;
-- GPU readiness: `NO` until a clean source commit is bound into a fresh GPU
-  manifest/receipt and the user explicitly authorizes calibration;
+- GPU readiness: `NO` until the user explicitly authorizes target-host
+  calibration preflight/serving; CPU-side clean-commit manifest is ready, but
+  real receipt generation must occur on the GPU machine using live identities;
 - current GPU/model/qualification/training/held-out/BFCL authority: closed.

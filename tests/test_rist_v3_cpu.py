@@ -339,3 +339,81 @@ def test_v3_finalizer_rejects_duplicate_task_seed_without_using_outcomes(tmp_pat
     qwen_traj.write_text("\n".join(rows) + "\n", encoding="utf-8")
     with pytest.raises(ValueError):
         finalizer.finalize(manifest_path)
+
+
+
+def test_v3_frozen_calibration_manifest_binds_clean_commit():
+    manifest_path = STAGE / "frozen/calibration_stage_manifest_83f9831.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert manifest["protocol"] == "RIST-C0-v3.0-STAGE-MANIFEST-v1"
+    assert manifest["split"] == "calibration"
+    assert manifest["source_commit"] == "83f9831a5752cb0588111d0d115f015b57fbfac2"
+    assert manifest["calibration_permitted"] is True
+    assert manifest["qualification_permitted"] is False
+    assert manifest["retry_permitted"] is False
+    assert manifest["trajectory_count"] == 2048
+    assert [job["job_id"] for job in manifest["jobs"]] == [
+        "qwen3-calibration", "gemma4-calibration",
+    ]
+    for job in manifest["jobs"]:
+        task_path = Path(job["task_file"])
+        assert hashlib.sha256(task_path.read_bytes()).hexdigest() == job["task_file_sha256"]
+
+
+def test_v3_prepare_deployment_receipt_rejects_commit_drift_before_launch(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(STAGE))
+    prep = _load("rist_v3_prepare_receipt", STAGE / "prepare_deployment_receipt.py")
+    gate = prep.gate
+    source = tmp_path / "source"
+    model = tmp_path / "models/snapshots" / ("c" * 40)
+    source.mkdir()
+    model.mkdir(parents=True)
+    manifest = source / "calibration_stage_manifest.json"
+    manifest.write_text(
+        json.dumps({"protocol": "RIST-C0-v3.0-STAGE-MANIFEST-v1"}, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    extension = tmp_path / "extension.so"
+    extension.write_bytes(b"extension")
+    interpreter = Path(sys.executable).resolve(strict=True)
+    live = {"commit": "a" * 40, "gpu_uuid": "GPU-preflight-test"}
+    probes = gate.Probes(
+        git_head=lambda _path: live["commit"],
+        model_revision=lambda path: path.resolve().name,
+        gpu_uuid=lambda: live["gpu_uuid"],
+        file_sha256=gate._file_sha256,
+        interpreter_version=gate._interpreter_version,
+    )
+    result = prep.prepare_receipt(
+        source_root=source,
+        stage_manifest=manifest,
+        model_path=model,
+        extension_path=extension,
+        interpreter_path=interpreter,
+        launcher_command=(str(interpreter), "-c", "pass"),
+        probes=probes,
+    )
+    receipt = result["receipt"]
+    receipt_bytes = gate.receipt_artifact_bytes(receipt)
+    assert result["receipt_artifact_sha256"] == gate._bytes_sha256(receipt_bytes)
+    assert result["serving_started"] is False
+    assert result["request_sent"] is False
+    assert receipt["launcher_command"][0] == str(interpreter)
+
+    live["commit"] = "b" * 40
+    ledger = tmp_path / "ledger.jsonl"
+    launched = []
+    returncode = gate.launch_receipt(
+        receipt,
+        inputs=gate.LiveInputs(source, model, extension, interpreter),
+        ledger_path=ledger,
+        authorized_receipt_sha256=result["receipt_artifact_sha256"],
+        receipt_bytes=receipt_bytes,
+        launcher=lambda command: launched.append(tuple(command)) or 0,
+        probes=probes,
+    )
+    events = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
+    assert returncode == 2
+    assert launched == []
+    assert any(row.get("decision") == "REJECT" for row in events)
+    assert not any(row.get("event") == "launch_attempt" for row in events)

@@ -35,7 +35,7 @@ any v2 outcome values.
 
 - `python -m py_compile` passed for the v3 C0 builders, collector, validator,
   finalizer, and v3 CPU tests.
-- `python -m pytest tests/test_rist_v3_cpu.py -q` returned `10 passed`.
+- `python -m pytest tests/test_rist_v3_cpu.py -q` returned `12 passed`, including frozen calibration manifest and deployment preflight commit-drift negative controls.
 - Adjacent v2.3 CPU regressions returned `19 passed, 3 failed`; the failures are
   limited to v2.3 temporary deployment receipt fixture canonicalization and do
   not alter this v3 freeze decision.
@@ -44,6 +44,4 @@ any v2 outcome values.
 
 The v3 CPU scientific request collector and terminal finalizer are frozen for
 purposes of building a later clean-commit GPU manifest. GPU/model authority is
-still closed. The next allowed operation is to commit this CPU freeze, bind that
-clean commit in a fresh deployment manifest, and request explicit calibration
-GPU authorization.
+still closed. The CPU-side clean-commit calibration manifest and target-host preflight CLI are now ready. The next allowed operation requires explicit GPU authorization to generate the live receipt on the target machine and launch only through the receipt gate.

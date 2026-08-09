@@ -2,7 +2,7 @@
 
 Protocol: `RIST-v3.0`
 
-Status: `CPU_COLLECTOR_FINALIZER_FREEZE_PASS_GPU_CLOSED`
+Status: `CPU_CALIBRATION_PREFLIGHT_READY_GPU_CLOSED`
 
 ## Scientific question
 
@@ -72,6 +72,6 @@ claim.
 ## Current authorization
 
 CPU-only pool construction, access-boundary tests, exact deployment replay,
-v3 scientific collector/finalizer freeze, and independent replay audit are
-complete. GPU use, model access, serving, inference, training,
+v3 scientific collector/finalizer freeze, frozen calibration stage manifest,
+target-host deployment preflight CLI, and independent replay audit are complete. GPU use, model access, serving, inference, training,
 qualification, held-out evaluation, and BFCL content remain closed.
