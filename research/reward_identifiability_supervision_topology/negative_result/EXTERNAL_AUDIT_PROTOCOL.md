@@ -304,6 +304,10 @@ OpenAI-compatible endpoint credentials, one request, and zero retry. It writes
 only derived observation/finalizer artifacts and keeps raw response text out of
 the repository.
 
+`EXECUTION_RUNBOOK.md` is the authoritative handoff for the remaining
+single-request canary. It lists the dry-run path, the separately authorized real
+execution command, terminal interpretations, and hard stops.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

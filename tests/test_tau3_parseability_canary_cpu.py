@@ -339,3 +339,16 @@ def test_tau3_runner_real_request_path_requires_explicit_api_binding(tmp_path, m
         assert "OPENAI_BASE_URL" in str(exc)
     else:
         raise AssertionError("real request path should require explicit API binding")
+
+
+def test_tau3_execution_runbook_preserves_authorization_boundary():
+    text = (CANARY / "EXECUTION_RUNBOOK.md").read_text(encoding="utf-8")
+    assert "CPU_ONLY_RUNBOOK_AWAITING_SEPARATE_SINGLE_REQUEST_AUTHORIZATION" in text
+    assert "exactly `1 task x 1 model x 1 rollout`" in text
+    assert "Retry budget: `0`" in text
+    assert "No model request is sent by this path." in text
+    assert "--execute-one-request" in text
+    assert "requires separate explicit authorization" in text
+    assert "Raw model response text must not be committed" in text
+    assert "reward-resolution calibration" in text
+    assert "BFCL, held-out/sealed data, or training" in text

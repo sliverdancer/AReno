@@ -46,9 +46,10 @@ Read order:
 35. `external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json`
 36. `external_audit/tau3_airline_parseability_canary/bind_runtime_receipt.py`
 37. `external_audit/tau3_airline_parseability_canary/run_tau3_single_request_canary.py`
-38. `submission/NEURIPS_ED_DRAFT.md`
-39. `EVIDENCE_SUMMARY.csv`
-40. `EVIDENCE_SUMMARY.json`
+38. `external_audit/tau3_airline_parseability_canary/EXECUTION_RUNBOOK.md`
+39. `submission/NEURIPS_ED_DRAFT.md`
+40. `EVIDENCE_SUMMARY.csv`
+41. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -96,4 +97,5 @@ single-request authorization is given. The runtime binder can create a bound
 receipt only after all identity fields are supplied; it still does not execute
 Tau3, a model, API, GPU, or training. The single-request runner is present but
 defaults to dry-run and requires explicit execution flags plus API/runtime
-bindings before any model request.
+bindings before any model request. `EXECUTION_RUNBOOK.md` is the authoritative
+handoff for the remaining single-request canary.
