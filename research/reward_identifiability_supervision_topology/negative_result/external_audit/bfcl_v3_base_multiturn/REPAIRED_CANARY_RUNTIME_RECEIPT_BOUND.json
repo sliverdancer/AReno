@@ -1,0 +1,44 @@
+{
+  "decoding": {
+    "do_sample": true,
+    "max_new_tokens": 256,
+    "seed": 9271002,
+    "temperature": 0.7,
+    "top_p": 0.95
+  },
+  "extension_hashes": {
+    "custom_cuda_extensions": "none_for_direct_transformers",
+    "vllm": "not_used"
+  },
+  "format_repair_replay_sha256": "b45f08ae9be517a910c5ee9568a6e120c6e0361747073873bee0f01986f4b21d",
+  "gpu_name": "NVIDIA A800 80GB PCIe",
+  "gpu_uuid": "GPU-b599186b-7114-be7b-36dc-74b07d12dac8",
+  "model_repo_id": "Qwen/Qwen3-0.6B",
+  "model_request_budget": 1,
+  "model_request_count_before_run": 0,
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "model_snapshot_hash": "f58707a8442b227e0a08967b3374a31dafc4cda1d374653248cf7a9fbaaef4e0",
+  "model_snapshot_path": "/root/autodl-tmp/hf-cache/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+  "output_root": "/root/autodl-tmp/bfcl_repaired_format_canary_ee70608_20260810_162832",
+  "protocol": "RRC-BFCL-V3-BASE-MT-REPAIRED-FORMAT-CANARY-RUNTIME-RECEIPT-BOUND-v1",
+  "python": "/root/miniconda3/bin/python",
+  "python_env_hash": "db9ca82c328492054a59efac691d76e16979555e564cdaacf433901a780770c4",
+  "repair_adapter": {
+    "bfcl_dict_to_object_converted_tool_count": 32,
+    "tool_count": 32
+  },
+  "request_policy": {
+    "no_selective_rerun": true,
+    "single_model_request_only": true,
+    "zero_retry": true
+  },
+  "serving_backend": "direct_transformers_generate_single_call_with_repaired_bfcl_schema",
+  "serving_command_sha256": "14f122b48e1a5b94b9b3dec43b167ae8cc8fe78437f201eca85c6d9e5e3dcd64",
+  "source_commit": "ee70608a2ff2ee2a2b230e32b28fdaba8b065e8b",
+  "status": "BOUND_BEFORE_FIRST_MODEL_REQUEST",
+  "success_gate": "parseable_tool_call_emission",
+  "task_id": "multi_turn_base_0",
+  "template_sha256": "204fff87b56950b475f3ee7cbdc2e13d765a97e6f70a1d5de2754b95b03bbca8",
+  "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "turn_index": 0
+}

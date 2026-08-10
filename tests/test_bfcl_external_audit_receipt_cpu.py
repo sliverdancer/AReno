@@ -235,3 +235,29 @@ def test_bfcl_repaired_format_canary_template_keeps_full_audit_closed():
     assert template["go_kill"]["full_audit_remains_closed"] is True
     expected = (AUDIT / "REPAIRED_FORMAT_CANARY_TEMPLATE.sha256").read_text(encoding="ascii").split()[0]
     assert expected == hashlib.sha256((AUDIT / "REPAIRED_FORMAT_CANARY_TEMPLATE.json").read_bytes()).hexdigest()
+
+
+def test_bfcl_repaired_canary_terminal_parse_failure_keeps_audit_closed():
+    finalizer = json.loads((AUDIT / "REPAIRED_CANARY_TERMINAL_FINALIZER.json").read_text(encoding="utf-8"))
+    receipt = json.loads((AUDIT / "REPAIRED_CANARY_RUNTIME_RECEIPT_BOUND.json").read_text(encoding="utf-8"))
+    assert finalizer["protocol"] == "RRC-BFCL-REPAIRED-FORMAT-CANARY-TERMINAL-FINALIZER-v1"
+    assert finalizer["status"] == "TERMINAL_INTERPRETABLE"
+    assert finalizer["model_request_sent"] is True
+    assert finalizer["model_request_count"] == 1
+    assert finalizer["retry_count"] == 0
+    assert finalizer["format_repair_used"] is True
+    assert finalizer["success_gate_passed"] is False
+    assert finalizer["parseable_tool_calls"] is False
+    assert finalizer["observed_call_count"] == 0
+    assert finalizer["failure_mode"] == "PARSE_FAILURE"
+    assert finalizer["go_to_two_model_canary"] is False
+    assert finalizer["two_model_canary_authorized"] is False
+    assert finalizer["full_audit_authorized"] is False
+    assert receipt["protocol"] == "RRC-BFCL-V3-BASE-MT-REPAIRED-FORMAT-CANARY-RUNTIME-RECEIPT-BOUND-v1"
+    assert receipt["source_commit"] == "ee70608a2ff2ee2a2b230e32b28fdaba8b065e8b"
+    assert receipt["model_request_budget"] == 1
+    assert receipt["repair_adapter"]["bfcl_dict_to_object_converted_tool_count"] == receipt["repair_adapter"]["tool_count"]
+    assert receipt["success_gate"] == "parseable_tool_call_emission"
+    assert finalizer["runtime_receipt_sha256"] == hashlib.sha256(
+        (AUDIT / "REPAIRED_CANARY_RUNTIME_RECEIPT_BOUND.json").read_bytes()
+    ).hexdigest()

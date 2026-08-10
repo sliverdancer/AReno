@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FORMAT_REPAIR_TEMPLATE_FROZEN_FULL_AUDIT_CLOSED`
+Status: `REPAIRED_FORMAT_CANARY_TERMINAL_PARSE_FAILURE_FULL_AUDIT_CLOSED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -25,6 +25,8 @@ The format investigation is recorded at
 The CPU-only format repair replay and new canary template are recorded at
 `external_audit/bfcl_v3_base_multiturn/FORMAT_REPAIR_REPLAY_RESULT.json` and
 `external_audit/bfcl_v3_base_multiturn/REPAIRED_FORMAT_CANARY_TEMPLATE.json`.
+The repaired-format canary finalizer is recorded at
+`external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`.
 
 ## Selected public target
 
@@ -219,6 +221,21 @@ text remains unparsed.
 The repaired-format canary template is frozen but not executable. It still
 allows only one task, one model, one rollout, and zero retries. The repaired
 canary gate is parseable tool-call emission, not strict BFCL success.
+
+## Repaired-format canary terminal result
+
+The repaired-format canary converted 32 / 32 BFCL tool schemas from
+`type = dict` to `type = object`, then executed exactly one Qwen3-0.6B request.
+It still terminated as parse failure:
+
+- model requests: 1;
+- retries: 0;
+- observed parseable tool calls: 0;
+- success gate passed: false;
+- go to two-model canary: false;
+- full audit authorized: false.
+
+This closes the current BFCL canary route. More rollouts are not justified.
 
 ## Deliverables when executed
 

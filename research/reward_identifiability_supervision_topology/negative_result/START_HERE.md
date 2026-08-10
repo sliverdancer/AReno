@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_FORMAT_REPAIR_TEMPLATE_FROZEN`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_REPAIRED_CANARY_TERMINAL_PARSE_FAILURE`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -35,9 +35,11 @@ Read order:
 24. `external_audit/bfcl_v3_base_multiturn/FORMAT_REPAIR_REPORT.md`
 25. `external_audit/bfcl_v3_base_multiturn/FORMAT_REPAIR_REPLAY_RESULT.json`
 26. `external_audit/bfcl_v3_base_multiturn/REPAIRED_FORMAT_CANARY_TEMPLATE.json`
-27. `submission/NEURIPS_ED_DRAFT.md`
-28. `EVIDENCE_SUMMARY.csv`
-29. `EVIDENCE_SUMMARY.json`
+27. `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_REPORT.md`
+28. `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`
+29. `submission/NEURIPS_ED_DRAFT.md`
+30. `EVIDENCE_SUMMARY.csv`
+31. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -62,4 +64,5 @@ committed in this repository; only hashes, schema summaries, selected public
 task ids, static execution receipt, synthetic replay results, canary receipts,
 terminal summaries, format-investigation summaries, and CPU-only format-repair
 fixtures are tracked. The next admissible inference step is a newly authorized
-one-request repaired-format canary; full BFCL audit remains closed.
+one-request repaired-format canary; that canary has now also terminated as a
+parse failure. Full BFCL audit and two-model canary remain closed.

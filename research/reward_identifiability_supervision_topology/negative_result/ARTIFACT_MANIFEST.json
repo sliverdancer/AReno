@@ -1,5 +1,5 @@
 {
-  "file_count": 47,
+  "file_count": 52,
   "files": [
     {
       "bytes": 5668,
@@ -142,9 +142,34 @@
       "sha256": "f528d53e9c373cb2d86aafdb9c545fda9d5a46a093ff07204c900903c470136c"
     },
     {
-      "bytes": 1565,
+      "bytes": 1719,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "fc236839426a5d24c795241f174bab1a0f894f70fc9d8b9e2e3b9ed34f7ec02f"
+      "sha256": "476b336355c275d5430b3e36dc44b9bf2f5e71d31f9028528f15f323bdf0f6f3"
+    },
+    {
+      "bytes": 489,
+      "path": "external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_REMOTE_HASH_MANIFEST.json",
+      "sha256": "71b40f0417891630c5274fcf097ca5f98cfa1cf17cbd4cefdfc50c36798b3a98"
+    },
+    {
+      "bytes": 1927,
+      "path": "external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_RUNTIME_RECEIPT_BOUND.json",
+      "sha256": "1128ecd028b0c172afbfa262c5407219bc7675fbccf98a66bd553287a7439088"
+    },
+    {
+      "bytes": 93,
+      "path": "external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_RUNTIME_RECEIPT_BOUND.sha256",
+      "sha256": "70eca86ca2dc0e6279b6267f08ba45a139ee2d98f1a4bf479f02ff74439c151e"
+    },
+    {
+      "bytes": 1193,
+      "path": "external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json",
+      "sha256": "c5aec908b6b35fccd14fefc99d01766f2c6f1008c2f7312d25845dff8bf5319c"
+    },
+    {
+      "bytes": 1291,
+      "path": "external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_REPORT.md",
+      "sha256": "a16540fd43394de9fd2e4cbb33a4e810076b4b427f527b408fd8efc71116dcca"
     },
     {
       "bytes": 2939,
@@ -177,9 +202,9 @@
       "sha256": "f710879dc705164f7a030c28ac3a5be59c7066b37939add02f08a81342c7a667"
     },
     {
-      "bytes": 8755,
+      "bytes": 9378,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "275f72d1bbad9cf449640962adeabd1b11c8f9fb23b1fa5177e4512509314dcb"
+      "sha256": "40916549ae9fe134964d4f74281948bb14a5c127a19a11ad874db8e057590965"
     },
     {
       "bytes": 1778,
@@ -212,9 +237,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 3743,
+      "bytes": 3991,
       "path": "START_HERE.md",
-      "sha256": "7cc50f18f2dbe2e1c14bbe1d4adba386671ba5d5525d22f11ed7c774daa0e518"
+      "sha256": "ff6a947f5ef7c69776089631fc6045c975240b4f246cb9dd3fecbbf048272c7a"
     },
     {
       "bytes": 1308,

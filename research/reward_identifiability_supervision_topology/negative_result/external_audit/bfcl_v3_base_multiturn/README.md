@@ -21,6 +21,8 @@ work should repair the prompt/tool-call interface, not increase rollouts.
 `FORMAT_REPAIR_REPLAY_RESULT.json` and `REPAIRED_FORMAT_CANARY_TEMPLATE.json`
 record the CPU-only schema adapter/parser-fixture repair and the next possible
 one-request canary template.
+`REPAIRED_CANARY_TERMINAL_FINALIZER.json` records that the repaired-format
+one-request canary also ended in parse failure, keeping the full audit closed.
 
 Rebuild with:
 
