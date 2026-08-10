@@ -316,6 +316,11 @@ model request. It is not external empirical evidence.
 criteria, and forbidden actions for the still-missing real single-request
 canary. It is not self-authorizing.
 
+The authorized Tau3/Qwen3-0.6B single-request canary executed once with zero
+retry and terminated as `TERMINAL_PARSE_FAILURE`: observed parseable tool calls
+`0`, success gate `false`, reward-resolution calibration closed. The result is
+stored in `remote_terminal_qwen3_0_6b/`.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

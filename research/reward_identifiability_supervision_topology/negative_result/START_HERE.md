@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_WITH_PARSEABLE_POSITIVE_CONTROL`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_TAU3_QWEN_TERMINAL_PARSE_FAILURE`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -49,9 +49,11 @@ Read order:
 38. `external_audit/tau3_airline_parseability_canary/EXECUTION_RUNBOOK.md`
 39. `external_audit/tau3_airline_parseability_canary/AUTHORIZATION_PACKET.md`
 40. `external_audit/tau3_airline_parseability_canary/dry_run_evidence/DRY_RUN_MANIFEST.json`
-41. `submission/NEURIPS_ED_DRAFT.md`
-42. `EVIDENCE_SUMMARY.csv`
-43. `EVIDENCE_SUMMARY.json`
+41. `external_audit/tau3_airline_parseability_canary/remote_terminal_qwen3_0_6b/TERMINAL_REPORT.md`
+42. `external_audit/tau3_airline_parseability_canary/remote_terminal_qwen3_0_6b/TAU3_CANARY_TERMINAL_FINALIZER.json`
+43. `submission/NEURIPS_ED_DRAFT.md`
+44. `EVIDENCE_SUMMARY.csv`
+45. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -104,3 +106,9 @@ handoff for the remaining single-request canary. A synthetic dry-run evidence
 directory proves the pre-authorization binder/runner path without sending a
 model request. `AUTHORIZATION_PACKET.md` contains the exact scope text needed
 for the still-missing real single-request canary.
+
+That single-request Tau3/Qwen3-0.6B canary has now executed and terminated as
+`TERMINAL_PARSE_FAILURE`: one model request, zero retries, zero observed
+parseable tool calls. This is interpretable negative evidence and does not
+satisfy the remaining goal of finding an external public route that emits
+parseable tool calls.

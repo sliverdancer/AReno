@@ -225,6 +225,10 @@ def run_local_transformers_single_request(receipt: dict[str, Any], *, model_path
         )
     except Exception:
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+    if hasattr(input_ids, "input_ids"):
+        input_ids = input_ids.input_ids
+    if isinstance(input_ids, dict):
+        input_ids = input_ids["input_ids"]
     if torch.cuda.is_available():
         input_ids = input_ids.to(model.device)
     with torch.no_grad():

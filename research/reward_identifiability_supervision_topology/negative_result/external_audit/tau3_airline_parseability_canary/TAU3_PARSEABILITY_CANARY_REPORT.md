@@ -72,3 +72,11 @@ receipt, its SHA-256 sidecar, a dry-run request plan, and a manifest. This
 artifact proves the pre-authorization execution chain is wired without sending a
 model request. It is not a model result and cannot satisfy the parseable
 external canary by itself.
+
+## Remote Qwen3-0.6B terminal result
+
+The authorized remote canary result is stored in `remote_terminal_qwen3_0_6b/`.
+It executed one local `transformers.generate` request against Qwen3-0.6B and
+terminated as `TERMINAL_PARSE_FAILURE`: zero retries and zero observed parseable
+tool calls. This closes the Tau3/Qwen3-0.6B canary route and does not open
+reward-resolution calibration.

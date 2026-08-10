@@ -411,3 +411,26 @@ def test_tau3_authorization_packet_is_not_self_authorizing():
     assert "committing raw model response text" in text
     assert 'TAU3_CANARY_TERMINAL_FINALIZER.json.status == "PASS_PARSEABLE_TOOL_CALL"' in text
     assert "cap at 15 minutes" in text
+
+
+def test_tau3_remote_qwen_terminal_parse_failure_artifact():
+    terminal = CANARY / "remote_terminal_qwen3_0_6b"
+    finalizer = json.loads((terminal / "TAU3_CANARY_TERMINAL_FINALIZER.json").read_text(encoding="utf-8"))
+    observation = json.loads((terminal / "TAU3_CANARY_OBSERVATION.json").read_text(encoding="utf-8"))
+    report = (terminal / "TERMINAL_REPORT.md").read_text(encoding="utf-8")
+    assert finalizer["status"] == "TERMINAL_PARSE_FAILURE"
+    assert finalizer["model_request_sent"] is True
+    assert finalizer["model_request_count"] == 1
+    assert finalizer["retry_count"] == 0
+    assert finalizer["parseable_tool_calls"] is False
+    assert finalizer["observed_call_count"] == 0
+    assert finalizer["success_gate_passed"] is False
+    assert finalizer["reward_resolution_claim_allowed"] is False
+    assert finalizer["go_to_reward_resolution_calibration"] is False
+    assert finalizer["training_authorized"] is False
+    assert finalizer["bfcl_used"] is False
+    assert finalizer["heldout_or_sealed_accessed"] is False
+    assert observation["observed_tool_calls"] == []
+    assert "raw_response_sha256" in observation
+    assert "raw response text committed: `false`" in report
+    assert "does not satisfy the project goal" in report
