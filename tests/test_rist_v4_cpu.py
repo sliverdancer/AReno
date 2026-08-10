@@ -137,6 +137,57 @@ def test_v4_capacity_canary_manifest_is_small_and_sealed(tmp_path, monkeypatch):
     }
 
 
+def test_v4_reward_resolution_thresholds_and_admission_schema():
+    analyzer = _load("rist_v4_resolution", STAGE / "analyze_reward_resolution.py")
+
+    def rows(success_counts):
+        out = []
+        for group_index, success_count in enumerate(success_counts):
+            out.extend(
+                {
+                    "task_id": f"task-{group_index}",
+                    "strict_success": int(seed < success_count),
+                }
+                for seed in range(32)
+            )
+        return out
+
+    assert analyzer.classify_cell(rows([0, 0, 0, 0]))["resolution_label"] == "low"
+    assert analyzer.classify_cell(rows([32, 32, 32, 32]))["resolution_label"] == "low"
+    assert analyzer.classify_cell(rows([1, 0, 0, 0]))["resolution_label"] == "ambiguous"
+    high = analyzer.classify_cell(rows([1, 31, 0, 32]))
+    assert high["resolution_label"] == "high"
+    assert high["mixed_group_count"] == 2
+
+    admission = analyzer.admission_from_analysis({
+        "protocol": analyzer.PROTOCOL,
+        "decision": "PASS_CALIBRATION_TO_QUALIFICATION",
+        "passed": True,
+        "pool_manifest_sha256": "a" * 64,
+        "calibration_result_sha256": "b" * 64,
+        "frozen_whole_cell_map": {
+            "c00": "low",
+            "c01": "low",
+            "c06": "high",
+            "c07": "high",
+        },
+    })
+    assert admission == {
+        "protocol": analyzer.ADMISSION_PROTOCOL,
+        "decision": "PASS_CALIBRATION_TO_QUALIFICATION",
+        "passed": True,
+        "pool_manifest_sha256": "a" * 64,
+        "calibration_result_sha256": "b" * 64,
+        "frozen_whole_cell_map": {
+            "c00": "low",
+            "c01": "low",
+            "c06": "high",
+            "c07": "high",
+        },
+        "qualification_accessed": False,
+    }
+
+
 def test_v4_qualification_requires_exact_admission(tmp_path):
     builder = _load("rist_v4_stage_qual", STAGE / "build_stage_manifest.py")
     pool = STAGE / "data/manifest.json"
