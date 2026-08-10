@@ -1,0 +1,73 @@
+{
+  "cpu_parser_replay": {
+    "adapter": "examples/agentic/rist_v2_1_tau3/run_agent.py::response_to_action",
+    "api_used": false,
+    "assistant_has_tool_calls": true,
+    "bfcl_used": false,
+    "cpu_only": true,
+    "gpu_used": false,
+    "heldout_or_sealed_access_used": false,
+    "input_response_shape": "OpenAI chat.completions response with one tool call",
+    "malformed_non_object_arguments_rejected": true,
+    "model_inference_used": false,
+    "parsed_action": {
+      "arguments": {
+        "query": "SELECT * FROM flights LIMIT 1"
+      },
+      "name": "DB"
+    },
+    "status": "PASS",
+    "training_used": false
+  },
+  "interpretation": {
+    "current_status": "CPU parser path is validated, but no external model request has been sent. The goal remains incomplete until a separately authorized runtime canary produces parseable tool calls.",
+    "why_tau3_next": "Unlike the BFCL direct-generation canary, the Tau3 adapter already uses an OpenAI-style tool-call response path and converts exactly one tool call into the gym action JSON."
+  },
+  "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-v1",
+  "request_policy": {
+    "no_bfcl_access": true,
+    "no_protocol_edit_after_first_model_request": true,
+    "no_training": true,
+    "single_model_request_only": true,
+    "terminal_finalizer_required_even_on_parse_error": true,
+    "zero_retry": true
+  },
+  "runtime_required_bindings": {
+    "gpu_uuid_or_api_provider": "UNBOUND_AT_RUNTIME",
+    "model_repo_or_api_id": "UNBOUND_AT_RUNTIME",
+    "model_revision": "UNBOUND_AT_RUNTIME",
+    "source_commit": "UNBOUND_40_HEX_AT_RUNTIME",
+    "task_id": "UNBOUND_TAU3_AIRLINE_PUBLIC_TASK_ID",
+    "user_simulator_authorization_sha256": "UNBOUND_64_HEX_AT_RUNTIME",
+    "user_simulator_model": "UNBOUND_AT_RUNTIME",
+    "user_simulator_revision": "UNBOUND_AT_RUNTIME"
+  },
+  "scope": {
+    "api_inference_authorized": false,
+    "bfcl_used": false,
+    "external_public_environment_candidate": "Tau3/Tau2 airline tasks",
+    "gpu_authorized": false,
+    "heldout_or_sealed_access_authorized": false,
+    "model_count": 1,
+    "model_inference_authorized": false,
+    "retries": 0,
+    "rollouts_per_task": 1,
+    "task_count": 1,
+    "tau3_commit": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+    "tau3_tag": "v1.0.1",
+    "training_authorized": false
+  },
+  "source_identity": {
+    "dataset_loader_sha256": "78409f82e0d48e15d226ac4e9c3d13188bfbc45accdbbe69a7027cd957de0944",
+    "reward_sha256": "4a7dc32fc2cda5748c39f4afea427393ef960d130c94cce5131a268112c45cc6",
+    "runner_sha256": "1037410517c0284f62d8c826185809c6d68f8b52439b4655eed7f57f5e3ac44a"
+  },
+  "status": "CPU_FROZEN_AWAITING_SEPARATE_SINGLE_REQUEST_AUTHORIZATION",
+  "success_gate": {
+    "primary": "parseable_tool_call_emission",
+    "required_adapter_action_json_object": true,
+    "required_observed_tool_call_count_min": 1,
+    "reward_resolution_claim_allowed": false,
+    "strict_task_success_required": false
+  }
+}

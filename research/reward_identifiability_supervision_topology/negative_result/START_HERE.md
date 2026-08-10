@@ -39,9 +39,11 @@ Read order:
 28. `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`
 29. `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_REPORT.md`
 30. `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json`
-31. `submission/NEURIPS_ED_DRAFT.md`
-32. `EVIDENCE_SUMMARY.csv`
-33. `EVIDENCE_SUMMARY.json`
+31. `external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_REPORT.md`
+32. `external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_TEMPLATE.json`
+33. `submission/NEURIPS_ED_DRAFT.md`
+34. `EVIDENCE_SUMMARY.csv`
+35. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -76,3 +78,9 @@ classify all-pass, all-fail, and mixed reward groups when the tool-call format
 is valid. This is not a BFCL result, not a model result, and not a substitute
 for a true external public benchmark canary; it only closes the narrower concern
 that the analyzer itself might be unable to pass on parseable tool-call data.
+
+The next frozen external candidate is Tau3/Tau2 airline. Its CPU-only canary
+template binds the existing `examples/agentic/rist_v2_1_tau3` adapter and
+validates, with synthetic OpenAI-style tool-call fixtures, that the adapter can
+convert exactly one parseable tool call into Tau3 action JSON. The template
+remains unbound and does not authorize model/API/GPU/training execution.

@@ -29,6 +29,8 @@ The repaired-format canary finalizer is recorded at
 `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`.
 The separate parseable positive-control result is recorded at
 `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json`.
+The next external public-environment canary template is recorded at
+`external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_TEMPLATE.json`.
 
 ## Selected public target
 
@@ -262,6 +264,22 @@ tool-call data with reward-resolution contrast. It does not reopen BFCL, does
 not claim an external benchmark model result, and does not remove the need for a
 true external public canary such as Tau3 or another tool-use benchmark with a
 known parseable tool-call interface.
+
+## Tau3 airline parseability canary freeze
+
+Tau3/Tau2 airline is the next external public-environment candidate. The CPU
+freeze validates only the local adapter path:
+
+- adapter: `examples/agentic/rist_v2_1_tau3/run_agent.py::response_to_action`;
+- fixture shape: OpenAI chat completion with exactly one tool call;
+- parsed action shape: Tau3 action JSON object with `name` and `arguments`;
+- malformed non-object tool arguments are rejected;
+- no model/API/GPU/training/BFCL/held-out access.
+
+The frozen runtime template permits only `1 task × 1 model × 1 rollout`, zero
+retry, and a terminal finalizer even on parse failure. Its success gate is
+parseable tool-call emission only; strict task success and reward-resolution
+claims remain closed until a later, separately frozen calibration protocol.
 
 ## Deliverables when executed
 
