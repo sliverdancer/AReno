@@ -3,3 +3,4 @@ research/reward_identifiability_supervision_topology/successors/rist_v3/** text 
 tests/test_rist_v3_cpu.py text eol=lf
 research/reward_identifiability_supervision_topology/successors/rist_v4/** text eol=lf
 tests/test_rist_v4_cpu.py text eol=lf
+research/reward_identifiability_supervision_topology/negative_result/** text eol=lf

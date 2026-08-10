@@ -1,0 +1,408 @@
+{
+  "lineages": [
+    {
+      "cell_count": 8,
+      "common_ambiguous_cells": [],
+      "common_high_cells": [],
+      "common_low_cells": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "decision": "KILL_C0_V3_1_CALIBRATION_NO_COMMON_HIGH_CELLS",
+      "families": [
+        "gemma4",
+        "qwen3"
+      ],
+      "go_gate_passed": false,
+      "lineage": "RIST-C0-v3.1",
+      "trajectory_count": 2048
+    },
+    {
+      "cell_count": 8,
+      "common_ambiguous_cells": [],
+      "common_high_cells": [],
+      "common_low_cells": [
+        "c00",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "decision": "KILL_C0_V4_CALIBRATION_NO_COMMON_RESOLUTION_CONTRAST",
+      "families": [
+        "gemma4",
+        "qwen3"
+      ],
+      "go_gate_passed": false,
+      "lineage": "RIST-C0-v4.0",
+      "trajectory_count": 2048
+    }
+  ],
+  "protocol": "RIST-NEGATIVE-RESULT-COLLAPSE-SUMMARY-v1",
+  "rows": [
+    {
+      "cell": "c00",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c01",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c02",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c03",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c04",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c05",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c06",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c07",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c00",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c01",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c02",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c03",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c04",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c05",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c06",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c07",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v3.1",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c00",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 1.0,
+      "success_count": 128,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c01",
+      "collapsed_group_count": 3,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 1,
+      "resolution_label": "ambiguous",
+      "strict_success_rate": 0.3359375,
+      "success_count": 43,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c02",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c03",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c04",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c05",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c06",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c07",
+      "collapsed_group_count": 4,
+      "family": "gemma4",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c00",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c01",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c02",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c03",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c04",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c05",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c06",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    },
+    {
+      "cell": "c07",
+      "collapsed_group_count": 4,
+      "family": "qwen3",
+      "lineage": "RIST-C0-v4.0",
+      "mixed_group_count": 0,
+      "resolution_label": "low",
+      "strict_success_rate": 0.0,
+      "success_count": 0,
+      "trajectory_count": 128
+    }
+  ],
+  "source_paths": {
+    "v3_resolution_analysis": "F:\\AReno_research_backups\\rist_v3\\calibration_ab271ed\\resolution_analysis.json",
+    "v4_reward_resolution_analysis": "C:\\Users\\15564\\AppData\\Local\\Temp\\rist_v4_analysis_extract\\areno_rist_v4\\results\\calibration\\calibration_20260810_1670324_v1\\REWARD_RESOLUTION_ANALYSIS.json"
+  }
+}
