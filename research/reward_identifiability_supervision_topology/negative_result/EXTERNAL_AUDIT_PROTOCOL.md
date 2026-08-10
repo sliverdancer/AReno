@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_WITH_CPU_ONLY_FEASIBILITY_PASS_AND_STATIC_RECEIPT_NOT_EXECUTED`
+Status: `FROZEN_WITH_CPU_ONLY_SYNTHETIC_REPLAY_PASS_NOT_EXECUTED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -12,6 +12,8 @@ been completed without model outputs; see
 
 The static execution receipt is frozen at
 `external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json`.
+The CPU-only synthetic replay is recorded at
+`external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json`.
 
 ## Selected public target
 
@@ -136,6 +138,16 @@ Receipt hash:
 
 The receipt is non-circular: `EXECUTION_RECEIPT_STATIC.json` is hashed by
 `EXECUTION_RECEIPT_STATIC.sha256`, and the containing Git commit binds both.
+
+## CPU-only synthetic replay
+
+The synthetic replay verifies evaluator/finalizer wiring without BFCL raw
+content or model outputs. It covers exact pass, wrong tool, wrong argument,
+empty observed calls, normalized JSON-string arguments, and all finalizer
+branches: mixed, all-pass, and all-fail.
+
+This replay is not external empirical evidence. It only proves that the
+pre-inference gate can run and fail fast before any model request.
 
 ## Deliverables when executed
 

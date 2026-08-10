@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
+import sys
 from pathlib import Path
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,6 +14,16 @@ AUDIT = (
     ROOT
     / "research/reward_identifiability_supervision_topology/negative_result/external_audit/bfcl_v3_base_multiturn"
 )
+
+
+def _load_replay_module():
+    path = AUDIT / "bfcl_synthetic_replay.py"
+    spec = importlib.util.spec_from_file_location("bfcl_synthetic_replay_test", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_bfcl_execution_receipt_is_cpu_only_and_no_inference():
@@ -47,3 +61,40 @@ def test_bfcl_execution_receipt_hash_file_matches_static_receipt():
     expected = (AUDIT / "EXECUTION_RECEIPT_STATIC.sha256").read_text(encoding="ascii").split()[0]
     actual = hashlib.sha256((AUDIT / "EXECUTION_RECEIPT_STATIC.json").read_bytes()).hexdigest()
     assert expected == actual
+
+
+def test_bfcl_synthetic_replay_is_cpu_only_and_exercises_finalizer():
+    replay = _load_replay_module()
+    result = replay.run_synthetic_replay()
+    assert result["status"] == "PASS"
+    assert result["cpu_only"] is True
+    assert result["model_inference_used"] is False
+    assert result["api_used"] is False
+    assert result["gpu_used"] is False
+    assert result["training_used"] is False
+    assert result["heldout_or_sealed_access_used"] is False
+    summary = result["resolution_summary"]
+    assert summary["mixed_group_count"] == 1
+    assert summary["all_pass_group_count"] == 1
+    assert summary["all_fail_group_count"] == 1
+    assert summary["non_zero_advantage_group_count"] == 1
+
+
+def test_bfcl_synthetic_evaluator_rejects_wrong_tool_and_argument():
+    replay = _load_replay_module()
+    expected = [{"name": "lookup_order", "arguments": {"order_id": "SYN-001"}}]
+    assert replay.strict_success(expected, [{"name": "lookup_order", "arguments": {"order_id": "SYN-001"}}])
+    assert not replay.strict_success(expected, [{"name": "cancel_order", "arguments": {"order_id": "SYN-001"}}])
+    assert not replay.strict_success(expected, [{"name": "lookup_order", "arguments": {"order_id": "SYN-002"}}])
+    assert replay.strict_success(expected, [{"name": "lookup_order", "arguments": "{\"order_id\":\"SYN-001\"}"}])
+
+
+def test_bfcl_synthetic_replay_fails_fast_on_receipt_hash_mismatch(tmp_path, monkeypatch):
+    replay = _load_replay_module()
+    bad_receipt = tmp_path / "EXECUTION_RECEIPT_STATIC.json"
+    receipt = json.loads((AUDIT / "EXECUTION_RECEIPT_STATIC.json").read_text(encoding="utf-8"))
+    receipt["scope"]["gpu_authorized"] = True
+    bad_receipt.write_text(json.dumps(receipt, sort_keys=True), encoding="utf-8")
+    monkeypatch.setattr(replay, "RECEIPT_SHA", AUDIT / "EXECUTION_RECEIPT_STATIC.sha256")
+    with pytest.raises(ValueError, match="receipt hash mismatch"):
+        replay.validate_static_receipt(bad_receipt)

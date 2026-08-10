@@ -6,6 +6,8 @@ BFCL v3 Base Multi-Turn split as an external audit target.
 Do not place raw BFCL prompt, answer, or function-documentation files here.
 `EXECUTION_RECEIPT_STATIC.json` freezes the external-audit execution design but
 does not authorize model/API/GPU inference.
+`SYNTHETIC_REPLAY_RESULT.json` records CPU-only evaluator/finalizer replay on
+dummy records only.
 
 Rebuild with:
 

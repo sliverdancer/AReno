@@ -1,5 +1,5 @@
 {
-  "file_count": 28,
+  "file_count": 31,
   "files": [
     {
       "bytes": 5668,
@@ -42,6 +42,11 @@
       "sha256": "c36c251e3ae873af2fa5b2618b021b3da66b56a5066a8703df319c5c15966566"
     },
     {
+      "bytes": 8866,
+      "path": "external_audit/bfcl_v3_base_multiturn/bfcl_synthetic_replay.py",
+      "sha256": "23fd5b324d3c76dae77f5f6d50f8a9beebac834aa86f3b41a3d32aaa4857645e"
+    },
+    {
       "bytes": 8544,
       "path": "external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json",
       "sha256": "13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667"
@@ -67,9 +72,9 @@
       "sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9"
     },
     {
-      "bytes": 637,
+      "bytes": 735,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "4628b5d7bb7e4e258066fadfea9e19d5c78140c3b67aca10c6fa6a4b2ed78199"
+      "sha256": "e294ac4a20125c6fcd6347578a9f31f9fea05a64bb6a41cf456013916b08854b"
     },
     {
       "bytes": 8651,
@@ -82,9 +87,19 @@
       "sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a"
     },
     {
-      "bytes": 5132,
+      "bytes": 1586,
+      "path": "external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_REPORT.md",
+      "sha256": "c9d9013a99e8f598bf2c875c0c823b0591d1b25dcb4f5a6334501229b1297c5b"
+    },
+    {
+      "bytes": 2415,
+      "path": "external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json",
+      "sha256": "10d74304432fd776ad8e3157fac0c142ffff35042b5f3c2d7fc71bfaea73702c"
+    },
+    {
+      "bytes": 5669,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "5233ec9b123bce934df1714666b611beae45ea26599b49884956e11a7ef20ce7"
+      "sha256": "b49cf70a732c8abeeb483574bc1f763cacd75a2db4f89373c7c8755403345603"
     },
     {
       "bytes": 1778,
@@ -117,9 +132,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 2035,
+      "bytes": 2267,
       "path": "START_HERE.md",
-      "sha256": "13facc7e99fb8e2f43f7dd50a5541b87bd4164ec1e1e5b492659322fee66599b"
+      "sha256": "a14b1e93bf06a4e7155d3e6bb1f0d302cb4dda570d1f9d719ff442aa11145d85"
     },
     {
       "bytes": 1308,

@@ -1,0 +1,89 @@
+{
+  "api_used": false,
+  "case_count": 5,
+  "cpu_only": true,
+  "evaluation_rows": [
+    {
+      "case_id": "synthetic_pass",
+      "model_slot": "synthetic",
+      "rollout_index": 0,
+      "strict_success": true,
+      "task_id": "multi_turn_base_0"
+    },
+    {
+      "case_id": "synthetic_wrong_tool",
+      "model_slot": "synthetic",
+      "rollout_index": 1,
+      "strict_success": false,
+      "task_id": "multi_turn_base_0"
+    },
+    {
+      "case_id": "synthetic_wrong_argument",
+      "model_slot": "synthetic",
+      "rollout_index": 2,
+      "strict_success": false,
+      "task_id": "multi_turn_base_0"
+    },
+    {
+      "case_id": "synthetic_string_arguments",
+      "model_slot": "synthetic",
+      "rollout_index": 0,
+      "strict_success": true,
+      "task_id": "multi_turn_base_1"
+    },
+    {
+      "case_id": "synthetic_empty_observed",
+      "model_slot": "synthetic",
+      "rollout_index": 0,
+      "strict_success": false,
+      "task_id": "multi_turn_base_2"
+    }
+  ],
+  "gpu_used": false,
+  "heldout_or_sealed_access_used": false,
+  "model_inference_used": false,
+  "protocol": "RRC-BFCL-SYNTHETIC-REPLAY-v1",
+  "receipt_sha256": "13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667",
+  "resolution_summary": {
+    "all_fail_group_count": 1,
+    "all_pass_group_count": 1,
+    "group_count": 3,
+    "groups": [
+      {
+        "all_fail": false,
+        "all_pass": false,
+        "group_size": 3,
+        "mixed_reward": true,
+        "model_slot": "synthetic",
+        "non_zero_advantage": true,
+        "strict_success_count": 1,
+        "task_id": "multi_turn_base_0"
+      },
+      {
+        "all_fail": false,
+        "all_pass": true,
+        "group_size": 1,
+        "mixed_reward": false,
+        "model_slot": "synthetic",
+        "non_zero_advantage": false,
+        "strict_success_count": 1,
+        "task_id": "multi_turn_base_1"
+      },
+      {
+        "all_fail": true,
+        "all_pass": false,
+        "group_size": 1,
+        "mixed_reward": false,
+        "model_slot": "synthetic",
+        "non_zero_advantage": false,
+        "strict_success_count": 0,
+        "task_id": "multi_turn_base_2"
+      }
+    ],
+    "mixed_group_count": 1,
+    "non_zero_advantage_group_count": 1
+  },
+  "selected_task_count": 64,
+  "status": "PASS",
+  "training_used": false
+}
