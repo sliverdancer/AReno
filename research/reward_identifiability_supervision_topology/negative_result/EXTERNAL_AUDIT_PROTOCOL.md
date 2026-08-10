@@ -298,6 +298,12 @@ bound receipt and SHA-256 sidecar only after every runtime identity is supplied
 and validated. It does not send the single request; execution still requires
 separate model/API/GPU authorization.
 
+`run_tau3_single_request_canary.py` is the future execution harness. Its default
+mode is dry-run. The real path requires `--execute-one-request`, bound receipt,
+OpenAI-compatible endpoint credentials, one request, and zero retry. It writes
+only derived observation/finalizer artifacts and keeps raw response text out of
+the repository.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

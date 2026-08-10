@@ -45,6 +45,16 @@ def _load_binder():
     return module
 
 
+def _load_runner():
+    path = CANARY / "run_tau3_single_request_canary.py"
+    spec = importlib.util.spec_from_file_location("tau3_parseability_runner_test", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 def test_tau3_parseability_template_is_cpu_only_and_unbound():
     template = json.loads((CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_text(encoding="utf-8"))
     assert template["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-v1"
@@ -249,3 +259,83 @@ def test_tau3_runtime_binder_rejects_unbound_or_malformed_identity():
         assert "source_commit" in str(exc)
     else:
         raise AssertionError("malformed source commit should be rejected")
+
+
+def _synthetic_bound_receipt():
+    binder = _load_binder()
+    return binder.build_bound_receipt(
+        source_commit="1" * 40,
+        model_repo_or_api_id="Qwen/Qwen3-0.6B",
+        model_revision="c1899de289a04d12100db370d81485cdf75e47ca",
+        user_simulator_model="tau3/synthetic-user-simulator-placeholder",
+        user_simulator_revision="tau3-v1.0.1",
+        user_simulator_authorization_sha256="2" * 64,
+        gpu_uuid_or_api_provider="GPU-synthetic-preflight",
+        task_id="airline:synthetic-public-task",
+    )
+
+
+def test_tau3_runner_dry_run_writes_plan_without_model_request(tmp_path):
+    runner = _load_runner()
+    binder = _load_binder()
+    receipt = _synthetic_bound_receipt()
+    receipt_path = tmp_path / "RUNTIME_RECEIPT_BOUND.json"
+    binder.write_bound_receipt(receipt, receipt_path)
+    assert runner.main.__module__
+
+    loaded = runner.load_receipt(receipt_path)
+    plan = runner.build_request_plan(loaded)
+    assert plan["status"] == "DRY_RUN_NO_MODEL_REQUEST_SENT"
+    assert plan["model_request_budget"] == 1
+    assert plan["retry_budget"] == 0
+    assert plan["success_gate"] == "parseable_tool_call_emission_only"
+    assert plan["strict_task_success_required"] is False
+    assert plan["reward_resolution_claim_allowed"] is False
+    assert plan["raw_response_commit_allowed"] is False
+
+
+def test_tau3_runner_build_observation_preserves_single_request_boundary():
+    runner = _load_runner()
+    receipt = _synthetic_bound_receipt()
+    observation = runner.build_observation(
+        receipt=receipt,
+        receipt_sha256="3" * 64,
+        observed_tool_calls=[{"name": "DB", "arguments": {"query": "SELECT 1"}}],
+        raw_response_sha256="4" * 64,
+    )
+    assert observation["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-v1"
+    assert observation["model_request_count"] == 1
+    assert observation["retry_count"] == 0
+    assert observation["task_id"] == receipt["task_id"]
+    assert observation["model_repo_or_api_id"] == receipt["model_repo_or_api_id"]
+    assert observation["observed_tool_calls"][0]["name"] == "DB"
+    assert "raw_response_sha256" in observation
+
+
+def test_tau3_runner_real_request_path_requires_explicit_api_binding(tmp_path, monkeypatch):
+    runner = _load_runner()
+    binder = _load_binder()
+    receipt = _synthetic_bound_receipt()
+    receipt_path = tmp_path / "RUNTIME_RECEIPT_BOUND.json"
+    binder.write_bound_receipt(receipt, receipt_path)
+    monkeypatch.delenv("OPENAI_BASE_URL", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_tau3_single_request_canary.py",
+            "--runtime-receipt",
+            str(receipt_path),
+            "--output-dir",
+            str(tmp_path),
+            "--execute-one-request",
+        ],
+    )
+    try:
+        runner.main()
+    except SystemExit as exc:
+        assert "OPENAI_BASE_URL" in str(exc)
+    else:
+        raise AssertionError("real request path should require explicit API binding")

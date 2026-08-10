@@ -45,9 +45,10 @@ Read order:
 34. `external_audit/tau3_airline_parseability_canary/TAU3_OBSERVATION_SCHEMA.json`
 35. `external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json`
 36. `external_audit/tau3_airline_parseability_canary/bind_runtime_receipt.py`
-37. `submission/NEURIPS_ED_DRAFT.md`
-38. `EVIDENCE_SUMMARY.csv`
-39. `EVIDENCE_SUMMARY.json`
+37. `external_audit/tau3_airline_parseability_canary/run_tau3_single_request_canary.py`
+38. `submission/NEURIPS_ED_DRAFT.md`
+39. `EVIDENCE_SUMMARY.csv`
+40. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -93,4 +94,6 @@ and terminal parse-failure outcomes. Runtime receipt and observation templates
 are present but deliberately unbound and non-executable until separate
 single-request authorization is given. The runtime binder can create a bound
 receipt only after all identity fields are supplied; it still does not execute
-Tau3, a model, API, GPU, or training.
+Tau3, a model, API, GPU, or training. The single-request runner is present but
+defaults to dry-run and requires explicit execution flags plus API/runtime
+bindings before any model request.

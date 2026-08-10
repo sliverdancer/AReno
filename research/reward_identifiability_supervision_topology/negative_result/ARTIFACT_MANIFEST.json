@@ -1,5 +1,5 @@
 {
-  "file_count": 64,
+  "file_count": 65,
   "files": [
     {
       "bytes": 5668,
@@ -227,6 +227,11 @@
       "sha256": "1712148cbdd42cb669badfcb3cfd62618199c5731fa516f417c05b5a648d3532"
     },
     {
+      "bytes": 7605,
+      "path": "external_audit/tau3_airline_parseability_canary/run_tau3_single_request_canary.py",
+      "sha256": "cf19fb6973957035be00c5caadf0a4de90ff8ef95e378e8b5137225a977ed944"
+    },
+    {
       "bytes": 11922,
       "path": "external_audit/tau3_airline_parseability_canary/tau3_canary_finalizer.py",
       "sha256": "843b30d3738d6c0730990302998a916ab98fe0c8a5e49f9b82f695d3be357258"
@@ -242,9 +247,9 @@
       "sha256": "fa1276f0328f19f86b33ab226170067bcde1e4755ae654e10c0700aef8b59e2f"
     },
     {
-      "bytes": 2318,
+      "bytes": 2786,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_REPORT.md",
-      "sha256": "83e993e0f98ecaca61f718dc8900302b2ff9beeb386ba300a7f3f66fa7756dd3"
+      "sha256": "4ab1ab56a40147c9f175d70c6e6243841a52562e05a6f8efdaf61569b5de3d56"
     },
     {
       "bytes": 3034,
@@ -262,9 +267,9 @@
       "sha256": "ccfc36d6c239ef598af3377799aff22498c5436d1ebb65588b4965ab76a327d8"
     },
     {
-      "bytes": 12426,
+      "bytes": 12763,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "de059e493c26782afef7eb31a384ec9858259f34cce5fd94474c760d1d3f9817"
+      "sha256": "3da98c88680e461cddeded9a6b9e36fd09b29f9900633aeebf5885fb51bce4a4"
     },
     {
       "bytes": 1778,
@@ -297,9 +302,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 6030,
+      "bytes": 6269,
       "path": "START_HERE.md",
-      "sha256": "4808baf0324c20c4bf2fafe0180e805310b093367706ed06df9339534d7cba1b"
+      "sha256": "8786e477b9c4975fe343008b5da56a9a98eec2791e4a54622506d7deaa2a7d8b"
     },
     {
       "bytes": 1308,

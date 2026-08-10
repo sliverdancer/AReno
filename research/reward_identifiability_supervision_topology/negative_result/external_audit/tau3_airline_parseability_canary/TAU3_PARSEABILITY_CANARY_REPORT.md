@@ -52,3 +52,12 @@ single-request receipt. It validates the frozen template hash, rejects any
 remaining `UNBOUND` value, enforces 40-hex source commits and 64-hex
 authorization hashes, and writes a SHA-256 sidecar. It is still CPU-only and
 does not start Tau3 or send a model request.
+
+## Single-request runner
+
+`run_tau3_single_request_canary.py` is the execution harness for the future
+authorized canary. By default it writes only `TAU3_REQUEST_PLAN_DRY_RUN.json`.
+The real path requires `--execute-one-request`, a valid bound runtime receipt,
+an OpenAI-compatible `base_url` and API key, and still enforces one request and
+zero retry. It writes a derived observation plus terminal finalizer; raw model
+response text remains out of tracked artifacts.
