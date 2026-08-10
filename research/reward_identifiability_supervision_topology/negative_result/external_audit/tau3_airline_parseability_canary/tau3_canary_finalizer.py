@@ -28,6 +28,13 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sha256_canonical_json_file(path: Path) -> str:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -37,7 +44,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def assert_template_hash() -> str:
     expected = TEMPLATE_SHA_PATH.read_text(encoding="ascii").split()[0]
-    actual = sha256_file(TEMPLATE_PATH)
+    actual = sha256_canonical_json_file(TEMPLATE_PATH)
     if expected != actual:
         raise ValueError("Tau3 parseability template hash mismatch")
     return actual

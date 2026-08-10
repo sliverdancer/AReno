@@ -12,7 +12,7 @@
   "source_commit": "1111111111111111111111111111111111111111",
   "status": "BOUND_READY_FOR_SINGLE_REQUEST_CANARY",
   "task_id": "airline:synthetic-public-task",
-  "template_sha256": "742e84e8fe0be9b1931f366a25056f32fad603ae5076338fbb8e5ecefe7b468b",
+  "template_sha256": "91cb7887584bc89f348036a4e160a4c50849cfd4faf3bd22ff7fb5a16c71c414",
   "training_authorized": false,
   "user_simulator_authorization_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
   "user_simulator_model": "tau3/synthetic-user-simulator-placeholder",

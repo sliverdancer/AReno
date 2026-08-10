@@ -4,11 +4,11 @@
   "files": [
     {
       "path": "TAU3_RUNTIME_RECEIPT_BOUND.json",
-      "sha256": "09c2748d0c0ed535cd3448409cee1d358b219fab5a4cd353a4f7be93f2242a5c"
+      "sha256": "c4a056846fff310c312b92c4b05cea5032bab4f1eadeee11aa9c3df3bb63228b"
     },
     {
       "path": "TAU3_RUNTIME_RECEIPT_BOUND.json.sha256",
-      "sha256": "8b2c2ab4c85757e1cb898cf3de43ac73fdba020bbceb9ce8f371b79bcdc9a66a"
+      "sha256": "ec16c599fe18d693968ade7e95084bf9fb3489f1478737313c2ddd063bc6a7d9"
     },
     {
       "path": "TAU3_REQUEST_PLAN_DRY_RUN.json",
@@ -20,7 +20,7 @@
   "model_request_sent": false,
   "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-DRY-RUN-EVIDENCE-v1",
   "raw_response_included": false,
-  "receipt_sha256": "db9282b9890b75729ef99d576450d3cf90542226a08dec3489d8a5c9b124dbc1",
+  "receipt_sha256": "365b3dd5c796ecdeec9583516f2142570fc9b06bf5bfdabadc909123fe8391aa",
   "status": "PASS_CPU_ONLY_NO_MODEL_REQUEST_SENT",
   "training_used": false
 }

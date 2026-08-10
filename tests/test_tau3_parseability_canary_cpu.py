@@ -78,7 +78,10 @@ def test_tau3_parseability_template_is_cpu_only_and_unbound():
 
 def test_tau3_parseability_template_hash_matches():
     expected = (CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.sha256").read_text(encoding="ascii").split()[0]
-    actual = hashlib.sha256((CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_bytes()).hexdigest()
+    value = json.loads((CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_text(encoding="utf-8"))
+    actual = hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
     assert expected == actual
 
 
@@ -177,8 +180,9 @@ def test_tau3_runtime_receipt_template_is_not_executable():
     assert template["heldout_or_sealed_accessed"] is False
     assert template["raw_response_committed"] is False
     assert template["pre_request_exit_if_any_unbound"] is True
+    value = json.loads((CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_text(encoding="utf-8"))
     assert template["template_sha256"] == hashlib.sha256(
-        (CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_bytes()
+        json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
     try:
         finalizer.validate_runtime_receipt(template)

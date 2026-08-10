@@ -239,7 +239,7 @@
     {
       "bytes": 897,
       "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/DRY_RUN_MANIFEST.json",
-      "sha256": "331e4ce9aa36d483b3f2f095a8f5ab74b5c9cbef0caa685b3bd313d89aad7450"
+      "sha256": "81531d3d71e27ba96987ffff717c2b81318558c6be1d7c8c148e48004c101b82"
     },
     {
       "bytes": 542,
@@ -249,12 +249,12 @@
     {
       "bytes": 956,
       "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/TAU3_RUNTIME_RECEIPT_BOUND.json",
-      "sha256": "09c2748d0c0ed535cd3448409cee1d358b219fab5a4cd353a4f7be93f2242a5c"
+      "sha256": "c4a056846fff310c312b92c4b05cea5032bab4f1eadeee11aa9c3df3bb63228b"
     },
     {
       "bytes": 99,
       "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/TAU3_RUNTIME_RECEIPT_BOUND.json.sha256",
-      "sha256": "8b2c2ab4c85757e1cb898cf3de43ac73fdba020bbceb9ce8f371b79bcdc9a66a"
+      "sha256": "ec16c599fe18d693968ade7e95084bf9fb3489f1478737313c2ddd063bc6a7d9"
     },
     {
       "bytes": 4042,
@@ -267,14 +267,14 @@
       "sha256": "4b6fabfcad3c04d4e8f515d633c733a0f96e9d1504f3aee48bde107aed835d24"
     },
     {
-      "bytes": 11922,
+      "bytes": 12173,
       "path": "external_audit/tau3_airline_parseability_canary/tau3_canary_finalizer.py",
-      "sha256": "843b30d3738d6c0730990302998a916ab98fe0c8a5e49f9b82f695d3be357258"
+      "sha256": "1c9079df70c0aa03372699611bae9abe034624a538033767e3dc5e11cc9a8d00"
     },
     {
       "bytes": 2683,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json",
-      "sha256": "56ed691fa64b5491079fba6a8aaf8ac86d169675d074a480884c47e6eab39f11"
+      "sha256": "34c541942bebe492a2ee82c23a97c489e58c84924260f3daf76a785711d82f9b"
     },
     {
       "bytes": 1223,
@@ -294,12 +294,12 @@
     {
       "bytes": 106,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_TEMPLATE.sha256",
-      "sha256": "6bcd7c4b2d29f09da4e9dcb4c6e75207a34743f9f453a841a1ee7f1e9577b318"
+      "sha256": "47f0bd4e34dabade6be81b88f224ffa80d4967c4284f95814f71c25093253ee6"
     },
     {
       "bytes": 864,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_RUNTIME_RECEIPT_TEMPLATE.json",
-      "sha256": "ccfc36d6c239ef598af3377799aff22498c5436d1ebb65588b4965ab76a327d8"
+      "sha256": "5f17a6e6a43c4673de0154aa019a2684513d1f75db9e456f3c1de4a1083a43ad"
     },
     {
       "bytes": 13373,
