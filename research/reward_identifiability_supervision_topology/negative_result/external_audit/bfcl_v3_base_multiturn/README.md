@@ -18,6 +18,9 @@ canary terminal result. The raw response is represented only by hash and is not
 tracked here.
 `FORMAT_INVESTIGATION_REPORT.md` records the CPU-only conclusion that the next
 work should repair the prompt/tool-call interface, not increase rollouts.
+`FORMAT_REPAIR_REPLAY_RESULT.json` and `REPAIRED_FORMAT_CANARY_TEMPLATE.json`
+record the CPU-only schema adapter/parser-fixture repair and the next possible
+one-request canary template.
 
 Rebuild with:
 

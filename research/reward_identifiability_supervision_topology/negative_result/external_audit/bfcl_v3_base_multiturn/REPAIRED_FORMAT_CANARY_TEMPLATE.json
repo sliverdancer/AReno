@@ -1,0 +1,76 @@
+{
+  "decoding": {
+    "max_new_tokens": 256,
+    "request_timeout_seconds": "UNBOUND",
+    "seed": "UNBOUND_NEW_SEED_REQUIRED",
+    "temperature": 0.7,
+    "top_p": 0.95
+  },
+  "format_change": {
+    "expected_first_canary_goal": "parseable tool-call emission, not strict BFCL success",
+    "known_risk": "selected BFCL first turn still expects three tool calls; parseability, not reward success, is the gate",
+    "tool_call_format": "qwen_xml_json_object_or_raw_json_object",
+    "tool_schema_adapter": "normalize_bfcl_json_schema"
+  },
+  "format_repair_replay": {
+    "path": "FORMAT_REPAIR_REPLAY_RESULT.json",
+    "required_status": "PASS",
+    "sha256": "3dcbd9fd2ffca418a139dce5c409ec3c4807187d15bc2ef85b7ba1ecbeca917b"
+  },
+  "frozen_at_local_date": "2026-08-10",
+  "go_kill": {
+    "full_audit_remains_closed": true,
+    "go_to_two_model_canary": "only if observed_call_count > 0 and parseable_tool_calls is true",
+    "kill_or_repair_again": "if observed_call_count == 0 or runner requires hidden/sealed data"
+  },
+  "model_slot": {
+    "gpu_uuid": "UNBOUND",
+    "model_repo_id": "UNBOUND",
+    "model_revision": "UNBOUND",
+    "model_snapshot_hash": "UNBOUND",
+    "output_root": "UNBOUND",
+    "python_env_hash": "UNBOUND",
+    "raw_response_hash_manifest": "UNBOUND_AFTER_RUN",
+    "serving_backend": "UNBOUND",
+    "slot_name": "qwen_family_primary_repaired_format_canary",
+    "tokenizer_revision": "UNBOUND"
+  },
+  "parent_terminal_finalizer": {
+    "path": "MINIMAL_CANARY_TERMINAL_FINALIZER.json",
+    "sha256": "69737e4d436f5f365f8fccc98c60e1ac314004197be73421e4a51ea12b48630d"
+  },
+  "protocol": "RRC-BFCL-V3-BASE-MT-REPAIRED-FORMAT-CANARY-TEMPLATE-v1",
+  "repair_adapter": {
+    "bfcl_parameters_type_dict_to_json_schema_object": true,
+    "outcome_conditioned_task_selection": false,
+    "preserve_properties_required_descriptions_defaults": true,
+    "recursive": true
+  },
+  "request_policy": {
+    "no_protocol_edit_after_first_model_request": true,
+    "no_selective_rerun": true,
+    "single_model_request_only": true,
+    "terminal_finalizer_required_even_on_parse_error": true,
+    "zero_retry": true
+  },
+  "scope": {
+    "canary_only": true,
+    "full_external_audit_authorized": false,
+    "heldout_or_sealed_access_authorized": false,
+    "model_count": 1,
+    "raw_bfcl_data_commit_allowed": false,
+    "retries": 0,
+    "rollouts_per_task": 1,
+    "task_count": 1,
+    "training_authorized": false,
+    "two_model_canary_authorized": false
+  },
+  "selected_task": {
+    "selected_task_ids_sha256": "87c16d1f3765a5fd421c4ba7b9688a6f60094106efc9d18502375fa8328067a6",
+    "selection_rule": "same frozen first selected id; no outcome-conditioned replacement",
+    "task_id": "multi_turn_base_0",
+    "turn_index": 0
+  },
+  "source_commit_at_template_freeze": "b34af7142831252baa3447a9a3aca260e721513d",
+  "status": "TEMPLATE_FROZEN_NOT_EXECUTABLE_UNTIL_RUNTIME_BINDINGS_FILLED_AND_SEPARATELY_AUTHORIZED"
+}

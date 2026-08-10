@@ -1,0 +1,89 @@
+{
+  "all_positive_fixtures_pass": true,
+  "api_used": false,
+  "cpu_only": true,
+  "fixtures": [
+    {
+      "expected": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ],
+      "fixture_id": "qwen_xml_json_object",
+      "matches_expected": true,
+      "observed": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ]
+    },
+    {
+      "expected": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ],
+      "fixture_id": "qwen_raw_json_object",
+      "matches_expected": true,
+      "observed": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ]
+    },
+    {
+      "expected": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ],
+      "fixture_id": "qwen_tool_calls_array",
+      "matches_expected": true,
+      "observed": [
+        {
+          "arguments": {
+            "order_id": "SYN-001"
+          },
+          "name": "lookup_order"
+        }
+      ]
+    },
+    {
+      "expected": [],
+      "fixture_id": "qwen_prose_only",
+      "matches_expected": true,
+      "observed": []
+    }
+  ],
+  "gpu_used": false,
+  "heldout_or_sealed_access_used": false,
+  "model_inference_used": false,
+  "prose_fixture_remains_unparsed": true,
+  "protocol": "RRC-BFCL-FORMAT-REPAIR-REPLAY-v1",
+  "raw_response_used": false,
+  "schema_adapter": {
+    "nested_type": "object",
+    "original_top_type": "dict",
+    "preserved_required": [
+      "order_id"
+    ],
+    "repaired_top_type": "object"
+  },
+  "status": "PASS",
+  "training_used": false
+}

@@ -200,3 +200,38 @@ def test_bfcl_format_investigation_keeps_rollouts_closed():
     assert summary["rollout_increase_recommended"] is False
     assert summary["full_audit_should_remain_closed"] is True
     assert "CPU-only format repair" in summary["next_admissible_step"]
+
+
+def test_bfcl_format_repair_schema_adapter_and_qwen_fixtures_pass():
+    replay = _load_replay_module()
+    result = replay.run_format_repair_replay()
+    assert result["status"] == "PASS"
+    assert result["model_inference_used"] is False
+    assert result["api_used"] is False
+    assert result["gpu_used"] is False
+    assert result["training_used"] is False
+    assert result["heldout_or_sealed_access_used"] is False
+    assert result["raw_response_used"] is False
+    assert result["schema_adapter"]["original_top_type"] == "dict"
+    assert result["schema_adapter"]["repaired_top_type"] == "object"
+    assert result["schema_adapter"]["nested_type"] == "object"
+    assert result["all_positive_fixtures_pass"] is True
+    assert result["prose_fixture_remains_unparsed"] is True
+
+
+def test_bfcl_repaired_format_canary_template_keeps_full_audit_closed():
+    template = json.loads((AUDIT / "REPAIRED_FORMAT_CANARY_TEMPLATE.json").read_text(encoding="utf-8"))
+    assert template["protocol"] == "RRC-BFCL-V3-BASE-MT-REPAIRED-FORMAT-CANARY-TEMPLATE-v1"
+    assert template["status"] == "TEMPLATE_FROZEN_NOT_EXECUTABLE_UNTIL_RUNTIME_BINDINGS_FILLED_AND_SEPARATELY_AUTHORIZED"
+    assert template["scope"]["canary_only"] is True
+    assert template["scope"]["full_external_audit_authorized"] is False
+    assert template["scope"]["two_model_canary_authorized"] is False
+    assert template["scope"]["task_count"] == 1
+    assert template["scope"]["model_count"] == 1
+    assert template["scope"]["rollouts_per_task"] == 1
+    assert template["scope"]["retries"] == 0
+    assert template["repair_adapter"]["bfcl_parameters_type_dict_to_json_schema_object"] is True
+    assert template["format_change"]["expected_first_canary_goal"] == "parseable tool-call emission, not strict BFCL success"
+    assert template["go_kill"]["full_audit_remains_closed"] is True
+    expected = (AUDIT / "REPAIRED_FORMAT_CANARY_TEMPLATE.sha256").read_text(encoding="ascii").split()[0]
+    assert expected == hashlib.sha256((AUDIT / "REPAIRED_FORMAT_CANARY_TEMPLATE.json").read_bytes()).hexdigest()
