@@ -20,3 +20,16 @@ A future execution must bind the source commit, model/API identity, Tau3
 user-simulator identity, runtime target, and exactly one public airline task
 before the first request. The only success criterion is parseable tool-call
 emission; strict reward success and reward-resolution claims remain closed.
+
+## Terminal finalizer
+
+`tau3_canary_finalizer.py` validates a bound runtime receipt and finalizes a
+single supplied observation. The CPU-only replay at
+`TAU3_CANARY_FINALIZER_REPLAY.json` covers both terminal outcomes:
+
+- `PASS_PARSEABLE_TOOL_CALL` when at least one observed call has a string name
+  and object arguments;
+- `TERMINAL_PARSE_FAILURE` when the single request emits no parseable tool call.
+
+The finalizer rejects training authorization, BFCL use, held-out/sealed access,
+nonzero retry, task/model mismatch, and more than one model request.

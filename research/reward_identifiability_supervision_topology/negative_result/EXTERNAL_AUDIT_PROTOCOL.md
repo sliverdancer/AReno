@@ -281,6 +281,12 @@ retry, and a terminal finalizer even on parse failure. Its success gate is
 parseable tool-call emission only; strict task success and reward-resolution
 claims remain closed until a later, separately frozen calibration protocol.
 
+The CPU-only terminal finalizer replay covers both admissible single-request
+outcomes. A parseable tool call opens only the next protocol-design step for
+reward-resolution calibration; it does not itself claim reward-resolution
+evidence. A parse failure terminates the Tau3 canary route without selective
+reruns.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`
