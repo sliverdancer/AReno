@@ -17,6 +17,8 @@ Permitted actions:
 - install only dependencies required to run the frozen single-request canary;
 - bind `TAU3_RUNTIME_RECEIPT_BOUND.json` from the frozen template;
 - run `run_tau3_single_request_canary.py --execute-one-request` once;
+- use either an OpenAI-compatible endpoint or exactly one local
+  `transformers.generate` call against a fixed cached model snapshot;
 - write only derived artifacts:
   - `TAU3_RUNTIME_RECEIPT_BOUND.json`;
   - `TAU3_RUNTIME_RECEIPT_BOUND.json.sha256`;
@@ -78,4 +80,3 @@ with native tool-call support for this one-request canary.
 - Result is reported as either PASS parseable tool call or terminal parse
   failure.
 - No reward-resolution or task-success claim is made from this canary.
-

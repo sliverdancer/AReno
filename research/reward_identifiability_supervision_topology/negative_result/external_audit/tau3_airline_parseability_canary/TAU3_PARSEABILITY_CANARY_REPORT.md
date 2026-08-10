@@ -61,6 +61,9 @@ The real path requires `--execute-one-request`, a valid bound runtime receipt,
 an OpenAI-compatible `base_url` and API key, and still enforces one request and
 zero retry. It writes a derived observation plus terminal finalizer; raw model
 response text remains out of tracked artifacts.
+If no OpenAI-compatible serving stack is available, the runner also supports
+`--local-transformers-model-path`, which performs exactly one local
+`transformers.generate` call against a fixed cached model snapshot.
 
 ## Dry-run evidence
 

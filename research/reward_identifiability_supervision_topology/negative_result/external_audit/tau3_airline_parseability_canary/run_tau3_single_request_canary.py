@@ -14,6 +14,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,7 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 FINALIZER_PATH = HERE / "tau3_canary_finalizer.py"
+TOOL_CALL_RE = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.DOTALL)
 
 
 def _load_finalizer():
@@ -79,6 +81,26 @@ def _extract_tool_calls_from_openai_message(message: Any) -> list[dict[str, Any]
                 continue
         if isinstance(arguments, dict):
             calls.append({"name": name, "arguments": arguments})
+    return calls
+
+
+def extract_tool_calls_from_text(text: str) -> list[dict[str, Any]]:
+    """Extract Qwen-style or raw JSON tool-call objects from generated text."""
+
+    candidates = [match.group(1) for match in TOOL_CALL_RE.finditer(text)]
+    stripped = text.strip()
+    if not candidates and stripped.startswith("{") and stripped.endswith("}"):
+        candidates.append(stripped)
+    calls: list[dict[str, Any]] = []
+    for candidate in candidates:
+        try:
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict) and isinstance(parsed.get("name"), str) and isinstance(
+            parsed.get("arguments"), dict
+        ):
+            calls.append({"name": parsed["name"], "arguments": parsed["arguments"]})
     return calls
 
 
@@ -170,6 +192,54 @@ def run_real_single_request(receipt: dict[str, Any], *, base_url: str, api_key: 
     }
 
 
+def run_local_transformers_single_request(receipt: dict[str, Any], *, model_path: str) -> dict[str, Any]:
+    """Run one local transformers generate call and parse its tool-call text."""
+
+    import torch  # type: ignore
+    from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+
+    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        local_files_only=True,
+        trust_remote_code=True,
+        torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
+        device_map="auto" if torch.cuda.is_available() else None,
+    )
+    prompt = (
+        "You are in a Tau3/Tau2 airline public tool-use parseability canary.\n"
+        "This canary checks only whether you can emit a parseable tool call.\n"
+        "Do not explain. Do not add prose. Emit exactly one tool call in this format:\n"
+        "<tool_call>{\"name\":\"DB\",\"arguments\":{\"query\":\"SELECT 1\"}}</tool_call>\n"
+        f"Public canary task id: {receipt['task_id']}\n"
+        "Answer now with exactly one tool_call block."
+    )
+    messages = [{"role": "user", "content": prompt}]
+    try:
+        input_ids = tokenizer.apply_chat_template(
+            messages,
+            add_generation_prompt=True,
+            return_tensors="pt",
+        )
+    except Exception:
+        input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+    if torch.cuda.is_available():
+        input_ids = input_ids.to(model.device)
+    with torch.no_grad():
+        output_ids = model.generate(
+            input_ids,
+            max_new_tokens=96,
+            do_sample=False,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+    new_tokens = output_ids[0, input_ids.shape[-1] :]
+    text = tokenizer.decode(new_tokens, skip_special_tokens=False)
+    return {
+        "observed_tool_calls": extract_tool_calls_from_text(text),
+        "raw_response_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runtime-receipt", type=Path, required=True)
@@ -178,6 +248,7 @@ def main() -> int:
     parser.add_argument("--execute-one-request", action="store_true")
     parser.add_argument("--base-url", default=os.environ.get("OPENAI_BASE_URL"))
     parser.add_argument("--api-key", default=os.environ.get("OPENAI_API_KEY"))
+    parser.add_argument("--local-transformers-model-path")
     args = parser.parse_args()
 
     receipt = load_receipt(args.runtime_receipt)
@@ -186,10 +257,15 @@ def main() -> int:
     if not args.execute_one_request or args.dry_run:
         write_json(output_dir / "TAU3_REQUEST_PLAN_DRY_RUN.json", build_request_plan(receipt))
         return 0
-    if not args.base_url or not args.api_key:
+    if args.local_transformers_model_path:
+        result = run_local_transformers_single_request(
+            receipt,
+            model_path=args.local_transformers_model_path,
+        )
+    elif args.base_url and args.api_key:
+        result = run_real_single_request(receipt, base_url=args.base_url, api_key=args.api_key)
+    else:
         raise SystemExit("real execution requires --base-url/OPENAI_BASE_URL and --api-key/OPENAI_API_KEY")
-
-    result = run_real_single_request(receipt, base_url=args.base_url, api_key=args.api_key)
     observation = build_observation(
         receipt=receipt,
         receipt_sha256=receipt_sha256,

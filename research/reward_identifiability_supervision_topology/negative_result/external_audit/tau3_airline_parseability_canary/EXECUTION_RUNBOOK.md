@@ -70,6 +70,17 @@ python research\reward_identifiability_supervision_topology\negative_result\exte
   --api-key <api_key>
 ```
 
+For a local cached model without OpenAI-compatible serving, use exactly one
+local `transformers.generate` call instead:
+
+```powershell
+python research\reward_identifiability_supervision_topology\negative_result\external_audit\tau3_airline_parseability_canary\run_tau3_single_request_canary.py `
+  --runtime-receipt <run_dir>\TAU3_RUNTIME_RECEIPT_BOUND.json `
+  --output-dir <run_dir> `
+  --execute-one-request `
+  --local-transformers-model-path <local_model_snapshot_or_repo_dir>
+```
+
 Expected terminal outputs:
 
 - `<run_dir>\TAU3_CANARY_OBSERVATION.json`

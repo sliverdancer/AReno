@@ -312,6 +312,18 @@ def test_tau3_runner_build_observation_preserves_single_request_boundary():
     assert "raw_response_sha256" in observation
 
 
+def test_tau3_runner_extracts_qwen_style_tool_call_text():
+    runner = _load_runner()
+    text = '<think>skip</think><tool_call>{"name":"DB","arguments":{"query":"SELECT 1"}}</tool_call>'
+    assert runner.extract_tool_calls_from_text(text) == [
+        {"name": "DB", "arguments": {"query": "SELECT 1"}}
+    ]
+    assert runner.extract_tool_calls_from_text("plain prose") == []
+    assert runner.extract_tool_calls_from_text('{"name":"DB","arguments":{"query":"SELECT 1"}}') == [
+        {"name": "DB", "arguments": {"query": "SELECT 1"}}
+    ]
+
+
 def test_tau3_runner_real_request_path_requires_explicit_api_binding(tmp_path, monkeypatch):
     runner = _load_runner()
     binder = _load_binder()
