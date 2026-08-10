@@ -204,8 +204,10 @@ def run_local_transformers_single_request(receipt: dict[str, Any], *, model_path
         local_files_only=True,
         trust_remote_code=True,
         torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
-        device_map="auto" if torch.cuda.is_available() else None,
     )
+    if torch.cuda.is_available():
+        model = model.to("cuda")
+    model.eval()
     prompt = (
         "You are in a Tau3/Tau2 airline public tool-use parseability canary.\n"
         "This canary checks only whether you can emit a parseable tool call.\n"

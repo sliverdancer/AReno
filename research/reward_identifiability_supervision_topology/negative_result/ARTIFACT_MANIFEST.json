@@ -262,9 +262,9 @@
       "sha256": "a964bbb32bed8112e3424d6befa30a2bff3e4910bf4b3ca2987db90f44652d8e"
     },
     {
-      "bytes": 10808,
+      "bytes": 10826,
       "path": "external_audit/tau3_airline_parseability_canary/run_tau3_single_request_canary.py",
-      "sha256": "4b6fabfcad3c04d4e8f515d633c733a0f96e9d1504f3aee48bde107aed835d24"
+      "sha256": "8aee71a34e5d911e1258894dd940e224c4e271fea4e5c2931970f7189627aab2"
     },
     {
       "bytes": 12173,
