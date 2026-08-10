@@ -1,5 +1,5 @@
 {
-  "file_count": 66,
+  "file_count": 71,
   "files": [
     {
       "bytes": 5668,
@@ -227,9 +227,34 @@
       "sha256": "1712148cbdd42cb669badfcb3cfd62618199c5731fa516f417c05b5a648d3532"
     },
     {
-      "bytes": 3289,
+      "bytes": 2905,
+      "path": "external_audit/tau3_airline_parseability_canary/build_dry_run_evidence.py",
+      "sha256": "ab33eee4cafb70ffbde5a4b204f9fb623fd13e41d48a49a884e75afd5bb14d43"
+    },
+    {
+      "bytes": 897,
+      "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/DRY_RUN_MANIFEST.json",
+      "sha256": "331e4ce9aa36d483b3f2f095a8f5ab74b5c9cbef0caa685b3bd313d89aad7450"
+    },
+    {
+      "bytes": 542,
+      "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/TAU3_REQUEST_PLAN_DRY_RUN.json",
+      "sha256": "4ccf1bbec2554657719ab3ff32f82cd931cc18bf627c15b2f59303621d3864a3"
+    },
+    {
+      "bytes": 956,
+      "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/TAU3_RUNTIME_RECEIPT_BOUND.json",
+      "sha256": "09c2748d0c0ed535cd3448409cee1d358b219fab5a4cd353a4f7be93f2242a5c"
+    },
+    {
+      "bytes": 99,
+      "path": "external_audit/tau3_airline_parseability_canary/dry_run_evidence/TAU3_RUNTIME_RECEIPT_BOUND.json.sha256",
+      "sha256": "8b2c2ab4c85757e1cb898cf3de43ac73fdba020bbceb9ce8f371b79bcdc9a66a"
+    },
+    {
+      "bytes": 3483,
       "path": "external_audit/tau3_airline_parseability_canary/EXECUTION_RUNBOOK.md",
-      "sha256": "f3414571e6a800125123246e300adb11628c0fb5da3b9f3da835fa7a4261f2db"
+      "sha256": "7ac80db6d809fb0cd4f961e2706a3894ac5d61e9f6fc4c1599c5d1e9b09313ca"
     },
     {
       "bytes": 7605,
@@ -252,9 +277,9 @@
       "sha256": "fa1276f0328f19f86b33ab226170067bcde1e4755ae654e10c0700aef8b59e2f"
     },
     {
-      "bytes": 2786,
+      "bytes": 3145,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_REPORT.md",
-      "sha256": "4ab1ab56a40147c9f175d70c6e6243841a52562e05a6f8efdaf61569b5de3d56"
+      "sha256": "1bef7b3cd1741436011b0adfbe0b42762cb5696d7303636c38d5a7e842731ee5"
     },
     {
       "bytes": 3034,
@@ -272,9 +297,9 @@
       "sha256": "ccfc36d6c239ef598af3377799aff22498c5436d1ebb65588b4965ab76a327d8"
     },
     {
-      "bytes": 12976,
+      "bytes": 13187,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "4dbcd343b79b3e311bca414bcf5fe9ade93a643ebf2330de32c33f83108d4567"
+      "sha256": "1431530a18f60932d9ecb73d8724a6bc1d2c5e113b923cc02d26565fc33b884c"
     },
     {
       "bytes": 1778,
@@ -307,9 +332,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 6437,
+      "bytes": 6650,
       "path": "START_HERE.md",
-      "sha256": "dd86c2f941ebe58c0989e73cd85ba76f9ab1d6bfd0b238ff9f63a30ca7f55676"
+      "sha256": "5de341fc7fe2f011c68175013daff0eb4d79d993c7f54c4e43b192157580a804"
     },
     {
       "bytes": 1308,

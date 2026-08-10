@@ -61,3 +61,11 @@ The real path requires `--execute-one-request`, a valid bound runtime receipt,
 an OpenAI-compatible `base_url` and API key, and still enforces one request and
 zero retry. It writes a derived observation plus terminal finalizer; raw model
 response text remains out of tracked artifacts.
+
+## Dry-run evidence
+
+`build_dry_run_evidence.py` generates `dry_run_evidence/` with a synthetic bound
+receipt, its SHA-256 sidecar, a dry-run request plan, and a manifest. This
+artifact proves the pre-authorization execution chain is wired without sending a
+model request. It is not a model result and cannot satisfy the parseable
+external canary by itself.

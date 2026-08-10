@@ -308,6 +308,10 @@ the repository.
 single-request canary. It lists the dry-run path, the separately authorized real
 execution command, terminal interpretations, and hard stops.
 
+`dry_run_evidence/` is a synthetic CPU-only proof that the binder and runner
+dry-run path produce a bound receipt, hash sidecar, and request plan without a
+model request. It is not external empirical evidence.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

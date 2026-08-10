@@ -1,0 +1,26 @@
+{
+  "api_used": false,
+  "bfcl_used": false,
+  "files": [
+    {
+      "path": "TAU3_RUNTIME_RECEIPT_BOUND.json",
+      "sha256": "09c2748d0c0ed535cd3448409cee1d358b219fab5a4cd353a4f7be93f2242a5c"
+    },
+    {
+      "path": "TAU3_RUNTIME_RECEIPT_BOUND.json.sha256",
+      "sha256": "8b2c2ab4c85757e1cb898cf3de43ac73fdba020bbceb9ce8f371b79bcdc9a66a"
+    },
+    {
+      "path": "TAU3_REQUEST_PLAN_DRY_RUN.json",
+      "sha256": "4ccf1bbec2554657719ab3ff32f82cd931cc18bf627c15b2f59303621d3864a3"
+    }
+  ],
+  "gpu_used": false,
+  "heldout_or_sealed_access_used": false,
+  "model_request_sent": false,
+  "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-DRY-RUN-EVIDENCE-v1",
+  "raw_response_included": false,
+  "receipt_sha256": "db9282b9890b75729ef99d576450d3cf90542226a08dec3489d8a5c9b124dbc1",
+  "status": "PASS_CPU_ONLY_NO_MODEL_REQUEST_SENT",
+  "training_used": false
+}

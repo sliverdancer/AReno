@@ -47,9 +47,10 @@ Read order:
 36. `external_audit/tau3_airline_parseability_canary/bind_runtime_receipt.py`
 37. `external_audit/tau3_airline_parseability_canary/run_tau3_single_request_canary.py`
 38. `external_audit/tau3_airline_parseability_canary/EXECUTION_RUNBOOK.md`
-39. `submission/NEURIPS_ED_DRAFT.md`
-40. `EVIDENCE_SUMMARY.csv`
-41. `EVIDENCE_SUMMARY.json`
+39. `external_audit/tau3_airline_parseability_canary/dry_run_evidence/DRY_RUN_MANIFEST.json`
+40. `submission/NEURIPS_ED_DRAFT.md`
+41. `EVIDENCE_SUMMARY.csv`
+42. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -98,4 +99,6 @@ receipt only after all identity fields are supplied; it still does not execute
 Tau3, a model, API, GPU, or training. The single-request runner is present but
 defaults to dry-run and requires explicit execution flags plus API/runtime
 bindings before any model request. `EXECUTION_RUNBOOK.md` is the authoritative
-handoff for the remaining single-request canary.
+handoff for the remaining single-request canary. A synthetic dry-run evidence
+directory proves the pre-authorization binder/runner path without sending a
+model request.

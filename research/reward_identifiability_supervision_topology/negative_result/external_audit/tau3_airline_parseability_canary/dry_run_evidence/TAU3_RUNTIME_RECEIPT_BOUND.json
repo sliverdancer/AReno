@@ -1,0 +1,20 @@
+{
+  "bfcl_used": false,
+  "gpu_uuid_or_api_provider": "CPU_SYNTHETIC_DRY_RUN",
+  "heldout_or_sealed_accessed": false,
+  "model_repo_or_api_id": "Qwen/Qwen3-0.6B",
+  "model_request_budget": 1,
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "pre_request_exit_if_any_unbound": true,
+  "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-RUNTIME-RECEIPT-v1",
+  "raw_response_committed": false,
+  "retry_budget": 0,
+  "source_commit": "1111111111111111111111111111111111111111",
+  "status": "BOUND_READY_FOR_SINGLE_REQUEST_CANARY",
+  "task_id": "airline:synthetic-public-task",
+  "template_sha256": "742e84e8fe0be9b1931f366a25056f32fad603ae5076338fbb8e5ecefe7b468b",
+  "training_authorized": false,
+  "user_simulator_authorization_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+  "user_simulator_model": "tau3/synthetic-user-simulator-placeholder",
+  "user_simulator_revision": "tau3-v1.0.1"
+}

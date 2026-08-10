@@ -352,3 +352,30 @@ def test_tau3_execution_runbook_preserves_authorization_boundary():
     assert "Raw model response text must not be committed" in text
     assert "reward-resolution calibration" in text
     assert "BFCL, held-out/sealed data, or training" in text
+
+
+def test_tau3_dry_run_evidence_is_cpu_only_and_hash_bound():
+    dry_run = CANARY / "dry_run_evidence"
+    manifest = json.loads((dry_run / "DRY_RUN_MANIFEST.json").read_text(encoding="utf-8"))
+    assert manifest["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-DRY-RUN-EVIDENCE-v1"
+    assert manifest["status"] == "PASS_CPU_ONLY_NO_MODEL_REQUEST_SENT"
+    assert manifest["model_request_sent"] is False
+    assert manifest["api_used"] is False
+    assert manifest["gpu_used"] is False
+    assert manifest["training_used"] is False
+    assert manifest["bfcl_used"] is False
+    assert manifest["heldout_or_sealed_access_used"] is False
+    assert manifest["raw_response_included"] is False
+    files = {item["path"]: item["sha256"] for item in manifest["files"]}
+    assert set(files) == {
+        "TAU3_RUNTIME_RECEIPT_BOUND.json",
+        "TAU3_RUNTIME_RECEIPT_BOUND.json.sha256",
+        "TAU3_REQUEST_PLAN_DRY_RUN.json",
+    }
+    for relative, digest in files.items():
+        assert hashlib.sha256((dry_run / relative).read_bytes()).hexdigest() == digest
+    plan = json.loads((dry_run / "TAU3_REQUEST_PLAN_DRY_RUN.json").read_text(encoding="utf-8"))
+    assert plan["status"] == "DRY_RUN_NO_MODEL_REQUEST_SENT"
+    assert plan["raw_response_commit_allowed"] is False
+    assert not (dry_run / "TAU3_CANARY_OBSERVATION.json").exists()
+    assert not (dry_run / "TAU3_CANARY_TERMINAL_FINALIZER.json").exists()

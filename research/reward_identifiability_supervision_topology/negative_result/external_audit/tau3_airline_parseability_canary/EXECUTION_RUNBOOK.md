@@ -51,6 +51,10 @@ Expected dry-run output:
 
 No model request is sent by this path.
 
+The repository contains a synthetic CPU-only dry-run example at
+`dry_run_evidence/`. It demonstrates the binder and runner dry-run path with
+synthetic identities only; it is not a model result.
+
 ## Real single-request path
 
 This path requires separate explicit authorization before use:
@@ -88,4 +92,3 @@ Stop before the first request if any of these are true:
 - The task is not a public Tau3/Tau2 airline task.
 - BFCL, held-out/sealed data, or training would be touched.
 - The endpoint cannot expose OpenAI-style tool calls.
-
