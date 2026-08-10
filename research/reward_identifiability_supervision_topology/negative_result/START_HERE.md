@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_MINIMAL_CANARY_TERMINAL_PARSE_FAILURE`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -27,9 +27,12 @@ Read order:
 16. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_REPORT.md`
 17. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.md`
 18. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json`
-19. `submission/NEURIPS_ED_DRAFT.md`
-20. `EVIDENCE_SUMMARY.csv`
-21. `EVIDENCE_SUMMARY.json`
+19. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_REPORT.md`
+20. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_FINALIZER.json`
+21. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json`
+22. `submission/NEURIPS_ED_DRAFT.md`
+23. `EVIDENCE_SUMMARY.csv`
+24. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -44,12 +47,10 @@ a static execution receipt, a CPU-only synthetic evaluator replay, and a minimal
 one-task one-model canary runtime receipt template. Do not retune v4 after
 observing the calibration outcomes.
 
-The most recent local preflight blocked before the first model request: no local
-Qwen/Gemma snapshot is available, local PyTorch is CPU-only, and no concrete
-remote/API runtime was provided. The next admissible step is binding a concrete
-remote GPU or API runtime, then rerunning preflight before exactly one model
-request. Full BFCL external audit remains closed. Raw BFCL prompt,
-possible-answer, and function-documentation files are not committed in this
-repository; only hashes, schema summaries, selected public task ids, static
-execution receipt, synthetic replay results, canary receipt template, and
-preflight block report are tracked.
+The remote minimal canary executed exactly one Qwen3-0.6B model request and
+terminated as an interpretable parse failure: zero parseable tool calls, strict
+success false, zero retries. This does not open the full BFCL external audit or
+the two-model canary. Raw BFCL prompt, possible-answer, function-documentation
+files, and raw model response are not committed in this repository; only hashes,
+schema summaries, selected public task ids, static execution receipt, synthetic
+replay results, canary receipts, and terminal summaries are tracked.

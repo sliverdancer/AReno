@@ -147,3 +147,42 @@ def test_bfcl_local_preflight_blocked_before_first_model_request():
         (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_bytes()
     ).hexdigest()
     assert report["decision"].startswith("Do not send a model request")
+
+
+def test_bfcl_minimal_canary_terminal_result_keeps_full_audit_closed():
+    finalizer = json.loads((AUDIT / "MINIMAL_CANARY_TERMINAL_FINALIZER.json").read_text(encoding="utf-8"))
+    assert finalizer["protocol"] == "RRC-BFCL-MINIMAL-CANARY-TERMINAL-FINALIZER-v1"
+    assert finalizer["status"] == "TERMINAL_INTERPRETABLE"
+    assert finalizer["model_request_sent"] is True
+    assert finalizer["model_request_count"] == 1
+    assert finalizer["retry_count"] == 0
+    assert finalizer["task_id"] == "multi_turn_base_0"
+    assert finalizer["model_repo_id"] == "Qwen/Qwen3-0.6B"
+    assert finalizer["model_revision"] == "c1899de289a04d12100db370d81485cdf75e47ca"
+    assert finalizer["strict_success"] is False
+    assert finalizer["failure_mode"] == "PARSE_FAILURE"
+    assert finalizer["parseable_tool_calls"] is False
+    assert finalizer["observed_call_count"] == 0
+    assert finalizer["expected_call_count"] == 3
+    assert finalizer["go_to_two_model_canary"] is False
+    assert finalizer["full_audit_authorized"] is False
+    assert finalizer["training_authorized"] is False
+    assert finalizer["heldout_or_sealed_accessed"] is False
+
+
+def test_bfcl_minimal_canary_bound_receipt_matches_terminal_hash():
+    receipt = json.loads((AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json").read_text(encoding="utf-8"))
+    finalizer = json.loads((AUDIT / "MINIMAL_CANARY_TERMINAL_FINALIZER.json").read_text(encoding="utf-8"))
+    assert receipt["protocol"] == "RRC-BFCL-V3-BASE-MT-MINIMAL-INFERENCE-CANARY-RUNTIME-RECEIPT-BOUND-v1"
+    assert receipt["source_commit"] == "48cacb973cd4d29c6cf39db221e1ba7e7cf27006"
+    assert receipt["model_request_budget"] == 1
+    assert receipt["model_request_count_before_run"] == 0
+    assert receipt["request_policy"]["single_model_request_only"] is True
+    assert receipt["request_policy"]["zero_retry"] is True
+    assert receipt["serving_backend"] == "direct_transformers_generate_single_call"
+    assert receipt["template_sha256"] == hashlib.sha256(
+        (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_bytes()
+    ).hexdigest()
+    assert finalizer["runtime_receipt_sha256"] == hashlib.sha256(
+        (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json").read_bytes()
+    ).hexdigest()

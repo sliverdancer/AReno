@@ -13,6 +13,9 @@ one-task, one-model inference canary but is not executable until all runtime
 bindings are filled and separately authorized.
 `MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json` records the first local fail-fast
 preflight, which stopped before any model request.
+`MINIMAL_CANARY_TERMINAL_FINALIZER.json` records the remote one-request Qwen3
+canary terminal result. The raw response is represented only by hash and is not
+tracked here.
 
 Rebuild with:
 

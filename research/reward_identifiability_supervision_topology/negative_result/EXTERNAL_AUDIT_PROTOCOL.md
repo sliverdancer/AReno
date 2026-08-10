@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_WITH_MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED_NOT_EXECUTED`
+Status: `MINIMAL_CANARY_TERMINAL_PARSE_FAILURE_FULL_AUDIT_CLOSED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -18,6 +18,8 @@ The minimal canary runtime receipt template is recorded at
 `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json`.
 The local preflight block report is recorded at
 `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json`.
+The remote one-request canary terminal finalizer is recorded at
+`external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_FINALIZER.json`.
 
 ## Selected public target
 
@@ -169,6 +171,23 @@ complete and interpretable.
 The first local preflight did not execute because runtime bindings were missing:
 no local Qwen/Gemma snapshot, CPU-only PyTorch, no vLLM/accelerate runtime, and
 no concrete remote GPU/API target.
+
+## Minimal canary terminal result
+
+The remote A800 canary executed exactly one Qwen3-0.6B request against
+`multi_turn_base_0` first turn. It terminated as interpretable `PARSE_FAILURE`:
+
+- model requests: 1;
+- retries: 0;
+- expected tool calls: 3;
+- observed parseable tool calls: 0;
+- strict success: false;
+- go to two-model canary: false;
+- full BFCL audit authorized: false.
+
+This result blocks full-audit execution. The next admissible work is
+format/prompt investigation without outcome-conditioned task selection, followed
+by a newly frozen one-request canary if the interface is changed.
 
 ## Deliverables when executed
 
