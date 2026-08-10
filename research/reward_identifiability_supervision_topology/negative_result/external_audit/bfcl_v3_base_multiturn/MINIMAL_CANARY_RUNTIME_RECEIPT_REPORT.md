@@ -16,7 +16,7 @@ runtime receipt for the smallest admissible model canary:
 
 - `MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json`
 - SHA-256:
-  `6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f`
+  `1985ef797b7f4a92a51f665e437c67ac7f1cb894a94ba651db4d9273598c83d3`
 
 ## Execution status
 

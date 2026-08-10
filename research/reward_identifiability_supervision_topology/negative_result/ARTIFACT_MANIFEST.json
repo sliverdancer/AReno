@@ -47,24 +47,24 @@
       "sha256": "23fd5b324d3c76dae77f5f6d50f8a9beebac834aa86f3b41a3d32aaa4857645e"
     },
     {
-      "bytes": 8544,
+      "bytes": 8397,
       "path": "external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json",
-      "sha256": "13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667"
+      "sha256": "6e780bfba8d61a3ccafa8b3510cfc54894855e84cc2eefa39cc24b9a205668ca"
     },
     {
-      "bytes": 97,
+      "bytes": 96,
       "path": "external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.sha256",
-      "sha256": "4193a415239e6a55b579e7f7bc5115ddd7f35920d68f3a8f9ff7c2ea4da0b3d6"
+      "sha256": "605e6eace36540e6c0a3061f55bc2993ae71236f7380ca43ba538af8953d859b"
     },
     {
-      "bytes": 1818,
+      "bytes": 1770,
       "path": "external_audit/bfcl_v3_base_multiturn/FEASIBILITY_AUDIT_REPORT.md",
-      "sha256": "15ffecfe6be0990f6082b2c3c3b9523f6b26be4f4caf2b51e2198b88e71a79b3"
+      "sha256": "884b6f93e57be028db85f2ce1f2bd25503a2d218864ab2b10bf886d87558647f"
     },
     {
-      "bytes": 2176,
+      "bytes": 2280,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json",
-      "sha256": "81a12ffaf25bba91163c4dba6ff9da4c20ff2026d10535a7534f3c91c91c1acb"
+      "sha256": "deb9ab51681e78e4fcdbd648802674a8e7e9466d7c1df6f939a4b3f1fd845cb2"
     },
     {
       "bytes": 1393,
@@ -74,17 +74,17 @@
     {
       "bytes": 1754,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_REPORT.md",
-      "sha256": "95f10ac6e76d16bd3eca97610dc418a96ea7f21bac2455b21d71fee48f2d65bd"
+      "sha256": "ed76889f5035dfebce2c260cf253ea15308ec12aa057c9e0ecac5ff20edb3015"
     },
     {
-      "bytes": 4292,
+      "bytes": 4207,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json",
-      "sha256": "6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f"
+      "sha256": "1985ef797b7f4a92a51f665e437c67ac7f1cb894a94ba651db4d9273598c83d3"
     },
     {
-      "bytes": 112,
+      "bytes": 111,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.sha256",
-      "sha256": "36e9c32ea6982525361c382196579761a56a25fc6d7e150fa0913c17594e1837"
+      "sha256": "59095cd738fa0ef10f70fc432097415143b3094e9e70d9ef529226b5e13aef3b"
     },
     {
       "bytes": 2548,
@@ -92,24 +92,24 @@
       "sha256": "2bd234792fc38aecf48cdea203f73b3211c89959da376c46126706e7b36a0aae"
     },
     {
-      "bytes": 4160,
+      "bytes": 4081,
       "path": "external_audit/bfcl_v3_base_multiturn/PUBLIC_FILE_MANIFEST.json",
-      "sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9"
+      "sha256": "f528d53e9c373cb2d86aafdb9c545fda9d5a46a093ff07204c900903c470136c"
     },
     {
-      "bytes": 1063,
+      "bytes": 1054,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "46f73a52fc36d0c9bdc10dded854ca487c26f33718907c56f1350315c14d4b28"
+      "sha256": "5ef4850fc800797c77bd25fd8b796bec88c14d633d97610df3a506602a928b85"
     },
     {
-      "bytes": 8651,
+      "bytes": 8162,
       "path": "external_audit/bfcl_v3_base_multiturn/SCHEMA_SUMMARY.json",
-      "sha256": "ade76eb996a5c682814cc732ca838fdc4967c73adbeb0845322c2fefc797ae24"
+      "sha256": "00a8e6519522c28877b94fabc2a96c6b852128cf75f4e45612c16b37031a4932"
     },
     {
-      "bytes": 1270,
+      "bytes": 1206,
       "path": "external_audit/bfcl_v3_base_multiturn/SELECTED_TASK_IDS.txt",
-      "sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a"
+      "sha256": "87c16d1f3765a5fd421c4ba7b9688a6f60094106efc9d18502375fa8328067a6"
     },
     {
       "bytes": 1586,
@@ -117,14 +117,14 @@
       "sha256": "c9d9013a99e8f598bf2c875c0c823b0591d1b25dcb4f5a6334501229b1297c5b"
     },
     {
-      "bytes": 2415,
+      "bytes": 2326,
       "path": "external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json",
-      "sha256": "10d74304432fd776ad8e3157fac0c142ffff35042b5f3c2d7fc71bfaea73702c"
+      "sha256": "f710879dc705164f7a030c28ac3a5be59c7066b37939add02f08a81342c7a667"
     },
     {
       "bytes": 6571,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "7efcdf649884cafa79674bef6019aec4c55d96607a04a903f37fc5726a9d44f0"
+      "sha256": "f517465302c0284d3ecd4c1c59699226d44c3311a54e8fda3aa8a9915cc26880"
     },
     {
       "bytes": 1778,

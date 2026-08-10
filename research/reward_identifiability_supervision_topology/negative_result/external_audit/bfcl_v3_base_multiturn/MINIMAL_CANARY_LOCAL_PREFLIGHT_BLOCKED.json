@@ -8,6 +8,7 @@
   ],
   "created_local_date": "2026-08-10",
   "decision": "Do not send a model request. Bind a concrete remote GPU or API runtime first, then rerun preflight before the first request.",
+  "line_ending_canonicalization_note": "Updated after LF-canonical receipt hash repair; no model request was sent during the original blocked preflight.",
   "local_runtime_probe": {
     "bfcl_public_mirror_present": true,
     "hf_token_present": false,
@@ -46,6 +47,6 @@
   "status": "BLOCKED_BEFORE_FIRST_MODEL_REQUEST",
   "template": {
     "path": "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json",
-    "sha256": "6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f"
+    "sha256": "1985ef797b7f4a92a51f665e437c67ac7f1cb894a94ba651db4d9273598c83d3"
   }
 }

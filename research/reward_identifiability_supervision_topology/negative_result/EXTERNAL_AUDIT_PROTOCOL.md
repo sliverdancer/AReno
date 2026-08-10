@@ -138,7 +138,7 @@ The frozen static receipt records:
 
 Receipt hash:
 
-`13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667`
+`6e780bfba8d61a3ccafa8b3510cfc54894855e84cc2eefa39cc24b9a205668ca`
 
 The receipt is non-circular: `EXECUTION_RECEIPT_STATIC.json` is hashed by
 `EXECUTION_RECEIPT_STATIC.sha256`, and the containing Git commit binds both.
@@ -161,7 +161,7 @@ field remains `UNBOUND`.
 
 Template hash:
 
-`6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f`
+`1985ef797b7f4a92a51f665e437c67ac7f1cb894a94ba651db4d9273598c83d3`
 
 The full external audit remains unauthorized until a terminal one-task canary is
 complete and interpretable.

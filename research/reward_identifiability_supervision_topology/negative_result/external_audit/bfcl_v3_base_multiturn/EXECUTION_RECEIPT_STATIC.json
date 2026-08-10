@@ -30,7 +30,7 @@
   "protocol_base_commit": "fa39c6580b313830d8a00bb9af9f5c79e4500988",
   "public_data_identity": {
     "benchmark": "Berkeley Function Calling Leaderboard",
-    "file_manifest_sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9",
+    "file_manifest_sha256": "f528d53e9c373cb2d86aafdb9c545fda9d5a46a093ff07204c900903c470136c",
     "files": [
       {
         "bytes": 391058,
@@ -105,7 +105,7 @@
         "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/eval.yaml"
       }
     ],
-    "schema_summary_sha256": "ade76eb996a5c682814cc732ca838fdc4967c73adbeb0845322c2fefc797ae24",
+    "schema_summary_sha256": "00a8e6519522c28877b94fabc2a96c6b852128cf75f4e45612c16b37031a4932",
     "subset": "BFCL V3 Base Multi-Turn public split"
   },
   "risk_position_before_any_inference": {
@@ -141,7 +141,7 @@
     "outcome_blind": true,
     "rule": "natural_numeric_sort(task_id)[:64]",
     "selected_task_ids_file": "SELECTED_TASK_IDS.txt",
-    "selected_task_ids_sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a",
+    "selected_task_ids_sha256": "87c16d1f3765a5fd421c4ba7b9688a6f60094106efc9d18502375fa8328067a6",
     "task_count": 64
   }
 }
