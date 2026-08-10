@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="190" viewBox="0 0 980 190">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="32" font-family="Arial" font-size="18" font-weight="700">Pre-training reward-resolution diagnostic pipeline</text>
+<rect x="40" y="70" width="190" height="70" rx="10" fill="#f7f7f7" stroke="#333"/>
+<text x="56" y="100" font-family="Arial" font-size="15" font-weight="700">Freeze pool</text>
+<text x="56" y="122" font-family="Arial" font-size="12">splits, seeds, thresholds</text>
+<line x1="240" y1="105" x2="268" y2="105" stroke="#333" stroke-width="2"/>
+<polygon points="268,105 258,99 258,111" fill="#333"/>
+<rect x="275" y="70" width="190" height="70" rx="10" fill="#f7f7f7" stroke="#333"/>
+<text x="291" y="100" font-family="Arial" font-size="15" font-weight="700">Collect calibration</text>
+<text x="291" y="122" font-family="Arial" font-size="12">zero retry, raw responses</text>
+<line x1="475" y1="105" x2="503" y2="105" stroke="#333" stroke-width="2"/>
+<polygon points="503,105 493,99 493,111" fill="#333"/>
+<rect x="510" y="70" width="190" height="70" rx="10" fill="#f7f7f7" stroke="#333"/>
+<text x="526" y="100" font-family="Arial" font-size="15" font-weight="700">Measure resolution</text>
+<text x="526" y="122" font-family="Arial" font-size="12">mixed groups, collapse rates</text>
+<line x1="710" y1="105" x2="738" y2="105" stroke="#333" stroke-width="2"/>
+<polygon points="738,105 728,99 728,111" fill="#333"/>
+<rect x="745" y="70" width="190" height="70" rx="10" fill="#f7f7f7" stroke="#333"/>
+<text x="761" y="100" font-family="Arial" font-size="15" font-weight="700">Gate training</text>
+<text x="761" y="122" font-family="Arial" font-size="12">GO only with common contrast</text>
+</svg>

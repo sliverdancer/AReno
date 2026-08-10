@@ -1,0 +1,105 @@
+{
+  "file_count": 19,
+  "files": [
+    {
+      "bytes": 5668,
+      "path": "analyze_collapse_summary.py",
+      "sha256": "2c9ba9df65987a20605f189174187e7e0c2a8129e5f291f746bcbf39d308e636"
+    },
+    {
+      "bytes": 1619,
+      "path": "build_artifact_manifest.py",
+      "sha256": "914195f373c3e44d13d5f10b4df91a6ea19065352ffc032b82c4c9f74a8552a2"
+    },
+    {
+      "bytes": 5047,
+      "path": "build_figures.py",
+      "sha256": "49c451d3c820dcad056d007b8f3aa3bf2a4c4e4e609cbcd43e1fb4d087551cba"
+    },
+    {
+      "bytes": 2457,
+      "path": "COLLAPSE_TAXONOMY.md",
+      "sha256": "8eebf6dc596d3f8daa2d81df71209e77f189944cd0eb192c3f63d3a0187f1d00"
+    },
+    {
+      "bytes": 1881,
+      "path": "DIAGNOSTIC_CHECKLIST.md",
+      "sha256": "6307edab51751f71215f7a3e9749a5ddbd6624903d7d30d69f108b48859c606a"
+    },
+    {
+      "bytes": 1504,
+      "path": "EVIDENCE_SUMMARY.csv",
+      "sha256": "913abb9ff81ae36b8f4cc31a2322e08029db1eeb531e1f9253eccc5823aa2c2f"
+    },
+    {
+      "bytes": 10772,
+      "path": "EVIDENCE_SUMMARY.json",
+      "sha256": "c36c251e3ae873af2fa5b2618b021b3da66b56a5066a8703df319c5c15966566"
+    },
+    {
+      "bytes": 3272,
+      "path": "EXTERNAL_AUDIT_PROTOCOL.md",
+      "sha256": "050934e16ab3f4ab521a6edb7129d7b455a4a22ce4ba25295552c81ce9bc1b81"
+    },
+    {
+      "bytes": 1778,
+      "path": "figures/diagnostic_pipeline.svg",
+      "sha256": "5af3a8b36a549aca79963982565bf01361817c1d1cde6b6134841ffcae4b2e36"
+    },
+    {
+      "bytes": 7027,
+      "path": "figures/reward_resolution_heatmap.svg",
+      "sha256": "52c1fa757dfa92cab804f879260a93d90723f4a967009a692bb12ff787d0e22b"
+    },
+    {
+      "bytes": 2317,
+      "path": "FORMALISM.md",
+      "sha256": "01ad0924182aadecedc93b6eea8c8d306d4e6cbf0f9f83db31ffbb97a70f4e19"
+    },
+    {
+      "bytes": 3022,
+      "path": "NEGATIVE_RESULT_POSITIONING.md",
+      "sha256": "b624e513dda3d8121d41b6059f9bdba456737989c8c52cc7c6891c9894f35e38"
+    },
+    {
+      "bytes": 3516,
+      "path": "PAPER_OUTLINE.md",
+      "sha256": "70393d094223a86a4deb02a65e5b6b4c7d3a51e15eaedea975a99f8b8eef5ceb"
+    },
+    {
+      "bytes": 4130,
+      "path": "RELATED_WORK_THREAT_MATRIX.md",
+      "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
+    },
+    {
+      "bytes": 1396,
+      "path": "START_HERE.md",
+      "sha256": "e63dd4ec3a3bcf92a28a955db4f386e9938f8de0c9981ac9462d5fb5fba14497"
+    },
+    {
+      "bytes": 1308,
+      "path": "submission/ACL_SHORT_FALLBACK.md",
+      "sha256": "b9a34fdc41f2ae553bb30992639775c78e8b69b1c7d30e886556c8ba9895e9b2"
+    },
+    {
+      "bytes": 5098,
+      "path": "submission/NEURIPS_ED_DRAFT.md",
+      "sha256": "cff690a8684498cc36f8025c2e9cb54623f6a2a34ca3860f2bd8a926bd85da20"
+    },
+    {
+      "bytes": 1202,
+      "path": "submission/WORKSHOP_4P_DRAFT.md",
+      "sha256": "97498cbc122f87fae2b8ab611ede0c1eded353698393f5eda50f47878c8e8179"
+    },
+    {
+      "bytes": 2107,
+      "path": "VENUE_ASSESSMENT.md",
+      "sha256": "d5aed079514bb92e28179873c079b2fba99ef4d311b63358f0c8ee504eebae20"
+    }
+  ],
+  "gpu_required_to_reproduce_tables": false,
+  "model_weights_included": false,
+  "protocol": "RIST-NEGATIVE-RESULT-ARTIFACT-MANIFEST-v1",
+  "root": "F:/AReno/tmp/worktrees/rist-v3-cpu-freeze/research/reward_identifiability_supervision_topology/negative_result",
+  "sealed_or_heldout_data_included": false
+}

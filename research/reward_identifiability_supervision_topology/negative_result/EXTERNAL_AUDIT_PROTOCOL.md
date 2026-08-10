@@ -1,0 +1,97 @@
+# External audit protocol freeze
+
+Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
+
+Status: `FROZEN_NOT_EXECUTED`
+
+This protocol specifies the external evidence needed before targeting NeurIPS
+Evaluations & Datasets. It does not authorize data download, model inference,
+API calls, GPU use, held-out access, or training.
+
+## Selected public target
+
+Primary external audit target:
+
+- Benchmark: Berkeley Function Calling Leaderboard V3
+- Subset: Base Multi-Turn public split
+- Rationale: public multi-turn/multi-step function-calling tasks with exact tool
+  invocation evaluation; closest external analogue to RIST's strict tool-call
+  reward-resolution setting.
+
+Fallback if the public split cannot be accessed or audited cleanly:
+
+- ToolSandbox public scenarios, using only public scenario definitions and
+  non-held-out released evaluation artifacts if available.
+
+## Audit question
+
+Do public multi-turn tool-use tasks exhibit reward-resolution collapse under
+grouped rollout sampling, measured before any training or topology comparison?
+
+## Frozen sampling design
+
+If execution is later authorized:
+
+- Models: same two-family principle as RIST, using one Qwen-family model and one
+  Gemma-family model if licenses and resources permit.
+- Group size: 32 rollout seeds per task.
+- Sampling: temperature 0.7, top-p 0.95, max output bounded by benchmark
+  evaluator requirements.
+- Retries: zero.
+- Task cap for first audit: 64 public base multi-turn tasks, selected by stable
+  sort order over task IDs after schema validation.
+- No task replacement after outcomes are observed.
+
+## Metrics
+
+For each task group:
+
+- strict success count;
+- all-fail indicator;
+- all-pass indicator;
+- mixed reward indicator;
+- invalid tool-call rate if the evaluator exposes it.
+
+For each structural bucket or benchmark category:
+
+- mixed group count;
+- all-fail collapse rate;
+- all-pass collapse rate;
+- non-zero-advantage group rate;
+- cross-model transportability of high/low labels.
+
+## GO/KILL rule
+
+The external audit supports a NeurIPS E&D submission only if it yields at least
+one of the following:
+
+- collapse is observed in a non-trivial fraction of public task groups, showing
+  the diagnostic is not RIST-specific; or
+- the public audit does not collapse, but clearly distinguishes RIST as an
+  instrument-specific failure mode and demonstrates the diagnostic's ability to
+  separate usable from unusable task pools.
+
+The audit kills the high-venue route if:
+
+- data access requires sealed or hidden test labels;
+- task selection must be adjusted after observing outcomes;
+- benchmark licensing prevents reproducible anonymous review artifacts;
+- results cannot be summarized without private model outputs or non-shareable
+  traces.
+
+## Access boundaries
+
+- Do not use BFCL sealed/private test content.
+- Do not use leaderboard hidden evaluation as a tuning source.
+- Do not train.
+- Do not compare supervision topology arms.
+- Do not open any RIST qualification or held-out data.
+- Do not mutate RIST v3.1/v4.0.
+
+## Deliverables when executed
+
+- `EXTERNAL_AUDIT_MANIFEST.json`
+- `EXTERNAL_AUDIT_EVIDENCE_SUMMARY.csv`
+- `EXTERNAL_AUDIT_REPORT.md`
+- evaluator version and dataset commit/revision hashes;
+- raw-response hash manifest, if model inference is performed.
