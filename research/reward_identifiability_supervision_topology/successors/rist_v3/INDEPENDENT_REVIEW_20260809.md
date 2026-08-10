@@ -45,3 +45,7 @@ any v2 outcome values.
 The v3 CPU scientific request collector and terminal finalizer are frozen for
 purposes of building a later clean-commit GPU manifest. GPU/model authority is
 still closed. The CPU-side clean-commit calibration manifest and target-host preflight CLI are now ready. The next allowed operation requires explicit GPU authorization to generate the live receipt on the target machine and launch only through the receipt gate.
+
+## 2026-08-10 v3.1 circularity correction
+
+A live target-host preflight found that requiring `deployment_receipt_sha256` inside the manifest creates a circular dependency: the receipt binds manifest SHA, while the manifest would need the receipt SHA before the receipt exists. v3.1 fixes this by freezing only static runtime identity in the manifest and requiring the live collector identity to carry the receipt SHA after receipt generation. CPU regression now includes this negative control; `tests/test_rist_v3_cpu.py` passes 15 tests. GPU/model access remains closed until the updated commit is deployed.

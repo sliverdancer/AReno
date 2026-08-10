@@ -73,3 +73,7 @@ is internally executable and rejects key contamination or corruption modes.
   calibration preflight/serving; CPU-side clean-commit manifest is ready, but
   real receipt generation must occur on the GPU machine using live identities;
 - current GPU/model/qualification/training/held-out/BFCL authority: closed.
+
+## 2026-08-10 v3.1 circularity correction
+
+A live target-host preflight found that requiring `deployment_receipt_sha256` inside the manifest creates a circular dependency: the receipt binds manifest SHA, while the manifest would need the receipt SHA before the receipt exists. v3.1 fixes this by freezing only static runtime identity in the manifest and requiring the live collector identity to carry the receipt SHA after receipt generation. CPU regression now includes this negative control; `tests/test_rist_v3_cpu.py` passes 15 tests. GPU/model access remains closed until the updated commit is deployed.

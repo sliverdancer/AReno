@@ -2,7 +2,7 @@
 
 Protocol: `RIST-v3.0`
 
-Status: `CPU_CALIBRATION_PREFLIGHT_READY_GPU_CLOSED`
+Status: `CPU_V3_1_NONCIRCULAR_PREFLIGHT_READY_GPU_CLOSED`
 
 ## Scientific question
 
@@ -75,3 +75,7 @@ CPU-only pool construction, access-boundary tests, exact deployment replay,
 v3 scientific collector/finalizer freeze, frozen calibration stage manifest,
 target-host deployment preflight CLI, and independent replay audit are complete. GPU use, model access, serving, inference, training,
 qualification, held-out evaluation, and BFCL content remain closed.
+
+## v3.1 non-circular deployment binding
+
+The target-host manifest may bind static runtime identity fields only: family, source commit, model revision, GPU UUID, interpreter real path, interpreter SHA-256, and interpreter version. It must not contain `deployment_receipt_sha256`, because the receipt artifact SHA depends on the manifest SHA. The live runtime identity supplied to the collector must include `deployment_receipt_sha256`, and the collector/validator compare static fields while separately requiring a concrete 64-hex receipt SHA.

@@ -1,6 +1,6 @@
 # RIST v3 handoff
 
-Status: `CPU_CALIBRATION_PREFLIGHT_READY_GPU_CLOSED`
+Status: `CPU_V3_1_NONCIRCULAR_PREFLIGHT_READY_GPU_CLOSED`
 
 RIST v3 is a new protocol lineage opened only after
 `RIST-R0-REFRESH-v2.0` returned `PASS_NOVELTY_OPEN_STRICT_V3` on 2026-08-05.
@@ -19,10 +19,13 @@ Authority order:
    terminal finalizer; it calls the v3-only validator and refuses invalid jobs.
 7. `stages/C0_RESOLUTION/frozen/calibration_stage_manifest_83f9831.json`
    is the frozen calibration stage manifest for commit `83f9831`.
-8. `stages/C0_RESOLUTION/prepare_deployment_receipt.py` is the target-host
+8. `stages/C0_RESOLUTION/bind_manifest_runtime_identities.py` writes
+   non-circular static runtime identities into the target-host manifest before
+   receipt generation.
+9. `stages/C0_RESOLUTION/prepare_deployment_receipt.py` is the target-host
    preflight CLI for producing canonical authority/receipt artifacts before
    serving.
-9. `CPU_FREEZE.json`, `CPU_AUDIT.md`, and
+10. `CPU_FREEZE.json`, `CPU_AUDIT.md`, and
    `INDEPENDENT_REVIEW_20260809.md` delimit what is frozen and what still
    blocks a GPU authority.
 
@@ -36,3 +39,5 @@ Next admissible step requires explicit GPU authorization: on the target machine,
 run `prepare_deployment_receipt.py` against the real model snapshot, extension,
 Python interpreter, GPU UUID, and frozen calibration manifest; then launch only
 through `deployment_entrypoint.py` with the produced receipt SHA.
+
+2026-08-10 correction: v3.1 removes the manifest/receipt circularity. The manifest binds only static runtime identity fields; live runtime evidence carries `deployment_receipt_sha256` after the receipt artifact exists.

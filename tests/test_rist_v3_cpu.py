@@ -240,7 +240,7 @@ def _small_collection_fixture(tmp_path: Path) -> tuple[dict, dict, dict]:
                 "concurrency": 2,
                 "max_retries": 0,
                 "result_root": str(tmp_path / "results" / "calibration" / family),
-                "runtime_identity": {**identity, "family": family},
+                "runtime_identity": {key: value for key, value in {**identity, "family": family}.items() if key != "deployment_receipt_sha256"},
             }
             for family in ("qwen3", "gemma4")
         ],
@@ -340,6 +340,93 @@ def test_v3_finalizer_rejects_duplicate_task_seed_without_using_outcomes(tmp_pat
     with pytest.raises(ValueError):
         finalizer.finalize(manifest_path)
 
+
+
+
+
+def test_v3_binder_writes_static_identity_without_receipt_sha(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(STAGE))
+    binder = _load("rist_v3_bind_manifest", STAGE / "bind_manifest_runtime_identities.py")
+    gate = binder.gate
+    manifest, _pool, _identity = _small_collection_fixture(tmp_path)
+    for job in manifest["jobs"]:
+        job.pop("runtime_identity", None)
+    source = tmp_path / "source"
+    qwen = tmp_path / "models/snapshots" / ("c" * 40)
+    gemma = tmp_path / "models/snapshots" / ("d" * 40)
+    source.mkdir()
+    qwen.mkdir(parents=True)
+    gemma.mkdir(parents=True)
+    interpreter = Path(sys.executable).resolve(strict=True)
+    probes = gate.Probes(
+        git_head=lambda _path: "a" * 40,
+        model_revision=lambda path: path.resolve().name,
+        gpu_uuid=lambda: "GPU-bind-test",
+        file_sha256=gate._file_sha256,
+        interpreter_version=gate._interpreter_version,
+    )
+    bound = binder.bind_manifest(
+        manifest=manifest,
+        source_root=source,
+        model_paths={"qwen3": qwen, "gemma4": gemma},
+        interpreter_path=interpreter,
+        probes=probes,
+    )
+    identities = {job["family"]: job["runtime_identity"] for job in bound["jobs"]}
+    assert identities["qwen3"]["model_revision"] == "c" * 40
+    assert identities["gemma4"]["model_revision"] == "d" * 40
+    for identity in identities.values():
+        assert identity["source_commit"] == "a" * 40
+        assert identity["gpu_uuid"] == "GPU-bind-test"
+        assert identity["interpreter_realpath"] == str(interpreter)
+        assert "deployment_receipt_sha256" not in identity
+
+
+def test_v3_manifest_does_not_prebind_deployment_receipt_sha(tmp_path):
+    collector = _load("rist_v3_collector_receipt_cycle", STAGE / "collect_scientific_job.py")
+    finalizer = _load("rist_v3_finalizer_receipt_cycle", STAGE / "finalize_scientific_collection.py")
+    manifest, pool, identity = _small_collection_fixture(tmp_path)
+    for job in manifest["jobs"]:
+        assert "deployment_receipt_sha256" not in job["runtime_identity"]
+    manifest_path = tmp_path / "collection_manifest.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    manifest_sha = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    root = tmp_path / "results" / "calibration" / "qwen3"
+    result = collector.collect_job(
+        manifest=manifest,
+        manifest_sha256=manifest_sha,
+        job_id="qwen3-calibration",
+        runtime_identity={**identity, "family": "qwen3", "deployment_receipt_sha256": "f" * 64},
+        pool_manifest=pool,
+        result_path=root / "result.json",
+        trajectory_path=root / "trajectories.jsonl",
+        journal_path=root / "raw_journal.jsonl",
+        post_json=_fake_tool_response,
+    )
+    assert result["complete"] is True
+    manifest["jobs"][1]["result_root"] = str(tmp_path / "missing")
+    with pytest.raises(FileNotFoundError):
+        finalizer.finalize(manifest_path)
+
+
+def test_v3_manifest_rejects_circular_receipt_binding(tmp_path):
+    collector = _load("rist_v3_collector_reject_cycle", STAGE / "collect_scientific_job.py")
+    manifest, pool, identity = _small_collection_fixture(tmp_path)
+    manifest["jobs"][0]["runtime_identity"]["deployment_receipt_sha256"] = "f" * 64
+    manifest_path = tmp_path / "collection_manifest.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="cannot pre-bind"):
+        collector.collect_job(
+            manifest=manifest,
+            manifest_sha256=hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+            job_id="qwen3-calibration",
+            runtime_identity={**identity, "family": "qwen3", "deployment_receipt_sha256": "f" * 64},
+            pool_manifest=pool,
+            result_path=tmp_path / "result.json",
+            trajectory_path=tmp_path / "trajectories.jsonl",
+            journal_path=tmp_path / "raw_journal.jsonl",
+            post_json=_fake_tool_response,
+        )
 
 
 def test_v3_frozen_calibration_manifest_binds_clean_commit():

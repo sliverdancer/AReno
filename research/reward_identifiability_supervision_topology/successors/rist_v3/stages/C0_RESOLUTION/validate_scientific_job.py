@@ -97,8 +97,24 @@ def validate_job(
 
     expected_identity = job.get("runtime_identity")
     identity = result.get("runtime_identity")
-    runtime_identity_pass = isinstance(identity, dict) and isinstance(expected_identity, dict) and all(
-        identity.get(key) == value for key, value in expected_identity.items()
+    frozen_required = {
+        "family",
+        "source_commit",
+        "model_revision",
+        "gpu_uuid",
+        "interpreter_realpath",
+        "interpreter_sha256",
+        "interpreter_version",
+    }
+    live_receipt_sha = identity.get("deployment_receipt_sha256") if isinstance(identity, dict) else None
+    runtime_identity_pass = (
+        isinstance(identity, dict)
+        and isinstance(expected_identity, dict)
+        and frozen_required.issubset(expected_identity)
+        and "deployment_receipt_sha256" not in expected_identity
+        and all(identity.get(key) == expected_identity[key] for key in frozen_required)
+        and isinstance(live_receipt_sha, str)
+        and len(live_receipt_sha) == 64
     )
     result_contract_pass = all(
         (

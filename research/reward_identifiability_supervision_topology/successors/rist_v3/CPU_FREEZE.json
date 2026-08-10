@@ -7,6 +7,15 @@
     "training_permitted": false
   },
   "bfcl_authorized": false,
+  "circularity_fix_20260810": {
+    "binder_path": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/bind_manifest_runtime_identities.py",
+    "binder_sha256": "1d72fe1e8ede81cc4b1f28af575b65c0894d4bbd9159257d80e05ea71e276ff2",
+    "collector_sha256": "ea0b554a7f4e3167aad1532011d2008158f99f55f8b533ebd6817eacb4f00d78",
+    "live_identity_requires_deployment_receipt_sha256": true,
+    "manifest_static_identity_only": true,
+    "reason": "real target-host preflight exposed impossible manifest deployment_receipt_sha256 <-> receipt manifest_sha256 cycle",
+    "validator_sha256": "f8319ac4b2d8abac8404d73af403ea94114850a140c253b6837e6040cf2f6553"
+  },
   "cpu_tests": {
     "adjacent_v2_3_failed": 3,
     "adjacent_v2_3_failure_scope": "temporary v2.3 test receipt canonical-byte fixture mismatch; no v3 source or scientific input affected",
@@ -15,7 +24,7 @@
     "py_compile": "PASS",
     "v3_command": "python -m pytest tests/test_rist_v3_cpu.py -q",
     "v3_failed": 0,
-    "v3_passed": 12
+    "v3_passed": 15
   },
   "date": "2026-08-09",
   "deployment_preflight_cli": {
@@ -84,13 +93,13 @@
     "task_signatures_disjoint_from_prior_lineages": true,
     "task_signatures_internally_unique": true
   },
-  "protocol": "RIST-v3.0-CPU-CALIBRATION-PREFLIGHT-v1",
+  "protocol": "RIST-v3.1-CPU-NONCIRCULAR-PREFLIGHT-v1",
   "qualification_authorized": false,
   "remaining_gpu_blockers": [
     "obtain explicit GPU authorization for target-host receipt generation and calibration serving",
     "generate live authority/receipt on the target GPU host using real model snapshot, extension, interpreter, and GPU UUID"
   ],
   "source_commit_binding": "REQUIRED_WHEN_A_CLEAN_DEPLOYMENT_MANIFEST_IS_CREATED",
-  "status": "PASS_CPU_CALIBRATION_PREFLIGHT_READY_GPU_CLOSED",
+  "status": "PASS_CPU_V3_1_NONCIRCULAR_PREFLIGHT_READY_GPU_CLOSED",
   "training_authorized": false
 }

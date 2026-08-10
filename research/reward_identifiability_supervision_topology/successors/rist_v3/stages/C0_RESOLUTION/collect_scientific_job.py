@@ -316,20 +316,27 @@ def _validate_gate(manifest: dict[str, Any], job: dict[str, Any], identity: dict
     expected_identity = job.get("runtime_identity")
     if not isinstance(expected_identity, dict):
         raise ValueError("v3 job must bind runtime identity")
-    required = {
+    frozen_required = {
         "family",
         "source_commit",
         "model_revision",
         "gpu_uuid",
-        "deployment_receipt_sha256",
         "interpreter_realpath",
         "interpreter_sha256",
         "interpreter_version",
     }
-    if not required.issubset(expected_identity):
-        raise ValueError("v3 runtime identity binding is incomplete")
-    if any(identity.get(key) != expected_identity[key] for key in required):
+    live_required = {*frozen_required, "deployment_receipt_sha256"}
+    if not frozen_required.issubset(expected_identity):
+        raise ValueError("v3 frozen runtime identity binding is incomplete")
+    if "deployment_receipt_sha256" in expected_identity:
+        raise ValueError("v3 manifest cannot pre-bind deployment receipt SHA")
+    if not live_required.issubset(identity):
+        raise ValueError("v3 live runtime identity binding is incomplete")
+    if any(identity.get(key) != expected_identity[key] for key in frozen_required):
         raise ValueError("v3 live runtime identity does not match frozen job")
+    receipt_sha = identity.get("deployment_receipt_sha256")
+    if not isinstance(receipt_sha, str) or len(receipt_sha) != 64:
+        raise ValueError("v3 live deployment receipt SHA-256 is required")
     if identity.get("family") != job.get("family"):
         raise ValueError("v3 runtime identity family mismatch")
 
