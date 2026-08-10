@@ -293,6 +293,11 @@ derived summaries, not raw model response text. Any remaining `UNBOUND` field,
 extra request, retry, BFCL access, held-out/sealed access, training flag, or
 reward-resolution claim is a pre-request or finalization failure.
 
+`bind_runtime_receipt.py` is the CPU-only binding/preflight tool. It produces a
+bound receipt and SHA-256 sidecar only after every runtime identity is supplied
+and validated. It does not send the single request; execution still requires
+separate model/API/GPU authorization.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

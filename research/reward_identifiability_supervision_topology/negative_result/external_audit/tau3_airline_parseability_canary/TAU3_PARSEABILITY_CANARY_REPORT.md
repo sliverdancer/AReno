@@ -44,3 +44,11 @@ requires pre-request exit if any runtime value remains `UNBOUND`.
 observation shape. It forbids raw response text in committed artifacts,
 additional requests, nonzero retry, reward-resolution claims, BFCL access,
 held-out/sealed access, and training.
+
+## Runtime binder
+
+`bind_runtime_receipt.py` converts the unbound runtime template into a bound
+single-request receipt. It validates the frozen template hash, rejects any
+remaining `UNBOUND` value, enforces 40-hex source commits and 64-hex
+authorization hashes, and writes a SHA-256 sidecar. It is still CPU-only and
+does not start Tau3 or send a model request.

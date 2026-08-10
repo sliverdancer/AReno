@@ -35,6 +35,16 @@ def _load_finalizer():
     return module
 
 
+def _load_binder():
+    path = CANARY / "bind_runtime_receipt.py"
+    spec = importlib.util.spec_from_file_location("tau3_parseability_binder_test", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 def test_tau3_parseability_template_is_cpu_only_and_unbound():
     template = json.loads((CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_text(encoding="utf-8"))
     assert template["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-v1"
@@ -179,3 +189,63 @@ def test_tau3_observation_schema_preserves_single_request_boundary():
     assert "raw model response text" in schema["forbidden"]
     assert "additional model requests" in schema["forbidden"]
     assert "reward-resolution claim" in schema["forbidden"]
+
+
+def test_tau3_runtime_binder_produces_valid_bound_receipt(tmp_path):
+    binder = _load_binder()
+    finalizer = _load_finalizer()
+    receipt = binder.build_bound_receipt(
+        source_commit="1" * 40,
+        model_repo_or_api_id="Qwen/Qwen3-0.6B",
+        model_revision="c1899de289a04d12100db370d81485cdf75e47ca",
+        user_simulator_model="tau3/synthetic-user-simulator-placeholder",
+        user_simulator_revision="tau3-v1.0.1",
+        user_simulator_authorization_sha256="2" * 64,
+        gpu_uuid_or_api_provider="GPU-synthetic-preflight",
+        task_id="airline:synthetic-public-task",
+    )
+    assert receipt["status"] == "BOUND_READY_FOR_SINGLE_REQUEST_CANARY"
+    assert receipt["model_request_budget"] == 1
+    assert receipt["retry_budget"] == 0
+    assert receipt["training_authorized"] is False
+    assert receipt["bfcl_used"] is False
+    assert receipt["heldout_or_sealed_accessed"] is False
+    finalizer.validate_runtime_receipt(receipt)
+
+    output = tmp_path / "RUNTIME_RECEIPT_BOUND.json"
+    digest = binder.write_bound_receipt(receipt, output)
+    assert output.exists()
+    assert output.with_suffix(output.suffix + ".sha256").exists()
+    expected = output.with_suffix(output.suffix + ".sha256").read_text(encoding="ascii").split()[0]
+    assert expected == digest
+
+
+def test_tau3_runtime_binder_rejects_unbound_or_malformed_identity():
+    binder = _load_binder()
+    kwargs = dict(
+        source_commit="1" * 40,
+        model_repo_or_api_id="Qwen/Qwen3-0.6B",
+        model_revision="c1899de289a04d12100db370d81485cdf75e47ca",
+        user_simulator_model="tau3/synthetic-user-simulator-placeholder",
+        user_simulator_revision="tau3-v1.0.1",
+        user_simulator_authorization_sha256="2" * 64,
+        gpu_uuid_or_api_provider="GPU-synthetic-preflight",
+        task_id="airline:synthetic-public-task",
+    )
+    bad = dict(kwargs)
+    bad["model_revision"] = "UNBOUND_AT_RUNTIME"
+    try:
+        binder.build_bound_receipt(**bad)
+    except ValueError as exc:
+        assert "model_revision" in str(exc)
+    else:
+        raise AssertionError("unbound model revision should be rejected")
+
+    bad = dict(kwargs)
+    bad["source_commit"] = "not-a-commit"
+    try:
+        binder.build_bound_receipt(**bad)
+    except ValueError as exc:
+        assert "source_commit" in str(exc)
+    else:
+        raise AssertionError("malformed source commit should be rejected")

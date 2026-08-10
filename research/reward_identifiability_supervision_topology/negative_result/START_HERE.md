@@ -44,9 +44,10 @@ Read order:
 33. `external_audit/tau3_airline_parseability_canary/TAU3_RUNTIME_RECEIPT_TEMPLATE.json`
 34. `external_audit/tau3_airline_parseability_canary/TAU3_OBSERVATION_SCHEMA.json`
 35. `external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json`
-36. `submission/NEURIPS_ED_DRAFT.md`
-37. `EVIDENCE_SUMMARY.csv`
-38. `EVIDENCE_SUMMARY.json`
+36. `external_audit/tau3_airline_parseability_canary/bind_runtime_receipt.py`
+37. `submission/NEURIPS_ED_DRAFT.md`
+38. `EVIDENCE_SUMMARY.csv`
+39. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -90,4 +91,6 @@ remains unbound and does not authorize model/API/GPU/training execution.
 Its terminal finalizer is also frozen and replay-tested for both parseable PASS
 and terminal parse-failure outcomes. Runtime receipt and observation templates
 are present but deliberately unbound and non-executable until separate
-single-request authorization is given.
+single-request authorization is given. The runtime binder can create a bound
+receipt only after all identity fields are supplied; it still does not execute
+Tau3, a model, API, GPU, or training.
