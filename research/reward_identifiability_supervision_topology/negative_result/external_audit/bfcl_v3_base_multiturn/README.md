@@ -8,6 +8,9 @@ Do not place raw BFCL prompt, answer, or function-documentation files here.
 does not authorize model/API/GPU inference.
 `SYNTHETIC_REPLAY_RESULT.json` records CPU-only evaluator/finalizer replay on
 dummy records only.
+`MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json` freezes the next possible
+one-task, one-model inference canary but is not executable until all runtime
+bindings are filled and separately authorized.
 
 Rebuild with:
 

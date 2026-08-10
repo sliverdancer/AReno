@@ -98,3 +98,35 @@ def test_bfcl_synthetic_replay_fails_fast_on_receipt_hash_mismatch(tmp_path, mon
     monkeypatch.setattr(replay, "RECEIPT_SHA", AUDIT / "EXECUTION_RECEIPT_STATIC.sha256")
     with pytest.raises(ValueError, match="receipt hash mismatch"):
         replay.validate_static_receipt(bad_receipt)
+
+
+def test_bfcl_minimal_canary_template_is_single_request_and_not_executable():
+    template = json.loads((AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_text(encoding="utf-8"))
+    assert template["protocol"] == "RRC-BFCL-V3-BASE-MT-MINIMAL-INFERENCE-CANARY-RUNTIME-RECEIPT-TEMPLATE-v1"
+    assert template["status"] == "TEMPLATE_FROZEN_NOT_EXECUTABLE_UNTIL_RUNTIME_BINDINGS_FILLED_AND_SEPARATELY_AUTHORIZED"
+    scope = template["scope"]
+    assert scope["canary_only"] is True
+    assert scope["full_external_audit_authorized"] is False
+    assert scope["training_authorized"] is False
+    assert scope["heldout_or_sealed_access_authorized"] is False
+    assert scope["task_count"] == 1
+    assert scope["model_count"] == 1
+    assert scope["rollouts_per_task"] == 1
+    assert scope["retries"] == 0
+    assert template["selected_task"]["task_id"] == "multi_turn_base_0"
+    assert template["request_policy"]["zero_retry"] is True
+    assert template["request_policy"]["single_model_request_only"] is True
+    assert template["request_policy"]["terminal_finalizer_required_even_on_parse_error"] is True
+    assert template["request_policy"]["no_protocol_edit_after_first_model_request"] is True
+    required_fields = template["model_slot"]["runtime_required_fields"]
+    assert required_fields
+    assert all(value.startswith("UNBOUND") for value in required_fields.values())
+    assert template["decoding"]["max_output"].startswith("UNBOUND")
+    assert template["decoding"]["tool_call_format"].startswith("UNBOUND")
+    assert template["decoding"]["request_timeout_seconds"].startswith("UNBOUND")
+
+
+def test_bfcl_minimal_canary_template_hash_file_matches():
+    expected = (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.sha256").read_text(encoding="ascii").split()[0]
+    actual = hashlib.sha256((AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_bytes()).hexdigest()
+    assert expected == actual

@@ -1,0 +1,85 @@
+{
+  "decoding": {
+    "max_output": "UNBOUND_MUST_BE_FILLED_BEFORE_REQUEST",
+    "request_timeout_seconds": "UNBOUND_MUST_BE_FILLED_BEFORE_REQUEST",
+    "temperature": 0.7,
+    "tool_call_format": "UNBOUND_MUST_BE_FILLED_BEFORE_REQUEST",
+    "top_p": 0.95
+  },
+  "frozen_at_local_date": "2026-08-10",
+  "model_slot": {
+    "alternative": "any one Qwen-family public model may be used only if exact repo id, revision, tokenizer revision, license note, and serving backend are filled before first request",
+    "preferred_candidate": "Qwen3-0.6B fixed revision used in earlier RIST work, if license/resource constraints remain valid",
+    "runtime_required_fields": {
+      "cuda_driver": "UNBOUND_OR_NOT_APPLICABLE",
+      "extension_hashes": "UNBOUND",
+      "gpu_uuid": "UNBOUND_OR_CPU_API_IF_API_CANARY",
+      "model_repo_id": "UNBOUND",
+      "model_revision": "UNBOUND",
+      "model_weight_hash_or_snapshot_hash": "UNBOUND",
+      "output_root": "UNBOUND",
+      "python_env_hash": "UNBOUND",
+      "raw_response_hash_manifest": "UNBOUND_AFTER_RUN",
+      "serving_backend": "UNBOUND",
+      "serving_command_sha256": "UNBOUND",
+      "tokenizer_revision": "UNBOUND"
+    },
+    "slot_name": "qwen_family_primary_canary"
+  },
+  "parent_static_receipt": {
+    "path": "EXECUTION_RECEIPT_STATIC.json",
+    "sha256": "13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667"
+  },
+  "pre_inference_probability_judgment": {
+    "format_canary_success_probability": "moderate, approximately 0.50-0.65 for a Qwen-family small model if prompt/tool schema is rendered correctly",
+    "full_audit_success_probability_before_canary": "not high enough to authorize full audit; keep full audit closed",
+    "main_risk": "strict BFCL function-call formatting may fail before task reasoning is measured"
+  },
+  "pre_request_fail_fast_checks": [
+    "static receipt sha256 matches parent_static_receipt.sha256",
+    "synthetic replay status is PASS and sha256 matches synthetic_replay_gate.sha256",
+    "selected task-id file sha256 matches selected_task.selected_task_ids_sha256",
+    "all runtime_required_fields are bound to non-UNBOUND values unless explicitly not applicable",
+    "max_output, tool_call_format, request_timeout_seconds are bound",
+    "output_root exists and is outside git-tracked source tree",
+    "no held-out/sealed paths are configured",
+    "full audit task_count remains disabled"
+  ],
+  "protocol": "RRC-BFCL-V3-BASE-MT-MINIMAL-INFERENCE-CANARY-RUNTIME-RECEIPT-TEMPLATE-v1",
+  "request_policy": {
+    "no_protocol_edit_after_first_model_request": true,
+    "no_selective_rerun": true,
+    "single_model_request_only": true,
+    "stop_after_first_terminal_response_or_error": true,
+    "terminal_finalizer_required_even_on_parse_error": true,
+    "zero_retry": true
+  },
+  "scope": {
+    "canary_only": true,
+    "full_external_audit_authorized": false,
+    "heldout_or_sealed_access_authorized": false,
+    "model_count": 1,
+    "raw_bfcl_data_commit_allowed": false,
+    "retries": 0,
+    "rollouts_per_task": 1,
+    "task_count": 1,
+    "training_authorized": false
+  },
+  "selected_task": {
+    "selected_task_ids_sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a",
+    "selection_rule": "first frozen task id from SELECTED_TASK_IDS.txt; no outcome-conditioned choice",
+    "task_id": "multi_turn_base_0"
+  },
+  "source_commit_at_template_freeze": "59cea55a0a2b69b08044d579b9d08309a78af557",
+  "status": "TEMPLATE_FROZEN_NOT_EXECUTABLE_UNTIL_RUNTIME_BINDINGS_FILLED_AND_SEPARATELY_AUTHORIZED",
+  "success_criteria_for_canary_only": {
+    "go_to_two_model_canary": "only if response is evaluator-parseable or parse failure is cleanly categorized as format failure",
+    "kill_or_rework": "if runner needs hidden labels, mutates task selection, performs retries, or cannot produce a terminal finalizer result",
+    "minimum_success": "runner starts, emits exactly one request, stores raw response out of git, and terminal finalizer writes parseable status"
+  },
+  "synthetic_replay_gate": {
+    "path": "SYNTHETIC_REPLAY_RESULT.json",
+    "required_status": "PASS",
+    "sha256": "10d74304432fd776ad8e3157fac0c142ffff35042b5f3c2d7fc71bfaea73702c"
+  }
+}

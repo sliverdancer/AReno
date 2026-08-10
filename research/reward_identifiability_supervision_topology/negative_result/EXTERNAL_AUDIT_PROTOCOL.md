@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_WITH_CPU_ONLY_SYNTHETIC_REPLAY_PASS_NOT_EXECUTED`
+Status: `FROZEN_WITH_MINIMAL_CANARY_TEMPLATE_NOT_EXECUTED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -14,6 +14,8 @@ The static execution receipt is frozen at
 `external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json`.
 The CPU-only synthetic replay is recorded at
 `external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json`.
+The minimal canary runtime receipt template is recorded at
+`external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json`.
 
 ## Selected public target
 
@@ -148,6 +150,19 @@ branches: mixed, all-pass, and all-fail.
 
 This replay is not external empirical evidence. It only proves that the
 pre-inference gate can run and fail fast before any model request.
+
+## Minimal canary runtime receipt template
+
+The next inference step is constrained to one public task, one model slot, one
+rollout, and zero retries. The template is not executable while any runtime
+field remains `UNBOUND`.
+
+Template hash:
+
+`6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f`
+
+The full external audit remains unauthorized until a terminal one-task canary is
+complete and interpretable.
 
 ## Deliverables when executed
 
