@@ -1,6 +1,6 @@
 # RIST v4 handoff
 
-Status: `CPU_POOL_FREEZE_PASS_GPU_CLOSED`
+Status: `C0_V4_CALIBRATION_TERMINAL_KILL_GPU_CLOSED`
 
 RIST v4 is a new strict-independent instrument lineage opened after terminal
 `RIST C0 v3.1` calibration killed the current transport. v4 is not a repair or
@@ -16,6 +16,11 @@ Current authority order:
    v4-owned runtime gates.
 5. `CPU_FREEZE.json` and `CPU_AUDIT.md` record the CPU freeze.
 
-No GPU, model access, serving, inference, training, qualification, held-out, or
-BFCL access is currently open. The next admissible step is a future explicit GPU
-authorization for a small v4 canary on A800-80GB.
+GPU serving and calibration have completed and all serving processes were
+stopped. The terminal report is:
+
+`stages/C0_RESOLUTION/CALIBRATION_TERMINAL_REPORT_20260810.md`
+
+Do not open qualification, held-out/BFCL access, or training from this v4 C0
+route. The calibration analyzer found zero common high-resolution cells across
+Qwen3 and Gemma4 under the frozen group-relative criterion.
