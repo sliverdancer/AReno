@@ -1,5 +1,5 @@
 {
-  "file_count": 52,
+  "file_count": 55,
   "files": [
     {
       "bytes": 5668,
@@ -40,6 +40,21 @@
       "bytes": 10772,
       "path": "EVIDENCE_SUMMARY.json",
       "sha256": "c36c251e3ae873af2fa5b2618b021b3da66b56a5066a8703df319c5c15966566"
+    },
+    {
+      "bytes": 9828,
+      "path": "external_audit/agentic_tictactoe_positive_control/build_positive_control.py",
+      "sha256": "445ce12bc4b2c9137e92ec824ed3a944841843b5a7212e328ccc10ffda2a3ae6"
+    },
+    {
+      "bytes": 928,
+      "path": "external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_REPORT.md",
+      "sha256": "63f115aac9eef9d8de2b21ed0f1909ed34c987bf9fa6cc42f3a846b27147489c"
+    },
+    {
+      "bytes": 10499,
+      "path": "external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json",
+      "sha256": "cd8a132f34225a710a674bf8a2e452dc2b2da6a8d89b63cab16d2e4fb24ca338"
     },
     {
       "bytes": 14188,
@@ -202,9 +217,9 @@
       "sha256": "f710879dc705164f7a030c28ac3a5be59c7066b37939add02f08a81342c7a667"
     },
     {
-      "bytes": 9378,
+      "bytes": 10494,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "40916549ae9fe134964d4f74281948bb14a5c127a19a11ad874db8e057590965"
+      "sha256": "b8882ef194d739288d111b58b33ae8de578414680c18fc52374a552b6a9c2b1b"
     },
     {
       "bytes": 1778,
@@ -237,9 +252,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 3991,
+      "bytes": 4705,
       "path": "START_HERE.md",
-      "sha256": "ff6a947f5ef7c69776089631fc6045c975240b4f246cb9dd3fecbbf048272c7a"
+      "sha256": "84acf45de75ef9fa1f3c56b5856da3cb9ec7b1ab04de56c914a08cf3cf6b54c5"
     },
     {
       "bytes": 1308,

@@ -1,0 +1,334 @@
+{
+  "environment": {
+    "parser_fixture_format": "<tool_call>{json}</tool_call>",
+    "reward_function": "examples/agentic/tictactoe/reward.py::reward_fn",
+    "source_example": "examples/agentic/tictactoe",
+    "tool_arguments_schema": {
+      "properties": {
+        "square": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "tool_name": "choose_square"
+  },
+  "groups": [
+    {
+      "best_moves": [
+        3,
+        5,
+        6,
+        8,
+        9
+      ],
+      "board": [
+        [
+          "X",
+          "X",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ]
+      ],
+      "expected_category": "all_pass",
+      "group_id": "ttt_public_all_pass_win",
+      "observed_category": "all_pass",
+      "public_example": "examples/agentic/tictactoe",
+      "rollouts": [
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_all_pass_win_r00",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_all_pass_win_r01",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_all_pass_win_r02",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_all_pass_win_r03",
+          "strict_success": true
+        }
+      ]
+    },
+    {
+      "best_moves": [
+        3,
+        5,
+        6,
+        8,
+        9
+      ],
+      "board": [
+        [
+          "X",
+          "X",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ]
+      ],
+      "expected_category": "mixed",
+      "group_id": "ttt_public_mixed_win_or_occupied",
+      "observed_category": "mixed",
+      "public_example": "examples/agentic/tictactoe",
+      "rollouts": [
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_mixed_win_or_occupied_r00",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 1,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "56fb78026a1a38f0050df1ca3ae1af7c2ee1e4a0d5bf776e0edfb9f6cff5d5b3",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_mixed_win_or_occupied_r01",
+          "strict_success": false
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_mixed_win_or_occupied_r02",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 1,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "56fb78026a1a38f0050df1ca3ae1af7c2ee1e4a0d5bf776e0edfb9f6cff5d5b3",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_mixed_win_or_occupied_r03",
+          "strict_success": false
+        }
+      ]
+    },
+    {
+      "best_moves": [
+        3,
+        5,
+        6,
+        8,
+        9
+      ],
+      "board": [
+        [
+          "X",
+          "X",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ]
+      ],
+      "expected_category": "mixed",
+      "group_id": "ttt_public_mixed_win_or_nonterminal_best",
+      "observed_category": "mixed",
+      "public_example": "examples/agentic/tictactoe",
+      "rollouts": [
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_mixed_win_or_nonterminal_best_r00",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 5,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "96a44b850a1c75320074682097c02252d1a016ba7aca4416303eb9b04ba4e2fb",
+          "reward": 0.8,
+          "rollout_id": "ttt_public_mixed_win_or_nonterminal_best_r01",
+          "strict_success": false
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 3,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "9008764721b590d2fd4c36e77fd160443ae818a1b8cc463076a37a4863c39616",
+          "reward": 1.0,
+          "rollout_id": "ttt_public_mixed_win_or_nonterminal_best_r02",
+          "strict_success": true
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 6,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "5e857962e44b2a97b33391ccc413c9d7ac024943f71e366de432b1203cbbd308",
+          "reward": 0.8,
+          "rollout_id": "ttt_public_mixed_win_or_nonterminal_best_r03",
+          "strict_success": false
+        }
+      ]
+    },
+    {
+      "best_moves": [
+        3,
+        5,
+        6,
+        8,
+        9
+      ],
+      "board": [
+        [
+          "X",
+          "X",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ],
+        [
+          "O",
+          ".",
+          "."
+        ]
+      ],
+      "expected_category": "all_fail",
+      "group_id": "ttt_public_all_fail_occupied",
+      "observed_category": "all_fail",
+      "public_example": "examples/agentic/tictactoe",
+      "rollouts": [
+        {
+          "observed_call_count": 1,
+          "observed_square": 1,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "56fb78026a1a38f0050df1ca3ae1af7c2ee1e4a0d5bf776e0edfb9f6cff5d5b3",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_all_fail_occupied_r00",
+          "strict_success": false
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 1,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "56fb78026a1a38f0050df1ca3ae1af7c2ee1e4a0d5bf776e0edfb9f6cff5d5b3",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_all_fail_occupied_r01",
+          "strict_success": false
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 4,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "ae158ca09aaf14632a5d42df7f9a275c8922f45a71a30e3263107dae5e97f264",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_all_fail_occupied_r02",
+          "strict_success": false
+        },
+        {
+          "observed_call_count": 1,
+          "observed_square": 7,
+          "observed_tool_name": "choose_square",
+          "parseable_tool_calls": true,
+          "response_sha256": "efa13142bdd63fb20aab26cf6623b5c06b858ae14a0b4a57343d71018d2b19a9",
+          "reward": -1.0,
+          "rollout_id": "ttt_public_all_fail_occupied_r03",
+          "strict_success": false
+        }
+      ]
+    }
+  ],
+  "interpretation": {
+    "next_gate": "Freeze a true external public environment canary, preferably Tau3 or another public tool-use benchmark whose model prompt format is known to emit parseable calls.",
+    "what_this_does_not_prove": "This is not a BFCL reward-resolution result, not a model capability result, and not a substitute for a true external benchmark canary.",
+    "what_this_proves": "The reward-resolution diagnostic and strict tool-call evaluator can PASS on a parseable public tool-call protocol with all-pass, mixed, and all-fail groups."
+  },
+  "protocol": "RRC-AGENTIC-TICTACTOE-PARSEABLE-POSITIVE-CONTROL-v1",
+  "resolution_summary": {
+    "all_fail_group_count": 1,
+    "all_pass_group_count": 1,
+    "group_count": 4,
+    "high_low_contrast_present": true,
+    "mixed_group_count": 2,
+    "non_zero_advantage_group_count": 2,
+    "parseable_tool_call_rate": 1.0,
+    "rollout_count": 16,
+    "strict_success_rate": 0.5
+  },
+  "scope": {
+    "api_used": false,
+    "bfcl_used": false,
+    "gpu_used": false,
+    "heldout_or_sealed_access_used": false,
+    "model_inference_used": false,
+    "raw_model_responses_included": false,
+    "training_used": false,
+    "uses_public_repo_native_example": true
+  },
+  "status": "PASS_CPU_ONLY_PARSEABLE_TOOL_CALL_POSITIVE_CONTROL"
+}

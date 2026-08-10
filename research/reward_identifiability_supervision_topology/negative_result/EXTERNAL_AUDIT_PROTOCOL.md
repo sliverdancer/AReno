@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `REPAIRED_FORMAT_CANARY_TERMINAL_PARSE_FAILURE_FULL_AUDIT_CLOSED`
+Status: `BFCL_REPAIRED_FORMAT_CANARY_TERMINAL_PARSE_FAILURE_PLUS_CPU_ONLY_PARSEABLE_POSITIVE_CONTROL`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -27,6 +27,8 @@ The CPU-only format repair replay and new canary template are recorded at
 `external_audit/bfcl_v3_base_multiturn/REPAIRED_FORMAT_CANARY_TEMPLATE.json`.
 The repaired-format canary finalizer is recorded at
 `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`.
+The separate parseable positive-control result is recorded at
+`external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json`.
 
 ## Selected public target
 
@@ -236,6 +238,30 @@ It still terminated as parse failure:
 - full audit authorized: false.
 
 This closes the current BFCL canary route. More rollouts are not justified.
+
+## Parseable positive-control result
+
+The package includes a CPU-only positive control using the public repo-native
+`examples/agentic/tictactoe` `choose_square` tool protocol. It constructs
+deterministic synthetic responses in a Qwen-style `<tool_call>{json}</tool_call>`
+fixture format and evaluates them with the public Tic-Tac-Toe reward function.
+
+Observed positive-control facts:
+
+- model/API/GPU/training/held-out/BFCL use: none;
+- parseable tool-call rate: 1.000;
+- groups: 4;
+- rollouts: 16;
+- mixed groups: 2;
+- all-pass groups: 1;
+- all-fail groups: 1;
+- non-zero-advantage groups: 2.
+
+This result proves only that the diagnostic can pass on parseable public
+tool-call data with reward-resolution contrast. It does not reopen BFCL, does
+not claim an external benchmark model result, and does not remove the need for a
+true external public canary such as Tau3 or another tool-use benchmark with a
+known parseable tool-call interface.
 
 ## Deliverables when executed
 

@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_REPAIRED_CANARY_TERMINAL_PARSE_FAILURE`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_WITH_PARSEABLE_POSITIVE_CONTROL`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -37,9 +37,11 @@ Read order:
 26. `external_audit/bfcl_v3_base_multiturn/REPAIRED_FORMAT_CANARY_TEMPLATE.json`
 27. `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_REPORT.md`
 28. `external_audit/bfcl_v3_base_multiturn/REPAIRED_CANARY_TERMINAL_FINALIZER.json`
-29. `submission/NEURIPS_ED_DRAFT.md`
-30. `EVIDENCE_SUMMARY.csv`
-31. `EVIDENCE_SUMMARY.json`
+29. `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_REPORT.md`
+30. `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json`
+31. `submission/NEURIPS_ED_DRAFT.md`
+32. `EVIDENCE_SUMMARY.csv`
+33. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -66,3 +68,11 @@ terminal summaries, format-investigation summaries, and CPU-only format-repair
 fixtures are tracked. The next admissible inference step is a newly authorized
 one-request repaired-format canary; that canary has now also terminated as a
 parse failure. Full BFCL audit and two-model canary remain closed.
+
+The package now also includes a separate CPU-only positive control using the
+public repo-native `examples/agentic/tictactoe` `choose_square` tool protocol.
+It produces parseable synthetic tool calls and confirms that the diagnostic can
+classify all-pass, all-fail, and mixed reward groups when the tool-call format
+is valid. This is not a BFCL result, not a model result, and not a substitute
+for a true external public benchmark canary; it only closes the narrower concern
+that the analyzer itself might be unable to pass on parseable tool-call data.
