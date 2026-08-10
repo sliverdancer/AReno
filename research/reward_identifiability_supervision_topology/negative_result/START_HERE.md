@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_MINIMAL_CANARY_TERMINAL_PARSE_FAILURE`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_FORMAT_LAYER_ISSUE_PROBABLE`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -30,9 +30,11 @@ Read order:
 19. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_REPORT.md`
 20. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_FINALIZER.json`
 21. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json`
-22. `submission/NEURIPS_ED_DRAFT.md`
-23. `EVIDENCE_SUMMARY.csv`
-24. `EVIDENCE_SUMMARY.json`
+22. `external_audit/bfcl_v3_base_multiturn/FORMAT_INVESTIGATION_REPORT.md`
+23. `external_audit/bfcl_v3_base_multiturn/FORMAT_INVESTIGATION_SUMMARY.json`
+24. `submission/NEURIPS_ED_DRAFT.md`
+25. `EVIDENCE_SUMMARY.csv`
+26. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -50,7 +52,9 @@ observing the calibration outcomes.
 The remote minimal canary executed exactly one Qwen3-0.6B model request and
 terminated as an interpretable parse failure: zero parseable tool calls, strict
 success false, zero retries. This does not open the full BFCL external audit or
-the two-model canary. Raw BFCL prompt, possible-answer, function-documentation
-files, and raw model response are not committed in this repository; only hashes,
-schema summaries, selected public task ids, static execution receipt, synthetic
-replay results, canary receipts, and terminal summaries are tracked.
+the two-model canary. The follow-up format investigation identifies a probable
+format-layer issue, not a reward-resolution result. Raw BFCL prompt,
+possible-answer, function-documentation files, and raw model response are not
+committed in this repository; only hashes, schema summaries, selected public
+task ids, static execution receipt, synthetic replay results, canary receipts,
+terminal summaries, and format-investigation summaries are tracked.

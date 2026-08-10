@@ -1,5 +1,5 @@
 {
-  "file_count": 41,
+  "file_count": 43,
   "files": [
     {
       "bytes": 5668,
@@ -62,6 +62,16 @@
       "sha256": "884b6f93e57be028db85f2ce1f2bd25503a2d218864ab2b10bf886d87558647f"
     },
     {
+      "bytes": 3001,
+      "path": "external_audit/bfcl_v3_base_multiturn/FORMAT_INVESTIGATION_REPORT.md",
+      "sha256": "3d30046d8b153cd9bd418fdd2c6666f259e3fcaef9f3380270f14c0810c0f765"
+    },
+    {
+      "bytes": 1181,
+      "path": "external_audit/bfcl_v3_base_multiturn/FORMAT_INVESTIGATION_SUMMARY.json",
+      "sha256": "abd5b5e3cbc7d6e84b2aa3db9cc226bcc38b5c26fa723a085d752d06e58d06ff"
+    },
+    {
       "bytes": 2280,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json",
       "sha256": "deb9ab51681e78e4fcdbd648802674a8e7e9466d7c1df6f939a4b3f1fd845cb2"
@@ -122,9 +132,9 @@
       "sha256": "f528d53e9c373cb2d86aafdb9c545fda9d5a46a093ff07204c900903c470136c"
     },
     {
-      "bytes": 1226,
+      "bytes": 1379,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "8acce7ab6df77a25c03cfae876bf8c1d68057ae3a00569d397798f2d632f029f"
+      "sha256": "5394d5cd7e4088df8e1f685260578a3098b97bd77856fc3912333204faafd910"
     },
     {
       "bytes": 8162,
@@ -147,9 +157,9 @@
       "sha256": "f710879dc705164f7a030c28ac3a5be59c7066b37939add02f08a81342c7a667"
     },
     {
-      "bytes": 7304,
+      "bytes": 7935,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "728357241bb8ed58c7e31d08c535b667d39d731db6e38d3ab7b2ce392474ff5d"
+      "sha256": "7327e45a9ee9c4b8bb1e8d88715ce4acd9a7db35a8fa70e06898edc8d2e08adb"
     },
     {
       "bytes": 1778,
@@ -182,9 +192,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 3073,
+      "bytes": 3357,
       "path": "START_HERE.md",
-      "sha256": "149b03c7ffd98d7bb85c575079ab63d0f0d9a3dc9ec1700101ef7c193cd80c57"
+      "sha256": "f2f9d0c39a51915e547178131e2186a217b1084c2f26b75d9971c79c59092ddd"
     },
     {
       "bytes": 1308,

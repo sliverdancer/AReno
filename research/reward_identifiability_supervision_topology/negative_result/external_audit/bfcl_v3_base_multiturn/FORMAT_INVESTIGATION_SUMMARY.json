@@ -1,0 +1,27 @@
+{
+  "api_used": false,
+  "conclusion": "FORMAT_LAYER_ISSUE_PROBABLE_FULL_AUDIT_CLOSED",
+  "evidence_files": [
+    "MINIMAL_CANARY_TERMINAL_FINALIZER.json",
+    "MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json",
+    "MINIMAL_CANARY_REMOTE_HASH_MANIFEST.json",
+    "PUBLIC_FILE_MANIFEST.json",
+    "SCHEMA_SUMMARY.json"
+  ],
+  "format_risks": [
+    "BFCL function docs use parameters.type=dict rather than JSON Schema type=object.",
+    "Direct transformers.generate does not enforce tool_choice or structured tool output.",
+    "Parser observed zero parseable calls, so the canary failed before strict reward evaluation.",
+    "The selected first turn expects three tool calls, which is too strict for the first format canary."
+  ],
+  "full_audit_should_remain_closed": true,
+  "gpu_used": false,
+  "heldout_or_sealed_accessed": false,
+  "model_request_sent": false,
+  "next_admissible_step": "CPU-only format repair design and a newly frozen one-request format canary.",
+  "raw_response_read": false,
+  "remote_tokenizer_probe": "blocked_connection_closed",
+  "rollout_increase_recommended": false,
+  "status": "FORMAT_LAYER_ISSUE_PROBABLE_FULL_AUDIT_CLOSED",
+  "training_used": false
+}

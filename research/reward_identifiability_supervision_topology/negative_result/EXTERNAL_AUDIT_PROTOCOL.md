@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `MINIMAL_CANARY_TERMINAL_PARSE_FAILURE_FULL_AUDIT_CLOSED`
+Status: `FORMAT_LAYER_ISSUE_PROBABLE_FULL_AUDIT_CLOSED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -20,6 +20,8 @@ The local preflight block report is recorded at
 `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json`.
 The remote one-request canary terminal finalizer is recorded at
 `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_TERMINAL_FINALIZER.json`.
+The format investigation is recorded at
+`external_audit/bfcl_v3_base_multiturn/FORMAT_INVESTIGATION_REPORT.md`.
 
 ## Selected public target
 
@@ -188,6 +190,20 @@ The remote A800 canary executed exactly one Qwen3-0.6B request against
 This result blocks full-audit execution. The next admissible work is
 format/prompt investigation without outcome-conditioned task selection, followed
 by a newly frozen one-request canary if the interface is changed.
+
+## Format investigation result
+
+The follow-up CPU-only investigation finds a probable format-layer issue:
+
+- BFCL tool schemas use `parameters.type = "dict"` rather than JSON Schema
+  `type = "object"`;
+- direct `transformers.generate` does not enforce tool-choice output;
+- the terminal canary parsed zero calls, so reward-resolution evidence was never
+  reached;
+- the selected first turn expects three calls, which is too strict for the first
+  interface canary.
+
+No additional rollout sampling is authorized by this result.
 
 ## Deliverables when executed
 

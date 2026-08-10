@@ -186,3 +186,17 @@ def test_bfcl_minimal_canary_bound_receipt_matches_terminal_hash():
     assert finalizer["runtime_receipt_sha256"] == hashlib.sha256(
         (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_BOUND.json").read_bytes()
     ).hexdigest()
+
+
+def test_bfcl_format_investigation_keeps_rollouts_closed():
+    summary = json.loads((AUDIT / "FORMAT_INVESTIGATION_SUMMARY.json").read_text(encoding="utf-8"))
+    assert summary["status"] == "FORMAT_LAYER_ISSUE_PROBABLE_FULL_AUDIT_CLOSED"
+    assert summary["model_request_sent"] is False
+    assert summary["api_used"] is False
+    assert summary["gpu_used"] is False
+    assert summary["training_used"] is False
+    assert summary["heldout_or_sealed_accessed"] is False
+    assert summary["raw_response_read"] is False
+    assert summary["rollout_increase_recommended"] is False
+    assert summary["full_audit_should_remain_closed"] is True
+    assert "CPU-only format repair" in summary["next_admissible_step"]

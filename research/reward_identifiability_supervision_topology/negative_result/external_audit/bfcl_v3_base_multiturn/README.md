@@ -16,6 +16,8 @@ preflight, which stopped before any model request.
 `MINIMAL_CANARY_TERMINAL_FINALIZER.json` records the remote one-request Qwen3
 canary terminal result. The raw response is represented only by hash and is not
 tracked here.
+`FORMAT_INVESTIGATION_REPORT.md` records the CPU-only conclusion that the next
+work should repair the prompt/tool-call interface, not increase rollouts.
 
 Rebuild with:
 
