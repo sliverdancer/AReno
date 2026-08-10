@@ -1,0 +1,20 @@
+{
+  "bfcl_used": false,
+  "gpu_uuid_or_api_provider": "UNBOUND_AT_RUNTIME",
+  "heldout_or_sealed_accessed": false,
+  "model_repo_or_api_id": "UNBOUND_AT_RUNTIME",
+  "model_request_budget": 1,
+  "model_revision": "UNBOUND_AT_RUNTIME",
+  "pre_request_exit_if_any_unbound": true,
+  "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-RUNTIME-RECEIPT-v1",
+  "raw_response_committed": false,
+  "retry_budget": 0,
+  "source_commit": "UNBOUND_40_HEX_AT_RUNTIME",
+  "status": "TEMPLATE_UNBOUND_NOT_EXECUTABLE",
+  "task_id": "UNBOUND_TAU3_AIRLINE_PUBLIC_TASK_ID",
+  "template_sha256": "742e84e8fe0be9b1931f366a25056f32fad603ae5076338fbb8e5ecefe7b468b",
+  "training_authorized": false,
+  "user_simulator_authorization_sha256": "UNBOUND_64_HEX_AT_RUNTIME",
+  "user_simulator_model": "UNBOUND_AT_RUNTIME",
+  "user_simulator_revision": "UNBOUND_AT_RUNTIME"
+}

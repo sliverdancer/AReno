@@ -68,6 +68,73 @@ def validate_runtime_receipt(receipt: dict[str, Any]) -> None:
         raise ValueError("model identity must be bound before first request")
 
 
+def build_runtime_receipt_template() -> dict[str, Any]:
+    """Return a non-executable runtime receipt template for the one-request canary."""
+
+    return {
+        "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-RUNTIME-RECEIPT-v1",
+        "status": "TEMPLATE_UNBOUND_NOT_EXECUTABLE",
+        "template_sha256": assert_template_hash(),
+        "source_commit": "UNBOUND_40_HEX_AT_RUNTIME",
+        "model_repo_or_api_id": "UNBOUND_AT_RUNTIME",
+        "model_revision": "UNBOUND_AT_RUNTIME",
+        "user_simulator_model": "UNBOUND_AT_RUNTIME",
+        "user_simulator_revision": "UNBOUND_AT_RUNTIME",
+        "user_simulator_authorization_sha256": "UNBOUND_64_HEX_AT_RUNTIME",
+        "gpu_uuid_or_api_provider": "UNBOUND_AT_RUNTIME",
+        "task_id": "UNBOUND_TAU3_AIRLINE_PUBLIC_TASK_ID",
+        "model_request_budget": 1,
+        "retry_budget": 0,
+        "training_authorized": False,
+        "bfcl_used": False,
+        "heldout_or_sealed_accessed": False,
+        "raw_response_committed": False,
+        "pre_request_exit_if_any_unbound": True,
+    }
+
+
+def build_observation_schema() -> dict[str, Any]:
+    """Return the minimal single-request observation schema expected by finalizer."""
+
+    return {
+        "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-SCHEMA-v1",
+        "status": "SCHEMA_ONLY_NO_MODEL_RESPONSE_INCLUDED",
+        "required_fields": {
+            "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-v1",
+            "runtime_receipt_sha256": "64_HEX_SHA256_OF_BOUND_RUNTIME_RECEIPT",
+            "task_id": "MUST_MATCH_BOUND_RUNTIME_RECEIPT",
+            "model_repo_or_api_id": "MUST_MATCH_BOUND_RUNTIME_RECEIPT",
+            "model_request_count": 1,
+            "retry_count": 0,
+            "observed_tool_calls": [
+                {
+                    "name": "STRING_TOOL_NAME",
+                    "arguments": {"json_object": "TOOL_ARGUMENTS_OBJECT"},
+                }
+            ],
+        },
+        "for_parse_failure": {
+            "observed_tool_calls": [],
+            "raw_response_sha256": "OPTIONAL_HASH_ONLY_DO_NOT_COMMIT_RAW_RESPONSE",
+        },
+        "for_parseable_pass": {
+            "observed_tool_calls_min_count": 1,
+            "first_call_requires_string_name": True,
+            "first_call_requires_object_arguments": True,
+        },
+        "forbidden": [
+            "raw model response text",
+            "additional model requests",
+            "nonzero retry",
+            "strict task success claim",
+            "reward-resolution claim",
+            "BFCL access",
+            "held-out or sealed data access",
+            "training",
+        ],
+    }
+
+
 def finalize_canary(receipt: dict[str, Any], observation: dict[str, Any]) -> dict[str, Any]:
     validate_runtime_receipt(receipt)
     if observation.get("protocol") != "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-v1":
@@ -186,7 +253,20 @@ def main() -> int:
     parser.add_argument("--observation", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--write-synthetic-replay", action="store_true")
+    parser.add_argument("--write-templates", action="store_true")
     args = parser.parse_args()
+    if args.write_templates:
+        receipt_template = build_runtime_receipt_template()
+        observation_schema = build_observation_schema()
+        (HERE / "TAU3_RUNTIME_RECEIPT_TEMPLATE.json").write_text(
+            json.dumps(receipt_template, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        (HERE / "TAU3_OBSERVATION_SCHEMA.json").write_text(
+            json.dumps(observation_schema, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return 0
     if args.write_synthetic_replay:
         replay = build_synthetic_replay()
         (args.output or HERE / "TAU3_CANARY_FINALIZER_REPLAY.json").write_text(

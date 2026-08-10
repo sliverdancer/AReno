@@ -33,3 +33,14 @@ single supplied observation. The CPU-only replay at
 
 The finalizer rejects training authorization, BFCL use, held-out/sealed access,
 nonzero retry, task/model mismatch, and more than one model request.
+
+## Runtime templates
+
+`TAU3_RUNTIME_RECEIPT_TEMPLATE.json` is deliberately unbound and non-executable.
+It records the exact fields that must be bound before the first request and
+requires pre-request exit if any runtime value remains `UNBOUND`.
+
+`TAU3_OBSERVATION_SCHEMA.json` records the only admissible single-request
+observation shape. It forbids raw response text in committed artifacts,
+additional requests, nonzero retry, reward-resolution claims, BFCL access,
+held-out/sealed access, and training.

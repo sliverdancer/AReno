@@ -1,5 +1,5 @@
 {
-  "file_count": 61,
+  "file_count": 63,
   "files": [
     {
       "bytes": 5668,
@@ -222,9 +222,9 @@
       "sha256": "1712148cbdd42cb669badfcb3cfd62618199c5731fa516f417c05b5a648d3532"
     },
     {
-      "bytes": 8670,
+      "bytes": 11922,
       "path": "external_audit/tau3_airline_parseability_canary/tau3_canary_finalizer.py",
-      "sha256": "84b759187c11204eda6c137041ed22f1d97acd2f3c99338992fd3922aeae99ff"
+      "sha256": "843b30d3738d6c0730990302998a916ab98fe0c8a5e49f9b82f695d3be357258"
     },
     {
       "bytes": 2683,
@@ -232,9 +232,14 @@
       "sha256": "56ed691fa64b5491079fba6a8aaf8ac86d169675d074a480884c47e6eab39f11"
     },
     {
-      "bytes": 1449,
+      "bytes": 1223,
+      "path": "external_audit/tau3_airline_parseability_canary/TAU3_OBSERVATION_SCHEMA.json",
+      "sha256": "fa1276f0328f19f86b33ab226170067bcde1e4755ae654e10c0700aef8b59e2f"
+    },
+    {
+      "bytes": 1955,
       "path": "external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_REPORT.md",
-      "sha256": "86c0225df84cc651b40db586183c1c79cabbdfd0b1b81b43d9c6a9a7680787bb"
+      "sha256": "a2e12735a04cb88c5342fc28c8bbbfb47e1a6906333b35080a65aee1eef5da00"
     },
     {
       "bytes": 3034,
@@ -247,9 +252,14 @@
       "sha256": "6bcd7c4b2d29f09da4e9dcb4c6e75207a34743f9f453a841a1ee7f1e9577b318"
     },
     {
-      "bytes": 11769,
+      "bytes": 864,
+      "path": "external_audit/tau3_airline_parseability_canary/TAU3_RUNTIME_RECEIPT_TEMPLATE.json",
+      "sha256": "ccfc36d6c239ef598af3377799aff22498c5436d1ebb65588b4965ab76a327d8"
+    },
+    {
+      "bytes": 12150,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "7219d11584d39b0614dc9b84aa833e47d5d858be1bc7964ad48be77beb003373"
+      "sha256": "2fafa38443b18cba5f45b937050c27430803d15fe57ae26a0fa15eca3a276807"
     },
     {
       "bytes": 1778,
@@ -282,9 +292,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 5473,
+      "bytes": 5797,
       "path": "START_HERE.md",
-      "sha256": "2a2e09280af744ad735760f2f7e5c678568b991c495ec5bdb8f074d4b3d5c60d"
+      "sha256": "430e4fafb2d5aabe9b2be6fb4e3096718828b77491f861474f48b379be2ecb3e"
     },
     {
       "bytes": 1308,

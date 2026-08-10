@@ -1,0 +1,39 @@
+{
+  "for_parse_failure": {
+    "observed_tool_calls": [],
+    "raw_response_sha256": "OPTIONAL_HASH_ONLY_DO_NOT_COMMIT_RAW_RESPONSE"
+  },
+  "for_parseable_pass": {
+    "first_call_requires_object_arguments": true,
+    "first_call_requires_string_name": true,
+    "observed_tool_calls_min_count": 1
+  },
+  "forbidden": [
+    "raw model response text",
+    "additional model requests",
+    "nonzero retry",
+    "strict task success claim",
+    "reward-resolution claim",
+    "BFCL access",
+    "held-out or sealed data access",
+    "training"
+  ],
+  "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-SCHEMA-v1",
+  "required_fields": {
+    "model_repo_or_api_id": "MUST_MATCH_BOUND_RUNTIME_RECEIPT",
+    "model_request_count": 1,
+    "observed_tool_calls": [
+      {
+        "arguments": {
+          "json_object": "TOOL_ARGUMENTS_OBJECT"
+        },
+        "name": "STRING_TOOL_NAME"
+      }
+    ],
+    "protocol": "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-v1",
+    "retry_count": 0,
+    "runtime_receipt_sha256": "64_HEX_SHA256_OF_BOUND_RUNTIME_RECEIPT",
+    "task_id": "MUST_MATCH_BOUND_RUNTIME_RECEIPT"
+  },
+  "status": "SCHEMA_ONLY_NO_MODEL_RESPONSE_INCLUDED"
+}

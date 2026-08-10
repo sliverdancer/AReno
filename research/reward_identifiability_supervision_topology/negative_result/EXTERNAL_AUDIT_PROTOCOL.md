@@ -287,6 +287,12 @@ reward-resolution calibration; it does not itself claim reward-resolution
 evidence. A parse failure terminates the Tau3 canary route without selective
 reruns.
 
+The runtime receipt template and observation schema are frozen but unbound. A
+future executor must bind all runtime identity fields and commit only hashes or
+derived summaries, not raw model response text. Any remaining `UNBOUND` field,
+extra request, retry, BFCL access, held-out/sealed access, training flag, or
+reward-resolution claim is a pre-request or finalization failure.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

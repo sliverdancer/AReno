@@ -143,3 +143,39 @@ def test_tau3_finalizer_rejects_unauthorized_training_and_extra_requests():
         assert "exactly one model request" in str(exc)
     else:
         raise AssertionError("multi-request observation should be rejected")
+
+
+def test_tau3_runtime_receipt_template_is_not_executable():
+    template = json.loads((CANARY / "TAU3_RUNTIME_RECEIPT_TEMPLATE.json").read_text(encoding="utf-8"))
+    finalizer = _load_finalizer()
+    assert template["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-RUNTIME-RECEIPT-v1"
+    assert template["status"] == "TEMPLATE_UNBOUND_NOT_EXECUTABLE"
+    assert template["model_request_budget"] == 1
+    assert template["retry_budget"] == 0
+    assert template["training_authorized"] is False
+    assert template["bfcl_used"] is False
+    assert template["heldout_or_sealed_accessed"] is False
+    assert template["raw_response_committed"] is False
+    assert template["pre_request_exit_if_any_unbound"] is True
+    assert template["template_sha256"] == hashlib.sha256(
+        (CANARY / "TAU3_PARSEABILITY_CANARY_TEMPLATE.json").read_bytes()
+    ).hexdigest()
+    try:
+        finalizer.validate_runtime_receipt(template)
+    except ValueError as exc:
+        assert "source_commit" in str(exc)
+    else:
+        raise AssertionError("unbound runtime receipt template should not validate")
+
+
+def test_tau3_observation_schema_preserves_single_request_boundary():
+    schema = json.loads((CANARY / "TAU3_OBSERVATION_SCHEMA.json").read_text(encoding="utf-8"))
+    assert schema["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-SCHEMA-v1"
+    assert schema["status"] == "SCHEMA_ONLY_NO_MODEL_RESPONSE_INCLUDED"
+    required = schema["required_fields"]
+    assert required["protocol"] == "RRC-TAU3-AIRLINE-PARSEABILITY-CANARY-OBSERVATION-v1"
+    assert required["model_request_count"] == 1
+    assert required["retry_count"] == 0
+    assert "raw model response text" in schema["forbidden"]
+    assert "additional model requests" in schema["forbidden"]
+    assert "reward-resolution claim" in schema["forbidden"]

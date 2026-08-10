@@ -41,10 +41,12 @@ Read order:
 30. `external_audit/agentic_tictactoe_positive_control/POSITIVE_CONTROL_RESULT.json`
 31. `external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_REPORT.md`
 32. `external_audit/tau3_airline_parseability_canary/TAU3_PARSEABILITY_CANARY_TEMPLATE.json`
-33. `external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json`
-34. `submission/NEURIPS_ED_DRAFT.md`
-35. `EVIDENCE_SUMMARY.csv`
-36. `EVIDENCE_SUMMARY.json`
+33. `external_audit/tau3_airline_parseability_canary/TAU3_RUNTIME_RECEIPT_TEMPLATE.json`
+34. `external_audit/tau3_airline_parseability_canary/TAU3_OBSERVATION_SCHEMA.json`
+35. `external_audit/tau3_airline_parseability_canary/TAU3_CANARY_FINALIZER_REPLAY.json`
+36. `submission/NEURIPS_ED_DRAFT.md`
+37. `EVIDENCE_SUMMARY.csv`
+38. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -86,4 +88,6 @@ validates, with synthetic OpenAI-style tool-call fixtures, that the adapter can
 convert exactly one parseable tool call into Tau3 action JSON. The template
 remains unbound and does not authorize model/API/GPU/training execution.
 Its terminal finalizer is also frozen and replay-tested for both parseable PASS
-and terminal parse-failure outcomes.
+and terminal parse-failure outcomes. Runtime receipt and observation templates
+are present but deliberately unbound and non-executable until separate
+single-request authorization is given.
