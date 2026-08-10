@@ -64,8 +64,8 @@ def build_manifest(
     source_commit: str,
     calibration_admission_path: Path | None = None,
 ) -> dict[str, Any]:
-    if split not in {"calibration", "qualification"}:
-        raise ValueError("split must be calibration or qualification")
+    if split not in {"capacity_canary", "calibration", "qualification"}:
+        raise ValueError("split must be capacity_canary, calibration, or qualification")
     if len(source_commit) != 40 or any(ch not in "0123456789abcdef" for ch in source_commit):
         raise ValueError("exact lowercase source commit is required")
     pool_path = pool_manifest_path.resolve(strict=True)
@@ -79,13 +79,19 @@ def build_manifest(
             raise PermissionError("qualification remains sealed")
         admission = _validate_admission(calibration_admission_path, pool_sha)
     elif calibration_admission_path is not None:
-        raise PermissionError("calibration cannot consume a qualification admission")
+        raise PermissionError(f"{split} cannot consume a qualification admission")
 
     split_row = pool["splits"][split]
     task_path = pool_path.parent / split_row["file"]
     if _sha256(task_path) != split_row["sha256"]:
         raise ValueError(f"{split} task bytes do not match the pool manifest")
-    if split_row["task_count"] != 32 or len(split_row["rollout_seeds"]) != 32:
+    expected_task_count = 1 if split == "capacity_canary" else 32
+    expected_seed_count = 8 if split == "capacity_canary" else 32
+    expected_trajectories = expected_task_count * expected_seed_count
+    if (
+        split_row["task_count"] != expected_task_count
+        or len(split_row["rollout_seeds"]) != expected_seed_count
+    ):
         raise ValueError(f"{split} shape mismatch")
     jobs = [
         {
@@ -95,7 +101,7 @@ def build_manifest(
             "task_file": str(task_path),
             "task_file_sha256": split_row["sha256"],
             "rollout_seeds": split_row["rollout_seeds"],
-            "trajectory_count": 1024,
+            "trajectory_count": expected_trajectories,
             "concurrency": 8,
             "max_retries": 0,
             "result_root": str(output_root / split / family),
@@ -116,8 +122,9 @@ def build_manifest(
             "retry_count": 0,
         },
         "job_count": 2,
-        "trajectory_count": 2048,
+        "trajectory_count": expected_trajectories * len(FAMILIES),
         "jobs": jobs,
+        "capacity_canary_permitted": split == "capacity_canary",
         "calibration_permitted": split == "calibration",
         "qualification_permitted": split == "qualification",
         "qualification_admission_sha256": (
@@ -133,7 +140,7 @@ def build_manifest(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--split", choices=("calibration", "qualification"), required=True)
+    parser.add_argument("--split", choices=("capacity_canary", "calibration", "qualification"), required=True)
     parser.add_argument("--pool-manifest", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)

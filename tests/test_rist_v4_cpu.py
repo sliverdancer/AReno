@@ -101,6 +101,42 @@ def test_v4_calibration_manifest_does_not_read_qualification(tmp_path, monkeypat
     assert qualification not in seen
 
 
+def test_v4_capacity_canary_manifest_is_small_and_sealed(tmp_path, monkeypatch):
+    builder = _load("rist_v4_stage_canary", STAGE / "build_stage_manifest.py")
+    pool = STAGE / "data/manifest.json"
+    protected = {
+        (STAGE / "data/calibration.jsonl").resolve(),
+        (STAGE / "data/qualification.jsonl").resolve(),
+    }
+    seen = []
+    original = builder._sha256
+
+    def tracking(path):
+        seen.append(Path(path).resolve())
+        return original(path)
+
+    monkeypatch.setattr(builder, "_sha256", tracking)
+    manifest = builder.build_manifest(
+        split="capacity_canary",
+        pool_manifest_path=pool,
+        output_root=tmp_path / "results",
+        source_commit="a" * 40,
+    )
+    assert manifest["protocol"] == "RIST-C0-v4.0-STAGE-MANIFEST-v1"
+    assert manifest["trajectory_count"] == 16
+    assert manifest["capacity_canary_permitted"] is True
+    assert manifest["calibration_permitted"] is False
+    assert manifest["qualification_permitted"] is False
+    assert manifest["training_permitted"] is False
+    assert manifest["retry_permitted"] is False
+    assert not (protected & set(seen))
+    assert {job["trajectory_count"] for job in manifest["jobs"]} == {8}
+    assert {job["job_id"] for job in manifest["jobs"]} == {
+        "qwen3-capacity_canary",
+        "gemma4-capacity_canary",
+    }
+
+
 def test_v4_qualification_requires_exact_admission(tmp_path):
     builder = _load("rist_v4_stage_qual", STAGE / "build_stage_manifest.py")
     pool = STAGE / "data/manifest.json"

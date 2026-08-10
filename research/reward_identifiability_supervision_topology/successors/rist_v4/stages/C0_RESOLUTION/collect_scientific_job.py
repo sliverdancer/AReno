@@ -288,8 +288,8 @@ def _post_json(base_url: str, api_key: str, timeout_seconds: float, payload: dic
 def _validate_gate(manifest: dict[str, Any], job: dict[str, Any], identity: dict[str, Any]) -> None:
     if manifest.get("protocol") != MANIFEST_PROTOCOL:
         raise ValueError("unexpected RIST C0 v4 scientific manifest")
-    if manifest.get("split") not in {"calibration", "qualification"}:
-        raise ValueError("v4 collection requires calibration or qualification")
+    if manifest.get("split") not in {"capacity_canary", "calibration", "qualification"}:
+        raise ValueError("v4 collection requires capacity_canary, calibration, or qualification")
     if manifest.get("retry_permitted") is not False or job.get("max_retries") != 0:
         raise PermissionError("v4 scientific collection forbids retries")
     if any(
@@ -305,13 +305,21 @@ def _validate_gate(manifest: dict[str, Any], job: dict[str, Any], identity: dict
     if manifest["split"] == "calibration" and not (
         manifest.get("calibration_permitted") is True
         and manifest.get("qualification_permitted") is False
+        and manifest.get("capacity_canary_permitted") is False
     ):
         raise PermissionError("invalid v4 calibration boundary")
     if manifest["split"] == "qualification" and not (
         manifest.get("calibration_permitted") is False
         and manifest.get("qualification_permitted") is True
+        and manifest.get("capacity_canary_permitted") is False
     ):
         raise PermissionError("invalid v4 qualification boundary")
+    if manifest["split"] == "capacity_canary" and not (
+        manifest.get("capacity_canary_permitted") is True
+        and manifest.get("calibration_permitted") is False
+        and manifest.get("qualification_permitted") is False
+    ):
+        raise PermissionError("invalid v4 capacity canary boundary")
 
     expected_identity = job.get("runtime_identity")
     if not isinstance(expected_identity, dict):

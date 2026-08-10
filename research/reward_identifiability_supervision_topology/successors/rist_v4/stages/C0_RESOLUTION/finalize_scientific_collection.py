@@ -35,7 +35,7 @@ def finalize(manifest_path: Path) -> dict[str, Any]:
     if manifest.get("protocol") != "RIST-C0-v4.0-STAGE-MANIFEST-v1":
         raise ValueError("unexpected RIST C0 v4 scientific manifest")
     split = manifest.get("split")
-    if split not in {"calibration", "qualification"}:
+    if split not in {"capacity_canary", "calibration", "qualification"}:
         raise ValueError("v4 finalization requires one frozen split")
     jobs = manifest.get("jobs", [])
     expected_job_ids = {f"qwen3-{split}", f"gemma4-{split}"}
