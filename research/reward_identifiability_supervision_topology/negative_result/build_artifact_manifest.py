@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 
-INCLUDE_SUFFIXES = {".md", ".csv", ".json", ".py", ".svg"}
+INCLUDE_SUFFIXES = {".md", ".csv", ".json", ".py", ".svg", ".txt"}
 EXCLUDE_NAMES = {"ARTIFACT_MANIFEST.json"}
 
 

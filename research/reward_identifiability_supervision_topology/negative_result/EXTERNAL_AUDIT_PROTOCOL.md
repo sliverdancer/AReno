@@ -2,11 +2,13 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_NOT_EXECUTED`
+Status: `FROZEN_WITH_CPU_ONLY_FEASIBILITY_PASS_NOT_EXECUTED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
-Evaluations & Datasets. It does not authorize data download, model inference,
-API calls, GPU use, held-out access, or training.
+Evaluations & Datasets. It does not authorize model inference, API calls, GPU
+use, held-out access, or training. A CPU-only public-file feasibility audit has
+been completed without model outputs; see
+`external_audit/bfcl_v3_base_multiturn/`.
 
 ## Selected public target
 
@@ -38,9 +40,12 @@ If execution is later authorized:
 - Sampling: temperature 0.7, top-p 0.95, max output bounded by benchmark
   evaluator requirements.
 - Retries: zero.
-- Task cap for first audit: 64 public base multi-turn tasks, selected by stable
-  sort order over task IDs after schema validation.
+- Task cap for first audit: 64 public base multi-turn tasks, selected by natural
+  numeric sort over task IDs after schema validation.
 - No task replacement after outcomes are observed.
+
+The frozen selected ids are stored in
+`external_audit/bfcl_v3_base_multiturn/SELECTED_TASK_IDS.txt`.
 
 ## Metrics
 
@@ -87,6 +92,29 @@ The audit kills the high-venue route if:
 - Do not compare supervision topology arms.
 - Do not open any RIST qualification or held-out data.
 - Do not mutate RIST v3.1/v4.0.
+
+## CPU-only feasibility audit addendum
+
+The feasibility audit used only public BFCL V3 Base Multi-Turn files and
+produced derived metadata, not raw benchmark contents.
+
+Observed public split facts:
+
+- Task records: 200.
+- Possible-answer records: 200.
+- Function-documentation files: 8.
+- JSON format: whitespace-separated JSON object stream.
+- Task id range after natural numeric sort: `multi_turn_base_0` through
+  `multi_turn_base_199`.
+- First external-audit candidate subset: `multi_turn_base_0` through
+  `multi_turn_base_63`.
+
+The complete public-file byte sizes and SHA-256 hashes are recorded in
+`external_audit/bfcl_v3_base_multiturn/PUBLIC_FILE_MANIFEST.json`.
+
+This addendum is a protocol clarification made before any model inference,
+reward computation, or outcome inspection. It does not change the scientific
+rule that task selection cannot be adjusted after observing model outcomes.
 
 ## Deliverables when executed
 

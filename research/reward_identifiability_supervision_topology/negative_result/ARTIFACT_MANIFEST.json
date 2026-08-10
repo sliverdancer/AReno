@@ -1,5 +1,5 @@
 {
-  "file_count": 19,
+  "file_count": 25,
   "files": [
     {
       "bytes": 5668,
@@ -7,9 +7,14 @@
       "sha256": "2c9ba9df65987a20605f189174187e7e0c2a8129e5f291f746bcbf39d308e636"
     },
     {
-      "bytes": 1619,
+      "bytes": 1627,
       "path": "build_artifact_manifest.py",
-      "sha256": "914195f373c3e44d13d5f10b4df91a6ea19065352ffc032b82c4c9f74a8552a2"
+      "sha256": "3cfbc25152e8939decac2e4bb1a98d680ef059ac312637adcc071a31989242af"
+    },
+    {
+      "bytes": 12648,
+      "path": "build_bfcl_feasibility_audit.py",
+      "sha256": "c49d0399fa540dd7ec73164aa373ce819eb6c369d2c4b65206b9b4d9a334e30d"
     },
     {
       "bytes": 5047,
@@ -37,9 +42,34 @@
       "sha256": "c36c251e3ae873af2fa5b2618b021b3da66b56a5066a8703df319c5c15966566"
     },
     {
-      "bytes": 3272,
+      "bytes": 1818,
+      "path": "external_audit/bfcl_v3_base_multiturn/FEASIBILITY_AUDIT_REPORT.md",
+      "sha256": "15ffecfe6be0990f6082b2c3c3b9523f6b26be4f4caf2b51e2198b88e71a79b3"
+    },
+    {
+      "bytes": 4160,
+      "path": "external_audit/bfcl_v3_base_multiturn/PUBLIC_FILE_MANIFEST.json",
+      "sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9"
+    },
+    {
+      "bytes": 517,
+      "path": "external_audit/bfcl_v3_base_multiturn/README.md",
+      "sha256": "8c8d44be0482daf79e4715fa8e375838a02ddb16907cdd034875c3fc66f9161e"
+    },
+    {
+      "bytes": 8651,
+      "path": "external_audit/bfcl_v3_base_multiturn/SCHEMA_SUMMARY.json",
+      "sha256": "ade76eb996a5c682814cc732ca838fdc4967c73adbeb0845322c2fefc797ae24"
+    },
+    {
+      "bytes": 1270,
+      "path": "external_audit/bfcl_v3_base_multiturn/SELECTED_TASK_IDS.txt",
+      "sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a"
+    },
+    {
+      "bytes": 4424,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "050934e16ab3f4ab521a6edb7129d7b455a4a22ce4ba25295552c81ce9bc1b81"
+      "sha256": "68d7fbe7bbd869c0aa6d952aa1792f980462cb9163da03edbdb6bd55f0293605"
     },
     {
       "bytes": 1778,
@@ -72,9 +102,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 1396,
+      "bytes": 1832,
       "path": "START_HERE.md",
-      "sha256": "e63dd4ec3a3bcf92a28a955db4f386e9938f8de0c9981ac9462d5fb5fba14497"
+      "sha256": "107c5978d2198acc8c86024abcf378c8f0b42e4f3813ccfb29de3e975cfb0fdf"
     },
     {
       "bytes": 1308,

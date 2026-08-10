@@ -1,0 +1,79 @@
+{
+  "audit_name": "BFCL-v3-base-multiturn-public-feasibility",
+  "files": [
+    {
+      "bytes": 391058,
+      "name": "BFCL_v3_multi_turn_base.json",
+      "sha256": "edaea7666e0089062c30f3ac511914d5c27414dbe9b8214488191980d873b145",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/BFCL_v3_multi_turn_base.json"
+    },
+    {
+      "bytes": 80428,
+      "name": "possible_answer_BFCL_v3_multi_turn_base.json",
+      "sha256": "d03b360939e3ca7fe537016349f84868971340393c3d43c1dd9527b8e43102f2",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/possible_answer/BFCL_v3_multi_turn_base.json"
+    },
+    {
+      "bytes": 13951,
+      "name": "func_doc_gorilla_file_system.json",
+      "sha256": "26c01bed25bf7affbc8d281cc8124ccdc220a64c374ac4a7a9181dea0a0468ee",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_gorilla_file_system.json"
+    },
+    {
+      "bytes": 9158,
+      "name": "func_doc_math_api.json",
+      "sha256": "83fa31708c89442bdcf12ac4dfbe3be8663ec9183a1b1524a9fda98164bc7e0b",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_math_api.json"
+    },
+    {
+      "bytes": 6097,
+      "name": "func_doc_message_api.json",
+      "sha256": "2855068a0e77c4f1861fb2c1aa581590af85eb4b56994c6ebf79e30afb83be24",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_message_api.json"
+    },
+    {
+      "bytes": 10573,
+      "name": "func_doc_posting_api.json",
+      "sha256": "87f9fc404a06e4107d7c366f1399c596440e84c16cb119faf374b2f532d86e8b",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_posting_api.json"
+    },
+    {
+      "bytes": 6577,
+      "name": "func_doc_ticket_api.json",
+      "sha256": "1d78a0bbc15ca2dca3a2228be690b8b929783b2715175cd05b80ee2106581897",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_ticket_api.json"
+    },
+    {
+      "bytes": 14075,
+      "name": "func_doc_trading_bot.json",
+      "sha256": "c04b85e9ea0795a0fea1e1c3608795aa720edde52539b2e71897aa207976a25f",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_trading_bot.json"
+    },
+    {
+      "bytes": 15930,
+      "name": "func_doc_travel_booking.json",
+      "sha256": "5247c1f4db044d4c18c30cc8e3a4e2a0c818aa122f4aae62f9b95d94dec065a3",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_travel_booking.json"
+    },
+    {
+      "bytes": 17545,
+      "name": "func_doc_vehicle_control.json",
+      "sha256": "a0366b59ad6eabb10410eadf95aa5991262ad0bbc3f560ebba45d7fc3e4f2808",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_vehicle_control.json"
+    },
+    {
+      "bytes": 15282,
+      "name": "README.md",
+      "sha256": "22234ad32a0bb921809278d01ed65e932b4e611690dfa17d1e0eb6ba74ab4e27",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/README.md"
+    },
+    {
+      "bytes": 736,
+      "name": "eval.yaml",
+      "sha256": "9ecc58567f275ca254542b4e888e25853df93d2d00b512213ec3f46fcba669b4",
+      "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/eval.yaml"
+    }
+  ],
+  "source_root_used_for_build": "C:\\Users\\15564\\AppData\\Local\\Temp\\bfcl_feasibility",
+  "stage": "CPU-only feasibility; no model inference; no training; no held-out access"
+}
