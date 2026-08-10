@@ -9,7 +9,7 @@
       "family": "qwen3",
       "job_id": "qwen3-calibration",
       "max_retries": 0,
-      "result_root": "\\root\\areno_rist_v3\\results\\calibration\\qwen3",
+      "result_root": "/root/areno_rist_v3/results/calibration/qwen3",
       "rollout_seeds": [
         32001,
         32002,
@@ -45,7 +45,7 @@
         32032
       ],
       "split": "calibration",
-      "task_file": "F:\\AReno\\tmp\\worktrees\\rist-v3-cpu-freeze\\research\\reward_identifiability_supervision_topology\\successors\\rist_v3\\stages\\C0_RESOLUTION\\data\\calibration.jsonl",
+      "task_file": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/data/calibration.jsonl",
       "task_file_sha256": "148966b05d2f119da1f6347c37d7852bfd5b2a957e84ad6fc0aa773b3035bf14",
       "trajectory_count": 1024
     },
@@ -54,7 +54,7 @@
       "family": "gemma4",
       "job_id": "gemma4-calibration",
       "max_retries": 0,
-      "result_root": "\\root\\areno_rist_v3\\results\\calibration\\gemma4",
+      "result_root": "/root/areno_rist_v3/results/calibration/gemma4",
       "rollout_seeds": [
         32001,
         32002,
@@ -90,12 +90,12 @@
         32032
       ],
       "split": "calibration",
-      "task_file": "F:\\AReno\\tmp\\worktrees\\rist-v3-cpu-freeze\\research\\reward_identifiability_supervision_topology\\successors\\rist_v3\\stages\\C0_RESOLUTION\\data\\calibration.jsonl",
+      "task_file": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/data/calibration.jsonl",
       "task_file_sha256": "148966b05d2f119da1f6347c37d7852bfd5b2a957e84ad6fc0aa773b3035bf14",
       "trajectory_count": 1024
     }
   ],
-  "pool_manifest": "F:\\AReno\\tmp\\worktrees\\rist-v3-cpu-freeze\\research\\reward_identifiability_supervision_topology\\successors\\rist_v3\\stages\\C0_RESOLUTION\\data\\manifest.json",
+  "pool_manifest": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/data/manifest.json",
   "pool_manifest_sha256": "e1967fa330268ff4e3317d56e75a608635a5b4fbafc63a11191df34633e22cfe",
   "prior_lineage_outcomes_permitted": false,
   "protocol": "RIST-C0-v3.0-STAGE-MANIFEST-v1",

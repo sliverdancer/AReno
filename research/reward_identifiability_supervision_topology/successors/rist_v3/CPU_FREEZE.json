@@ -44,8 +44,9 @@
   },
   "frozen_calibration_manifest": {
     "path": "research/reward_identifiability_supervision_topology/successors/rist_v3/stages/C0_RESOLUTION/frozen/calibration_stage_manifest_83f9831.json",
+    "portable_repo_relative_paths": true,
     "retry_permitted": false,
-    "sha256": "aead88c11b7f3ba301f6ed1761a227629524a7e93fb7f28db0c92dc5465cbbe7",
+    "sha256": "d12a8fd5a528acbc8033d68a3c1301c01fb7f89a8523d3282e1141ca9d28d3cb",
     "source_commit": "83f9831a5752cb0588111d0d115f015b57fbfac2",
     "split": "calibration",
     "trajectory_count": 2048
