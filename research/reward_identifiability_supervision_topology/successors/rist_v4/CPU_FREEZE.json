@@ -1,0 +1,53 @@
+{
+  "access_boundary": {
+    "bfcl_permitted": false,
+    "calibration_reads_qualification": false,
+    "gpu_used": false,
+    "heldout_permitted": false,
+    "model_accessed": false,
+    "qualification_requires_exact_admission": true,
+    "training_permitted": false
+  },
+  "bfcl_authorized": false,
+  "cpu_tests": {
+    "command": "python -m pytest tests/test_rist_v4_cpu.py -q",
+    "failed": 0,
+    "passed": 9
+  },
+  "date": "2026-08-10",
+  "generator": {
+    "path": "research/reward_identifiability_supervision_topology/successors/rist_v4/stages/C0_RESOLUTION/build_fresh_pool.py",
+    "sha256": "093f1d1ba5a750f6226992da1b8ae1e5f75886d3f1ccce421269c2aaf806f27c"
+  },
+  "gpu_authorized": false,
+  "heldout_authorized": false,
+  "next_gpu_gate": {
+    "calibration_go_condition": "at least two common low cells and two common high cells across Qwen3 and Gemma4",
+    "first_step": "small two-family serving canary before full calibration",
+    "recommended_gpu": "A800-80GB"
+  },
+  "pool": {
+    "calibration_sha256": "d6ef1adaa1a623362f998d278b858e2d0638960cf838707f075f8d9b11022307",
+    "calibration_task_count": 32,
+    "capacity_canary_sha256": "512c42f8dce272b0371398b19273d28adb9af81cc61bd5273504f302541e48b4",
+    "capacity_canary_task_count": 1,
+    "manifest_sha256": "1b707c0c5ee4383900df6b37cdda5532cd13fed830f25e2d6aeae38a05c4f93f",
+    "protocol": "RIST-C0-v4.0-FRESH-POOL-v1",
+    "qualification_sha256": "fed8f6398e9daa4817883dccb9a86e9af84e06ce7aef2f2b6444fcb8c260bb46",
+    "qualification_task_count": 32,
+    "rollout_seeds_per_scientific_task": 32,
+    "seeds_disjoint_from_prior_lineages": true,
+    "seeds_internally_unique": true,
+    "semantic_code_max_length": 3,
+    "task_count": 65,
+    "task_signatures_disjoint_from_prior_lineages": true,
+    "task_signatures_internally_unique": true
+  },
+  "protocol": "RIST-v4.0-CPU-POOL-FREEZE-v1",
+  "qualification_authorized": false,
+  "retired_parent": "RIST-C0-v3.1:KILL_CURRENT_C0_V3_1_TRANSPORT_DO_NOT_OPEN_QUALIFICATION",
+  "status": "PASS_CPU_POOL_FREEZE_GPU_CLOSED",
+  "training_authorized": false,
+  "v3_1_failure_diagnosis_only": true,
+  "v3_outcomes_used_for_task_selection": false
+}

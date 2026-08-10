@@ -1,0 +1,447 @@
+{
+  "bfcl_opened": false,
+  "capacity_canary_seed": 202608100402,
+  "cell_specs": [
+    {
+      "anchor_intent": "high",
+      "argument_decoys": 0,
+      "cell": "c00",
+      "dependency_depth": 0,
+      "selector": "direct",
+      "semantic_ambiguity": 0,
+      "tool_decoys": 0
+    },
+    {
+      "anchor_intent": "high",
+      "argument_decoys": 1,
+      "cell": "c01",
+      "dependency_depth": 0,
+      "selector": "direct",
+      "semantic_ambiguity": 0,
+      "tool_decoys": 0
+    },
+    {
+      "anchor_intent": "mixed",
+      "argument_decoys": 1,
+      "cell": "c02",
+      "dependency_depth": 1,
+      "selector": "direct",
+      "semantic_ambiguity": 1,
+      "tool_decoys": 1
+    },
+    {
+      "anchor_intent": "mixed",
+      "argument_decoys": 2,
+      "cell": "c03",
+      "dependency_depth": 1,
+      "selector": "relational",
+      "semantic_ambiguity": 1,
+      "tool_decoys": 1
+    },
+    {
+      "anchor_intent": "mixed",
+      "argument_decoys": 3,
+      "cell": "c04",
+      "dependency_depth": 2,
+      "selector": "direct",
+      "semantic_ambiguity": 2,
+      "tool_decoys": 2
+    },
+    {
+      "anchor_intent": "mixed",
+      "argument_decoys": 3,
+      "cell": "c05",
+      "dependency_depth": 2,
+      "selector": "relational",
+      "semantic_ambiguity": 2,
+      "tool_decoys": 2
+    },
+    {
+      "anchor_intent": "low",
+      "argument_decoys": 5,
+      "cell": "c06",
+      "dependency_depth": 3,
+      "selector": "direct",
+      "semantic_ambiguity": 3,
+      "tool_decoys": 3
+    },
+    {
+      "anchor_intent": "low",
+      "argument_decoys": 5,
+      "cell": "c07",
+      "dependency_depth": 3,
+      "selector": "relational",
+      "semantic_ambiguity": 3,
+      "tool_decoys": 3
+    }
+  ],
+  "generator_version": "rist-c0-v4-semantic-code-pool",
+  "gpu_used": false,
+  "heldout_opened": false,
+  "model_accessed": false,
+  "pool_seed": 202608100401,
+  "prior_outcomes_used": false,
+  "prior_tasks_or_seeds_used": false,
+  "protocol": "RIST-C0-v4.0-FRESH-POOL-v1",
+  "qualification_opened": false,
+  "retired_parent_protocols": [
+    "v2.1",
+    "v2.2",
+    "v2.3",
+    "v3.1"
+  ],
+  "splits": {
+    "calibration": {
+      "file": "calibration.jsonl",
+      "rollout_seeds": [
+        42001,
+        42002,
+        42003,
+        42004,
+        42005,
+        42006,
+        42007,
+        42008,
+        42009,
+        42010,
+        42011,
+        42012,
+        42013,
+        42014,
+        42015,
+        42016,
+        42017,
+        42018,
+        42019,
+        42020,
+        42021,
+        42022,
+        42023,
+        42024,
+        42025,
+        42026,
+        42027,
+        42028,
+        42029,
+        42030,
+        42031,
+        42032
+      ],
+      "sha256": "d6ef1adaa1a623362f998d278b858e2d0638960cf838707f075f8d9b11022307",
+      "structural_stats": {
+        "candidate_count_by_cell": {
+          "c00": [
+            1
+          ],
+          "c01": [
+            2
+          ],
+          "c02": [
+            2
+          ],
+          "c03": [
+            3
+          ],
+          "c04": [
+            4
+          ],
+          "c05": [
+            4
+          ],
+          "c06": [
+            6
+          ],
+          "c07": [
+            6
+          ]
+        },
+        "dependency_depth_by_cell": {
+          "c00": [
+            0
+          ],
+          "c01": [
+            0
+          ],
+          "c02": [
+            1
+          ],
+          "c03": [
+            1
+          ],
+          "c04": [
+            2
+          ],
+          "c05": [
+            2
+          ],
+          "c06": [
+            3
+          ],
+          "c07": [
+            3
+          ]
+        },
+        "max_code_length": 2,
+        "min_code_length": 2,
+        "tool_count_by_cell": {
+          "c00": [
+            1
+          ],
+          "c01": [
+            1
+          ],
+          "c02": [
+            2
+          ],
+          "c03": [
+            2
+          ],
+          "c04": [
+            3
+          ],
+          "c05": [
+            3
+          ],
+          "c06": [
+            4
+          ],
+          "c07": [
+            4
+          ]
+        }
+      },
+      "task_count": 32,
+      "task_signatures": [
+        "025acaeada7b810867978d9f92f9ae4510d9953dd815bd973d2fbaae49175407",
+        "07c1a5a9fa40d0b8cee05c31def8173278530072a11eefb2aca9135066f4a513",
+        "09247397a9d01cd2e76573a9f5945781beeb232fdb7981aa9ff82b00a45e4771",
+        "098fee7a2f1eed6347b7253c89b673bf3d13090a69af9c47f85ea01150ec09d6",
+        "0ce5d28341e60f6f9a59c1b4f358ed55c5b6bfe7bee75912cfef8a1016a419ee",
+        "1013258b1bc6511da0e7bcc9ea49509139693847f9418448f26bb2bd1aa6f1c8",
+        "28f584f8af2d4d7f818348b3c2691ac0e596771b101ec161def92bca098440f1",
+        "2b1a820b634c81412f3f3fa4c69b08f887e3ce2ea4fea851f533a80b3925e9ef",
+        "368ed24ff65f581f597e5f9bebf0d27f9938bb6af7a3bc1c113ea994a368bf04",
+        "368fa031b3268748476b5032ae70460ef43dec789ec80a5859c784b4f7f47ac7",
+        "67236be24183d126358b4c3980d131dd572c3d4c5240cdd7d410e8f1ed5bc6f3",
+        "695bf6198e6114eee840697a8d73735fddbbcee83be5b771fc94f52628351f43",
+        "6b8abd98bfb5139bd5d7f98c346329052dd9d4eb0095ee1b7aa13ef51a35801b",
+        "710f482cd4eec6fbd846fbca4777a170d8d07b4bdec779193f269d86d116bbc5",
+        "76fd08b0547f8d2848268961ae1d37c082ea7118675dde938e1fc860b619454b",
+        "8d79223e5016fbba4ea25852b15a721d90572fef384b37c169a02730dfadbf82",
+        "9790c69dff3b21f582bcc607218300d0f9d767a71851420121c2057832375c83",
+        "a328659ba4bd4d10d6465d7f5fe4f03d494fe13a507f87d48b9428db3709266a",
+        "ab01a0470dfeb9e99e3e12c382c08b00ce33eecbf7c6ee701a62ae67de1abb87",
+        "ac5e85fcd9a6d3275137599c30cf9b2a1814e8e66d2fdd2891e772c453da5619",
+        "addf5f97d9a9efb1bddf15d80ad04e06f96c162eaca2c8c7a537bbadbc9fde78",
+        "b0bc69f5efd58ff1be6e20500e98bf6e15c57beffaae534295b5bc38d659d4ab",
+        "b29ab375fccaa7c09d644be1ef7592a26a1690d2296250479ba3ee6fa63e9812",
+        "ba61b0a72f6b2f1778b2d738afff87ba76d42d0fa80c715b7118d739e00ba176",
+        "bd95be6a70a60a805422fb34f98d833758ccea008e7be55ed6a8a0cc3c915cf9",
+        "ca1e22575f4fe647c995ba682a83d1946d6f7c45da6637e660ec83aaf66dfd21",
+        "d07f895eff981c4ac13b42c067809845d1e0c5f1d40f642e5afbaf57330a405c",
+        "d49f46d093a45a6f32e5079e16914b845e4677bbfdbf61136c620a26280c60a4",
+        "d68456ab95d08f925df1098611ea8c40083d020e7590c611f571de22f0087b3d",
+        "d9623f587e73e35366cf1a96f77069e0210f85e7833d42ec4eb3f3a9dc5e1ba4",
+        "de9debe16c0ef25f6fafa9c39102e0731efac74a0d5b0685bd98d455a86f20d5",
+        "e821ff61e60770a61954012228b428407e1a606c775f5fcffcd9bb877dd51229"
+      ],
+      "trajectory_count_per_family": 1024
+    },
+    "capacity_canary": {
+      "file": "capacity_canary.jsonl",
+      "rollout_seeds": [
+        41001,
+        41002,
+        41003,
+        41004,
+        41005,
+        41006,
+        41007,
+        41008
+      ],
+      "sha256": "512c42f8dce272b0371398b19273d28adb9af81cc61bd5273504f302541e48b4",
+      "structural_stats": {
+        "candidate_count_by_cell": {
+          "c07": [
+            6
+          ]
+        },
+        "dependency_depth_by_cell": {
+          "c07": [
+            3
+          ]
+        },
+        "max_code_length": 2,
+        "min_code_length": 2,
+        "tool_count_by_cell": {
+          "c07": [
+            4
+          ]
+        }
+      },
+      "task_count": 1,
+      "task_signatures": [
+        "56e387707ff13f6029d6f1612df9162040c87b8f4d75d393a9b330374f452a4f"
+      ],
+      "trajectory_count_per_family": 8
+    },
+    "qualification": {
+      "file": "qualification.jsonl",
+      "rollout_seeds": [
+        43001,
+        43002,
+        43003,
+        43004,
+        43005,
+        43006,
+        43007,
+        43008,
+        43009,
+        43010,
+        43011,
+        43012,
+        43013,
+        43014,
+        43015,
+        43016,
+        43017,
+        43018,
+        43019,
+        43020,
+        43021,
+        43022,
+        43023,
+        43024,
+        43025,
+        43026,
+        43027,
+        43028,
+        43029,
+        43030,
+        43031,
+        43032
+      ],
+      "sha256": "fed8f6398e9daa4817883dccb9a86e9af84e06ce7aef2f2b6444fcb8c260bb46",
+      "structural_stats": {
+        "candidate_count_by_cell": {
+          "c00": [
+            1
+          ],
+          "c01": [
+            2
+          ],
+          "c02": [
+            2
+          ],
+          "c03": [
+            3
+          ],
+          "c04": [
+            4
+          ],
+          "c05": [
+            4
+          ],
+          "c06": [
+            6
+          ],
+          "c07": [
+            6
+          ]
+        },
+        "dependency_depth_by_cell": {
+          "c00": [
+            0
+          ],
+          "c01": [
+            0
+          ],
+          "c02": [
+            1
+          ],
+          "c03": [
+            1
+          ],
+          "c04": [
+            2
+          ],
+          "c05": [
+            2
+          ],
+          "c06": [
+            3
+          ],
+          "c07": [
+            3
+          ]
+        },
+        "max_code_length": 2,
+        "min_code_length": 2,
+        "tool_count_by_cell": {
+          "c00": [
+            1
+          ],
+          "c01": [
+            1
+          ],
+          "c02": [
+            2
+          ],
+          "c03": [
+            2
+          ],
+          "c04": [
+            3
+          ],
+          "c05": [
+            3
+          ],
+          "c06": [
+            4
+          ],
+          "c07": [
+            4
+          ]
+        }
+      },
+      "task_count": 32,
+      "task_signatures": [
+        "077b8f471a335979aeddec208a4dc21a610bb2b49ce6791792e2083a0c09b9d4",
+        "199fb3237abf6d7aa2fd695cbb36753be4e4dce1e45113ffdf8c9b351b6f9092",
+        "1baf175e87e8165bffb0733c7ba58053e2f8427066b5670395d7bd250cc0ecea",
+        "2a69dcd9af78e538b0050a21139073438118c2a844745c56234059f6aac69730",
+        "40cca5caf4c7e6b1c5ee016a68bb1efacd5de4a250f6fbb1b5e9cedd261b2bfe",
+        "41242c9d20c1812d1e1ab47235d7939a3fe27f7759863ed7c23fc055fd68e790",
+        "554dce516223695c465ba6380d432e4c123cf8b4c00ce1124ef1c61b2027161f",
+        "576f1bfd627f4c3920799937be194b06e38125514c0b294896cd32470e24bbdf",
+        "68cb4eb3a405196eae52eeacdfef3af5e024d7160d435aaedad531e1c0059bdb",
+        "6e1e5cae625bce6bd6d555f6b590bb62956cae8e18ad2c36edf03346baa71c85",
+        "7137da11dec3724f4a857e757732f82d2c3de98eb9ec2ca15a19924130c268f0",
+        "7d6dc4491ba7e983fc0a6754dc9a89231995bfc0d42e051f30d2a6c8af759197",
+        "85e22d079206b844aa34a8e65b4407bfc533f0c0e91d52bb9c79e0ea8f5edffc",
+        "89280d6fade8896310632e3be46582a6061852e63bf99e1a3dd1cb0932a951a9",
+        "8b44854ece508b8e41c7bea8d2c9403d904226fe1cf6ac545af75e9e28dce554",
+        "8daace1ae0cf166e54cbea88a406ea95cf9808c1e5424fb53fc74eda772a1e1c",
+        "8e8f4e4ae9d5baebc37a702fb1c6f3a3aebf1a64923c46f43fa7469ec072de73",
+        "9caad97f4f581f0a04339e55b215812e521c42c5b0e73bcda205f4d7abb49c0f",
+        "aa022e5214029dd60c620627c983ea9ad11fb4172e03bd395157f631367ecd9e",
+        "b4408519fabc260182b61b2c350475e4c4f4a3ca1f851984880a1f6c3f2243b8",
+        "b6bd4a1ad3b128d611631e6354777a36c76b0bf28123bde8e5a7f76487353410",
+        "ba3d9e28bbe5f8c05df9d77f6ef0f34e269878359c7eb5d5f0cc6ff56a3f61f2",
+        "c4529d0f06dd1cc929d6dffe1b609f6f5f1a6358da67269b70ff9dedc99a122d",
+        "cb318c594096d4c0c9c2b519950ca313fb9497a026782a1667efc0344c441139",
+        "d893b6fc1c7c89a2a7aebe5b72ca81d2b82eed82c04c6cfc83721086005eb511",
+        "d89669871d90d35910b6795e0ab4400eee7141d3938ba0e48dfe2e7516e0060c",
+        "e5f10ecb97f61dfe45a2cb9caeb33c13d7cd6995a6b195ec23e633d3773a7245",
+        "e7e94a20a873c0507c491a4a7bf362e07f3ae189fd16fcbe13b0ccbeea0cf3b3",
+        "eff9bf502979fcd919d17b76c3cc5bd4dec7c6853eef9a8b7ffb5d792db785a7",
+        "f2bf56762b5277d4aa2ee3cf43829586d4d6144ffe2df73811ec5d618b87798d",
+        "f8d4cafebead7d9ce2a13eda27af8fbe1e0145346f6d87bebd71b0c742bc72fd",
+        "fcb63da343c1060b8c4f7bd629a98fe3ada86a4c3a6ab903fd7a49e8a37a8ee4"
+      ],
+      "trajectory_count_per_family": 1024
+    }
+  },
+  "training_performed": false,
+  "v3_outcomes_used_for_task_selection": false
+}
