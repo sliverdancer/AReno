@@ -4,6 +4,9 @@ This directory contains CPU-only, outcome-blind metadata for using the public
 BFCL v3 Base Multi-Turn split as an external audit target.
 
 Do not place raw BFCL prompt, answer, or function-documentation files here.
+`EXECUTION_RECEIPT_STATIC.json` freezes the external-audit execution design but
+does not authorize model/API/GPU inference.
+
 Rebuild with:
 
 ```bash

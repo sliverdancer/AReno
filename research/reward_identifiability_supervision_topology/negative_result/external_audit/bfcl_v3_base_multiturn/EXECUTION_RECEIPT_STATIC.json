@@ -1,0 +1,147 @@
+{
+  "evaluation_metrics": [
+    "strict_success_count_per_task_group",
+    "all_fail_indicator",
+    "all_pass_indicator",
+    "mixed_reward_indicator",
+    "invalid_tool_call_rate_if_exposed_by_evaluator",
+    "non_zero_advantage_group_rate",
+    "cross_model_transportability_of_high_low_labels"
+  ],
+  "finalization_rules": {
+    "go_condition": "External audit supports venue escalation if collapse appears in a non-trivial fraction of public groups, or if BFCL clearly does not collapse and thereby separates RIST from usable public task pools.",
+    "kill_condition": "Kill high-venue route if public audit requires hidden labels, task selection changes after outcomes, non-shareable outputs, or uninterpretable evaluator/format failure.",
+    "no_protocol_edit_after_first_model_request": true,
+    "no_selective_reruns": true,
+    "no_task_replacement": true,
+    "terminal_summary_required_even_if_serving_or_evaluator_fails": true,
+    "zero_retry": true
+  },
+  "frozen_at_local_date": "2026-08-10",
+  "non_circular_binding": "This static receipt is hashed by EXECUTION_RECEIPT_STATIC.sha256; the containing Git commit binds both files.",
+  "pre_inference_gates_required": [
+    "CPU evaluator wiring dry-run on synthetic dummy records only",
+    "public-file hash recheck against this receipt",
+    "selected task-id hash recheck",
+    "runtime receipt with exact model repo/revision/tokenizer/backend/GPU UUID/extension hashes",
+    "single-task format canary per model with terminal finalizer enabled before full 64-task run"
+  ],
+  "protocol": "RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-EXECUTION-RECEIPT-v1",
+  "protocol_base_commit": "fa39c6580b313830d8a00bb9af9f5c79e4500988",
+  "public_data_identity": {
+    "benchmark": "Berkeley Function Calling Leaderboard",
+    "file_manifest_sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9",
+    "files": [
+      {
+        "bytes": 391058,
+        "name": "BFCL_v3_multi_turn_base.json",
+        "sha256": "edaea7666e0089062c30f3ac511914d5c27414dbe9b8214488191980d873b145",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/BFCL_v3_multi_turn_base.json"
+      },
+      {
+        "bytes": 80428,
+        "name": "possible_answer_BFCL_v3_multi_turn_base.json",
+        "sha256": "d03b360939e3ca7fe537016349f84868971340393c3d43c1dd9527b8e43102f2",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/possible_answer/BFCL_v3_multi_turn_base.json"
+      },
+      {
+        "bytes": 13951,
+        "name": "func_doc_gorilla_file_system.json",
+        "sha256": "26c01bed25bf7affbc8d281cc8124ccdc220a64c374ac4a7a9181dea0a0468ee",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_gorilla_file_system.json"
+      },
+      {
+        "bytes": 9158,
+        "name": "func_doc_math_api.json",
+        "sha256": "83fa31708c89442bdcf12ac4dfbe3be8663ec9183a1b1524a9fda98164bc7e0b",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_math_api.json"
+      },
+      {
+        "bytes": 6097,
+        "name": "func_doc_message_api.json",
+        "sha256": "2855068a0e77c4f1861fb2c1aa581590af85eb4b56994c6ebf79e30afb83be24",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_message_api.json"
+      },
+      {
+        "bytes": 10573,
+        "name": "func_doc_posting_api.json",
+        "sha256": "87f9fc404a06e4107d7c366f1399c596440e84c16cb119faf374b2f532d86e8b",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_posting_api.json"
+      },
+      {
+        "bytes": 6577,
+        "name": "func_doc_ticket_api.json",
+        "sha256": "1d78a0bbc15ca2dca3a2228be690b8b929783b2715175cd05b80ee2106581897",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_ticket_api.json"
+      },
+      {
+        "bytes": 14075,
+        "name": "func_doc_trading_bot.json",
+        "sha256": "c04b85e9ea0795a0fea1e1c3608795aa720edde52539b2e71897aa207976a25f",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_trading_bot.json"
+      },
+      {
+        "bytes": 15930,
+        "name": "func_doc_travel_booking.json",
+        "sha256": "5247c1f4db044d4c18c30cc8e3a4e2a0c818aa122f4aae62f9b95d94dec065a3",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_travel_booking.json"
+      },
+      {
+        "bytes": 17545,
+        "name": "func_doc_vehicle_control.json",
+        "sha256": "a0366b59ad6eabb10410eadf95aa5991262ad0bbc3f560ebba45d7fc3e4f2808",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/data/multi_turn_func_doc/func_doc_vehicle_control.json"
+      },
+      {
+        "bytes": 15282,
+        "name": "README.md",
+        "sha256": "22234ad32a0bb921809278d01ed65e932b4e611690dfa17d1e0eb6ba74ab4e27",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/README.md"
+      },
+      {
+        "bytes": 736,
+        "name": "eval.yaml",
+        "sha256": "9ecc58567f275ca254542b4e888e25853df93d2d00b512213ec3f46fcba669b4",
+        "source_url": "https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/raw/main/eval.yaml"
+      }
+    ],
+    "schema_summary_sha256": "ade76eb996a5c682814cc732ca838fdc4967c73adbeb0845322c2fefc797ae24",
+    "subset": "BFCL V3 Base Multi-Turn public split"
+  },
+  "risk_position_before_any_inference": {
+    "gpu_api_go_recommendation": "do not authorize full inference until CPU evaluator integration and one-task format canaries are frozen; start with minimal canary, not the 4096-response full audit",
+    "informative_external_audit_probability": "moderate, approximately 0.55-0.70 if evaluator integration is clean",
+    "reason": "BFCL Base Multi-Turn has public oracle answers and complete function docs, so it is likely to produce interpretable collapse-or-separation evidence. The main risk is strict function-call formatting failure for small open models, which could make the result all-fail but still less diagnostic than desired."
+  },
+  "rollout_design_when_separately_authorized": {
+    "group_size_per_task_per_model": 32,
+    "max_output": "bounded by BFCL evaluator requirements and frozen in runtime receipt",
+    "models": "two-family principle: one Qwen-family model and one Gemma-family model; exact repo ids, revisions, tokenizer revisions, serving backend, GPU UUID, and extension hashes must be bound in a separate runtime receipt before first request",
+    "raw_response_storage": "store raw response files outside git; commit only hash manifest and derived summaries",
+    "request_order": "model-major, natural task-id order, rollout index 00..31 unless runtime receipt freezes a different deterministic order before outcomes",
+    "retries": 0,
+    "rollout_seed_rule": "sha256(\"bfcl-v3-base-mt-v1/{model_slot}/{task_id}/rollout/{00..31}\") truncated only by the runner PRNG interface; generated before inference",
+    "temperature": 0.7,
+    "top_p": 0.95
+  },
+  "scope": {
+    "api_inference_authorized": false,
+    "cpu_only_freeze": true,
+    "gpu_authorized": false,
+    "heldout_or_sealed_access_authorized": false,
+    "model_inference_authorized": false,
+    "raw_bfcl_data_committed": false,
+    "training_authorized": false
+  },
+  "status": "FROZEN_CPU_ONLY_NO_INFERENCE_AUTHORIZED",
+  "task_selection": {
+    "first_task_id": "multi_turn_base_0",
+    "last_task_id": "multi_turn_base_63",
+    "no_task_replacement_after_model_outcomes": true,
+    "outcome_blind": true,
+    "rule": "natural_numeric_sort(task_id)[:64]",
+    "selected_task_ids_file": "SELECTED_TASK_IDS.txt",
+    "selected_task_ids_sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a",
+    "task_count": 64
+  }
+}

@@ -2,13 +2,16 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_WITH_CPU_ONLY_FEASIBILITY_PASS_NOT_EXECUTED`
+Status: `FROZEN_WITH_CPU_ONLY_FEASIBILITY_PASS_AND_STATIC_RECEIPT_NOT_EXECUTED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
 use, held-out access, or training. A CPU-only public-file feasibility audit has
 been completed without model outputs; see
 `external_audit/bfcl_v3_base_multiturn/`.
+
+The static execution receipt is frozen at
+`external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json`.
 
 ## Selected public target
 
@@ -115,6 +118,24 @@ The complete public-file byte sizes and SHA-256 hashes are recorded in
 This addendum is a protocol clarification made before any model inference,
 reward computation, or outcome inspection. It does not change the scientific
 rule that task selection cannot be adjusted after observing model outcomes.
+
+## Static execution receipt
+
+The frozen static receipt records:
+
+- public file identity;
+- selected task-id file hash;
+- group size, sampling parameters, request order, zero-retry policy;
+- finalization and GO/KILL rules;
+- explicit denial of model/API/GPU/training authorization;
+- pre-inference gates required before any model spending.
+
+Receipt hash:
+
+`13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667`
+
+The receipt is non-circular: `EXECUTION_RECEIPT_STATIC.json` is hashed by
+`EXECUTION_RECEIPT_STATIC.sha256`, and the containing Git commit binds both.
 
 ## Deliverables when executed
 

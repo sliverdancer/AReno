@@ -1,5 +1,5 @@
 {
-  "file_count": 25,
+  "file_count": 28,
   "files": [
     {
       "bytes": 5668,
@@ -7,9 +7,9 @@
       "sha256": "2c9ba9df65987a20605f189174187e7e0c2a8129e5f291f746bcbf39d308e636"
     },
     {
-      "bytes": 1627,
+      "bytes": 1638,
       "path": "build_artifact_manifest.py",
-      "sha256": "3cfbc25152e8939decac2e4bb1a98d680ef059ac312637adcc071a31989242af"
+      "sha256": "6d0c2b5fcc9599b597ca0bd174e68748813256d85e7ea5ba55b7f9a313502875"
     },
     {
       "bytes": 12648,
@@ -42,9 +42,24 @@
       "sha256": "c36c251e3ae873af2fa5b2618b021b3da66b56a5066a8703df319c5c15966566"
     },
     {
+      "bytes": 8544,
+      "path": "external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.json",
+      "sha256": "13f13cd6ac31a75408e1eef86c8c6b7e616b941b03acadd5e2cd01a9c9dda667"
+    },
+    {
+      "bytes": 97,
+      "path": "external_audit/bfcl_v3_base_multiturn/EXECUTION_RECEIPT_STATIC.sha256",
+      "sha256": "4193a415239e6a55b579e7f7bc5115ddd7f35920d68f3a8f9ff7c2ea4da0b3d6"
+    },
+    {
       "bytes": 1818,
       "path": "external_audit/bfcl_v3_base_multiturn/FEASIBILITY_AUDIT_REPORT.md",
       "sha256": "15ffecfe6be0990f6082b2c3c3b9523f6b26be4f4caf2b51e2198b88e71a79b3"
+    },
+    {
+      "bytes": 2548,
+      "path": "external_audit/bfcl_v3_base_multiturn/PRE_INFERENCE_RISK_ASSESSMENT.md",
+      "sha256": "2bd234792fc38aecf48cdea203f73b3211c89959da376c46126706e7b36a0aae"
     },
     {
       "bytes": 4160,
@@ -52,9 +67,9 @@
       "sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9"
     },
     {
-      "bytes": 517,
+      "bytes": 637,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "8c8d44be0482daf79e4715fa8e375838a02ddb16907cdd034875c3fc66f9161e"
+      "sha256": "4628b5d7bb7e4e258066fadfea9e19d5c78140c3b67aca10c6fa6a4b2ed78199"
     },
     {
       "bytes": 8651,
@@ -67,9 +82,9 @@
       "sha256": "72c55c66b716925d4e0965ad275fe29fc50993d5712a20f824d99f5dcd2c713a"
     },
     {
-      "bytes": 4424,
+      "bytes": 5132,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "68d7fbe7bbd869c0aa6d952aa1792f980462cb9163da03edbdb6bd55f0293605"
+      "sha256": "5233ec9b123bce934df1714666b611beae45ea26599b49884956e11a7ef20ce7"
     },
     {
       "bytes": 1778,
@@ -102,9 +117,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 1832,
+      "bytes": 2035,
       "path": "START_HERE.md",
-      "sha256": "107c5978d2198acc8c86024abcf378c8f0b42e4f3813ccfb29de3e975cfb0fdf"
+      "sha256": "13facc7e99fb8e2f43f7dd50a5541b87bd4164ec1e1e5b492659322fee66599b"
     },
     {
       "bytes": 1308,
