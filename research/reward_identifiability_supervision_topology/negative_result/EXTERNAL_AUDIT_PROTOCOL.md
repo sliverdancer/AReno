@@ -312,6 +312,10 @@ execution command, terminal interpretations, and hard stops.
 dry-run path produce a bound receipt, hash sidecar, and request plan without a
 model request. It is not external empirical evidence.
 
+`AUTHORIZATION_PACKET.md` records the exact scope, budget, success/failure
+criteria, and forbidden actions for the still-missing real single-request
+canary. It is not self-authorizing.
+
 ## Deliverables when executed
 
 - `EXTERNAL_AUDIT_MANIFEST.json`

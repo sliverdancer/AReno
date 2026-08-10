@@ -379,3 +379,19 @@ def test_tau3_dry_run_evidence_is_cpu_only_and_hash_bound():
     assert plan["raw_response_commit_allowed"] is False
     assert not (dry_run / "TAU3_CANARY_OBSERVATION.json").exists()
     assert not (dry_run / "TAU3_CANARY_TERMINAL_FINALIZER.json").exists()
+
+
+def test_tau3_authorization_packet_is_not_self_authorizing():
+    text = (CANARY / "AUTHORIZATION_PACKET.md").read_text(encoding="utf-8")
+    assert "AWAITING_USER_AUTHORIZATION_NOT_EXECUTABLE" in text
+    assert "It is not an authorization by itself." in text
+    assert "`1 public airline task x 1 model x 1 rollout`" in text
+    assert "more than one model request" in text
+    assert "any retry" in text
+    assert "training" in text
+    assert "BFCL access" in text
+    assert "held-out or sealed task access" in text
+    assert "reward-resolution calibration" in text
+    assert "committing raw model response text" in text
+    assert 'TAU3_CANARY_TERMINAL_FINALIZER.json.status == "PASS_PARSEABLE_TOOL_CALL"' in text
+    assert "cap at 15 minutes" in text

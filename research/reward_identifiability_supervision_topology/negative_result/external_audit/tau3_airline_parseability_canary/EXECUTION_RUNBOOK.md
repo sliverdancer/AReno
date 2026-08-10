@@ -6,6 +6,8 @@ This runbook is the handoff for the missing external public-environment
 parseable tool-call canary. It does not authorize model/API/GPU execution by
 itself.
 
+The exact authorization scope is recorded in `AUTHORIZATION_PACKET.md`.
+
 ## Scope
 
 - Environment candidate: Tau3/Tau2 airline public task.
