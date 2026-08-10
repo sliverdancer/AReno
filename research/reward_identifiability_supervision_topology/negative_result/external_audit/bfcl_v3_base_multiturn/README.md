@@ -11,6 +11,8 @@ dummy records only.
 `MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json` freezes the next possible
 one-task, one-model inference canary but is not executable until all runtime
 bindings are filled and separately authorized.
+`MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json` records the first local fail-fast
+preflight, which stopped before any model request.
 
 Rebuild with:
 

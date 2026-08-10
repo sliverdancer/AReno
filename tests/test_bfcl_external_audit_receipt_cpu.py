@@ -130,3 +130,20 @@ def test_bfcl_minimal_canary_template_hash_file_matches():
     expected = (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.sha256").read_text(encoding="ascii").split()[0]
     actual = hashlib.sha256((AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_bytes()).hexdigest()
     assert expected == actual
+
+
+def test_bfcl_local_preflight_blocked_before_first_model_request():
+    report = json.loads((AUDIT / "MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json").read_text(encoding="utf-8"))
+    assert report["protocol"] == "RRC-BFCL-MINIMAL-CANARY-LOCAL-PREFLIGHT-v1"
+    assert report["status"] == "BLOCKED_BEFORE_FIRST_MODEL_REQUEST"
+    scope = report["scope_confirmed"]
+    assert scope["model_request_sent"] is False
+    assert scope["api_request_sent"] is False
+    assert scope["gpu_model_serving_started"] is False
+    assert scope["training_started"] is False
+    assert scope["heldout_or_sealed_accessed"] is False
+    assert scope["raw_bfcl_committed"] is False
+    assert report["template"]["sha256"] == hashlib.sha256(
+        (AUDIT / "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json").read_bytes()
+    ).hexdigest()
+    assert report["decision"].startswith("Do not send a model request")

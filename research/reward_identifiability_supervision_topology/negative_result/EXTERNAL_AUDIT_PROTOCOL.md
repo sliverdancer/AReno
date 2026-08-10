@@ -2,7 +2,7 @@
 
 Protocol: `RRC-EXTERNAL-AUDIT-BFCL-V3-BASE-MULTITURN-v1`
 
-Status: `FROZEN_WITH_MINIMAL_CANARY_TEMPLATE_NOT_EXECUTED`
+Status: `FROZEN_WITH_MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED_NOT_EXECUTED`
 
 This protocol specifies the external evidence needed before targeting NeurIPS
 Evaluations & Datasets. It does not authorize model inference, API calls, GPU
@@ -16,6 +16,8 @@ The CPU-only synthetic replay is recorded at
 `external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json`.
 The minimal canary runtime receipt template is recorded at
 `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json`.
+The local preflight block report is recorded at
+`external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json`.
 
 ## Selected public target
 
@@ -163,6 +165,10 @@ Template hash:
 
 The full external audit remains unauthorized until a terminal one-task canary is
 complete and interpretable.
+
+The first local preflight did not execute because runtime bindings were missing:
+no local Qwen/Gemma snapshot, CPU-only PyTorch, no vLLM/accelerate runtime, and
+no concrete remote GPU/API target.
 
 ## Deliverables when executed
 

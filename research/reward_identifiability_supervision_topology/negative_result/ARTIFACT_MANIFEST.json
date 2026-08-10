@@ -1,5 +1,5 @@
 {
-  "file_count": 34,
+  "file_count": 36,
   "files": [
     {
       "bytes": 5668,
@@ -62,6 +62,16 @@
       "sha256": "15ffecfe6be0990f6082b2c3c3b9523f6b26be4f4caf2b51e2198b88e71a79b3"
     },
     {
+      "bytes": 2176,
+      "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json",
+      "sha256": "81a12ffaf25bba91163c4dba6ff9da4c20ff2026d10535a7534f3c91c91c1acb"
+    },
+    {
+      "bytes": 1393,
+      "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.md",
+      "sha256": "a1b799e9ee5671909c44d6bdeec44889ab651df08ca39afdb8903cc6310bcf16"
+    },
+    {
       "bytes": 1754,
       "path": "external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_REPORT.md",
       "sha256": "95f10ac6e76d16bd3eca97610dc418a96ea7f21bac2455b21d71fee48f2d65bd"
@@ -87,9 +97,9 @@
       "sha256": "e6ef7717b31846b407e66bd718bb7b1b99311a6827deb3e6e74399537b0ae3f9"
     },
     {
-      "bytes": 932,
+      "bytes": 1063,
       "path": "external_audit/bfcl_v3_base_multiturn/README.md",
-      "sha256": "9752d35dba0c420ec1519e4dba78aece3d4350fdfd15f832897e8d5a3ea321f7"
+      "sha256": "46f73a52fc36d0c9bdc10dded854ca487c26f33718907c56f1350315c14d4b28"
     },
     {
       "bytes": 8651,
@@ -112,9 +122,9 @@
       "sha256": "10d74304432fd776ad8e3157fac0c142ffff35042b5f3c2d7fc71bfaea73702c"
     },
     {
-      "bytes": 6226,
+      "bytes": 6571,
       "path": "EXTERNAL_AUDIT_PROTOCOL.md",
-      "sha256": "0feb34cf581d2233e1aab895e7d140f2b9552898427ada477ed556361604980a"
+      "sha256": "7efcdf649884cafa79674bef6019aec4c55d96607a04a903f37fc5726a9d44f0"
     },
     {
       "bytes": 1778,
@@ -147,9 +157,9 @@
       "sha256": "54971835300cfd19807eab967de20fe652644e940044d49d7686510860de1d29"
     },
     {
-      "bytes": 2569,
+      "bytes": 2926,
       "path": "START_HERE.md",
-      "sha256": "c2d7951d908e529f17312aa1bf48fb59a3157609bcf732f2af72ad7a51384fd6"
+      "sha256": "a6a8215bbc2ab184c4d647caadb8b4e81cd4fe0ecfbd5b31faf7854e067dd2b7"
     },
     {
       "bytes": 1308,

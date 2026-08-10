@@ -1,6 +1,6 @@
 # RIST negative-result handoff
 
-Status: `NEURIPS_ED_RESEARCH_PACKAGE_CPU_ONLY_MINIMAL_CANARY_TEMPLATE_FROZEN`
+Status: `NEURIPS_ED_RESEARCH_PACKAGE_MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED`
 
 This directory reframes the terminal RIST v3.1/v4.0 evidence as a negative
 result about reward-resolution collapse under group-relative objectives. It is
@@ -25,9 +25,11 @@ Read order:
 14. `external_audit/bfcl_v3_base_multiturn/SYNTHETIC_REPLAY_RESULT.json`
 15. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json`
 16. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_RUNTIME_RECEIPT_REPORT.md`
-17. `submission/NEURIPS_ED_DRAFT.md`
-18. `EVIDENCE_SUMMARY.csv`
-19. `EVIDENCE_SUMMARY.json`
+17. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.md`
+18. `external_audit/bfcl_v3_base_multiturn/MINIMAL_CANARY_LOCAL_PREFLIGHT_BLOCKED.json`
+19. `submission/NEURIPS_ED_DRAFT.md`
+20. `EVIDENCE_SUMMARY.csv`
+21. `EVIDENCE_SUMMARY.json`
 
 The key empirical fact is stable across two independent task-pool lineages:
 
@@ -42,10 +44,12 @@ a static execution receipt, a CPU-only synthetic evaluator replay, and a minimal
 one-task one-model canary runtime receipt template. Do not retune v4 after
 observing the calibration outcomes.
 
-The next admissible step, if separately authorized, is binding the minimal
-canary template to a concrete runtime environment and running exactly one model
+The most recent local preflight blocked before the first model request: no local
+Qwen/Gemma snapshot is available, local PyTorch is CPU-only, and no concrete
+remote/API runtime was provided. The next admissible step is binding a concrete
+remote GPU or API runtime, then rerunning preflight before exactly one model
 request. Full BFCL external audit remains closed. Raw BFCL prompt,
 possible-answer, and function-documentation files are not committed in this
 repository; only hashes, schema summaries, selected public task ids, static
-execution receipt, synthetic replay results, and canary receipt template are
-tracked.
+execution receipt, synthetic replay results, canary receipt template, and
+preflight block report are tracked.

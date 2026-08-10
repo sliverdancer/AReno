@@ -1,0 +1,51 @@
+{
+  "blockers": [
+    "No local Qwen/Gemma model snapshot found in Hugging Face cache.",
+    "Installed torch is CPU-only and reports cuda_available=False despite a display GPU being visible to nvidia-smi.",
+    "vLLM is not installed; accelerate is not installed.",
+    "No concrete remote GPU/API runtime has been provided for this canary turn.",
+    "Runtime receipt template still contains UNBOUND fields and is therefore not executable."
+  ],
+  "created_local_date": "2026-08-10",
+  "decision": "Do not send a model request. Bind a concrete remote GPU or API runtime first, then rerun preflight before the first request.",
+  "local_runtime_probe": {
+    "bfcl_public_mirror_present": true,
+    "hf_token_present": false,
+    "nvidia_smi_returncode": 0,
+    "nvidia_smi_summary": "NVIDIA GeForce RTX 3070 Laptop GPU, GPU-e6176e63-48c7-6b8c-b550-7906fd644875, 8192 MiB",
+    "openai_api_key_present": false,
+    "python_modules": {
+      "accelerate": false,
+      "huggingface_hub": true,
+      "torch": true,
+      "transformers": true,
+      "vllm": false
+    },
+    "qwen_or_gemma_hf_cache_matches": [],
+    "torch": {
+      "cuda_available": false,
+      "device_name": null,
+      "version": "2.5.1+cpu"
+    }
+  },
+  "protocol": "RRC-BFCL-MINIMAL-CANARY-LOCAL-PREFLIGHT-v1",
+  "safe_next_options": [
+    "Provide an SSH command for a running GPU instance with Qwen3-0.6B or permission to download it there.",
+    "Or provide an API runtime and exact model id allowed for the one-request canary.",
+    "Keep the full 64-task audit closed until this one-request canary is terminal and interpretable."
+  ],
+  "scope_confirmed": {
+    "api_request_sent": false,
+    "gpu_model_serving_started": false,
+    "heldout_or_sealed_accessed": false,
+    "model_request_sent": false,
+    "raw_bfcl_committed": false,
+    "training_started": false
+  },
+  "source_commit": "33e2c202a0be0533292a8a4b4cb13aa9f8ffd35c",
+  "status": "BLOCKED_BEFORE_FIRST_MODEL_REQUEST",
+  "template": {
+    "path": "MINIMAL_CANARY_RUNTIME_RECEIPT_TEMPLATE.json",
+    "sha256": "6cda5adfef062f6ec9e8211963ecfcbceb1eba7ea3d7b667fa3929a968fd858f"
+  }
+}
